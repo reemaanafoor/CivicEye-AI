@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CivicEye AI - Citizen Portal</title>
+
+<style>
+:root {
+    --main-text:#ffffff;
+    --card-bg:rgba(255,255,255,0.16);
+    --card-border:rgba(255,255,255,0.25);
+    --secondary-bg:rgba(255,255,255,0.10);
+    --soft-bg:rgba(255,255,255,0.08);
+    --button-bg:#ffffff;
+    --button-text:#222222;
+    --muted-text:rgba(255,255,255,0.75);
+    --shadow:0 8px 25px rgba(0,0,0,0.15);
+}
+
+body.theme-light {
+    --page-bg:#f5f7fa;
+    --main-text:#222222;
+    --card-bg:#ffffff;
+    --card-border:#e1e5ea;
+    --secondary-bg:#f1f3f6;
+    --soft-bg:#f7f8fa;
+    --button-bg:#222222;
+    --button-text:#ffffff;
+    --muted-text:#666666;
+    --shadow:0 8px 25px rgba(0,0,0,0.08);
+    background:var(--page-bg);
+}
+
+body.theme-dark {
+    --page-bg:#111827;
+    --main-text:#ffffff;
+    --card-bg:#1f2937;
+    --card-border:#374151;
+    --secondary-bg:#273449;
+    --soft-bg:#1a2433;
+    --button-bg:#ffffff;
+    --button-text:#111827;
+    --muted-text:#b9c0cc;
+    --shadow:0 8px 25px rgba(0,0,0,0.35);
+    background:var(--page-bg);
+}
+
+body {
+    margin:0;
+    min-height:100vh;
+    background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+    color:var(--main-text);
+    transition:background .3s ease,color .3s ease;
+}
+
+.navbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 35px;
+    background:var(--card-bg);
+    border-bottom:1px solid var(--card-border);
+    backdrop-filter:blur(15px);
+    position:relative;
+    z-index:999998;
+}
+
+.logo {
+    font-size:24px;
+    font-weight:bold;
+}
+
+.nav-links {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.nav-links a {
+    text-decoration:none;
+    color:var(--main-text);
+    padding:9px 14px;
+    border-radius:10px;
+    transition:.2s;
+    position:relative;
+}
+
+.nav-links a:hover {
+    background:var(--secondary-bg);
+}
+
+.notification-link {
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.notification-badge {
+    display:none;
+    min-width:19px;
+    height:19px;
+    padding:0 5px;
+    border-radius:20px;
+    background:#ff4757;
+    color:white;
+    font-size:11px;
+    font-weight:bold;
+    align-items:center;
+    justify-content:center;
+}
+
+.more-menu-container {
+    position:relative;
+    display:inline-block;
+    margin-left:8px;
+    z-index:999999 !important;
+}
+
+.more-menu-button {
+    border:1px solid var(--card-border);
+    background:var(--secondary-bg);
+    color:var(--main-text);
+    padding:9px 13px;
+    border-radius:10px;
+    font-size:20px;
+    line-height:1;
+    cursor:pointer;
+    position:relative;
+    z-index:1000000 !important;
+    pointer-events:auto !important;
+    transition:.2s;
+}
+
+.more-menu-button:hover {
+    background:var(--soft-bg);
+    transform:scale(1.03);
+}
+
+.more-menu {
+    position:fixed !important;
+    top:70px !important;
+    right:20px !important;
+    width:235px;
+    padding:8px;
+    border-radius:16px;
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    box-shadow:0 15px 40px rgba(0,0,0,.30);
+    display:none !important;
+    z-index:999999 !important;
+    animation:moreMenuOpen .18s ease;
+    pointer-events:auto !important;
+    backdrop-filter:blur(20px);
+}
+
+.more-menu.show {
+    display:block !important;
+    pointer-events:auto !important;
+}
+
+@keyframes moreMenuOpen {
+    from {
+        opacity:0;
+        transform:translateY(-8px) scale(.97);
+    }
+    to {
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.more-menu a,
+.more-menu button {
+    width:100%;
+    box-sizing:border-box;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 13px;
+    margin:2px 0;
+    border:none;
+    background:transparent;
+    color:var(--main-text);
+    text-decoration:none;
+    font-size:14px;
+    border-radius:10px;
+    cursor:pointer;
+    text-align:left;
+    position:relative;
+    z-index:1000000 !important;
+    pointer-events:auto !important;
+    transition:.2s;
+}
+
+.more-menu a:hover,
+.more-menu button:hover {
+    background:var(--secondary-bg);
+}
+
+.more-menu .logout-item {
+    color:#ff4757;
+}
+
+.civic-modal {
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:2000000;
+}
+
+.civic-modal.show {
+    display:flex;
+}
+
+.civic-modal-box {
+    width:100%;
+    max-width:500px;
+    background:var(--card-bg);
+    color:var(--main-text);
+    border:1px solid var(--card-border);
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+    backdrop-filter:blur(20px);
+    position:relative;
+    animation:modalOpen .2s ease;
+}
+
+@keyframes modalOpen {
+    from {
+        opacity:0;
+        transform:translateY(10px) scale(.97);
+    }
+    to {
+        opacity:1;
+        transform:translateY(0) scale(1);
+    }
+}
+
+.civic-modal-box h2 {
+    margin-top:0;
+    margin-bottom:12px;
+}
+
+.civic-modal-box p {
+    color:var(--muted-text);
+    line-height:1.6;
+}
+
+.modal-close {
+    position:absolute;
+    top:12px;
+    right:15px;
+    border:none;
+    background:transparent;
+    color:var(--main-text);
+    font-size:24px;
+    cursor:pointer;
+}
+
+.container {
+    width:90%;
+    max-width:1100px;
+    margin:35px auto;
+}
+
+.header {
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.header h1 {
+    margin-bottom:8px;
+}
+
+.header p {
+    color:var(--muted-text);
+    font-size:15px;
+}
+
+.reports-section {
+    margin-bottom:35px;
+}
+
+.reports-section h2 {
+    margin-bottom:18px;
+}
+
+.report-card {
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:18px;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(15px);
+}
+
+.report-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.report-title {
+    font-size:20px;
+    font-weight:bold;
+}
+
+.status-badge {
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status-pending {
+    background:#f1c40f;
+    color:#222;
+}
+
+.status-processing {
+    background:#3498db;
+    color:white;
+}
+
+.status-solved {
+    background:#2ecc71;
+    color:white;
+}
+
+.report-info {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.info-box {
+    background:var(--secondary-bg);
+    padding:12px;
+    border-radius:10px;
+}
+
+.info-label {
+    font-size:12px;
+    color:var(--muted-text);
+    margin-bottom:4px;
+}
+
+.info-value {
+    font-weight:bold;
+}
+
+.description {
+    background:var(--soft-bg);
+    padding:14px;
+    border-radius:10px;
+    color:var(--main-text);
+}
+
+.timeline {
+    margin-top:20px;
+    padding-left:10px;
+}
+
+.timeline-item {
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.timeline-dot {
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:#3498db;
+    margin-top:3px;
+    flex-shrink:0;
+}
+
+.timeline-dot.completed {
+    background:#2ecc71;
+}
+
+.timeline-content strong {
+    display:block;
+}
+
+.timeline-content small {
+    color:var(--muted-text);
+}
+
+.citizen-actions {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-top:30px;
+}
+
+.citizen-card {
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(15px);
+    color:var(--main-text);
+    text-decoration:none;
+    transition:transform .2s ease,background .2s ease;
+}
+
+.citizen-card:hover {
+    transform:translateY(-5px);
+    background:var(--secondary-bg);
+}
+
+.citizen-card .icon {
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.citizen-card h3 {
+    margin:8px 0;
+    color:var(--main-text);
+}
+
+.citizen-card p {
+    margin:0;
+    color:var(--muted-text);
+    font-size:14px;
+}
+
+.retention-note {
+    background:var(--secondary-bg);
+    border:1px solid var(--card-border);
+    padding:15px;
+    border-radius:12px;
+    margin-top:15px;
+    color:var(--muted-text);
+    font-size:13px;
+}
+
+.empty-message {
+    text-align:center;
+    padding:25px;
+    color:var(--muted-text);
+}
+
+@media (max-width:700px) {
+
+    .navbar {
+        padding:15px 18px;
+        flex-direction:column;
+        gap:12px;
+        position:relative;
+        z-index:999998;
+    }
+
+    .nav-links {
+        justify-content:center;
+        z-index:999999;
+    }
+
+    .more-menu-container {
+        margin-top:5px;
+        z-index:999999 !important;
+    }
+
+    .more-menu {
+        position:fixed !important;
+        top:70px !important;
+        right:15px !important;
+        width:230px;
+        z-index:999999 !important;
+    }
+
+    .container {
+        width:92%;
+    }
+
+    .report-header {
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        👁️ CivicEye AI
+    </div>
+
+    <div class="nav-links">
+
+        <a href="./index.html" data-i18n="home">
+            🏠 Home
+        </a>
+
+        <a href="./notifications.html" class="notification-link">
+
+            <span data-i18n="notifications">
+                🔔 Notifications
+            </span>
+
+            <span id="notificationBadge" class="notification-badge">
+                0
+            </span>
+
+        </a>
+
+        <div class="more-menu-container">
+
+            <button
+                type="button"
+                class="more-menu-button"
+                id="moreMenuButton"
+                aria-label="More"
+                aria-expanded="false">
+
+                ⋮
+
+            </button>
+
+            <div class="more-menu" id="moreMenu">
+
+                <a href="./profile.html" data-menu-text="profile">
+                    👤 Profile
+                </a>
+
+                <a href="./settings.html" data-menu-text="settings">
+                    ⚙️ Settings
+                </a>
+
+                <a href="./privacy.html" data-menu-text="privacy">
+                    🔒 Privacy
+                </a>
+
+                <button
+                    type="button"
+                    onclick="showHelp()"
+                    data-menu-text="help">
+
+                    ❓ Help & Support
+
+                </button>
+
+                <button
+                    type="button"
+                    onclick="showAbout()"
+                    data-menu-text="about">
+
+                    ℹ️ About CivicEye AI
+
+                </button>
+
+                <a
+                    href="./login.html"
+                    class="logout-item"
+                    data-menu-text="logout">
+
+                    🚪 Logout
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="header">
+
+        <h1 data-i18n="portalTitle">
+            👤 CivicEye AI Citizen Portal
+        </h1>
+
+        <p data-i18n="portalSubtitle">
+            Report, track and monitor public issues in your area.
+        </p>
+
+    </div>
+
+
+    <section class="reports-section">
+
+        <h2 data-i18n="myReports">
+            📍 My Reports
+        </h2>
+
+        <div id="reportsContainer">
+
+            <div
+                class="empty-message"
+                data-i18n="loadingReports">
+
+                Loading your reports...
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div class="citizen-actions">
+
+        <a href="./report.html" class="citizen-card">
+
+            <div class="icon">
+                📸
+            </div>
+
+            <h3 data-i18n="reportNewIssue">
+                Report New Issue
+            </h3>
+
+            <p data-i18n="reportNewIssueDesc">
+                Upload images and report problems in your area.
+            </p>
+
+        </a>
+
+
+        <a href="./track.html" class="citizen-card">
+
+            <div class="icon">
+                📍
+            </div>
+
+            <h3 data-i18n="trackIssue">
+                Track Issue
+            </h3>
+
+            <p data-i18n="trackIssueDesc">
+                Check your complaint status and updates.
+            </p>
+
+        </a>
+
+
+        <a href="./profile.html" class="citizen-card">
+
+            <div class="icon">
+                👤
+            </div>
+
+            <h3 data-i18n="myProfile">
+                My Profile
+            </h3>
+
+            <p data-i18n="myProfileDesc">
+                View your citizen account and report statistics.
+            </p>
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<div
+    class="civic-modal"
+    id="helpModal"
+    onclick="closeModalOutside(event)">
+
+    <div class="civic-modal-box">
+
+        <button
+            class="modal-close"
+            type="button"
+            onclick="closeModal()">
+
+            ×
+
+        </button>
+
+        <h2 data-i18n="helpTitle">
+            ❓ Help & Support
+        </h2>
+
+        <p data-i18n="helpIntro">
+            Need help using CivicEye AI?
+        </p>
+
+        <p data-i18n="helpFeatures">
+            You can report public issues, track your complaint status,
+            receive notifications and monitor updates through the Citizen Portal.
+        </p>
+
+        <p data-i18n="helpInternet">
+            If you experience a problem, please check your internet
+            connection and try again.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div
+    class="civic-modal"
+    id="aboutModal"
+    onclick="closeModalOutside(event)">
+
+    <div class="civic-modal-box">
+
+        <button
+            class="modal-close"
+            type="button"
+            onclick="closeModal()">
+
+            ×
+
+        </button>
+
+        <h2 data-i18n="aboutTitle">
+            ℹ️ About CivicEye AI
+        </h2>
+
+        <p data-i18n="aboutIntro">
+            CivicEye AI is an AI-assisted platform designed
+            to help citizens report and track public issues
+            more easily.
+        </p>
+
+        <p data-i18n="aboutFeatures">
+            The system can identify reported issues,
+            recommend relevant authorities, detect possible
+            duplicate complaints and provide status notifications.
+        </p>
+
+        <p data-i18n="aboutSriLanka">
+            Built to support smarter and more responsive
+            communities in Sri Lanka. 🇱🇰
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   BACKEND
+===================================================== */
+
+const BACKEND_URL =
+    "https://civiceye-backend-production-eac6.up.railway.app";
+
+const SOLVED_RETENTION_DAYS = 14;
+
+const SOLVED_RETENTION_MS =
+    SOLVED_RETENTION_DAYS *
+    24 *
+    60 *
+    60 *
+    1000;
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+function applySavedTheme() {
+
+    const savedTheme =
+        localStorage.getItem("civicEyeTheme") ||
+        "default";
+
+    document.body.classList.remove(
+        "theme-light",
+        "theme-dark"
+    );
+
+    if (savedTheme === "light") {
+
+        document.body.classList.add("theme-light");
+
+    }
+
+    if (savedTheme === "dark") {
+
+        document.body.classList.add("theme-dark");
+
+    }
+}
+
+applySavedTheme();
+
+
+/* =====================================================
+   LANGUAGE TRANSLATIONS
+===================================================== */
+
+const citizenTranslations = {
+
+    en: {
+
+        portalTitle:
+            "👤 CivicEye AI Citizen Portal",
+
+        portalSubtitle:
+            "Report, track and monitor public issues in your area.",
+
+        home:
+            "🏠 Home",
+
+        notifications:
+            "🔔 Notifications",
+
+        myReports:
+            "📍 My Reports",
+
+        loadingReports:
+            "Loading your reports...",
+
+        noReports:
+            "📭 No reports found.",
+
+        startReporting:
+            "Start by reporting a public issue.",
+
+        unableReports:
+            "⚠️ Unable to load your reports.",
+
+        reportNewIssue:
+            "Report New Issue",
+
+        reportNewIssueDesc:
+            "Upload images and report problems in your area.",
+
+        trackIssue:
+            "Track Issue",
+
+        trackIssueDesc:
+            "Check your complaint status and updates.",
+
+        myProfile:
+            "My Profile",
+
+        myProfileDesc:
+            "View your citizen account and report statistics.",
+
+        reportId:
+            "Report ID",
+
+        location:
+            "📍 Location",
+
+        priority:
+            "⚠️ Priority",
+
+        authority:
+            "🏛️ Authority",
+
+        description:
+            "Description",
+
+        reportSubmitted:
+            "Report Submitted",
+
+        reportSubmittedDesc:
+            "Your complaint was successfully submitted.",
+
+        aiAnalysisCompleted:
+            "AI Analysis Completed",
+
+        aiAnalysisCompletedDesc:
+            "CivicEye AI analyzed the reported issue.",
+
+        authorityReviewing:
+            "Authority Reviewing",
+
+        authorityReviewingDesc:
+            "The relevant authority is reviewing the issue.",
+
+        issueResolved:
+            "Issue Resolved",
+
+        issueResolvedDesc:
+            "The reported issue has been marked as solved.",
+
+        retentionNote:
+            "🗑️ This solved report will be automatically removed after 14 days.",
+
+        pending:
+            "Pending",
+
+        processing:
+            "Processing",
+
+        solved:
+            "Solved",
+
+        publicIssue:
+            "Public Issue",
+
+        locationUnavailable:
+            "Location not available",
+
+        noDescription:
+            "No description provided.",
+
+        normal:
+            "Normal",
+
+        relevantAuthority:
+            "Relevant Authority",
+
+        helpTitle:
+            "❓ Help & Support",
+
+        helpIntro:
+            "Need help using CivicEye AI?",
+
+        helpFeatures:
+            "You can report public issues, track your complaint status, receive notifications and monitor updates through the Citizen Portal.",
+
+        helpInternet:
+            "If you experience a problem, please check your internet connection and try again.",
+
+        aboutTitle:
+            "ℹ️ About CivicEye AI",
+
+        aboutIntro:
+            "CivicEye AI is an AI-assisted platform designed to help citizens report and track public issues more easily.",
+
+        aboutFeatures:
+            "The system can identify reported issues, recommend relevant authorities, detect possible duplicate complaints and provide status notifications.",
+
+        aboutSriLanka:
+            "Built to support smarter and more responsive communities in Sri Lanka. 🇱🇰"
+
+    },
+
+
+    ta: {
+
+        portalTitle:
+            "👤 CivicEye AI குடிமக்கள் தளம்",
+
+        portalSubtitle:
+            "உங்கள் பகுதியில் உள்ள பொது பிரச்சினைகளைப் புகாரளித்து, கண்காணித்து, நிலையை அறியுங்கள்.",
+
+        home:
+            "🏠 முகப்பு",
+
+        notifications:
+            "🔔 அறிவிப்புகள்",
+
+        myReports:
+            "📍 எனது புகார்கள்",
+
+        loadingReports:
+            "உங்கள் புகார்களை ஏற்றுகிறது...",
+
+        noReports:
+            "📭 புகார்கள் எதுவும் இல்லை.",
+
+        startReporting:
+            "பொது பிரச்சினையைப் புகாரளிப்பதன் மூலம் தொடங்குங்கள்.",
+
+        unableReports:
+            "⚠️ உங்கள் புகார்களை ஏற்ற முடியவில்லை.",
+
+        reportNewIssue:
+            "புதிய பிரச்சினையைப் புகாரளிக்கவும்",
+
+        reportNewIssueDesc:
+            "படங்களைப் பதிவேற்றி உங்கள் பகுதியில் உள்ள பிரச்சினைகளைப் புகாரளிக்கவும்.",
+
+        trackIssue:
+            "புகாரைக் கண்காணிக்கவும்",
+
+        trackIssueDesc:
+            "உங்கள் புகாரின் நிலை மற்றும் புதுப்பிப்புகளைப் பார்க்கவும்.",
+
+        myProfile:
+            "எனது சுயவிவரம்",
+
+        myProfileDesc:
+            "உங்கள் குடிமக்கள் கணக்கு மற்றும் புகார் புள்ளிவிவரங்களைப் பார்க்கவும்.",
+
+        reportId:
+            "புகார் ID",
+
+        location:
+            "📍 இடம்",
+
+        priority:
+            "⚠️ முன்னுரிமை",
+
+        authority:
+            "🏛️ அதிகாரம்",
+
+        description:
+            "விளக்கம்",
+
+        reportSubmitted:
+            "புகார் சமர்ப்பிக்கப்பட்டது",
+
+        reportSubmittedDesc:
+            "உங்கள் புகார் வெற்றிகரமாக சமர்ப்பிக்கப்பட்டது.",
+
+        aiAnalysisCompleted:
+            "AI பகுப்பாய்வு முடிந்தது",
+
+        aiAnalysisCompletedDesc:
+            "CivicEye AI புகாரளிக்கப்பட்ட பிரச்சினையை பகுப்பாய்வு செய்தது.",
+
+        authorityReviewing:
+            "அதிகாரம் பரிசீலிக்கிறது",
+
+        authorityReviewingDesc:
+            "சம்பந்தப்பட்ட அதிகாரம் பிரச்சினையைப் பரிசீலித்து வருகிறது.",
+
+        issueResolved:
+            "பிரச்சினை தீர்க்கப்பட்டது",
+
+        issueResolvedDesc:
+            "புகாரளிக்கப்பட்ட பிரச்சினை தீர்க்கப்பட்டதாகக் குறிக்கப்பட்டுள்ளது.",
+
+        retentionNote:
+            "🗑️ இந்த தீர்க்கப்பட்ட புகார் 14 நாட்களுக்குப் பிறகு தானாகவே நீக்கப்படும்.",
+
+        pending:
+            "நிலுவையில்",
+
+        processing:
+            "செயலாக்கத்தில்",
+
+        solved:
+            "தீர்க்கப்பட்டது",
+
+        publicIssue:
+            "பொது பிரச்சினை",
+
+        locationUnavailable:
+            "இடம் கிடைக்கவில்லை",
+
+        noDescription:
+            "விளக்கம் வழங்கப்படவில்லை.",
+
+        normal:
+            "சாதாரணம்",
+
+        relevantAuthority:
+            "சம்பந்தப்பட்ட அதிகாரம்",
+
+        helpTitle:
+            "❓ உதவி மற்றும் ஆதரவு",
+
+        helpIntro:
+            "CivicEye AI-ஐப் பயன்படுத்த உதவி தேவையா?",
+
+        helpFeatures:
+            "Citizen Portal மூலம் பொது பிரச்சினைகளைப் புகாரளிக்கலாம், உங்கள் புகாரின் நிலையை கண்காணிக்கலாம், அறிவிப்புகளைப் பெறலாம் மற்றும் புதுப்பிப்புகளைப் பார்க்கலாம்.",
+
+        helpInternet:
+            "ஏதேனும் பிரச்சினை ஏற்பட்டால், உங்கள் இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
+
+        aboutTitle:
+            "ℹ️ CivicEye AI பற்றி",
+
+        aboutIntro:
+            "CivicEye AI என்பது குடிமக்கள் பொது பிரச்சினைகளை எளிதாகப் புகாரளித்து கண்காணிக்க உதவும் AI உதவியுடனான தளமாகும்.",
+
+        aboutFeatures:
+            "இந்த அமைப்பு புகாரளிக்கப்பட்ட பிரச்சினைகளை அடையாளம் காணவும், தொடர்புடைய அதிகாரங்களைப் பரிந்துரைக்கவும், சாத்தியமான நகல் புகார்களைக் கண்டறியவும் மற்றும் நிலை அறிவிப்புகளை வழங்கவும் முடியும்.",
+
+        aboutSriLanka:
+            "இலங்கையில் புத்திசாலித்தனமான மற்றும் விரைவாக செயல்படும் சமூகங்களை ஆதரிப்பதற்காக உருவாக்கப்பட்டது. 🇱🇰"
+
+    },
+
+
+    si: {
+
+        portalTitle:
+            "👤 CivicEye AI පුරවැසි ද්වාරය",
+
+        portalSubtitle:
+            "ඔබේ ප්‍රදේශයේ පොදු ගැටලු වාර්තා කර, නිරීක්ෂණය කර තත්ත්වය පරීක්ෂා කරන්න.",
+
+        home:
+            "🏠 මුල් පිටුව",
+
+        notifications:
+            "🔔 දැනුම්දීම්",
+
+        myReports:
+            "📍 මගේ වාර්තා",
+
+        loadingReports:
+            "ඔබගේ වාර්තා පූරණය කරමින්...",
+
+        noReports:
+            "📭 වාර්තා කිසිවක් හමු නොවීය.",
+
+        startReporting:
+            "පොදු ගැටලුවක් වාර්තා කිරීමෙන් ආරම්භ කරන්න.",
+
+        unableReports:
+            "⚠️ ඔබගේ වාර්තා පූරණය කළ නොහැක.",
+
+        reportNewIssue:
+            "නව ගැටලුවක් වාර්තා කරන්න",
+
+        reportNewIssueDesc:
+            "පින්තූර උඩුගත කර ඔබේ ප්‍රදේශයේ ගැටලු වාර්තා කරන්න.",
+
+        trackIssue:
+            "ගැටලුව නිරීක්ෂණය කරන්න",
+
+        trackIssueDesc:
+            "ඔබගේ පැමිණිල්ලේ තත්ත්වය සහ යාවත්කාලීන පරීක්ෂා කරන්න.",
+
+        myProfile:
+            "මගේ පැතිකඩ",
+
+        myProfileDesc:
+            "ඔබගේ පුරවැසි ගිණුම සහ වාර්තා සංඛ්‍යාලේඛන බලන්න.",
+
+        reportId:
+            "වාර්තා ID",
+
+        location:
+            "📍 ස්ථානය",
+
+        priority:
+            "⚠️ ප්‍රමුඛතාව",
+
+        authority:
+            "🏛️ අධිකාරිය",
+
+        description:
+            "විස්තරය",
+
+        reportSubmitted:
+            "වාර්තාව ඉදිරිපත් කරන ලදී",
+
+        reportSubmittedDesc:
+            "ඔබගේ පැමිණිල්ල සාර්ථකව ඉදිරිපත් කරන ලදී.",
+
+        aiAnalysisCompleted:
+            "AI විශ්ලේෂණය සම්පූර්ණයි",
+
+        aiAnalysisCompletedDesc:
+            "CivicEye AI විසින් වාර්තා කළ ගැටලුව විශ්ලේෂණය කරන ලදී.",
+
+        authorityReviewing:
+            "අධිකාරිය සමාලෝචනය කරමින්",
+
+        authorityReviewingDesc:
+            "අදාළ අධිකාරිය ගැටලුව සමාලෝචනය කරමින් සිටී.",
+
+        issueResolved:
+            "ගැටලුව විසඳා ඇත",
+
+        issueResolvedDesc:
+            "වාර්තා කළ ගැටලුව විසඳා ඇති බවට සලකුණු කර ඇත.",
+
+        retentionNote:
+            "🗑️ මෙම විසඳූ වාර්තාව දින 14කට පසු ස්වයංක්‍රීයව ඉවත් කරනු ලැබේ.",
+
+        pending:
+            "පොරොත්තු",
+
+        processing:
+            "සැකසෙමින්",
+
+        solved:
+            "විසඳා ඇත",
+
+        publicIssue:
+            "පොදු ගැටලුව",
+
+        locationUnavailable:
+            "ස්ථානය ලබා ගත නොහැක",
+
+        noDescription:
+            "විස්තරයක් ලබා දී නොමැත.",
+
+        normal:
+            "සාමාන්‍ය",
+
+        relevantAuthority:
+            "අදාළ අධිකාරිය",
+
+        helpTitle:
+            "❓ උදව් සහ සහාය",
+
+        helpIntro:
+            "CivicEye AI භාවිතා කිරීමට උදව් අවශ්‍යද?",
+
+        helpFeatures:
+            "Citizen Portal හරහා පොදු ගැටලු වාර්තා කිරීමට, ඔබගේ පැමිණිල්ලේ තත්ත්වය නිරීක්ෂණය කිරීමට, දැනුම්දීම් ලබා ගැනීමට සහ යාවත්කාලීන බැලීමට හැකිය.",
+
+        helpInternet:
+            "ගැටලුවක් ඇති වුවහොත්, ඔබගේ අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න.",
+
+        aboutTitle:
+            "ℹ️ CivicEye AI ගැන",
+
+        aboutIntro:
+            "CivicEye AI යනු පුරවැසියන්ට පොදු ගැටලු පහසුවෙන් වාර්තා කිරීමට සහ නිරීක්ෂණය කිරීමට උපකාර කරන AI සහාය සහිත වේදිකාවකි.",
+
+        aboutFeatures:
+            "මෙම පද්ධතියට වාර්තා කළ ගැටලු හඳුනා ගැනීමට, අදාළ අධිකාරීන් නිර්දේශ කිරීමට, හැකි අනුපිටපත් පැමිණිලි හඳුනා ගැනීමට සහ තත්ත්ව දැනුම්දීම් ලබා දීමට හැකිය.",
+
+        aboutSriLanka:
+            "ශ්‍රී ලංකාවේ වඩාත් බුද්ධිමත් සහ ප්‍රතිචාරාත්මක ප්‍රජාවන්ට සහාය වීම සඳහා නිර්මාණය කර ඇත. 🇱🇰"
+
+    }
+
+};
+
+
+/* =====================================================
+   MENU TRANSLATIONS
+===================================================== */
+
+const citizenMenuTranslations = {
+
+    en: {
+        profile:"👤 Profile",
+        settings:"⚙️ Settings",
+        privacy:"🔒 Privacy",
+        help:"❓ Help & Support",
+        about:"ℹ️ About CivicEye AI",
+        logout:"🚪 Logout"
+    },
+
+    ta: {
+        profile:"👤 சுயவிவரம்",
+        settings:"⚙️ அமைப்புகள்",
+        privacy:"🔒 தனியுரிமை",
+        help:"❓ உதவி மற்றும் ஆதரவு",
+        about:"ℹ️ CivicEye AI பற்றி",
+        logout:"🚪 வெளியேறு"
+    },
+
+    si: {
+        profile:"👤 පැතිකඩ",
+        settings:"⚙️ සැකසුම්",
+        privacy:"🔒 පෞද්ගලිකත්වය",
+        help:"❓ උදව් සහ සහාය",
+        about:"ℹ️ CivicEye AI ගැන",
+        logout:"🚪 ඉවත් වන්න"
+    }
+
+};
+
+
+/* =====================================================
+   CURRENT LANGUAGE
+===================================================== */
+
+let currentCitizenLanguage =
+    localStorage.getItem("civicEyeLanguage") || "en";
+
+if (!citizenTranslations[currentCitizenLanguage]) {
+    currentCitizenLanguage = "en";
+}
+
+
+/* =====================================================
+   GET TRANSLATION
+===================================================== */
+
+function t(key) {
+
+    return (
+        citizenTranslations[currentCitizenLanguage][key] ||
+        citizenTranslations.en[key] ||
+        key
+    );
+}
+
+
+/* =====================================================
+   APPLY LANGUAGE
+===================================================== */
+
+function applyCitizenLanguage() {
+
+    document.documentElement.lang =
+        currentCitizenLanguage === "ta"
+            ? "ta"
+            : currentCitizenLanguage === "si"
+                ? "si"
+                : "en";
+
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(function(element) {
+
+            const key =
+                element.getAttribute("data-i18n");
+
+            element.textContent =
+                t(key);
+
+        });
+
+
+    const menuLanguage =
+        citizenMenuTranslations[currentCitizenLanguage] ||
+        citizenMenuTranslations.en;
+
+
+    document
+        .querySelectorAll("[data-menu-text]")
+        .forEach(function(element) {
+
+            const key =
+                element.getAttribute("data-menu-text");
+
+            if (menuLanguage[key]) {
+
+                element.textContent =
+                    menuLanguage[key];
+
+            }
+
+        });
+
+}
+
+
+/* =====================================================
+   THREE DOT MENU
+===================================================== */
+
+const moreMenuButton =
+    document.getElementById("moreMenuButton");
+
+const moreMenu =
+    document.getElementById("moreMenu");
+
+
+if (moreMenuButton && moreMenu) {
+
+    moreMenuButton.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+            const isOpen =
+                moreMenu.classList.toggle("show");
+
+            moreMenuButton.setAttribute(
+                "aria-expanded",
+                isOpen ? "true" : "false"
+            );
+
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                !moreMenu.contains(event.target) &&
+                !moreMenuButton.contains(event.target)
+            ) {
+
+                moreMenu.classList.remove("show");
+
+                moreMenuButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   HELP / ABOUT MODALS
+===================================================== */
+
+function showHelp() {
+
+    if (moreMenu) {
+
+        moreMenu.classList.remove("show");
+
+    }
+
+    if (moreMenuButton) {
+
+        moreMenuButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+    const modal =
+        document.getElementById("helpModal");
+
+    if (modal) {
+
+        modal.classList.add("show");
+
+    }
+
+}
+
+
+function showAbout() {
+
+    if (moreMenu) {
+
+        moreMenu.classList.remove("show");
+
+    }
+
+    if (moreMenuButton) {
+
+        moreMenuButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+    const modal =
+        document.getElementById("aboutModal");
+
+    if (modal) {
+
+        modal.classList.add("show");
+
+    }
+
+}
+
+
+function closeModal() {
+
+    document
+        .querySelectorAll(".civic-modal")
+        .forEach(function(modal) {
+
+            modal.classList.remove("show");
+
+        });
+
+}
+
+
+function closeModalOutside(event) {
+
+    if (
+        event.target.classList.contains("civic-modal")
+    ) {
+
+        closeModal();
+
+    }
+
+}
+
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            closeModal();
+
+            if (moreMenu) {
+
+                moreMenu.classList.remove("show");
+
+            }
+
+            if (moreMenuButton) {
+
+                moreMenuButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SOLVED REPORT EXPIRY
+===================================================== */
+
+function isSolvedReportExpired(report) {
+
+    if (
+        String(report.status || "").toLowerCase() !==
+        "solved"
+    ) {
+
+        return false;
+
+    }
+
+    const solvedDate =
+        report.solvedAt ||
+        report.updatedAt ||
+        report.createdAt;
+
+    if (!solvedDate) {
+
+        return false;
+
+    }
+
+    const solvedTime =
+        new Date(solvedDate).getTime();
+
+    if (Number.isNaN(solvedTime)) {
+
+        return false;
+
+    }
+
+    return (
+        Date.now() - solvedTime >
+        SOLVED_RETENTION_MS
+    );
+
+}
+
+
+/* =====================================================
+   NOTIFICATION COUNT
+===================================================== */
+
+async function loadNotificationCount() {
+
+    const badge =
+        document.getElementById("notificationBadge");
+
+    if (!badge) {
+
+        return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/notifications`,
+                {
+                    method:"GET",
+                    headers:{
+                        "Accept":"application/json"
+                    },
+                    cache:"no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const notifications =
+            Array.isArray(data)
+                ? data
+                : Array.isArray(data.notifications)
+                    ? data.notifications
+                    : [];
+
+
+        const unreadCount =
+            notifications.filter(
+                notification =>
+                    notification &&
+                    (
+                        notification.read === false ||
+                        notification.read === 0 ||
+                        notification.read === "false"
+                    )
+            ).length;
+
+
+        if (unreadCount > 0) {
+
+            badge.textContent =
+                unreadCount > 99
+                    ? "99+"
+                    : unreadCount;
+
+            badge.style.display =
+                "inline-flex";
+
+        } else {
+
+            badge.textContent = "0";
+
+            badge.style.display = "none";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Notification count error:",
+            error
+        );
+
+        badge.style.display = "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD CITIZEN REPORTS
+===================================================== */
+
+async function loadCitizenReports() {
+
+    const container =
+        document.getElementById("reportsContainer");
+
+    if (!container) {
+
+        return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/reports`,
+                {
+                    method:"GET",
+                    headers:{
+                        "Accept":"application/json"
+                    },
+                    cache:"no-store"
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Reports request failed: HTTP ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const reports =
+            Array.isArray(data)
+                ? data
+                : Array.isArray(data.reports)
+                    ? data.reports
+                    : [];
+
+
+        const activeReports =
+            reports.filter(
+                report =>
+                    !isSolvedReportExpired(report)
+            );
+
+
+        container.innerHTML = "";
+
+
+        if (activeReports.length === 0) {
+
+            container.innerHTML = `
+
+                <div class="empty-message">
+
+                    ${t("noReports")}
+
+                    <br><br>
+
+                    ${t("startReporting")}
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        activeReports.forEach(function(report) {
+
+            renderCitizenReport(
+                report,
+                container
+            );
+
+        });
+
+
+    } catch (error) {
+
+        console.error(
+            "Reports error:",
+            error
+        );
+
+        container.innerHTML = `
+
+            <div class="empty-message">
+
+                ${t("unableReports")}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER REPORT
+===================================================== */
+
+function renderCitizenReport(
+    report,
+    container
+) {
+
+    const card =
+        document.createElement("div");
+
+    card.className =
+        "report-card";
+
+
+    const issue =
+        report.issue ||
+        report.category ||
+        t("publicIssue");
+
+
+    const status =
+        String(
+            report.status ||
+            "pending"
+        ).toLowerCase();
+
+
+    const location =
+        report.location ||
+        report.address ||
+        t("locationUnavailable");
+
+
+    const description =
+        report.description ||
+        t("noDescription");
+
+
+    const priority =
+        report.priority ||
+        t("normal");
+
+
+    const authority =
+        report.recommendedAuthority ||
+        report.authority ||
+        t("relevantAuthority");
+
+
+    let statusClass =
+        "status-pending";
+
+
+    if (status === "processing") {
+
+        statusClass =
+            "status-processing";
+
+    }
+
+
+    if (status === "solved") {
+
+        statusClass =
+            "status-solved";
+
+    }
+
+
+    card.innerHTML = `
+
+        <div class="report-header">
+
+            <div class="report-title">
+
+                ${getIssueIcon(issue)}
+
+                ${escapeHTML(issue)}
+
+            </div>
+
+            <span class="status-badge ${statusClass}">
+
+                ${getStatusDisplay(status)}
+
+            </span>
+
+        </div>
+
+
+        <div class="report-info">
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    ${t("reportId")}
+                </div>
+
+                <div class="info-value">
+
+                    ${escapeHTML(
+                        String(
+                            report.id ||
+                            report.reportId ||
+                            "N/A"
+                        )
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    ${t("location")}
+                </div>
+
+                <div class="info-value">
+
+                    ${escapeHTML(location)}
+
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    ${t("priority")}
+                </div>
+
+                <div class="info-value">
+
+                    ${escapeHTML(priority)}
+
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="info-label">
+                    ${t("authority")}
+                </div>
+
+                <div class="info-value">
+
+                    ${escapeHTML(authority)}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="description">
+
+            <strong>
+                ${t("description")}
+            </strong>
+
+            <br><br>
+
+            ${escapeHTML(description)}
+
+        </div>
+
+
+        <div class="timeline">
+
+            ${createTimeline(status)}
+
+        </div>
+
+
+        ${
+            status === "solved"
+                ? `
+
+                    <div class="retention-note">
+
+                        ${t("retentionNote")}
+
+                    </div>
+
+                  `
+                : ""
+        }
+
+    `;
+
+
+    container.appendChild(card);
+
+}
+
+
+/* =====================================================
+   TIMELINE
+===================================================== */
+
+function createTimeline(status) {
+
+    const steps = [
+
+        {
+            title:t("reportSubmitted"),
+
+            description:t("reportSubmittedDesc")
+        },
+
+        {
+            title:t("aiAnalysisCompleted"),
+
+            description:t("aiAnalysisCompletedDesc")
+        },
+
+        {
+            title:t("authorityReviewing"),
+
+            description:t("authorityReviewingDesc")
+        },
+
+        {
+            title:t("issueResolved"),
+
+            description:t("issueResolvedDesc")
+        }
+
+    ];
+
+
+    const statusOrder = {
+
+        pending:0,
+
+        processing:2,
+
+        solved:3
+
+    };
+
+
+    const currentStep =
+        statusOrder[status] ?? 0;
+
+
+    return steps
+        .map(function(step,index) {
+
+            const completed =
+                index <= currentStep;
+
+
+            return `
+
+                <div class="timeline-item">
+
+                    <div
+                        class="timeline-dot ${
+                            completed
+                                ? "completed"
+                                : ""
+                        }">
+                    </div>
+
+                    <div class="timeline-content">
+
+                        <strong>
+                            ${step.title}
+                        </strong>
+
+                        <small>
+                            ${step.description}
+                        </small>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
+
+}
+
+
+/* =====================================================
+   STATUS DISPLAY
+===================================================== */
+
+function getStatusDisplay(status) {
+
+    if (status === "processing") {
+
+        return t("processing");
+
+    }
+
+    if (status === "solved") {
+
+        return t("solved");
+
+    }
+
+    return t("pending");
+
+}
+
+
+/* =====================================================
+   ISSUE ICON
+===================================================== */
+
+function getIssueIcon(issue) {
+
+    const value =
+        String(issue).toLowerCase();
+
+
+    if (value.includes("road")) {
+
+        return "🛣️";
+
+    }
+
+
+    if (
+        value.includes("garbage") ||
+        value.includes("waste")
+    ) {
+
+        return "🗑️";
+
+    }
+
+
+    if (
+        value.includes("water") ||
+        value.includes("leak")
+    ) {
+
+        return "💧";
+
+    }
+
+
+    if (
+        value.includes("street") ||
+        value.includes("light")
+    ) {
+
+        return "💡";
+
+    }
+
+
+    if (value.includes("drain")) {
+
+        return "🚰";
+
+    }
+
+
+    return "📋";
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   INITIAL LANGUAGE
+===================================================== */
+
+applyCitizenLanguage();
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+loadNotificationCount();
+
+loadCitizenReports();
+
+
+/* =====================================================
+   AUTO REFRESH
+===================================================== */
+
+setInterval(
+    loadNotificationCount,
+    10000
+);
+
+setInterval(
+    loadCitizenReports,
+    15000
+);
+
+
+/* =====================================================
+   UPDATE LANGUAGE IF SETTINGS CHANGES
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function(event) {
+
+        if (event.key === "civicEyeLanguage") {
+
+            currentCitizenLanguage =
+                event.newValue || "en";
+
+            if (
+                !citizenTranslations[
+                    currentCitizenLanguage
+                ]
+            ) {
+
+                currentCitizenLanguage = "en";
+
+            }
+
+            applyCitizenLanguage();
+
+            loadCitizenReports();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

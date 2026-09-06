@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CivicEye AI - Track Issue</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* =====================================================
+   THEME VARIABLES
+===================================================== */
+
+:root {
+    --track-text: #ffffff;
+    --track-subtext: rgba(255,255,255,0.82);
+    --track-card-bg: rgba(255,255,255,0.16);
+    --track-border: rgba(255,255,255,0.25);
+    --track-button-bg: #ffffff;
+    --track-button-text: #222222;
+    --track-button-hover: #f0f0f0;
+}
+
+
+/* =====================================================
+   LIGHT THEME
+===================================================== */
+
+body.theme-light {
+
+    --track-text: #222222;
+    --track-subtext: rgba(34,34,34,0.75);
+    --track-card-bg: rgba(255,255,255,0.95);
+    --track-border: rgba(0,0,0,0.12);
+    --track-button-bg: #222222;
+    --track-button-text: #ffffff;
+    --track-button-hover: #000000;
+
+    background: #f5f7fa;
+}
+
+
+/* =====================================================
+   DARK THEME
+===================================================== */
+
+body.theme-dark {
+
+    --track-text: #ffffff;
+    --track-subtext: rgba(255,255,255,0.75);
+    --track-card-bg: rgba(20,20,20,0.95);
+    --track-border: rgba(255,255,255,0.15);
+    --track-button-bg: #ffffff;
+    --track-button-text: #222222;
+    --track-button-hover: #eeeeee;
+
+    background: #101010;
+}
+
+
+/* =====================================================
+   MAIN TEXT
+===================================================== */
+
+.track-container {
+    color: var(--track-text);
+}
+
+.track-card {
+    color: var(--track-text);
+}
+
+.track-card p,
+.track-card span,
+.track-card small {
+    color: var(--track-subtext);
+}
+
+.track-card strong,
+.track-card h1,
+.track-card h2,
+.track-card h3,
+.track-card h4 {
+    color: var(--track-text);
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+body.theme-light .dashboard-nav,
+body.theme-light .dashboard-nav h2,
+body.theme-light .dashboard-nav a {
+    color: #222222 !important;
+}
+
+body.theme-dark .dashboard-nav,
+body.theme-dark .dashboard-nav h2,
+body.theme-dark .dashboard-nav a {
+    color: #ffffff !important;
+}
+
+
+/* =====================================================
+   THREE DOT MENU
+===================================================== */
+
+.more-menu-container {
+    position: relative;
+    display: inline-block;
+}
+
+
+/* 3 DOT BUTTON */
+
+.more-menu-button {
+
+    width: 42px !important;
+    height: 42px !important;
+
+    padding: 0 !important;
+    margin: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border: none !important;
+    outline: none !important;
+
+    background: transparent !important;
+
+    color: inherit !important;
+
+    font-size: 24px !important;
+    line-height: 1 !important;
+
+    border-radius: 10px !important;
+
+    cursor: pointer !important;
+
+    transition: background 0.2s ease;
+}
+
+
+.more-menu-button:hover {
+    background: rgba(0,0,0,0.08) !important;
+}
+
+body.theme-dark .more-menu-button:hover {
+    background: rgba(255,255,255,0.10) !important;
+}
+
+
+/* =====================================================
+   MENU BOX
+===================================================== */
+
+.more-menu {
+
+    position: absolute;
+
+    top: calc(100% + 8px);
+
+    right: 0;
+
+    width: 210px;
+
+    padding: 8px;
+
+    background: rgba(255,255,255,0.98);
+
+    border: 1px solid rgba(0,0,0,0.10);
+
+    border-radius: 14px;
+
+    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+
+    z-index: 9999;
+
+    display: none;
+
+    box-sizing: border-box;
+}
+
+
+.more-menu.show {
+    display: block;
+}
+
+
+/* =====================================================
+   MENU ITEM ALIGNMENT
+===================================================== */
+
+.more-menu a,
+.more-menu button {
+
+    width: 100% !important;
+
+    box-sizing: border-box !important;
+
+    display: flex !important;
+
+    align-items: center !important;
+
+    margin: 0 !important;
+
+    padding: 12px 14px !important;
+
+    gap: 10px !important;
+
+    text-align: left !important;
+
+    justify-content: flex-start !important;
+
+    font-family: inherit !important;
+
+    font-size: 14px !important;
+
+    font-weight: 500 !important;
+
+    line-height: 1.2 !important;
+
+    border: none !important;
+
+    outline: none !important;
+
+    background: transparent !important;
+
+    appearance: none !important;
+
+    -webkit-appearance: none !important;
+
+    border-radius: 10px !important;
+
+    cursor: pointer !important;
+
+    min-height: 42px !important;
+
+    text-decoration: none !important;
+}
+
+
+.more-menu button {
+    color: inherit !important;
+}
+
+
+/* ICON ALIGNMENT */
+
+.more-menu a::first-letter,
+.more-menu button::first-letter {
+    font-size: 15px;
+}
+
+
+/* HOVER */
+
+.more-menu a:hover,
+.more-menu button:hover {
+    background: rgba(0,0,0,0.07) !important;
+}
+
+
+/* =====================================================
+   DARK MODE MENU
+===================================================== */
+
+body.theme-dark .more-menu {
+
+    background: rgba(25,25,35,0.98) !important;
+
+    border-color: rgba(255,255,255,0.12) !important;
+}
+
+
+body.theme-dark .more-menu a,
+body.theme-dark .more-menu button {
+
+    color: #ffffff !important;
+
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+
+body.theme-dark .more-menu a:hover,
+body.theme-dark .more-menu button:hover {
+    background: rgba(255,255,255,0.10) !important;
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.more-menu .menu-danger {
+    color: #e74c3c !important;
+}
+
+body.theme-dark .more-menu .menu-danger {
+    color: #ff6b6b !important;
+}
+
+
+/* =====================================================
+   ALL MAIN TRACK BUTTONS
+===================================================== */
+
+.track-card > button {
+
+    background: var(--track-button-bg) !important;
+
+    color: var(--track-button-text) !important;
+
+    border: none !important;
+
+    border-radius: 12px;
+
+    padding: 12px 22px;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.track-card > button span {
+    color: var(--track-button-text) !important;
+}
+
+
+.track-card > button:hover {
+
+    background: var(--track-button-hover) !important;
+
+    color: var(--track-button-text) !important;
+
+    transform: translateY(-2px);
+}
+
+
+.track-card > button:hover span {
+    color: var(--track-button-text) !important;
+}
+
+
+/* =====================================================
+   CITIZEN VERIFICATION BUTTONS
+===================================================== */
+
+.verification-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-top: 18px;
+}
+
+
+.verification-buttons button {
+
+    background: var(--track-button-bg) !important;
+
+    color: var(--track-button-text) !important;
+
+    border: none !important;
+
+    border-radius: 12px;
+
+    padding: 12px 18px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+
+.verification-buttons button span {
+    color: var(--track-button-text) !important;
+}
+
+
+.verification-buttons button:hover {
+
+    background: var(--track-button-hover) !important;
+
+    color: var(--track-button-text) !important;
+
+    transform: translateY(-2px);
+}
+
+
+.verification-buttons button:hover span {
+    color: var(--track-button-text) !important;
+}
+
+
+/* =====================================================
+   STATUS / VERIFICATION BOX
+===================================================== */
+
+.status-box,
+.verification-box {
+
+    background: var(--track-card-bg) !important;
+
+    border: 1px solid var(--track-border) !important;
+
+    color: var(--track-text);
+}
+
+
+.status-box h3,
+.verification-box h2 {
+    color: var(--track-text) !important;
+}
+
+
+.status-box p,
+.verification-box p {
+    color: var(--track-subtext) !important;
+}
+
+
+/* =====================================================
+   VERIFICATION RESULT
+===================================================== */
+
+.verification-success {
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    background: rgba(46,204,113,0.15);
+
+    color: #168a4a !important;
+
+    font-weight: 600;
+
+    line-height: 1.5;
+}
+
+
+.verification-warning {
+
+    margin-top: 18px;
+
+    padding: 14px;
+
+    border-radius: 12px;
+
+    background: rgba(243,156,18,0.15);
+
+    color: #a85f00 !important;
+
+    font-weight: 600;
+
+    line-height: 1.5;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:600px) {
+
+    .verification-buttons {
+        flex-direction: column;
+    }
+
+    .verification-buttons button {
+        width: 100%;
+    }
+
+    .track-card > button {
+        width: 100%;
+    }
+
+    .more-menu {
+        right: 0;
+        width: 205px;
+    }
+
+}
+
+/* =====================================================
+   MORE MENU - LIGHT MODE VISIBILITY FIX
+===================================================== */
+
+body.theme-light .more-menu,
+body:not(.theme-dark) .more-menu {
+    background: #ffffff !important;
+    color: #222222 !important;
+    border: 1px solid #dddddd !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+body.theme-light .more-menu a,
+body.theme-light .more-menu button,
+body:not(.theme-dark) .more-menu a,
+body:not(.theme-dark) .more-menu button {
+    color: #222222 !important;
+    -webkit-text-fill-color: #222222 !important;
+    background: transparent !important;
+}
+
+body.theme-light .more-menu a:hover,
+body.theme-light .more-menu button:hover,
+body:not(.theme-dark) .more-menu a:hover,
+body:not(.theme-dark) .more-menu button:hover {
+    background: #f1f1f1 !important;
+    color: #111111 !important;
+}
+
+/* Logout stays red */
+body.theme-light .more-menu .menu-danger,
+body:not(.theme-dark) .more-menu .menu-danger {
+    color: #e74c3c !important;
+    -webkit-text-fill-color: #e74c3c !important;
+}
+
+/* DARK MODE */
+body.theme-dark .more-menu {
+    background: rgba(25, 25, 35, 0.98) !important;
+    color: #ffffff !important;
+}
+
+body.theme-dark .more-menu a,
+body.theme-dark .more-menu button {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="dashboard-nav">
+
+    <h2>
+        👁️ CivicEye AI
+    </h2>
+
+    <div>
+
+        <a href="citizen.html">
+
+            🏠
+
+            <span data-i18n="citizenPortal">
+                Citizen Portal
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             THREE DOT MENU
+        ================================================== -->
+
+        <div class="more-menu-container">
+
+            <button
+                type="button"
+                class="more-menu-button"
+                aria-label="More menu"
+                aria-expanded="false"
+                onclick="toggleMoreMenu(event)"
+            >
+                ⋮
+            </button>
+
+
+            <div
+                class="more-menu"
+                id="moreMenu"
+            >
+
+                <a href="profile.html">
+                    👤
+                    <span>
+                        Profile
+                    </span>
+                </a>
+
+
+                <a href="settings.html">
+                    ⚙️
+                    <span>
+                        Settings
+                    </span>
+                </a>
+
+
+                <a href="privacy.html">
+                    🔒
+                    <span>
+                        Privacy
+                    </span>
+                </a>
+
+
+                <a href="help.html">
+                    ❓
+                    <span>
+                        Help &amp; Support
+                    </span>
+                </a>
+
+
+                <a href="about.html">
+                    ℹ️
+                    <span>
+                        About CivicEye AI
+                    </span>
+                </a>
+
+
+                <button
+                    type="button"
+                    class="menu-danger"
+                    onclick="logout()"
+                >
+                    🚪
+                    <span>
+                        Logout
+                    </span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     TRACK CONTAINER
+===================================================== -->
+
+<div class="track-container">
+
+    <div class="track-card">
+
+
+        <h1 data-i18n="pageTitle">
+            🔍 Track Your Issue
+        </h1>
+
+
+        <p data-i18n="pageDescription">
+            Check your complaint progress with CivicEye AI 🇱🇰
+        </p>
+
+
+
+        <!-- =================================================
+             LOADING
+        ================================================== -->
+
+        <div id="loadingReport">
+
+            <h3 data-i18n="loadingReport">
+                📋 Loading Report...
+            </h3>
+
+
+            <p data-i18n="loading">
+                🔄 Loading your report...
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             REPORT CONTENT
+        ================================================== -->
+
+        <div
+            id="reportContent"
+            style="display:none;"
+        >
+
+
+            <!-- REPORT DETAILS -->
+
+            <div class="report-details">
+
+                <h2 data-i18n="reportDetails">
+                    📋 Report Details
+                </h2>
+
+
+                <p>
+
+                    <strong data-i18n="issue">
+                        Issue
+                    </strong>:
+
+                    <span id="issue">
+                    </span>
+
+                </p>
+
+
+                <p>
+
+                    <strong data-i18n="location">
+                        Location
+                    </strong>:
+
+                    <span id="location">
+                    </span>
+
+                </p>
+
+
+                <p>
+
+                    <strong data-i18n="confidence">
+                        AI Confidence
+                    </strong>:
+
+                    <span id="confidence">
+                    </span>
+
+                </p>
+
+
+                <p>
+
+                    <strong data-i18n="currentStatus">
+                        Current Status
+                    </strong>:
+
+                    <span id="currentStatus">
+                    </span>
+
+                </p>
+
+
+                <p>
+
+                    <strong data-i18n="submittedDate">
+                        Report Submitted
+                    </strong>:
+
+                    <span id="submittedDate">
+                    </span>
+
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 STATUS TIMELINE
+            ================================================== -->
+
+            <div class="status-timeline">
+
+
+                <!-- SUBMITTED -->
+
+                <div class="status-step completed">
+
+                    <div class="status-icon">
+                        📤
+                    </div>
+
+
+                    <div>
+
+                        <h3 data-i18n="submitted">
+                            📤 Report Submitted
+                        </h3>
+
+
+                        <p data-i18n="submittedDesc">
+                            Your issue has been received successfully.
+                        </p>
+
+
+                        <span
+                            class="status-label"
+                            data-i18n="completed"
+                        >
+                            ✅ Completed
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- AI PROCESSING -->
+
+                <div class="status-step completed">
+
+                    <div class="status-icon">
+                        🤖
+                    </div>
+
+
+                    <div>
+
+                        <h3 data-i18n="ai">
+                            🤖 AI Processing
+                        </h3>
+
+
+                        <p data-i18n="aiDesc">
+                            CivicEye AI identified the issue type and analysed the submitted report.
+                        </p>
+
+
+                        <span
+                            class="status-label"
+                            data-i18n="completed"
+                        >
+                            ✅ Completed
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ADMIN REVIEW -->
+
+                <div
+                    class="status-step"
+                    id="adminStep"
+                >
+
+                    <div class="status-icon">
+                        👨‍💼
+                    </div>
+
+
+                    <div>
+
+                        <h3 data-i18n="admin">
+                            👨‍💼 Admin Review
+                        </h3>
+
+
+                        <p data-i18n="adminDesc">
+                            The complaint is reviewed and forwarded to the relevant local authority.
+                        </p>
+
+
+                        <span
+                            class="status-label"
+                            id="adminStatus"
+                        >
+                            🔵 Awaiting Review
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- AUTHORITY -->
+
+                <div
+                    class="status-step"
+                    id="authorityStep"
+                >
+
+                    <div class="status-icon">
+                        🏛️
+                    </div>
+
+
+                    <div>
+
+                        <h3 data-i18n="authority">
+                            🔵 Authority Processing
+                        </h3>
+
+
+                        <p data-i18n="authorityDesc">
+                            The relevant authority is processing the reported public issue.
+                        </p>
+
+
+                        <span
+                            class="status-label"
+                            id="authorityStatus"
+                        >
+                            ⏳ Waiting
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RESOLUTION
+            ================================================== -->
+
+            <div
+                class="status-box"
+                id="resolutionBox"
+                style="display:none;"
+            >
+
+                <h3 id="resolutionTitle">
+                </h3>
+
+
+                <p id="resolutionMessage">
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CITIZEN VERIFICATION
+            ================================================== -->
+
+            <div
+                class="verification-box"
+                id="verificationBox"
+                style="display:none;"
+            >
+
+                <h2 data-i18n="verification">
+                    🔄 Citizen Verification
+                </h2>
+
+
+                <p data-i18n="verificationQuestion">
+                    Has this issue actually been resolved?
+                </p>
+
+
+                <div class="verification-buttons">
+
+
+                    <button
+                        type="button"
+                        onclick="verifyResolution('yes')"
+                    >
+
+                        <span data-i18n="yes">
+                            👍 Yes, Resolved
+                        </span>
+
+                    </button>
+
+
+
+                    <button
+                        type="button"
+                        onclick="verifyResolution('no')"
+                    >
+
+                        <span data-i18n="no">
+                            👎 No, Still Exists
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+
+                <div id="verificationResult"></div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             ERROR
+        ================================================== -->
+
+        <div
+            id="errorMessage"
+            style="display:none;"
+        >
+
+            <h2 data-i18n="noReport">
+                📋 No Report Available
+            </h2>
+
+
+            <p id="errorText">
+            </p>
+
+        </div>
+
+
+
+        <br>
+
+
+        <!-- =================================================
+             BACK BUTTON
+        ================================================== -->
+
+        <button
+            type="button"
+            onclick="window.location.href='citizen.html'"
+        >
+
+            <span data-i18n="back">
+                ⬅ Back to Citizen Dashboard
+            </span>
+
+        </button>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   BACKEND
+===================================================== */
+
+const BACKEND_URL =
+    "https://civiceye-backend-production-eac6.up.railway.app";
+
+
+
+/* =====================================================
+   THREE DOT MENU
+===================================================== */
+
+function toggleMoreMenu(event) {
+
+    if (event) {
+        event.stopPropagation();
+    }
+
+
+    const menu =
+        document.getElementById("moreMenu");
+
+
+    const button =
+        document.querySelector(".more-menu-button");
+
+
+    if (!menu) {
+        return;
+    }
+
+
+    const isOpen =
+        menu.classList.contains("show");
+
+
+    if (isOpen) {
+
+        menu.classList.remove("show");
+
+        if (button) {
+
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+
+    else {
+
+        menu.classList.add("show");
+
+        if (button) {
+
+            button.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   CLOSE MENU OUTSIDE
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const container =
+            document.querySelector(
+                ".more-menu-container"
+            );
+
+
+        const menu =
+            document.getElementById(
+                "moreMenu"
+            );
+
+
+        const button =
+            document.querySelector(
+                ".more-menu-button"
+            );
+
+
+        if (
+            container &&
+            menu &&
+            !container.contains(event.target)
+        ) {
+
+            menu.classList.remove("show");
+
+
+            if (button) {
+
+                button.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+function applySavedTheme() {
+
+    const savedTheme =
+        localStorage.getItem(
+            "civicEyeTheme"
+        ) || "default";
+
+
+    document.body.classList.remove(
+        "theme-light",
+        "theme-dark"
+    );
+
+
+    if (savedTheme === "light") {
+
+        document.body.classList.add(
+            "theme-light"
+        );
+
+    }
+
+    else if (savedTheme === "dark") {
+
+        document.body.classList.add(
+            "theme-dark"
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   TRANSLATIONS
+===================================================== */
+
+const translations = {
+
+    en: {
+
+        citizenPortal:
+            "Citizen Portal",
+
+        settings:
+            "Settings",
+
+        logout:
+            "Logout",
+
+        pageTitle:
+            "🔍 Track Your Issue",
+
+        pageDescription:
+            "Check your complaint progress with CivicEye AI 🇱🇰",
+
+        loadingReport:
+            "📋 Loading Report...",
+
+        loading:
+            "🔄 Loading your report...",
+
+        reportDetails:
+            "📋 Report Details",
+
+        issue:
+            "Issue",
+
+        location:
+            "Location",
+
+        confidence:
+            "AI Confidence",
+
+        currentStatus:
+            "Current Status",
+
+        submittedDate:
+            "Report Submitted",
+
+        submitted:
+            "📤 Report Submitted",
+
+        submittedDesc:
+            "Your issue has been received successfully.",
+
+        completed:
+            "Completed",
+
+        ai:
+            "🤖 AI Processing",
+
+        aiDesc:
+            "CivicEye AI identified the issue type and analysed the submitted report.",
+
+        admin:
+            "👨‍💼 Admin Review",
+
+        adminDesc:
+            "The complaint is reviewed and forwarded to the relevant local authority.",
+
+        awaiting:
+            "🔵 Awaiting Review",
+
+        authority:
+            "🔵 Authority Processing",
+
+        authorityDesc:
+            "The relevant authority is processing the reported public issue.",
+
+        waiting:
+            "⏳ Waiting",
+
+        resolved:
+            "🟢 Status:",
+
+        resolvedYes:
+            "The reported issue has been marked as resolved by the authority.",
+
+        resolvedNo:
+            "The reported issue has not been resolved yet.",
+
+        resolutionCompleted:
+            "✅ Resolution Completed",
+
+        awaitingResolution:
+            "⏳ Awaiting Resolution",
+
+        verification:
+            "🔄 Citizen Verification",
+
+        verificationQuestion:
+            "Has this issue actually been resolved?",
+
+        yes:
+            "👍 Yes, Resolved",
+
+        no:
+            "👎 No, Still Exists",
+
+        verified:
+            "✅ Thank you! Your confirmation has been recorded. The issue is confirmed as resolved.",
+
+        further:
+            "⚠️ Thank you for your feedback. The issue has been marked for further review by the authority.",
+
+        verifiedStatus:
+            "🟢 Verified Resolved",
+
+        furtherStatus:
+            "🟠 Further Review",
+
+        pending:
+            "Pending",
+
+        processing:
+            "Processing",
+
+        solved:
+            "Solved",
+
+        noReports:
+            "📭 No reports found.",
+
+        submitFirst:
+            "Please submit a report first.",
+
+        noReport:
+            "📋 No Report Available",
+
+        unable:
+            "❌ Unable to load report.",
+
+        checkBackend:
+            "Please check the backend connection.",
+
+        back:
+            "⬅ Back to Citizen Dashboard"
+
+    },
+
+
+    ta: {
+
+        citizenPortal:
+            "குடிமக்கள் Portal",
+
+        settings:
+            "அமைப்புகள்",
+
+        logout:
+            "வெளியேறு",
+
+        pageTitle:
+            "🔍 உங்கள் பிரச்சினையைக் கண்காணிக்கவும்",
+
+        pageDescription:
+            "CivicEye AI மூலம் உங்கள் புகாரின் முன்னேற்றத்தைப் பார்க்கவும் 🇱🇰",
+
+        loadingReport:
+            "📋 புகார் ஏற்றப்படுகிறது...",
+
+        loading:
+            "🔄 உங்கள் புகாரை ஏற்றுகிறது...",
+
+        reportDetails:
+            "📋 புகார் விவரங்கள்",
+
+        issue:
+            "பிரச்சினை",
+
+        location:
+            "இடம்",
+
+        confidence:
+            "AI நம்பகத்தன்மை",
+
+        currentStatus:
+            "தற்போதைய நிலை",
+
+        submittedDate:
+            "புகார் சமர்ப்பிக்கப்பட்டது",
+
+        submitted:
+            "📤 புகார் சமர்ப்பிக்கப்பட்டது",
+
+        submittedDesc:
+            "உங்கள் பிரச்சினை வெற்றிகரமாகப் பெறப்பட்டது.",
+
+        completed:
+            "முடிந்தது",
+
+        ai:
+            "🤖 AI செயலாக்கம்",
+
+        aiDesc:
+            "CivicEye AI பிரச்சினையின் வகையை அடையாளம் கண்டு சமர்ப்பிக்கப்பட்ட புகாரை பகுப்பாய்வு செய்தது.",
+
+        admin:
+            "👨‍💼 நிர்வாகி பரிசீலனை",
+
+        adminDesc:
+            "புகார் பரிசீலிக்கப்பட்டு தொடர்புடைய உள்ளூர் அதிகார அமைப்புக்கு அனுப்பப்படுகிறது.",
+
+        awaiting:
+            "🔵 பரிசீலனைக்காக காத்திருக்கிறது",
+
+        authority:
+            "🔵 அதிகார அமைப்பு செயலாக்கம்",
+
+        authorityDesc:
+            "தொடர்புடைய அதிகார அமைப்பு புகாரளிக்கப்பட்ட பொது பிரச்சினையை செயல்படுத்தி வருகிறது.",
+
+        waiting:
+            "⏳ காத்திருக்கிறது",
+
+        resolved:
+            "🟢 நிலை:",
+
+        resolvedYes:
+            "புகாரளிக்கப்பட்ட பிரச்சினை அதிகார அமைப்பால் தீர்க்கப்பட்டதாகக் குறிக்கப்பட்டுள்ளது.",
+
+        resolvedNo:
+            "புகாரளிக்கப்பட்ட பிரச்சினை இன்னும் தீர்க்கப்படவில்லை.",
+
+        resolutionCompleted:
+            "✅ தீர்வு முடிந்தது",
+
+        awaitingResolution:
+            "⏳ தீர்வுக்காக காத்திருக்கிறது",
+
+        verification:
+            "🔄 குடிமக்கள் சரிபார்ப்பு",
+
+        verificationQuestion:
+            "இந்தப் பிரச்சினை உண்மையில் தீர்க்கப்பட்டதா?",
+
+        yes:
+            "👍 ஆம், தீர்க்கப்பட்டது",
+
+        no:
+            "👎 இல்லை, இன்னும் உள்ளது",
+
+        verified:
+            "✅ நன்றி! உங்கள் உறுதிப்படுத்தல் பதிவு செய்யப்பட்டுள்ளது. பிரச்சினை தீர்க்கப்பட்டதாக உறுதிப்படுத்தப்பட்டுள்ளது.",
+
+        further:
+            "⚠️ உங்கள் கருத்துக்கு நன்றி. இந்தப் பிரச்சினை அதிகார அமைப்பால் மேலும் பரிசீலிக்க குறிக்கப்பட்டுள்ளது.",
+
+        verifiedStatus:
+            "🟢 தீர்க்கப்பட்டதாக உறுதிப்படுத்தப்பட்டது",
+
+        furtherStatus:
+            "🟠 மேலும் பரிசீலனை",
+
+        pending:
+            "நிலுவையில்",
+
+        processing:
+            "செயலாக்கப்படுகிறது",
+
+        solved:
+            "தீர்க்கப்பட்டது",
+
+        noReports:
+            "📭 புகார்கள் எதுவும் இல்லை.",
+
+        submitFirst:
+            "முதலில் ஒரு புகாரைச் சமர்ப்பிக்கவும்.",
+
+        noReport:
+            "📋 புகார் எதுவும் இல்லை",
+
+        unable:
+            "❌ புகாரை ஏற்ற முடியவில்லை.",
+
+        checkBackend:
+            "Backend இணைப்பைச் சரிபார்க்கவும்.",
+
+        back:
+            "⬅ குடிமக்கள் Dashboard-க்கு திரும்பவும்"
+
+    },
+
+
+    si: {
+
+        citizenPortal:
+            "පුරවැසි Portal",
+
+        settings:
+            "සැකසුම්",
+
+        logout:
+            "ඉවත් වන්න",
+
+        pageTitle:
+            "🔍 ඔබගේ ගැටලුව නිරීක්ෂණය කරන්න",
+
+        pageDescription:
+            "CivicEye AI සමඟ ඔබගේ පැමිණිල්ලේ ප්‍රගතිය පරීක්ෂා කරන්න 🇱🇰",
+
+        loadingReport:
+            "📋 පැමිණිල්ල පූරණය වෙමින්...",
+
+        loading:
+            "🔄 ඔබගේ පැමිණිල්ල පූරණය කරමින්...",
+
+        reportDetails:
+            "📋 පැමිණිලි විස්තර",
+
+        issue:
+            "ගැටලුව",
+
+        location:
+            "ස්ථානය",
+
+        confidence:
+            "AI විශ්වාස මට්ටම",
+
+        currentStatus:
+            "වත්මන් තත්ත්වය",
+
+        submittedDate:
+            "පැමිණිල්ල ඉදිරිපත් කළ දිනය",
+
+        submitted:
+            "📤 පැමිණිල්ල ඉදිරිපත් කරන ලදී",
+
+        submittedDesc:
+            "ඔබගේ ගැටලුව සාර්ථකව ලබාගෙන ඇත.",
+
+        completed:
+            "සම්පූර්ණයි",
+
+        ai:
+            "🤖 AI සැකසීම",
+
+        aiDesc:
+            "CivicEye AI ගැටලුවේ වර්ගය හඳුනාගෙන ඉදිරිපත් කළ පැමිණිල්ල විශ්ලේෂණය කළේය.",
+
+        admin:
+            "👨‍💼 පරිපාලන සමාලෝචනය",
+
+        adminDesc:
+            "පැමිණිල්ල සමාලෝචනය කර අදාළ ප්‍රාදේශීය අධිකාරිය වෙත යොමු කරනු ලැබේ.",
+
+        awaiting:
+            "🔵 සමාලෝචනය සඳහා රැඳී සිටී",
+
+        authority:
+            "🔵 අධිකාරි සැකසීම",
+
+        authorityDesc:
+            "අදාළ අධිකාරිය වාර්තා කළ පොදු ගැටලුව සම්බන්ධයෙන් කටයුතු කරමින් සිටී.",
+
+        waiting:
+            "⏳ රැඳී සිටී",
+
+        resolved:
+            "🟢 තත්ත්වය:",
+
+        resolvedYes:
+            "වාර්තා කළ ගැටලුව අධිකාරිය විසින් විසඳා ඇති බව සලකුණු කර ඇත.",
+
+        resolvedNo:
+            "වාර්තා කළ ගැටලුව තවමත් විසඳා නොමැත.",
+
+        resolutionCompleted:
+            "✅ විසඳීම සම්පූර්ණයි",
+
+        awaitingResolution:
+            "⏳ විසඳීම සඳහා රැඳී සිටී",
+
+        verification:
+            "🔄 පුරවැසි සත්‍යාපනය",
+
+        verificationQuestion:
+            "මෙම ගැටලුව සැබවින්ම විසඳී තිබේද?",
+
+        yes:
+            "👍 ඔව්, විසඳා ඇත",
+
+        no:
+            "👎 නැහැ, තවමත් පවතී",
+
+        verified:
+            "✅ ස්තූතියි! ඔබගේ තහවුරු කිරීම සටහන් කර ඇත. ගැටලුව විසඳී ඇති බව තහවුරු කර ඇත.",
+
+        further:
+            "⚠️ ඔබගේ ප්‍රතිචාරයට ස්තූතියි. මෙම ගැටලුව අධිකාරිය විසින් තවදුරටත් සමාලෝචනය කිරීමට සලකුණු කර ඇත.",
+
+        verifiedStatus:
+            "🟢 විසඳී ඇති බව තහවුරු කර ඇත",
+
+        furtherStatus:
+            "🟠 තවදුරටත් සමාලෝචනය",
+
+        pending:
+            "රැඳී සිටී",
+
+        processing:
+            "සැකසෙමින් පවතී",
+
+        solved:
+            "විසඳා ඇත",
+
+        noReports:
+            "📭 පැමිණිලි හමු නොවීය.",
+
+        submitFirst:
+            "පළමුව පැමිණිල්ලක් ඉදිරිපත් කරන්න.",
+
+        noReport:
+            "📋 පැමිණිල්ලක් නොමැත",
+
+        unable:
+            "❌ පැමිණිල්ල පූරණය කළ නොහැක.",
+
+        checkBackend:
+            "Backend සම්බන්ධතාවය පරීක්ෂා කරන්න.",
+
+        back:
+            "⬅ පුරවැසි Dashboard වෙත ආපසු යන්න"
+
+    }
+
+};
+
+
+let currentLanguage = "en";
+
+
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+function applySavedLanguage() {
+
+    const savedLanguage =
+        localStorage.getItem("civicEyeLanguage") || "English";
+
+
+    const language =
+        String(savedLanguage)
+            .trim()
+            .toLowerCase();
+
+
+    if (
+        language === "english" ||
+        language === "en"
+    ) {
+
+        currentLanguage = "en";
+
+    }
+
+
+    else if (
+        savedLanguage === "தமிழ்" ||
+        language === "tamil" ||
+        language === "ta"
+    ) {
+
+        currentLanguage = "ta";
+
+    }
+
+
+    else if (
+        savedLanguage === "සිංහල" ||
+        language === "sinhala" ||
+        language === "si"
+    ) {
+
+        currentLanguage = "si";
+
+    }
+
+
+    else {
+
+        currentLanguage = "en";
+
+    }
+
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(element => {
+
+            const key =
+                element.getAttribute("data-i18n");
+
+
+            const translatedText =
+                translations[currentLanguage]?.[key];
+
+
+            if (translatedText) {
+
+                element.textContent =
+                    translatedText;
+
+            }
+
+        });
+
+}
+
+
+
+/* =====================================================
+   TRANSLATION HELPER
+===================================================== */
+
+function t(key) {
+
+    return (
+        translations[currentLanguage]?.[key] ||
+        translations.en[key] ||
+        key
+    );
+
+}
+
+
+
+/* =====================================================
+   LOAD REPORT
+===================================================== */
+
+async function loadTrackedReport() {
+
+    try {
+
+        const response =
+            await fetch(
+                BACKEND_URL +
+                "/reports"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Backend error"
+            );
+
+        }
+
+
+        const reports =
+            await response.json();
+
+
+        if (
+            !reports ||
+            reports.length === 0
+        ) {
+
+            document
+                .getElementById(
+                    "loadingReport"
+                )
+                .style.display =
+                    "none";
+
+
+            document
+                .getElementById(
+                    "errorMessage"
+                )
+                .style.display =
+                    "block";
+
+
+            document
+                .getElementById(
+                    "errorText"
+                )
+                .textContent =
+                    t("noReports") +
+                    " " +
+                    t("submitFirst");
+
+            return;
+
+        }
+
+
+        const report =
+            reports[
+                reports.length - 1
+            ];
+
+
+        renderReport(report);
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Track report error:",
+            error
+        );
+
+
+        document
+            .getElementById(
+                "loadingReport"
+            )
+            .style.display =
+                "none";
+
+
+        document
+            .getElementById(
+                "errorMessage"
+            )
+            .style.display =
+                "block";
+
+
+        document
+            .getElementById(
+                "errorText"
+            )
+            .textContent =
+                t("unable") +
+                " " +
+                t("checkBackend");
+
+    }
+
+}
+
+
+
+/* =====================================================
+   RENDER REPORT
+===================================================== */
+
+function renderReport(report) {
+
+    document
+        .getElementById(
+            "loadingReport"
+        )
+        .style.display =
+            "none";
+
+
+    document
+        .getElementById(
+            "reportContent"
+        )
+        .style.display =
+            "block";
+
+
+    document
+        .getElementById(
+            "issue"
+        )
+        .textContent =
+            report.issueType ||
+            report.issue ||
+            "—";
+
+
+    document
+        .getElementById(
+            "location"
+        )
+        .textContent =
+            report.location ||
+            "—";
+
+
+    document
+        .getElementById(
+            "confidence"
+        )
+        .textContent =
+            report.confidence ||
+            "—";
+
+
+    const status =
+        report.status ||
+        "Pending";
+
+
+    document
+        .getElementById(
+            "currentStatus"
+        )
+        .textContent =
+            translateStatus(status);
+
+
+    document
+        .getElementById(
+            "submittedDate"
+        )
+        .textContent =
+            report.createdAt
+                ? new Date(
+                    report.createdAt
+                  ).toLocaleString()
+                : "—";
+
+
+    /* =================================================
+       ADMIN REVIEW
+    ================================================== */
+
+    const adminStep =
+        document.getElementById(
+            "adminStep"
+        );
+
+
+    const adminStatus =
+        document.getElementById(
+            "adminStatus"
+        );
+
+
+    if (
+        status.toLowerCase() === "processing" ||
+        status.toLowerCase() === "solved"
+    ) {
+
+        adminStep.classList.add(
+            "completed"
+        );
+
+
+        adminStatus.textContent =
+            "✅ " +
+            t("completed");
+
+    }
+
+    else {
+
+        adminStatus.textContent =
+            t("awaiting");
+
+    }
+
+
+
+    /* =================================================
+       AUTHORITY
+    ================================================== */
+
+    const authorityStep =
+        document.getElementById(
+            "authorityStep"
+        );
+
+
+    const authorityStatus =
+        document.getElementById(
+            "authorityStatus"
+        );
+
+
+    if (
+        status.toLowerCase() === "solved"
+    ) {
+
+        authorityStep.classList.add(
+            "completed"
+        );
+
+
+        authorityStatus.textContent =
+            "✅ " +
+            t("completed");
+
+    }
+
+    else if (
+        status.toLowerCase() === "processing"
+    ) {
+
+        authorityStep.classList.add(
+            "active"
+        );
+
+
+        authorityStatus.textContent =
+            "🔵 " +
+            t("processing");
+
+    }
+
+    else {
+
+        authorityStatus.textContent =
+            t("waiting");
+
+    }
+
+
+
+    /* =================================================
+       RESOLUTION
+    ================================================== */
+
+    const resolutionBox =
+        document.getElementById(
+            "resolutionBox"
+        );
+
+
+    const resolutionTitle =
+        document.getElementById(
+            "resolutionTitle"
+        );
+
+
+    const resolutionMessage =
+        document.getElementById(
+            "resolutionMessage"
+        );
+
+
+    if (
+        status.toLowerCase() === "solved"
+    ) {
+
+        resolutionBox.style.display =
+            "block";
+
+
+        resolutionTitle.textContent =
+            t("resolutionCompleted");
+
+
+        resolutionMessage.textContent =
+            t("resolvedYes");
+
+
+        document
+            .getElementById(
+                "verificationBox"
+            )
+            .style.display =
+                "block";
+
+    }
+
+    else {
+
+        resolutionBox.style.display =
+            "block";
+
+
+        resolutionTitle.textContent =
+            t("awaitingResolution");
+
+
+        resolutionMessage.textContent =
+            t("resolvedNo");
+
+
+        document
+            .getElementById(
+                "verificationBox"
+            )
+            .style.display =
+                "none";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   STATUS TRANSLATION
+===================================================== */
+
+function translateStatus(status) {
+
+    const normalized =
+        String(status)
+            .toLowerCase();
+
+
+    if (
+        normalized === "pending"
+    ) {
+
+        return t("pending");
+
+    }
+
+
+    if (
+        normalized === "processing"
+    ) {
+
+        return t("processing");
+
+    }
+
+
+    if (
+        normalized === "solved"
+    ) {
+
+        return t("solved");
+
+    }
+
+
+    return status;
+
+}
+
+
+
+/* =====================================================
+   VERIFY RESOLUTION
+===================================================== */
+
+function verifyResolution(answer) {
+
+    const result =
+        document.getElementById(
+            "verificationResult"
+        );
+
+
+    if (
+        answer === "yes"
+    ) {
+
+        result.textContent =
+            t("verified");
+
+
+        result.className =
+            "verification-success";
+
+    }
+
+    else {
+
+        result.textContent =
+            t("further");
+
+
+        result.className =
+            "verification-warning";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    localStorage.removeItem(
+        "civicEyeCitizenEmail"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+
+/* =====================================================
+   START
+===================================================== */
+
+applySavedTheme();
+
+applySavedLanguage();
+
+loadTrackedReport();
+
+</script>
+
+
+</body>
+
+</html>

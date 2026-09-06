@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CivicEye AI - AI Processing</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ================================
+           SAVED THEME SUPPORT
+           ================================ */
+
+        body.theme-light {
+            background: #f5f7fa;
+        }
+
+        body.theme-dark {
+            background: #101010;
+        }
+
+        body.theme-light .processing-container,
+        body.theme-light .processing-card,
+        body.theme-light .result-box {
+            color: #222;
+        }
+
+        body.theme-dark .processing-container,
+        body.theme-dark .processing-card,
+        body.theme-dark .result-box {
+            color: white;
+        }
+
+        body.theme-light .result-box {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0, 0, 0, 0.12);
+        }
+
+        body.theme-dark .result-box {
+            background: rgba(20, 20, 20, 0.95);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        body.theme-light h1,
+        body.theme-light h2,
+        body.theme-light h3,
+        body.theme-light p,
+        body.theme-light .result-item,
+        body.theme-dark h1,
+        body.theme-dark h2,
+        body.theme-dark h3,
+        body.theme-dark p,
+        body.theme-dark .result-item {
+            color: inherit;
+        }
+
+
+        /* ================================
+           NAVBAR
+           ================================ */
+
+        .civic-navbar {
+            position: relative !important;
+            z-index: 999998 !important;
+        }
+
+        .civic-nav-links {
+            display: flex !important;
+            align-items: center !important;
+            gap: 10px !important;
+        }
+
+
+        /* ================================
+           MORE MENU
+           ================================ */
+
+        .more-menu-container {
+            position: relative !important;
+            display: inline-block !important;
+            margin-left: 0 !important;
+            z-index: 999999 !important;
+        }
+
+        .more-menu-button {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            width: 42px !important;
+            height: 42px !important;
+
+            padding: 0 !important;
+
+            border: none !important;
+            background: transparent !important;
+
+            font-size: 26px !important;
+            line-height: 1 !important;
+
+            cursor: pointer !important;
+
+            position: relative !important;
+            z-index: 1000000 !important;
+        }
+
+        .more-menu {
+            position: fixed !important;
+
+            top: 70px !important;
+            right: 20px !important;
+
+            width: 235px !important;
+
+            padding: 8px !important;
+
+            display: none !important;
+            flex-direction: column !important;
+
+            background: rgba(255, 255, 255, 0.98) !important;
+
+            border-radius: 16px !important;
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.30) !important;
+
+            z-index: 999999 !important;
+
+            animation: moreMenuOpen 0.18s ease;
+
+            pointer-events: auto !important;
+        }
+
+        .more-menu.show {
+            display: flex !important;
+            flex-direction: column !important;
+        }
+
+        .more-menu a,
+        .more-menu button {
+            display: flex !important;
+            align-items: center !important;
+
+            width: 100% !important;
+            min-height: 44px !important;
+
+            box-sizing: border-box !important;
+
+            margin: 0 !important;
+            padding: 11px 14px !important;
+
+            border: none !important;
+            border-radius: 10px !important;
+
+            background: transparent !important;
+
+            color: #374151 !important;
+
+            text-decoration: none !important;
+            text-align: left !important;
+
+            font-size: 15px !important;
+            font-family: inherit !important;
+
+            cursor: pointer !important;
+
+            white-space: nowrap !important;
+
+            position: relative !important;
+            z-index: 1000000 !important;
+        }
+
+        .more-menu a:hover,
+        .more-menu button:hover {
+            background: rgba(0, 0, 0, 0.06) !important;
+        }
+
+
+        /* ================================
+           DARK MODE MENU
+           ================================ */
+
+        body.theme-dark .more-menu {
+            background: #1f2937 !important;
+        }
+
+        body.theme-dark .more-menu a,
+        body.theme-dark .more-menu button {
+            color: #ffffff !important;
+        }
+
+        body.theme-dark .more-menu a:hover,
+        body.theme-dark .more-menu button:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+        }
+
+        .more-menu .logout-item {
+            color: #dc2626 !important;
+        }
+
+        body.theme-dark .more-menu .logout-item {
+            color: #f87171 !important;
+        }
+
+
+        /* ================================
+           MENU ANIMATION
+           ================================ */
+
+        @keyframes moreMenuOpen {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        /* ================================
+           MODALS
+           ================================ */
+
+        .civic-modal {
+            position: fixed;
+            inset: 0;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(0, 0, 0, 0.55);
+
+            z-index: 2000000;
+
+            padding: 20px;
+
+            box-sizing: border-box;
+        }
+
+        .civic-modal.show {
+            display: flex;
+        }
+
+        .civic-modal-content {
+            width: min(500px, 100%);
+
+            background: #ffffff;
+
+            color: #1f2937;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+
+            position: relative;
+        }
+
+        body.theme-dark .civic-modal-content {
+            background: #1f2937;
+            color: #ffffff;
+        }
+
+        .civic-modal-content h2 {
+            margin-top: 0;
+        }
+
+        .civic-modal-content p {
+            line-height: 1.6;
+        }
+
+        .civic-modal-close {
+            position: absolute;
+
+            top: 10px;
+            right: 14px;
+
+            border: none;
+
+            background: transparent;
+
+            font-size: 26px;
+
+            cursor: pointer;
+
+            color: inherit;
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ================================
+         NAVBAR
+         ================================ -->
+
+    <nav class="civic-navbar">
+
+        <div class="civic-logo">
+            👁️ CivicEye AI
+        </div>
+
+        <div class="civic-nav-links">
+
+            <a href="./index.html">
+                🏠 Home
+            </a>
+
+            <div class="more-menu-container">
+
+                <button
+                    type="button"
+                    class="more-menu-button"
+                    id="moreMenuButton"
+                    aria-label="More"
+                    aria-expanded="false">
+                    ⋮
+                </button>
+
+                <div
+                    class="more-menu"
+                    id="moreMenu">
+
+                    <a href="./profile.html">
+                        👤 Profile
+                    </a>
+
+                    <a href="./settings.html">
+                        ⚙️ Settings
+                    </a>
+
+                    <a href="./privacy.html">
+                        🔒 Privacy
+                    </a>
+
+                    <button
+                        type="button"
+                        onclick="showHelp()">
+                        ❓ Help & Support
+                    </button>
+
+                    <button
+                        type="button"
+                        onclick="showAbout()">
+                        ℹ️ About CivicEye AI
+                    </button>
+
+                    <a
+                        href="./login.html"
+                        class="logout-item">
+                        🚪 Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================================
+         PROCESSING CONTAINER
+         ================================ -->
+
+    <div class="processing-container">
+
+        <div class="processing-card">
+
+            <h1 data-i18n="title">
+                🤖 CivicEye AI Analysis
+            </h1>
+
+            <p data-i18n="subtitle">
+                AI is analysing your reported issue...
+            </p>
+
+
+            <!-- ================================
+                 LOADER
+                 ================================ -->
+
+            <div id="loader">
+
+                <div class="loader-spinner"></div>
+
+                <h2 data-i18n="processingTitle">
+                    🔍 Processing Report
+                </h2>
+
+                <p data-i18n="processingText">
+                    CivicEye AI is analysing the image and complaint details.
+                </p>
+
+            </div>
+
+
+            <!-- ================================
+                 RESULT
+                 ================================ -->
+
+            <div
+                id="resultBox"
+                class="result-box"
+                style="display:none;">
+
+                <h2 data-i18n="resultTitle">
+                    ✅ AI Analysis Complete
+                </h2>
+
+
+                <div class="result-item">
+
+                    <strong data-i18n="issue">
+                        Issue:
+                    </strong>
+
+                    <span id="resultIssue">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <strong data-i18n="confidence">
+                        AI Confidence:
+                    </strong>
+
+                    <span id="resultConfidence">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <strong data-i18n="location">
+                        Location:
+                    </strong>
+
+                    <span id="resultLocation">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <strong data-i18n="description">
+                        Description:
+                    </strong>
+
+                    <span id="resultDescription">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <strong data-i18n="priority">
+                        Priority:
+                    </strong>
+
+                    <span id="resultPriority">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <strong data-i18n="authority">
+                        Recommended Authority:
+                    </strong>
+
+                    <span id="resultAuthority">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <strong data-i18n="duplicate">
+                        Duplicate Complaint:
+                    </strong>
+
+                    <span id="resultDuplicate">
+                        -
+                    </span>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <strong data-i18n="status">
+                        Status:
+                    </strong>
+
+                    <span id="resultStatus">
+                        -
+                    </span>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    onclick="goToDashboard()"
+                    data-i18n="dashboardButton">
+
+                    🏠 Go to Citizen Dashboard
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================
+         HELP MODAL
+         ================================ -->
+
+    <div
+        class="civic-modal"
+        id="helpModal"
+        onclick="closeModalOutside(event)">
+
+        <div class="civic-modal-content">
+
+            <button
+                class="civic-modal-close"
+                type="button"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+            <h2>
+                ❓ Help & Support
+            </h2>
+
+            <p>
+                Need help using CivicEye AI?
+            </p>
+
+            <p>
+                📸 Upload a clear image of the public issue.
+            </p>
+
+            <p>
+                📝 Select the correct issue type and describe the problem.
+            </p>
+
+            <p>
+                📍 Add your location so authorities can identify the issue.
+            </p>
+
+            <p>
+                🚀 After submission, CivicEye AI analyses your complaint
+                and provides the detected issue, priority, authority,
+                duplicate status and current status.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================
+         ABOUT MODAL
+         ================================ -->
+
+    <div
+        class="civic-modal"
+        id="aboutModal"
+        onclick="closeModalOutside(event)">
+
+        <div class="civic-modal-content">
+
+            <button
+                class="civic-modal-close"
+                type="button"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+            <h2>
+                ℹ️ About CivicEye AI
+            </h2>
+
+            <p>
+                CivicEye AI is an AI-powered platform designed to help
+                citizens report and track public issues more easily.
+            </p>
+
+            <p>
+                The system can identify issue types, detect duplicate
+                complaints, recommend the relevant authority and provide
+                status updates.
+            </p>
+
+            <p>
+                🇱🇰 Built with the goal of creating cleaner, safer and
+                smarter communities.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        /* ================================
+           THEME
+           ================================ */
+
+        (function () {
+
+            const savedTheme =
+                localStorage.getItem("civicEyeTheme") || "default";
+
+            document.body.classList.remove(
+                "theme-light",
+                "theme-dark"
+            );
+
+            if (savedTheme === "light") {
+
+                document.body.classList.add(
+                    "theme-light"
+                );
+
+            }
+            else if (savedTheme === "dark") {
+
+                document.body.classList.add(
+                    "theme-dark"
+                );
+
+            }
+
+        })();
+
+
+        /* ================================
+           MORE MENU
+           ================================ */
+
+        const moreMenuButton =
+            document.getElementById("moreMenuButton");
+
+        const moreMenu =
+            document.getElementById("moreMenu");
+
+
+        moreMenuButton.addEventListener(
+            "click",
+            function (event) {
+
+                event.stopPropagation();
+
+                const isOpen =
+                    moreMenu.classList.toggle("show");
+
+                moreMenuButton.setAttribute(
+                    "aria-expanded",
+                    isOpen ? "true" : "false"
+                );
+
+            }
+        );
+
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                if (
+                    !moreMenu.contains(event.target) &&
+                    !moreMenuButton.contains(event.target)
+                ) {
+
+                    moreMenu.classList.remove("show");
+
+                    moreMenuButton.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* ================================
+           MODALS
+           ================================ */
+
+        function showHelp() {
+
+            document
+                .getElementById("helpModal")
+                .classList.add("show");
+
+            moreMenu.classList.remove("show");
+
+            moreMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+
+        function showAbout() {
+
+            document
+                .getElementById("aboutModal")
+                .classList.add("show");
+
+            moreMenu.classList.remove("show");
+
+            moreMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+
+        function closeModal() {
+
+            document
+                .querySelectorAll(".civic-modal")
+                .forEach(function (modal) {
+
+                    modal.classList.remove("show");
+
+                });
+
+        }
+
+
+        function closeModalOutside(event) {
+
+            if (
+                event.target.classList.contains("civic-modal")
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (event.key === "Escape") {
+
+                    closeModal();
+
+                    if (moreMenu) {
+
+                        moreMenu.classList.remove("show");
+
+                        moreMenuButton.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* ================================
+           LANGUAGE
+           ================================ */
+
+        const translations = {
+
+            en: {
+
+                title:
+                    "🤖 CivicEye AI Analysis",
+
+                subtitle:
+                    "AI is analysing your reported issue...",
+
+                processingTitle:
+                    "🔍 Processing Report",
+
+                processingText:
+                    "CivicEye AI is analysing the image and complaint details.",
+
+                resultTitle:
+                    "✅ AI Analysis Complete",
+
+                issue:
+                    "Issue:",
+
+                confidence:
+                    "AI Confidence:",
+
+                location:
+                    "Location:",
+
+                description:
+                    "Description:",
+
+                priority:
+                    "Priority:",
+
+                authority:
+                    "Recommended Authority:",
+
+                duplicate:
+                    "Duplicate Complaint:",
+
+                status:
+                    "Status:",
+
+                dashboardButton:
+                    "🏠 Go to Citizen Dashboard"
+
+            },
+
+
+            ta: {
+
+                title:
+                    "🤖 CivicEye AI பகுப்பாய்வு",
+
+                subtitle:
+                    "AI உங்கள் புகாரளிக்கப்பட்ட பிரச்சினையை பகுப்பாய்வு செய்கிறது...",
+
+                processingTitle:
+                    "🔍 புகார் செயலாக்கப்படுகிறது",
+
+                processingText:
+                    "CivicEye AI படத்தையும் புகார் விவரங்களையும் பகுப்பாய்வு செய்கிறது.",
+
+                resultTitle:
+                    "✅ AI பகுப்பாய்வு முடிந்தது",
+
+                issue:
+                    "பிரச்சினை:",
+
+                confidence:
+                    "AI நம்பகத்தன்மை:",
+
+                location:
+                    "இடம்:",
+
+                description:
+                    "விளக்கம்:",
+
+                priority:
+                    "முன்னுரிமை:",
+
+                authority:
+                    "பரிந்துரைக்கப்பட்ட அதிகார அமைப்பு:",
+
+                duplicate:
+                    "நகல் புகார்:",
+
+                status:
+                    "நிலை:",
+
+                dashboardButton:
+                    "🏠 குடிமக்கள் Dashboard-க்கு செல்லவும்"
+
+            },
+
+
+            si: {
+
+                title:
+                    "🤖 CivicEye AI විශ්ලේෂණය",
+
+                subtitle:
+                    "AI ඔබ වාර්තා කළ ගැටලුව විශ්ලේෂණය කරමින් පවතී...",
+
+                processingTitle:
+                    "🔍 වාර්තාව සැකසෙමින් පවතී",
+
+                processingText:
+                    "CivicEye AI රූපය සහ පැමිණිලි විස්තර විශ්ලේෂණය කරමින් පවතී.",
+
+                resultTitle:
+                    "✅ AI විශ්ලේෂණය සම්පූර්ණයි",
+
+                issue:
+                    "ගැටලුව:",
+
+                confidence:
+                    "AI විශ්වාස මට්ටම:",
+
+                location:
+                    "ස්ථානය:",
+
+                description:
+                    "විස්තරය:",
+
+                priority:
+                    "ප්‍රමුඛතාව:",
+
+                authority:
+                    "නිර්දේශිත බලධාරියා:",
+
+                duplicate:
+                    "අනුපිටපත් පැමිණිල්ල:",
+
+                status:
+                    "තත්ත්වය:",
+
+                dashboardButton:
+                    "🏠 පුරවැසි Dashboard වෙත යන්න"
+
+            }
+
+        };
+
+
+        const savedLanguage =
+            localStorage.getItem("civicEyeLanguage") || "en";
+
+
+        const currentLanguage =
+            translations[savedLanguage]
+                ? savedLanguage
+                : "en";
+
+
+        function applyLanguage() {
+
+            document.documentElement.lang =
+                currentLanguage === "ta"
+                    ? "ta"
+                    : currentLanguage === "si"
+                        ? "si"
+                        : "en";
+
+
+            document.querySelectorAll(
+                "[data-i18n]"
+            ).forEach(element => {
+
+                const key =
+                    element.getAttribute(
+                        "data-i18n"
+                    );
+
+
+                if (
+                    translations[currentLanguage][key]
+                ) {
+
+                    element.textContent =
+                        translations[currentLanguage][key];
+
+                }
+
+            });
+
+        }
+
+
+        applyLanguage();
+
+
+        /* ================================
+           EXISTING CIVICEYE AI PROCESSING
+           ================================ */
+
+        const reportData =
+            sessionStorage.getItem(
+                "civicEyeReport"
+            );
+
+
+        setTimeout(function () {
+
+            document.getElementById(
+                "loader"
+            ).style.display = "none";
+
+
+            document.getElementById(
+                "resultBox"
+            ).style.display = "block";
+
+
+            let report = null;
+
+
+            if (reportData) {
+
+                try {
+
+                    report =
+                        JSON.parse(reportData);
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Unable to parse report data:",
+                        error
+                    );
+
+                }
+
+            }
+
+
+            /* ================================
+               EXISTING RESULT DATA
+               ================================ */
+
+            if (report) {
+
+                document.getElementById(
+                    "resultIssue"
+                ).textContent =
+                    report.issueType
+                    || report.issue
+                    || "Road Damage";
+
+
+                document.getElementById(
+                    "resultConfidence"
+                ).textContent =
+                    report.confidence
+                    || "94%";
+
+
+                document.getElementById(
+                    "resultLocation"
+                ).textContent =
+                    report.location
+                    || "Colombo";
+
+
+                document.getElementById(
+                    "resultDescription"
+                ).textContent =
+                    report.description
+                    || "-";
+
+
+                document.getElementById(
+                    "resultPriority"
+                ).textContent =
+                    report.priority
+                    || "High";
+
+
+                document.getElementById(
+                    "resultAuthority"
+                ).textContent =
+                    report.recommendedAuthority
+                    || report.authority
+                    || "Relevant Local Authority";
+
+
+                document.getElementById(
+                    "resultDuplicate"
+                ).textContent =
+                    report.duplicate
+                    !== undefined
+                        ? (
+                            report.duplicate
+                                ? "Yes"
+                                : "No"
+                        )
+                        : "No";
+
+
+                document.getElementById(
+                    "resultStatus"
+                ).textContent =
+                    report.status
+                    || "Pending";
+
+            }
+            else {
+
+                /*
+                 * Keep the existing prototype
+                 * fallback values.
+                 */
+
+                document.getElementById(
+                    "resultIssue"
+                ).textContent =
+                    "Road Damage";
+
+
+                document.getElementById(
+                    "resultConfidence"
+                ).textContent =
+                    "94%";
+
+
+                document.getElementById(
+                    "resultLocation"
+                ).textContent =
+                    "Colombo";
+
+
+                document.getElementById(
+                    "resultDescription"
+                ).textContent =
+                    "-";
+
+
+                document.getElementById(
+                    "resultPriority"
+                ).textContent =
+                    "High";
+
+
+                document.getElementById(
+                    "resultAuthority"
+                ).textContent =
+                    "Relevant Local Authority";
+
+
+                document.getElementById(
+                    "resultDuplicate"
+                ).textContent =
+                    "No";
+
+
+                document.getElementById(
+                    "resultStatus"
+                ).textContent =
+                    "Pending";
+
+            }
+
+        }, 2500);
+
+
+        /* ================================
+           DASHBOARD
+           ================================ */
+
+        function goToDashboard() {
+
+            window.location.href =
+                "citizen.html";
+
+        }
+
+    </script>
+
+</body>
+
+</html>

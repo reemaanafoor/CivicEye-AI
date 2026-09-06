@@ -1,0 +1,2349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CivicEye AI - Settings</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =====================================================
+           SETTINGS THEME
+        ===================================================== */
+
+        :root {
+            --settings-text: white;
+            --settings-subtext: rgba(255,255,255,0.8);
+            --settings-box-bg: rgba(255,255,255,0.14);
+            --settings-section-bg: rgba(255,255,255,0.08);
+            --settings-border: rgba(255,255,255,0.25);
+            --settings-row-border: rgba(255,255,255,0.12);
+            --settings-button-bg: white;
+            --settings-button-text: #222;
+        }
+
+
+        body.theme-light {
+
+            --settings-text: #222;
+            --settings-subtext: rgba(34,34,34,0.75);
+            --settings-box-bg: rgba(255,255,255,0.95);
+            --settings-section-bg: rgba(0,0,0,0.04);
+            --settings-border: rgba(0,0,0,0.12);
+            --settings-row-border: rgba(0,0,0,0.12);
+            --settings-button-bg: #222;
+            --settings-button-text: white;
+
+            background: #f5f7fa;
+
+        }
+
+
+        body.theme-dark {
+
+            --settings-text: white;
+            --settings-subtext: rgba(255,255,255,0.75);
+            --settings-box-bg: rgba(20,20,20,0.95);
+            --settings-section-bg: rgba(255,255,255,0.06);
+            --settings-border: rgba(255,255,255,0.15);
+            --settings-row-border: rgba(255,255,255,0.12);
+            --settings-button-bg: white;
+            --settings-button-text: #222;
+
+            background: #101010;
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .dashboard-nav {
+
+            position: relative !important;
+
+            z-index: 999998 !important;
+
+        }
+
+
+        body.theme-light .dashboard-nav,
+        body.theme-light .dashboard-nav h2,
+        body.theme-light .dashboard-nav a {
+
+            color: #222 !important;
+
+        }
+
+
+        body.theme-dark .dashboard-nav,
+        body.theme-dark .dashboard-nav h2,
+        body.theme-dark .dashboard-nav a {
+
+            color: white !important;
+
+        }
+
+
+        /* =====================================================
+           MORE MENU
+        ===================================================== */
+
+        .more-menu-container {
+
+            position: relative;
+
+            display: inline-block;
+
+            margin-left: 8px;
+
+            z-index: 999999 !important;
+
+        }
+
+
+        .more-menu-button {
+
+            width: 42px;
+
+            height: 42px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.18);
+
+            color: inherit;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            z-index: 1000000 !important;
+
+            pointer-events: auto !important;
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .more-menu-button:hover {
+
+            transform: scale(1.05);
+
+            background: rgba(255,255,255,0.28);
+
+        }
+
+
+        body.theme-light .more-menu-button {
+
+            background: rgba(0,0,0,0.08);
+
+            color: #222;
+
+        }
+
+
+        body.theme-dark .more-menu-button {
+
+            background: rgba(255,255,255,0.12);
+
+            color: white;
+
+        }
+
+
+        /* =====================================================
+           MORE MENU - DEFAULT LIGHT
+        ===================================================== */
+
+        .more-menu {
+
+            position: fixed !important;
+
+            top: 70px !important;
+
+            right: 20px !important;
+
+            width: 235px;
+
+            padding: 8px;
+
+            border-radius: 16px;
+
+            background: rgba(255,255,255,0.97);
+
+            box-shadow: 0 15px 40px rgba(0,0,0,0.30);
+
+            display: none !important;
+
+            z-index: 999999 !important;
+
+            animation: moreMenuOpen 0.18s ease;
+
+            pointer-events: auto !important;
+
+        }
+
+
+        .more-menu.show {
+
+            display: block !important;
+
+            pointer-events: auto !important;
+
+        }
+
+
+        /* =====================================================
+           MORE MENU - LIGHT TEXT
+        ===================================================== */
+
+        .more-menu a,
+        .more-menu button {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 12px 13px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: transparent;
+
+            color: #222 !important;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            text-align: left;
+
+            position: relative;
+
+            z-index: 1000000 !important;
+
+            pointer-events: auto !important;
+
+            cursor: pointer;
+
+            box-sizing: border-box;
+
+        }
+
+
+        .more-menu a:hover,
+        .more-menu button:hover {
+
+            background: rgba(0,0,0,0.07);
+
+        }
+
+
+        .more-menu .menu-danger {
+
+            color: #d62828 !important;
+
+        }
+
+
+        /* =====================================================
+           DARK THEME - MORE MENU FIX
+        ===================================================== */
+
+        body.theme-dark .more-menu {
+
+            background: rgba(25,25,25,0.98) !important;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+            box-shadow: 0 15px 40px rgba(0,0,0,0.60);
+
+        }
+
+
+        body.theme-dark .more-menu a,
+        body.theme-dark .more-menu button,
+        body.theme-dark .more-menu span {
+
+            color: white !important;
+
+        }
+
+
+        body.theme-dark .more-menu a:hover,
+        body.theme-dark .more-menu button:hover {
+
+            background: rgba(255,255,255,0.10) !important;
+
+            color: white !important;
+
+        }
+
+
+        body.theme-dark .more-menu .menu-danger {
+
+            color: #ff6b6b !important;
+
+        }
+
+
+        /* =====================================================
+           MENU ANIMATION
+        ===================================================== */
+
+        @keyframes moreMenuOpen {
+
+            from {
+
+                opacity: 0;
+
+                transform: translateY(-8px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SETTINGS CONTAINER
+        ===================================================== */
+
+        .settings-container {
+
+            min-height: 100vh;
+
+            padding: 40px 20px;
+
+            color: var(--settings-text);
+
+            text-align: center;
+
+        }
+
+
+        .settings-box {
+
+            max-width: 700px;
+
+            margin: 40px auto;
+
+            padding: 35px;
+
+            background: var(--settings-box-bg);
+
+            backdrop-filter: blur(18px);
+
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid var(--settings-border);
+
+            border-radius: 25px;
+
+            box-shadow: 0 12px 35px rgba(0,0,0,0.20);
+
+            text-align: left;
+
+        }
+
+
+        .settings-box h1 {
+
+            text-align: center;
+
+            color: var(--settings-text);
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .settings-subtitle {
+
+            text-align: center;
+
+            color: var(--settings-subtext);
+
+            opacity: 0.8;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .settings-section {
+
+            margin-bottom: 25px;
+
+            padding: 20px;
+
+            background: var(--settings-section-bg);
+
+            border-radius: 18px;
+
+            border: 1px solid var(--settings-row-border);
+
+        }
+
+
+        .settings-section h2 {
+
+            color: var(--settings-text);
+
+            font-size: 19px;
+
+            margin-bottom: 16px;
+
+        }
+
+
+        .setting-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 14px 0;
+
+            border-bottom: 1px solid var(--settings-row-border);
+
+        }
+
+
+        .setting-row:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .setting-info {
+
+            flex: 1;
+
+        }
+
+
+        .setting-title {
+
+            color: var(--settings-text);
+
+            font-weight: bold;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .setting-description {
+
+            color: var(--settings-subtext);
+
+            opacity: 0.75;
+
+            font-size: 13px;
+
+            line-height: 1.4;
+
+        }
+
+
+        .setting-control {
+
+            flex-shrink: 0;
+
+        }
+
+
+        .setting-control select {
+
+            padding: 9px 12px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            font-weight: bold;
+
+            background: white;
+
+            color: #222;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =====================================================
+           TOGGLE SWITCH
+        ===================================================== */
+
+        .toggle {
+
+            position: relative;
+
+            width: 50px;
+
+            height: 28px;
+
+            display: inline-block;
+
+        }
+
+
+        .toggle input {
+
+            opacity: 0;
+
+            width: 0;
+
+            height: 0;
+
+        }
+
+
+        .slider {
+
+            position: absolute;
+
+            cursor: pointer;
+
+            inset: 0;
+
+            background: rgba(128,128,128,0.45);
+
+            border-radius: 30px;
+
+            transition: 0.25s;
+
+        }
+
+
+        .slider::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 22px;
+
+            height: 22px;
+
+            left: 3px;
+
+            top: 3px;
+
+            background: white;
+
+            border-radius: 50%;
+
+            transition: 0.25s;
+
+        }
+
+
+        .toggle input:checked + .slider {
+
+            background: #4caf50;
+
+        }
+
+
+        .toggle input:checked + .slider::before {
+
+            transform: translateX(22px);
+
+        }
+
+
+        /* =====================================================
+           SAVE BUTTON
+        ===================================================== */
+
+        .save-button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 13px;
+
+            background: var(--settings-button-bg);
+
+            color: var(--settings-button-text);
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .save-button:hover {
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .settings-status {
+
+            text-align: center;
+
+            min-height: 22px;
+
+            margin-top: 15px;
+
+            font-weight: bold;
+
+            color: var(--settings-text);
+
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .navigation-buttons {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            margin-top: 25px;
+
+        }
+
+
+        .navigation-button {
+
+            padding: 11px 18px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: var(--settings-button-bg);
+
+            color: var(--settings-button-text);
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .navigation-button:hover {
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* =====================================================
+           MODALS
+        ===================================================== */
+
+        .civic-modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0,0,0,0.60);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 2000000;
+
+        }
+
+
+        .civic-modal.show {
+
+            display: flex;
+
+        }
+
+
+        .civic-modal-box {
+
+            width: min(500px, 100%);
+
+            padding: 28px;
+
+            border-radius: 22px;
+
+            background: white;
+
+            color: #222;
+
+            box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+
+            text-align: center;
+
+            animation: modalOpen 0.2s ease;
+
+        }
+
+
+        body.theme-dark .civic-modal-box {
+
+            background: #1c1c1c;
+
+            color: white;
+
+            border: 1px solid rgba(255,255,255,0.12);
+
+        }
+
+
+        body.theme-dark .civic-modal-box h2 {
+
+            color: white;
+
+        }
+
+
+        body.theme-dark .civic-modal-box p {
+
+            color: rgba(255,255,255,0.78);
+
+        }
+
+
+        @keyframes modalOpen {
+
+            from {
+
+                opacity: 0;
+
+                transform: scale(0.95);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform: scale(1);
+
+            }
+
+        }
+
+
+        .civic-modal-box h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .civic-modal-box p {
+
+            line-height: 1.6;
+
+            color: #555;
+
+        }
+
+
+        .modal-close {
+
+            margin-top: 15px;
+
+            padding: 10px 22px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #222;
+
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media(max-width:600px) {
+
+            .settings-container {
+
+                padding: 25px 15px;
+
+            }
+
+
+            .settings-box {
+
+                padding: 25px 18px;
+
+                margin-top: 25px;
+
+            }
+
+
+            .setting-row {
+
+                align-items: flex-start;
+
+            }
+
+
+            .dashboard-nav {
+
+                padding-left: 15px !important;
+
+                padding-right: 15px !important;
+
+            }
+
+
+            .dashboard-nav h2 {
+
+                font-size: 17px;
+
+            }
+
+
+            .more-menu {
+
+                right: 12px !important;
+
+                top: 65px !important;
+
+            }
+
+        }
+
+
+/* =====================================================
+   FINAL MORE MENU ALIGNMENT FIX
+===================================================== */
+
+.more-menu a,
+.more-menu button {
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    margin: 0 !important;
+    padding: 12px 14px !important;
+
+    gap: 10px !important;
+
+    text-align: left !important;
+    justify-content: flex-start !important;
+
+    font-family: inherit !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+
+    line-height: 1.2 !important;
+
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+
+    appearance: none !important;
+    -webkit-appearance: none !important;
+
+    border-radius: 10px !important;
+    cursor: pointer !important;
+}
+
+/* Keep button items visually identical to links */
+.more-menu button {
+    color: inherit !important;
+}
+
+/* Icon alignment */
+.more-menu a::first-letter,
+.more-menu button::first-letter {
+    font-size: 15px;
+}
+
+/* Hover */
+.more-menu a:hover,
+.more-menu button:hover {
+    background: rgba(0, 0, 0, 0.07) !important;
+}
+
+/* Dark theme */
+body.theme-dark .more-menu {
+    background: rgba(25, 25, 35, 0.98) !important;
+}
+
+body.theme-dark .more-menu a,
+body.theme-dark .more-menu button {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+
+body.theme-dark .more-menu a:hover,
+body.theme-dark .more-menu button:hover {
+    background: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* Logout */
+.more-menu .menu-danger {
+    color: #e74c3c !important;
+}
+
+body.theme-dark .more-menu .menu-danger {
+    color: #ff6b6b !important;
+}
+
+/* Make every item the same height */
+.more-menu a,
+.more-menu button {
+    min-height: 42px !important;
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="dashboard-nav">
+
+    <h2>
+        👁️ CivicEye AI
+    </h2>
+
+    <div>
+
+        <a href="citizen.html">
+            🏠 <span data-i18n="citizenPortal">Citizen Portal</span>
+        </a>
+
+
+        <div class="more-menu-container">
+
+            <button
+                type="button"
+                class="more-menu-button"
+                id="moreMenuButton"
+                aria-label="More"
+                aria-expanded="false"
+            >
+                ⋮
+            </button>
+
+
+            <div
+                class="more-menu"
+                id="moreMenu"
+            >
+
+                <a href="profile.html">
+
+                    👤
+
+                    <span data-menu-text="profile">
+                        Profile
+                    </span>
+
+                </a>
+
+
+                <a href="settings.html">
+
+                    ⚙️
+
+                    <span data-menu-text="settings">
+                        Settings
+                    </span>
+
+                </a>
+
+
+                <a href="privacy.html">
+
+                    🔒
+
+                    <span data-menu-text="privacy">
+                        Privacy
+                    </span>
+
+                </a>
+
+
+                <button
+                    type="button"
+                    onclick="showHelp()"
+                >
+
+                    ❓
+
+                    <span data-menu-text="help">
+                        Help & Support
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="showAbout()"
+                >
+
+                    ℹ️
+
+                    <span data-menu-text="about">
+                        About CivicEye AI
+                    </span>
+
+                </button>
+
+
+                <a
+                    href="login.html"
+                    class="menu-danger"
+                >
+
+                    🚪
+
+                    <span data-menu-text="logout">
+                        Logout
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     SETTINGS
+===================================================== -->
+
+<div class="settings-container">
+
+    <div class="settings-box">
+
+
+        <h1 data-i18n="settingsTitle">
+            ⚙️ Settings
+        </h1>
+
+
+        <p
+            class="settings-subtitle"
+            data-i18n="settingsSubtitle"
+        >
+            Customize your CivicEye AI experience
+        </p>
+
+
+
+        <!-- =================================================
+             NOTIFICATIONS
+        ================================================== -->
+
+        <div class="settings-section">
+
+            <h2 data-i18n="notificationsHeading">
+                🔔 Notifications
+            </h2>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div
+                        class="setting-title"
+                        data-i18n="pushNotifications"
+                    >
+                        Push Notifications
+                    </div>
+
+                    <div
+                        class="setting-description"
+                        data-i18n="pushDescription"
+                    >
+                        Receive updates about your reported issues.
+                    </div>
+
+                </div>
+
+
+                <div class="setting-control">
+
+                    <label class="toggle">
+
+                        <input
+                            type="checkbox"
+                            id="notificationSetting"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div
+                        class="setting-title"
+                        data-i18n="statusUpdates"
+                    >
+                        Status Updates
+                    </div>
+
+                    <div
+                        class="setting-description"
+                        data-i18n="statusDescription"
+                    >
+                        Get notified when your complaint status changes.
+                    </div>
+
+                </div>
+
+
+                <div class="setting-control">
+
+                    <label class="toggle">
+
+                        <input
+                            type="checkbox"
+                            id="statusSetting"
+                            checked
+                        >
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             LANGUAGE
+        ================================================== -->
+
+        <div class="settings-section">
+
+            <h2 data-i18n="languageHeading">
+                🌐 Language
+            </h2>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div
+                        class="setting-title"
+                        data-i18n="preferredLanguage"
+                    >
+                        Preferred Language
+                    </div>
+
+                    <div
+                        class="setting-description"
+                        data-i18n="languageDescription"
+                    >
+                        Choose the language used by the citizen portal.
+                    </div>
+
+                </div>
+
+
+                <div class="setting-control">
+
+                    <select id="languageSetting">
+
+                        <option
+                            value="en"
+                            data-i18n="english"
+                        >
+                            English
+                        </option>
+
+                        <option
+                            value="ta"
+                            data-i18n="tamil"
+                        >
+                            தமிழ்
+                        </option>
+
+                        <option
+                            value="si"
+                            data-i18n="sinhala"
+                        >
+                            සිංහල
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             APPEARANCE
+        ================================================== -->
+
+        <div class="settings-section">
+
+            <h2 data-i18n="appearanceHeading">
+                🎨 Appearance
+            </h2>
+
+
+            <div class="setting-row">
+
+                <div class="setting-info">
+
+                    <div
+                        class="setting-title"
+                        data-i18n="theme"
+                    >
+                        Theme
+                    </div>
+
+                    <div
+                        class="setting-description"
+                        data-i18n="themeDescription"
+                    >
+                        Choose your preferred display theme.
+                    </div>
+
+                </div>
+
+
+                <div class="setting-control">
+
+                    <select id="themeSetting">
+
+                        <option
+                            value="default"
+                            data-i18n="defaultTheme"
+                        >
+                            Default
+                        </option>
+
+                        <option
+                            value="light"
+                            data-i18n="lightTheme"
+                        >
+                            Light
+                        </option>
+
+                        <option
+                            value="dark"
+                            data-i18n="darkTheme"
+                        >
+                            Dark
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SAVE
+        ================================================== -->
+
+        <button
+            type="button"
+            class="save-button"
+            id="saveSettingsButton"
+            data-i18n="saveSettings"
+        >
+
+            💾 Save Settings
+
+        </button>
+
+
+        <div
+            id="settingsStatus"
+            class="settings-status"
+        ></div>
+
+
+
+        <!-- =================================================
+             NAVIGATION
+        ================================================== -->
+
+        <div class="navigation-buttons">
+
+
+            <button
+                type="button"
+                class="navigation-button"
+                onclick="window.location.href='profile.html'"
+                data-i18n="profileButton"
+            >
+
+                👤 Profile
+
+            </button>
+
+
+            <button
+                type="button"
+                class="navigation-button"
+                onclick="window.location.href='privacy.html'"
+                data-i18n="privacyButton"
+            >
+
+                🔒 Privacy
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     HELP MODAL
+===================================================== -->
+
+<div
+    class="civic-modal"
+    id="helpModal"
+    onclick="closeModalOutside(event,'helpModal')"
+>
+
+    <div class="civic-modal-box">
+
+        <h2 data-i18n="helpTitle">
+            ❓ Help & Support
+        </h2>
+
+        <p data-i18n="helpText">
+            CivicEye AI helps citizens report public issues,
+            track complaint progress, and receive status updates.
+            If you need assistance, please contact your project
+            administrator.
+        </p>
+
+        <button
+            type="button"
+            class="modal-close"
+            onclick="closeModal('helpModal')"
+            data-i18n="close"
+        >
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     ABOUT MODAL
+===================================================== -->
+
+<div
+    class="civic-modal"
+    id="aboutModal"
+    onclick="closeModalOutside(event,'aboutModal')"
+>
+
+    <div class="civic-modal-box">
+
+        <h2 data-i18n="aboutTitle">
+            ℹ️ About CivicEye AI
+        </h2>
+
+        <p data-i18n="aboutText">
+            CivicEye AI is a smart civic issue reporting platform
+            designed to help citizens report problems such as road
+            damage, garbage, water leaks and street-light issues.
+        </p>
+
+        <button
+            type="button"
+            class="modal-close"
+            onclick="closeModal('aboutModal')"
+            data-i18n="close"
+        >
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   TRANSLATIONS
+===================================================== */
+
+const settingsTranslations = {
+
+    en: {
+
+        citizenPortal: "Citizen Portal",
+
+        settingsTitle: "⚙️ Settings",
+
+        settingsSubtitle:
+            "Customize your CivicEye AI experience",
+
+        notificationsHeading:
+            "🔔 Notifications",
+
+        pushNotifications:
+            "Push Notifications",
+
+        pushDescription:
+            "Receive updates about your reported issues.",
+
+        statusUpdates:
+            "Status Updates",
+
+        statusDescription:
+            "Get notified when your complaint status changes.",
+
+        languageHeading:
+            "🌐 Language",
+
+        preferredLanguage:
+            "Preferred Language",
+
+        languageDescription:
+            "Choose the language used by the citizen portal.",
+
+        english:
+            "English",
+
+        tamil:
+            "தமிழ்",
+
+        sinhala:
+            "සිංහල",
+
+        appearanceHeading:
+            "🎨 Appearance",
+
+        theme:
+            "Theme",
+
+        themeDescription:
+            "Choose your preferred display theme.",
+
+        defaultTheme:
+            "Default",
+
+        lightTheme:
+            "Light",
+
+        darkTheme:
+            "Dark",
+
+        saveSettings:
+            "💾 Save Settings",
+
+        profileButton:
+            "👤 Profile",
+
+        privacyButton:
+            "🔒 Privacy",
+
+        helpTitle:
+            "❓ Help & Support",
+
+        helpText:
+            "CivicEye AI helps citizens report public issues, track complaint progress, and receive status updates. If you need assistance, please contact your project administrator.",
+
+        aboutTitle:
+            "ℹ️ About CivicEye AI",
+
+        aboutText:
+            "CivicEye AI is a smart civic issue reporting platform designed to help citizens report problems such as road damage, garbage, water leaks and street-light issues.",
+
+        close:
+            "Close",
+
+        saved:
+            "✅ Settings saved successfully."
+
+    },
+
+
+    ta: {
+
+        citizenPortal:
+            "குடிமக்கள் தளம்",
+
+        settingsTitle:
+            "⚙️ அமைப்புகள்",
+
+        settingsSubtitle:
+            "CivicEye AI அனுபவத்தை உங்கள் விருப்பத்திற்கு ஏற்ப மாற்றுங்கள்",
+
+        notificationsHeading:
+            "🔔 அறிவிப்புகள்",
+
+        pushNotifications:
+            "Push அறிவிப்புகள்",
+
+        pushDescription:
+            "நீங்கள் பதிவு செய்த பிரச்சினைகள் தொடர்பான புதுப்பிப்புகளைப் பெறுங்கள்.",
+
+        statusUpdates:
+            "நிலை புதுப்பிப்புகள்",
+
+        statusDescription:
+            "உங்கள் புகாரின் நிலை மாறும்போது அறிவிப்பைப் பெறுங்கள்.",
+
+        languageHeading:
+            "🌐 மொழி",
+
+        preferredLanguage:
+            "விருப்பமான மொழி",
+
+        languageDescription:
+            "குடிமக்கள் தளத்தில் பயன்படுத்தப்படும் மொழியைத் தேர்ந்தெடுக்கவும்.",
+
+        english:
+            "English",
+
+        tamil:
+            "தமிழ்",
+
+        sinhala:
+            "සිංහල",
+
+        appearanceHeading:
+            "🎨 தோற்றம்",
+
+        theme:
+            "Theme",
+
+        themeDescription:
+            "உங்களுக்கு விருப்பமான காட்சி தோற்றத்தைத் தேர்ந்தெடுக்கவும்.",
+
+        defaultTheme:
+            "இயல்புநிலை",
+
+        lightTheme:
+            "ஒளி",
+
+        darkTheme:
+            "இருள்",
+
+        saveSettings:
+            "💾 அமைப்புகளைச் சேமிக்கவும்",
+
+        profileButton:
+            "👤 சுயவிவரம்",
+
+        privacyButton:
+            "🔒 தனியுரிமை",
+
+        helpTitle:
+            "❓ உதவி மற்றும் ஆதரவு",
+
+        helpText:
+            "CivicEye AI மூலம் குடிமக்கள் பொது பிரச்சினைகளைப் பதிவு செய்யவும், புகார்களின் முன்னேற்றத்தைப் பார்க்கவும் மற்றும் நிலை புதுப்பிப்புகளைப் பெறவும் முடியும். உதவி தேவைப்பட்டால் திட்ட நிர்வாகியைத் தொடர்புகொள்ளவும்.",
+
+        aboutTitle:
+            "ℹ️ CivicEye AI பற்றி",
+
+        aboutText:
+            "CivicEye AI என்பது சாலை சேதம், குப்பை, நீர் கசிவு மற்றும் தெருவிளக்கு பிரச்சினைகள் போன்ற பொது பிரச்சினைகளைப் பதிவு செய்ய குடிமக்களுக்கு உதவும் புத்திசாலித்தனமான தளமாகும்.",
+
+        close:
+            "மூடு",
+
+        saved:
+            "✅ அமைப்புகள் வெற்றிகரமாகச் சேமிக்கப்பட்டன."
+
+    },
+
+
+    si: {
+
+        citizenPortal:
+            "පුරවැසි ද්වාරය",
+
+        settingsTitle:
+            "⚙️ සැකසුම්",
+
+        settingsSubtitle:
+            "ඔබේ CivicEye AI අත්දැකීම ඔබට අවශ්‍ය පරිදි සකස් කරන්න",
+
+        notificationsHeading:
+            "🔔 දැනුම්දීම්",
+
+        pushNotifications:
+            "Push දැනුම්දීම්",
+
+        pushDescription:
+            "ඔබ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන ලබා ගන්න.",
+
+        statusUpdates:
+            "තත්ත්ව යාවත්කාලීන",
+
+        statusDescription:
+            "ඔබේ පැමිණිල්ලේ තත්ත්වය වෙනස් වූ විට දැනුම්දීමක් ලබා ගන්න.",
+
+        languageHeading:
+            "🌐 භාෂාව",
+
+        preferredLanguage:
+            "කැමති භාෂාව",
+
+        languageDescription:
+            "පුරවැසි ද්වාරය සඳහා භාවිත කරන භාෂාව තෝරන්න.",
+
+        english:
+            "English",
+
+        tamil:
+            "தமிழ்",
+
+        sinhala:
+            "සිංහල",
+
+        appearanceHeading:
+            "🎨 පෙනුම",
+
+        theme:
+            "තේමාව",
+
+        themeDescription:
+            "ඔබ කැමති දර්ශන තේමාව තෝරන්න.",
+
+        defaultTheme:
+            "පෙරනිමිය",
+
+        lightTheme:
+            "ආලෝක",
+
+        darkTheme:
+            "අඳුරු",
+
+        saveSettings:
+            "💾 සැකසුම් සුරකින්න",
+
+        profileButton:
+            "👤 පැතිකඩ",
+
+        privacyButton:
+            "🔒 පෞද්ගලිකත්වය",
+
+        helpTitle:
+            "❓ උදව් සහ සහාය",
+
+        helpText:
+            "CivicEye AI මඟින් පුරවැසියන්ට පොදු ගැටලු වාර්තා කිරීමට, පැමිණිලිවල ප්‍රගතිය නිරීක්ෂණය කිරීමට සහ තත්ත්ව යාවත්කාලීන ලබා ගැනීමට හැකිය. සහාය අවශ්‍ය නම් ව්‍යාපෘති පරිපාලක අමතන්න.",
+
+        aboutTitle:
+            "ℹ️ CivicEye AI ගැන",
+
+        aboutText:
+            "CivicEye AI යනු මාර්ග හානි, කසළ, ජල කාන්දුවීම් සහ වීදි ආලෝක ගැටලු වැනි පොදු ගැටලු වාර්තා කිරීමට පුරවැසියන්ට උපකාර කරන බුද්ධිමත් වේදිකාවකි.",
+
+        close:
+            "වසන්න",
+
+        saved:
+            "✅ සැකසුම් සාර්ථකව සුරකින ලදී."
+
+    }
+
+};
+
+
+
+/* =====================================================
+   MENU TRANSLATIONS
+===================================================== */
+
+const civicEyeMenuTranslations = {
+
+    en: {
+
+        profile: "Profile",
+
+        settings: "Settings",
+
+        privacy: "Privacy",
+
+        help: "Help & Support",
+
+        about: "About CivicEye AI",
+
+        logout: "Logout"
+
+    },
+
+
+    ta: {
+
+        profile: "சுயவிவரம்",
+
+        settings: "அமைப்புகள்",
+
+        privacy: "தனியுரிமை",
+
+        help: "உதவி மற்றும் ஆதரவு",
+
+        about: "CivicEye AI பற்றி",
+
+        logout: "வெளியேறு"
+
+    },
+
+
+    si: {
+
+        profile: "පැතිකඩ",
+
+        settings: "සැකසුම්",
+
+        privacy: "පෞද්ගලිකත්වය",
+
+        help: "උදව් සහ සහාය",
+
+        about: "CivicEye AI ගැන",
+
+        logout: "ඉවත් වන්න"
+
+    }
+
+};
+
+
+
+/* =====================================================
+   ELEMENTS
+===================================================== */
+
+const notificationSetting =
+    document.getElementById("notificationSetting");
+
+const statusSetting =
+    document.getElementById("statusSetting");
+
+const languageSetting =
+    document.getElementById("languageSetting");
+
+const themeSetting =
+    document.getElementById("themeSetting");
+
+const saveSettingsButton =
+    document.getElementById("saveSettingsButton");
+
+const settingsStatus =
+    document.getElementById("settingsStatus");
+
+const moreMenuButton =
+    document.getElementById("moreMenuButton");
+
+const moreMenu =
+    document.getElementById("moreMenu");
+
+
+
+/* =====================================================
+   APPLY LANGUAGE
+   IMPORTANT:
+   Uses ONLY SAVED language.
+===================================================== */
+
+function applyLanguage() {
+
+    const language =
+        localStorage.getItem("civicEyeLanguage") || "en";
+
+
+    const t =
+        settingsTranslations[language] ||
+        settingsTranslations.en;
+
+
+    document.documentElement.lang =
+        language === "ta"
+            ? "ta"
+            : language === "si"
+                ? "si"
+                : "en";
+
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(function(element) {
+
+            const key =
+                element.getAttribute("data-i18n");
+
+
+            if (t[key] !== undefined) {
+
+                element.textContent =
+                    t[key];
+
+            }
+
+        });
+
+
+    const menuLanguage =
+        civicEyeMenuTranslations[language] ||
+        civicEyeMenuTranslations.en;
+
+
+    document
+        .querySelectorAll("[data-menu-text]")
+        .forEach(function(element) {
+
+            const key =
+                element.getAttribute("data-menu-text");
+
+
+            if (menuLanguage[key] !== undefined) {
+
+                element.textContent =
+                    menuLanguage[key];
+
+            }
+
+        });
+
+}
+
+
+
+/* =====================================================
+   APPLY SAVED THEME
+   IMPORTANT:
+   Uses ONLY SAVED theme.
+===================================================== */
+
+function applySavedTheme() {
+
+    const savedTheme =
+        localStorage.getItem("civicEyeTheme") || "default";
+
+
+    document.body.classList.remove(
+        "theme-light",
+        "theme-dark"
+    );
+
+
+    if (savedTheme === "light") {
+
+        document.body.classList.add(
+            "theme-light"
+        );
+
+    }
+    else if (savedTheme === "dark") {
+
+        document.body.classList.add(
+            "theme-dark"
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   LOAD SETTINGS
+===================================================== */
+
+function loadSettings() {
+
+    const savedNotifications =
+        localStorage.getItem(
+            "civicEyeNotifications"
+        );
+
+
+    const savedStatusUpdates =
+        localStorage.getItem(
+            "civicEyeStatusUpdates"
+        );
+
+
+    const savedLanguage =
+        localStorage.getItem(
+            "civicEyeLanguage"
+        );
+
+
+    const savedTheme =
+        localStorage.getItem(
+            "civicEyeTheme"
+        );
+
+
+    /* Notifications */
+
+    notificationSetting.checked =
+        savedNotifications === null
+            ? true
+            : savedNotifications === "true";
+
+
+    /* Status Updates */
+
+    statusSetting.checked =
+        savedStatusUpdates === null
+            ? true
+            : savedStatusUpdates === "true";
+
+
+    /* Language */
+
+    languageSetting.value =
+        savedLanguage || "en";
+
+
+    /* Theme */
+
+    themeSetting.value =
+        savedTheme || "default";
+
+
+    /* Apply ONLY SAVED settings */
+
+    applySavedTheme();
+
+    applyLanguage();
+
+}
+
+
+
+/* =====================================================
+   SAVE SETTINGS
+   EVERYTHING IS APPLIED ONLY HERE
+===================================================== */
+
+function saveSettings() {
+
+    const notifications =
+        notificationSetting.checked;
+
+
+    const statusUpdates =
+        statusSetting.checked;
+
+
+    const language =
+        languageSetting.value;
+
+
+    const theme =
+        themeSetting.value;
+
+
+
+    /* Save Notifications */
+
+    localStorage.setItem(
+        "civicEyeNotifications",
+        notifications ? "true" : "false"
+    );
+
+
+    /* Save Status Updates */
+
+    localStorage.setItem(
+        "civicEyeStatusUpdates",
+        statusUpdates ? "true" : "false"
+    );
+
+
+    /* Save Language */
+
+    localStorage.setItem(
+        "civicEyeLanguage",
+        language
+    );
+
+
+    /* Save Theme */
+
+    localStorage.setItem(
+        "civicEyeTheme",
+        theme
+    );
+
+
+    /*
+       NOW APPLY THE CHANGES.
+       Nothing was changed before this point.
+    */
+
+    applySavedTheme();
+
+    applyLanguage();
+
+
+    /* Confirmation */
+
+    const t =
+        settingsTranslations[language] ||
+        settingsTranslations.en;
+
+
+    settingsStatus.textContent =
+        t.saved;
+
+
+    settingsStatus.style.color =
+        "var(--settings-text)";
+
+
+    setTimeout(function() {
+
+        settingsStatus.textContent = "";
+
+    }, 2500);
+
+}
+
+
+
+/* =====================================================
+   IMPORTANT:
+   NO LANGUAGE CHANGE EVENT
+   NO THEME CHANGE EVENT
+
+   Selecting an option only changes the pending value.
+   Nothing is saved/applied until Save Settings.
+===================================================== */
+
+
+
+/* =====================================================
+   SAVE BUTTON
+===================================================== */
+
+saveSettingsButton.addEventListener(
+    "click",
+    saveSettings
+);
+
+
+
+/* =====================================================
+   MORE MENU
+===================================================== */
+
+moreMenuButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+
+        const isOpen =
+            moreMenu.classList.toggle("show");
+
+
+        moreMenuButton.setAttribute(
+            "aria-expanded",
+            isOpen
+                ? "true"
+                : "false"
+        );
+
+    }
+);
+
+
+
+/* =====================================================
+   CLOSE MENU OUTSIDE
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            !moreMenu.contains(event.target) &&
+            !moreMenuButton.contains(event.target)
+        ) {
+
+            moreMenu.classList.remove("show");
+
+
+            moreMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   HELP MODAL
+===================================================== */
+
+function showHelp() {
+
+    document
+        .getElementById("helpModal")
+        .classList.add("show");
+
+
+    moreMenu.classList.remove("show");
+
+}
+
+
+
+/* =====================================================
+   ABOUT MODAL
+===================================================== */
+
+function showAbout() {
+
+    document
+        .getElementById("aboutModal")
+        .classList.add("show");
+
+
+    moreMenu.classList.remove("show");
+
+}
+
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal(id) {
+
+    document
+        .getElementById(id)
+        .classList.remove("show");
+
+}
+
+
+
+/* =====================================================
+   CLOSE MODAL OUTSIDE
+===================================================== */
+
+function closeModalOutside(event, id) {
+
+    if (
+        event.target.id === id
+    ) {
+
+        closeModal(id);
+
+    }
+
+}
+
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            document
+                .querySelectorAll(
+                    ".civic-modal.show"
+                )
+                .forEach(function(modal) {
+
+                    modal.classList.remove("show");
+
+                });
+
+
+            moreMenu.classList.remove("show");
+
+
+            moreMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   PAGE READY
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        loadSettings();
+
+    }
+);
+
+
+
+/* =====================================================
+   REFRESH WHEN RETURNING TO PAGE
+===================================================== */
+
+window.addEventListener(
+    "pageshow",
+    function() {
+
+        loadSettings();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

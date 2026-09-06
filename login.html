@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CivicEye AI - Login</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* =====================================================
+           THEME VARIABLES
+        ===================================================== */
+
+        :root {
+            --page-bg: linear-gradient(135deg, #eef2ff, #f8fafc);
+            --container-bg: rgba(255, 255, 255, 0.9);
+            --main-text: #111827;
+            --secondary-text: #6b7280;
+            --label-text: #374151;
+            --input-bg: white;
+            --input-border: #d1d5db;
+            --note-bg: #f3f4f6;
+            --button-bg: #4f46e5;
+            --button-hover: #4338ca;
+            --button-text: white;
+            --link-color: #4f46e5;
+        }
+
+        /* LIGHT THEME */
+
+        body.theme-light {
+            --page-bg: #f5f7fa;
+            --container-bg: rgba(255, 255, 255, 0.95);
+            --main-text: #111827;
+            --secondary-text: #6b7280;
+            --label-text: #374151;
+            --input-bg: white;
+            --input-border: #d1d5db;
+            --note-bg: #f3f4f6;
+            --button-bg: #4f46e5;
+            --button-hover: #4338ca;
+            --button-text: white;
+            --link-color: #4f46e5;
+        }
+
+        /* DARK THEME */
+
+        body.theme-dark {
+            --page-bg: #101010;
+            --container-bg: rgba(25, 25, 25, 0.96);
+            --main-text: #ffffff;
+            --secondary-text: #c7c7c7;
+            --label-text: #eeeeee;
+            --input-bg: #1f1f1f;
+            --input-border: #444444;
+            --note-bg: #202020;
+            --button-bg: #ffffff;
+            --button-hover: #e5e5e5;
+            --button-text: #111111;
+            --link-color: #9ca3ff;
+        }
+
+
+        body {
+            min-height: 100vh;
+            background: var(--page-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--main-text);
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 430px;
+            background: var(--container-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .logo {
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            color: var(--main-text);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--secondary-text);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: 600;
+            color: var(--label-text);
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 13px 15px;
+            border: 1px solid var(--input-border);
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+            background: var(--input-bg);
+            color: var(--main-text);
+        }
+
+        input::placeholder {
+            color: var(--secondary-text);
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #6366f1;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: var(--button-bg);
+            color: var(--button-text);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+
+        .login-btn:hover {
+            background: var(--button-hover);
+        }
+
+        .message {
+            margin-top: 18px;
+            text-align: center;
+            font-weight: 600;
+            min-height: 20px;
+        }
+
+        .back-home {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .admin-note {
+            margin-top: 18px;
+            padding: 12px;
+            background: var(--note-bg);
+            border-radius: 10px;
+            font-size: 12px;
+            color: var(--secondary-text);
+            text-align: center;
+        }
+
+        @media (max-width: 500px) {
+            .login-container {
+                padding: 25px 20px;
+            }
+
+            .logo {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-container">
+
+    <div class="logo">👁️ CivicEye AI</div>
+
+    <div class="subtitle">
+        Citizen & Admin Login
+    </div>
+
+    <form id="loginForm">
+
+        <div class="form-group">
+            <label for="email">📧 Email</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="password">🔒 Password</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                required
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="accountType">👤 Account Type</label>
+
+            <select id="accountType" required>
+                <option value="citizen">Citizen</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+
+        <button type="submit" class="login-btn">
+            Login 🚀
+        </button>
+
+    </form>
+
+    <div id="message" class="message"></div>
+
+    <div class="admin-note">
+        Admin Demo Account:<br>
+        admin@civiceye.lk
+    </div>
+
+    <a href="index.html" class="back-home">
+        ← Back to Home
+    </a>
+
+</div>
+
+<script>
+
+    /* =====================================================
+       APPLY SAVED THEME
+    ===================================================== */
+
+    (function () {
+
+        const savedTheme =
+            localStorage.getItem("civicEyeTheme") || "default";
+
+        document.body.classList.remove(
+            "theme-light",
+            "theme-dark"
+        );
+
+        if (savedTheme === "light") {
+            document.body.classList.add("theme-light");
+        }
+
+        else if (savedTheme === "dark") {
+            document.body.classList.add("theme-dark");
+        }
+
+    })();
+
+
+    /* =====================================================
+       LOGIN SYSTEM
+    ===================================================== */
+
+    const loginForm = document.getElementById("loginForm");
+    const message = document.getElementById("message");
+
+    loginForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const selectedAccount = document.getElementById("accountType").value;
+
+        message.textContent = "";
+        message.style.color = "";
+
+        /* =========================
+           ADMIN LOGIN
+        ========================= */
+
+        if (selectedAccount === "admin") {
+
+            if (
+                email === "admin@civiceye.lk" &&
+                password === "CivicEyeAdmin2026"
+            ) {
+
+                message.textContent = "✅ Admin login successful!";
+                message.style.color = "green";
+
+                setTimeout(() => {
+                    window.location.href = "admin.html";
+                }, 800);
+
+            } else {
+
+                message.textContent = "❌ Invalid admin email or password.";
+                message.style.color = "red";
+            }
+
+            return;
+        }
+
+        /* =========================
+           CITIZEN LOGIN
+        ========================= */
+
+        if (selectedAccount === "citizen") {
+
+            /*
+             * Save citizen email so profile.html
+             * can display the logged-in citizen's email.
+             */
+
+            localStorage.setItem(
+                "civicEyeCitizenEmail",
+                email
+            );
+
+            message.textContent = "✅ Citizen login successful!";
+            message.style.color = "green";
+
+            setTimeout(() => {
+                window.location.href = "citizen.html";
+            }, 800);
+        }
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,3491 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CivicEye AI Admin Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* ===============================
+   THEME
+================================ */
+
+:root {
+
+    --admin-page-bg:
+        linear-gradient(
+            135deg,
+            #667eea 0%,
+            #764ba2 100%
+        );
+
+    --admin-text:
+        #ffffff;
+
+    --admin-muted:
+        rgba(255,255,255,0.90);
+
+    --admin-card:
+        rgba(255,255,255,0.18);
+
+    --admin-card-border:
+        rgba(255,255,255,0.25);
+
+    --admin-secondary:
+        rgba(255,255,255,0.10);
+
+    --admin-shadow:
+        0 10px 30px rgba(0,0,0,0.18);
+
+}
+
+
+/* ===============================
+   LIGHT THEME
+================================ */
+
+body.theme-light {
+
+    --admin-page-bg:
+        #f5f7fa;
+
+    --admin-text:
+        #222222;
+
+    --admin-muted:
+        #555555;
+
+    --admin-card:
+        #ffffff;
+
+    --admin-card-border:
+        #e1e5ea;
+
+    --admin-secondary:
+        #f1f3f6;
+
+    --admin-shadow:
+        0 10px 30px rgba(0,0,0,0.08);
+
+}
+
+
+/* ===============================
+   DARK THEME
+================================ */
+
+body.theme-dark {
+
+    --admin-page-bg:
+        #111827;
+
+    --admin-text:
+        #ffffff;
+
+    --admin-muted:
+        #c4cad4;
+
+    --admin-card:
+        #1f2937;
+
+    --admin-card-border:
+        #374151;
+
+    --admin-secondary:
+        #273449;
+
+    --admin-shadow:
+        0 10px 30px rgba(0,0,0,0.35);
+
+}
+
+
+/* ===============================
+   BODY
+================================ */
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background:
+        var(--admin-page-bg);
+
+    color:
+        var(--admin-text);
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+
+}
+
+
+/* ===============================
+   ADMIN CONTAINER
+================================ */
+
+.admin-container {
+
+    min-height: 100vh;
+
+    padding: 40px 30px;
+
+    color:
+        var(--admin-text);
+
+    text-align: center;
+
+}
+
+
+.admin-container h1 {
+
+    color:
+        var(--admin-text);
+
+    font-size: 40px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.admin-container > p {
+
+    color:
+        var(--admin-muted);
+
+    opacity: 1;
+
+    margin-bottom: 35px;
+
+}
+
+
+/* ===============================
+   NAVBAR
+================================ */
+
+.dashboard-nav {
+
+    color:
+        var(--admin-text);
+
+    position:
+        relative;
+
+    z-index:
+        1000;
+
+}
+
+
+.dashboard-nav h2 {
+
+    color:
+        var(--admin-text) !important;
+
+}
+
+
+.dashboard-nav > div {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+}
+
+
+.dashboard-nav a {
+
+    color:
+        var(--admin-text) !important;
+
+}
+
+
+/* ===============================
+   LIGHT NAVBAR
+================================ */
+
+body.theme-light .dashboard-nav h2,
+body.theme-light .dashboard-nav a {
+
+    color:
+        #222222 !important;
+
+    -webkit-text-fill-color:
+        #222222 !important;
+
+}
+
+
+/* ===============================
+   DARK NAVBAR
+================================ */
+
+body.theme-dark .dashboard-nav h2,
+body.theme-dark .dashboard-nav a {
+
+    color:
+        #ffffff !important;
+
+    -webkit-text-fill-color:
+        #ffffff !important;
+
+}
+
+
+/* =====================================================
+   THREE DOT MENU
+===================================================== */
+
+.more-menu-container {
+
+    position:
+        relative;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+}
+
+
+.more-menu-button {
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid var(--admin-card-border);
+
+    border-radius:
+        10px;
+
+    background:
+        var(--admin-card);
+
+    color:
+        var(--admin-text);
+
+    font-size:
+        25px;
+
+    font-weight:
+        bold;
+
+    line-height:
+        1;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.2s;
+
+    padding:
+        0;
+
+}
+
+
+.more-menu-button:hover {
+
+    background:
+        var(--admin-secondary);
+
+    transform:
+        translateY(-1px);
+
+}
+
+
+/* ===============================
+   MORE MENU
+================================ */
+
+.more-menu {
+
+    position:
+        absolute;
+
+    top:
+        calc(100% + 10px);
+
+    right:
+        0;
+
+    width:
+        230px;
+
+    padding:
+        8px;
+
+    background:
+        #ffffff;
+
+    color:
+        #222222;
+
+    border:
+        1px solid #dddddd;
+
+    border-radius:
+        14px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.15);
+
+    display:
+        none;
+
+    z-index:
+        9999;
+
+    box-sizing:
+        border-box;
+
+}
+
+
+.more-menu.show {
+
+    display:
+        block;
+
+}
+
+
+/* ===============================
+   MENU ITEMS
+================================ */
+
+.more-menu a,
+.more-menu button {
+
+    width:
+        100% !important;
+
+    box-sizing:
+        border-box !important;
+
+    display:
+        flex !important;
+
+    align-items:
+        center !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        12px 14px !important;
+
+    gap:
+        10px !important;
+
+    text-align:
+        left !important;
+
+    justify-content:
+        flex-start !important;
+
+    font-family:
+        inherit !important;
+
+    font-size:
+        14px !important;
+
+    font-weight:
+        500 !important;
+
+    line-height:
+        1.2 !important;
+
+    border:
+        none !important;
+
+    outline:
+        none !important;
+
+    background:
+        transparent !important;
+
+    appearance:
+        none !important;
+
+    -webkit-appearance:
+        none !important;
+
+    border-radius:
+        10px !important;
+
+    cursor:
+        pointer !important;
+
+    text-decoration:
+        none !important;
+
+    min-height:
+        42px !important;
+
+    color:
+        #222222 !important;
+
+    -webkit-text-fill-color:
+        #222222 !important;
+
+}
+
+
+.more-menu a:hover,
+.more-menu button:hover {
+
+    background:
+        #f1f1f1 !important;
+
+    color:
+        #111111 !important;
+
+    -webkit-text-fill-color:
+        #111111 !important;
+
+}
+
+
+/* ===============================
+   DARK MENU
+================================ */
+
+body.theme-dark .more-menu {
+
+    background:
+        rgba(25,25,35,0.98) !important;
+
+    color:
+        #ffffff !important;
+
+    border:
+        1px solid #374151 !important;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.35) !important;
+
+}
+
+
+body.theme-dark .more-menu a,
+body.theme-dark .more-menu button {
+
+    color:
+        #ffffff !important;
+
+    -webkit-text-fill-color:
+        #ffffff !important;
+
+}
+
+
+body.theme-dark .more-menu a:hover,
+body.theme-dark .more-menu button:hover {
+
+    background:
+        rgba(255,255,255,0.10) !important;
+
+    color:
+        #ffffff !important;
+
+    -webkit-text-fill-color:
+        #ffffff !important;
+
+}
+
+
+/* ===============================
+   LOGOUT
+================================ */
+
+.more-menu .menu-danger {
+
+    color:
+        #e74c3c !important;
+
+    -webkit-text-fill-color:
+        #e74c3c !important;
+
+}
+
+
+body.theme-dark .more-menu .menu-danger {
+
+    color:
+        #ff6b6b !important;
+
+    -webkit-text-fill-color:
+        #ff6b6b !important;
+
+}
+
+
+/* ===============================
+   STATISTICS
+================================ */
+
+.admin-stats {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(180px, 1fr));
+
+    gap:
+        20px;
+
+    margin-bottom:
+        45px;
+
+}
+
+
+.admin-card {
+
+    background:
+        var(--admin-card);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    border:
+        1px solid var(--admin-card-border);
+
+    border-radius:
+        22px;
+
+    padding:
+        25px;
+
+    color:
+        var(--admin-text);
+
+    box-shadow:
+        var(--admin-shadow);
+
+    transition:
+        0.3s ease;
+
+}
+
+
+.admin-card:hover {
+
+    transform:
+        translateY(-7px);
+
+}
+
+
+.admin-card h2 {
+
+    color:
+        var(--admin-text);
+
+    font-size:
+        38px;
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.admin-card p {
+
+    color:
+        var(--admin-text);
+
+    margin:
+        0;
+
+}
+
+
+/* ===============================
+   REPORTS SECTION
+================================ */
+
+.reports {
+
+    max-width:
+        1000px;
+
+    margin:
+        auto;
+
+    padding:
+        30px;
+
+    background:
+        var(--admin-secondary);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    border:
+        1px solid var(--admin-card-border);
+
+    border-radius:
+        25px;
+
+}
+
+
+.reports > h2 {
+
+    color:
+        var(--admin-text);
+
+    margin-bottom:
+        20px;
+
+    font-size:
+        28px;
+
+}
+
+
+/* ===============================
+   REFRESH BUTTON
+================================ */
+
+.refresh-button {
+
+    background:
+        #ffffff;
+
+    color:
+        #222222;
+
+    border:
+        none;
+
+    padding:
+        11px 22px;
+
+    border-radius:
+        12px;
+
+    font-size:
+        15px;
+
+    font-weight:
+        bold;
+
+    cursor:
+        pointer;
+
+    margin-bottom:
+        20px;
+
+}
+
+
+.refresh-button:hover {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* ===============================
+   REPORT CARD
+================================ */
+
+.report-card {
+
+    background:
+        var(--admin-card) !important;
+
+    backdrop-filter:
+        blur(15px);
+
+    -webkit-backdrop-filter:
+        blur(15px);
+
+    border:
+        1px solid var(--admin-card-border);
+
+    border-radius:
+        18px;
+
+    padding:
+        22px;
+
+    margin:
+        15px 0;
+
+    text-align:
+        left;
+
+    color:
+        var(--admin-text) !important;
+
+    box-shadow:
+        var(--admin-shadow);
+
+    transition:
+        0.3s ease;
+
+}
+
+
+.report-card:hover {
+
+    transform:
+        translateY(-3px);
+
+}
+
+
+.report-card h3 {
+
+    color:
+        var(--admin-text) !important;
+
+    font-size:
+        21px;
+
+    margin-bottom:
+        15px;
+
+}
+
+
+.report-card p {
+
+    color:
+        var(--admin-text) !important;
+
+    margin:
+        8px 0;
+
+    line-height:
+        1.5;
+
+}
+
+
+/* ===============================
+   REPORT IMAGE
+================================ */
+
+.report-image {
+
+    width:
+        100%;
+
+    max-width:
+        400px;
+
+    border-radius:
+        15px;
+
+    margin-top:
+        15px;
+
+    display:
+        block;
+
+}
+
+
+/* ===============================
+   BUTTONS
+================================ */
+
+.review-button,
+.status-button {
+
+    margin-top:
+        18px;
+
+    padding:
+        10px 18px;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    cursor:
+        pointer;
+
+    font-weight:
+        bold;
+
+    background:
+        #ffffff;
+
+    color:
+        #222222;
+
+}
+
+
+.review-button:hover,
+.status-button:hover {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+.status-controls {
+
+    margin-top:
+        18px;
+
+    display:
+        flex;
+
+    gap:
+        10px;
+
+    flex-wrap:
+        wrap;
+
+}
+
+
+.status-button {
+
+    margin-top:
+        0;
+
+    transition:
+        0.2s ease;
+
+}
+
+
+.status-button:disabled {
+
+    opacity:
+        0.6;
+
+    cursor:
+        not-allowed;
+
+    transform:
+        none;
+
+}
+
+
+/* ===============================
+   STATUS BADGE
+================================ */
+
+.status-badge {
+
+    display:
+        inline-block;
+
+    margin-top:
+        5px;
+
+    padding:
+        6px 12px;
+
+    border-radius:
+        20px;
+
+    background:
+        rgba(255,255,255,0.20);
+
+    color:
+        var(--admin-text);
+
+    font-weight:
+        bold;
+
+}
+
+
+/* ===============================
+   MODAL
+================================ */
+
+.modal {
+
+    display:
+        none;
+
+    position:
+        fixed;
+
+    z-index:
+        9999;
+
+    left:
+        0;
+
+    top:
+        0;
+
+    width:
+        100%;
+
+    height:
+        100%;
+
+    background:
+        rgba(0,0,0,0.65);
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    padding:
+        20px;
+
+    box-sizing:
+        border-box;
+
+}
+
+
+.modal-content {
+
+    width:
+        100%;
+
+    max-width:
+        600px;
+
+    max-height:
+        90vh;
+
+    overflow-y:
+        auto;
+
+    background:
+        var(--admin-card);
+
+    backdrop-filter:
+        blur(20px);
+
+    -webkit-backdrop-filter:
+        blur(20px);
+
+    border:
+        1px solid var(--admin-card-border);
+
+    border-radius:
+        22px;
+
+    padding:
+        30px;
+
+    color:
+        var(--admin-text);
+
+    text-align:
+        left;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.30);
+
+    box-sizing:
+        border-box;
+
+}
+
+
+.modal-content h2 {
+
+    color:
+        var(--admin-text);
+
+    margin-bottom:
+        20px;
+
+}
+
+
+.modal-content p {
+
+    color:
+        var(--admin-text);
+
+    line-height:
+        1.6;
+
+    margin:
+        10px 0;
+
+}
+
+
+.modal-image {
+
+    width:
+        100%;
+
+    max-height:
+        350px;
+
+    object-fit:
+        contain;
+
+    border-radius:
+        15px;
+
+    margin:
+        15px 0;
+
+}
+
+
+.close-button {
+
+    float:
+        right;
+
+    background:
+        #ffffff;
+
+    color:
+        #222222;
+
+    border:
+        none;
+
+    border-radius:
+        10px;
+
+    padding:
+        8px 14px;
+
+    font-weight:
+        bold;
+
+    cursor:
+        pointer;
+
+}
+
+
+.close-button:hover {
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* ===============================
+   LOADING
+================================ */
+
+.loading-reports {
+
+    color:
+        var(--admin-muted);
+
+    padding:
+        30px;
+
+    font-size:
+        17px;
+
+}
+
+
+/* ===============================
+   ERROR
+================================ */
+
+.error-reports {
+
+    color:
+        var(--admin-text);
+
+    padding:
+        25px;
+
+    background:
+        var(--admin-secondary);
+
+    border-radius:
+        15px;
+
+}
+
+
+/* ===============================
+   MOBILE
+================================ */
+
+@media(max-width:700px) {
+
+    .admin-container {
+
+        padding:
+            25px 15px;
+
+    }
+
+
+    .admin-container h1 {
+
+        font-size:
+            30px;
+
+    }
+
+
+    .dashboard-nav {
+
+        padding:
+            15px 18px;
+
+    }
+
+
+    .reports {
+
+        padding:
+            20px;
+
+    }
+
+
+    .reports > h2 {
+
+        font-size:
+            23px;
+
+    }
+
+
+    .report-card {
+
+        padding:
+            18px;
+
+    }
+
+
+    .report-image {
+
+        max-width:
+            100%;
+
+    }
+
+
+    .modal-content {
+
+        padding:
+            22px;
+
+    }
+
+
+    .more-menu {
+
+        width:
+            220px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===============================
+     NAVBAR
+================================ -->
+
+<nav class="dashboard-nav">
+
+    <h2>
+        👁️ CivicEye AI
+    </h2>
+
+
+    <div>
+
+        <a href="index.html">
+            🏠 <span data-i18n="home">Home</span>
+        </a>
+
+
+        <div class="more-menu-container">
+
+            <button
+                type="button"
+                class="more-menu-button"
+                id="moreMenuButton"
+                aria-label="More menu"
+                aria-expanded="false"
+                onclick="toggleMoreMenu(event)"
+            >
+                ⋮
+            </button>
+
+
+            <div
+                class="more-menu"
+                id="moreMenu"
+            >
+
+                <a href="profile.html">
+                    👤
+                    <span data-i18n="profile">
+                        Profile
+                    </span>
+                </a>
+
+
+                <a href="settings.html">
+                    ⚙️
+                    <span data-i18n="settings">
+                        Settings
+                    </span>
+                </a>
+
+
+                <a href="privacy.html">
+                    🔒
+                    <span data-i18n="privacy">
+                        Privacy
+                    </span>
+                </a>
+
+
+                <a href="help.html">
+                    ❓
+                    <span data-i18n="help">
+                        Help &amp; Support
+                    </span>
+                </a>
+
+
+                <a href="about.html">
+                    ℹ️
+                    <span data-i18n="about">
+                        About CivicEye AI
+                    </span>
+                </a>
+
+
+                <button
+                    type="button"
+                    class="menu-danger"
+                    onclick="logout()"
+                >
+                    🚪
+                    <span data-i18n="logout">
+                        Logout
+                    </span>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ===============================
+     ADMIN DASHBOARD
+================================ -->
+
+<div class="admin-container">
+
+
+    <h1 data-i18n="adminTitle">
+        👨‍💼 CivicEye AI Admin Dashboard
+    </h1>
+
+
+    <p data-i18n="adminSubtitle">
+        Manage and monitor public issues across Sri Lanka 🇱🇰
+    </p>
+
+
+
+    <!-- ===============================
+         STATISTICS
+    ================================ -->
+
+    <div class="admin-stats">
+
+
+        <div class="admin-card">
+
+            <h2 id="totalReports">
+                0
+            </h2>
+
+            <p data-i18n="totalReports">
+                Total Reports
+            </p>
+
+        </div>
+
+
+
+        <div class="admin-card">
+
+            <h2 id="pendingReports">
+                0
+            </h2>
+
+            <p data-i18n="pendingIssues">
+                Pending Issues
+            </p>
+
+        </div>
+
+
+
+        <div class="admin-card">
+
+            <h2 id="processingReports">
+                0
+            </h2>
+
+            <p data-i18n="processing">
+                Processing
+            </p>
+
+        </div>
+
+
+
+        <div class="admin-card">
+
+            <h2 id="solvedReports">
+                0
+            </h2>
+
+            <p data-i18n="solved">
+                Solved
+            </p>
+
+        </div>
+
+
+
+        <div class="admin-card">
+
+            <h2 id="districtReports">
+                0
+            </h2>
+
+            <p data-i18n="activeLocations">
+                Active Locations
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ===============================
+         REPORTS
+    ================================ -->
+
+    <div class="reports">
+
+
+        <h2 data-i18n="recentReports">
+            📋 Recent Reports
+        </h2>
+
+
+        <button
+            class="refresh-button"
+            type="button"
+            onclick="loadReports()"
+            data-i18n="refreshReports"
+        >
+
+            🔄 Refresh Reports
+
+        </button>
+
+
+        <div id="reportsContainer">
+
+            <p
+                class="loading-reports"
+                data-i18n="loadingReports"
+            >
+
+                🔄 Loading reports...
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ===============================
+     REVIEW MODAL
+================================ -->
+
+<div
+    id="reviewModal"
+    class="modal"
+    onclick="closeModalOutside(event)"
+>
+
+    <div
+        class="modal-content"
+        onclick="event.stopPropagation()"
+    >
+
+        <button
+            class="close-button"
+            type="button"
+            onclick="closeReviewModal()"
+        >
+
+            ✕ <span data-i18n="close">Close</span>
+
+        </button>
+
+
+        <h2 data-i18n="reportDetails">
+            📋 Report Details
+        </h2>
+
+
+        <div id="modalReportContent">
+
+            Loading...
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+// =====================================
+// RAILWAY BACKEND URL
+// =====================================
+
+const BACKEND_URL =
+    "https://civiceye-backend-production-eac6.up.railway.app";
+
+
+
+// =====================================
+// STORE REPORTS
+// =====================================
+
+let currentReports = [];
+
+
+
+// =====================================
+// LANGUAGE SYSTEM
+// =====================================
+
+const translations = {
+
+    en: {
+
+        home:
+            "Home",
+
+        profile:
+            "Profile",
+
+        settings:
+            "Settings",
+
+        privacy:
+            "Privacy",
+
+        help:
+            "Help & Support",
+
+        about:
+            "About CivicEye AI",
+
+        logout:
+            "Logout",
+
+        adminTitle:
+            "👨‍💼 CivicEye AI Admin Dashboard",
+
+        adminSubtitle:
+            "Manage and monitor public issues across Sri Lanka 🇱🇰",
+
+        totalReports:
+            "Total Reports",
+
+        pendingIssues:
+            "Pending Issues",
+
+        processing:
+            "Processing",
+
+        solved:
+            "Solved",
+
+        activeLocations:
+            "Active Locations",
+
+        recentReports:
+            "📋 Recent Reports",
+
+        refreshReports:
+            "🔄 Refresh Reports",
+
+        loadingReports:
+            "🔄 Loading reports...",
+
+        noReports:
+            "📭 No reports available yet.",
+
+        reportId:
+            "Report ID",
+
+        location:
+            "Location",
+
+        description:
+            "Description",
+
+        aiConfidence:
+            "AI Confidence",
+
+        priority:
+            "Priority",
+
+        authority:
+            "Recommended Authority",
+
+        duplicate:
+            "Duplicate Complaint",
+
+        status:
+            "Status",
+
+        submitted:
+            "Submitted",
+
+        review:
+            "📝 Review Report",
+
+        startProcessing:
+            "▶️ Start Processing",
+
+        markSolved:
+            "✅ Mark as Solved",
+
+        reportDetails:
+            "📋 Report Details",
+
+        issue:
+            "Issue",
+
+        close:
+            "Close",
+
+        yes:
+            "Yes",
+
+        no:
+            "No",
+
+        unknown:
+            "Unknown",
+
+        noDescription:
+            "No description provided",
+
+        normal:
+            "Normal",
+
+        relevantAuthority:
+            "Relevant Local Authority",
+
+        unableLoad:
+            "❌ Unable to load reports.",
+
+        railwayCheck:
+            "Please check the Railway backend connection.",
+
+        statusUpdated:
+            "Report status updated to",
+
+        unableStatus:
+            "Unable to update report status."
+
+    },
+
+
+    ta: {
+
+        home:
+            "முகப்பு",
+
+        profile:
+            "சுயவிவரம்",
+
+        settings:
+            "அமைப்புகள்",
+
+        privacy:
+            "தனியுரிமை",
+
+        help:
+            "உதவி மற்றும் ஆதரவு",
+
+        about:
+            "CivicEye AI பற்றி",
+
+        logout:
+            "வெளியேறு",
+
+        adminTitle:
+            "👨‍💼 CivicEye AI நிர்வாக டாஷ்போர்டு",
+
+        adminSubtitle:
+            "இலங்கை முழுவதும் உள்ள பொது பிரச்சினைகளை நிர்வகித்து கண்காணிக்கவும் 🇱🇰",
+
+        totalReports:
+            "மொத்த புகார்கள்",
+
+        pendingIssues:
+            "நிலுவையில் உள்ள பிரச்சினைகள்",
+
+        processing:
+            "செயலாக்கத்தில்",
+
+        solved:
+            "தீர்க்கப்பட்டது",
+
+        activeLocations:
+            "செயலில் உள்ள இடங்கள்",
+
+        recentReports:
+            "📋 சமீபத்திய புகார்கள்",
+
+        refreshReports:
+            "🔄 புகார்களை புதுப்பிக்கவும்",
+
+        loadingReports:
+            "🔄 புகார்கள் ஏற்றப்படுகின்றன...",
+
+        noReports:
+            "📭 இதுவரை புகார்கள் எதுவும் இல்லை.",
+
+        reportId:
+            "புகார் அடையாள எண்",
+
+        location:
+            "இடம்",
+
+        description:
+            "விளக்கம்",
+
+        aiConfidence:
+            "AI நம்பகத்தன்மை",
+
+        priority:
+            "முன்னுரிமை",
+
+        authority:
+            "பரிந்துரைக்கப்பட்ட அதிகார நிறுவனம்",
+
+        duplicate:
+            "நகல் புகார்",
+
+        status:
+            "நிலை",
+
+        submitted:
+            "சமர்ப்பிக்கப்பட்ட நேரம்",
+
+        review:
+            "📝 புகாரை மதிப்பாய்வு செய்க",
+
+        startProcessing:
+            "▶️ செயலாக்கத்தை தொடங்குக",
+
+        markSolved:
+            "✅ தீர்க்கப்பட்டதாக குறிக்கவும்",
+
+        reportDetails:
+            "📋 புகார் விவரங்கள்",
+
+        issue:
+            "பிரச்சினை",
+
+        close:
+            "மூடு",
+
+        yes:
+            "ஆம்",
+
+        no:
+            "இல்லை",
+
+        unknown:
+            "தெரியவில்லை",
+
+        noDescription:
+            "விளக்கம் வழங்கப்படவில்லை",
+
+        normal:
+            "சாதாரணம்",
+
+        relevantAuthority:
+            "சம்பந்தப்பட்ட உள்ளாட்சி அதிகார நிறுவனம்",
+
+        unableLoad:
+            "❌ புகார்களை ஏற்ற முடியவில்லை.",
+
+        railwayCheck:
+            "Railway backend இணைப்பை சரிபார்க்கவும்.",
+
+        statusUpdated:
+            "புகாரின் நிலை மாற்றப்பட்டது:",
+
+        unableStatus:
+            "புகாரின் நிலையை மாற்ற முடியவில்லை."
+
+    },
+
+
+    si: {
+
+        home:
+            "මුල් පිටුව",
+
+        profile:
+            "පැතිකඩ",
+
+        settings:
+            "සැකසුම්",
+
+        privacy:
+            "පෞද්ගලිකත්වය",
+
+        help:
+            "උදව් සහ සහාය",
+
+        about:
+            "CivicEye AI ගැන",
+
+        logout:
+            "ඉවත් වන්න",
+
+        adminTitle:
+            "👨‍💼 CivicEye AI පරිපාලක පුවරුව",
+
+        adminSubtitle:
+            "ශ්‍රී ලංකාව පුරා පොදු ගැටලු කළමනාකරණය සහ නිරීක්ෂණය කරන්න 🇱🇰",
+
+        totalReports:
+            "මුළු පැමිණිලි",
+
+        pendingIssues:
+            "පොරොත්තුවෙන් ඇති ගැටලු",
+
+        processing:
+            "සැකසෙමින් පවතී",
+
+        solved:
+            "විසඳා ඇත",
+
+        activeLocations:
+            "සක්‍රීය ස්ථාන",
+
+        recentReports:
+            "📋 මෑත පැමිණිලි",
+
+        refreshReports:
+            "🔄 පැමිණිලි යාවත්කාලීන කරන්න",
+
+        loadingReports:
+            "🔄 පැමිණිලි පූරණය වෙමින් පවතී...",
+
+        noReports:
+            "📭 තවමත් පැමිණිලි නොමැත.",
+
+        reportId:
+            "පැමිණිලි අංකය",
+
+        location:
+            "ස්ථානය",
+
+        description:
+            "විස්තරය",
+
+        aiConfidence:
+            "AI විශ්වාස මට්ටම",
+
+        priority:
+            "ප්‍රමුඛතාව",
+
+        authority:
+            "නිර්දේශිත ආයතනය",
+
+        duplicate:
+            "අනුපිටපත් පැමිණිල්ල",
+
+        status:
+            "තත්ත්වය",
+
+        submitted:
+            "ඉදිරිපත් කළ වේලාව",
+
+        review:
+            "📝 පැමිණිල්ල පරීක්ෂා කරන්න",
+
+        startProcessing:
+            "▶️ සැකසීම ආරම්භ කරන්න",
+
+        markSolved:
+            "✅ විසඳා ඇත ලෙස සලකුණු කරන්න",
+
+        reportDetails:
+            "📋 පැමිණිලි විස්තර",
+
+        issue:
+            "ගැටලුව",
+
+        close:
+            "වසන්න",
+
+        yes:
+            "ඔව්",
+
+        no:
+            "නැත",
+
+        unknown:
+            "නොදනී",
+
+        noDescription:
+            "විස්තරයක් ලබා දී නොමැත",
+
+        normal:
+            "සාමාන්‍ය",
+
+        relevantAuthority:
+            "අදාළ පළාත් පාලන ආයතනය",
+
+        unableLoad:
+            "❌ පැමිණිලි පූරණය කළ නොහැක.",
+
+        railwayCheck:
+            "Railway backend සම්බන්ධතාවය පරීක්ෂා කරන්න.",
+
+        statusUpdated:
+            "පැමිණිලි තත්ත්වය යාවත්කාලීන කරන ලදී:",
+
+        unableStatus:
+            "පැමිණිලි තත්ත්වය යාවත්කාලීන කළ නොහැක."
+
+    }
+
+};
+
+
+
+// =====================================
+// GET CURRENT LANGUAGE
+// =====================================
+
+function getCurrentLanguage() {
+
+    const savedLanguage =
+        localStorage.getItem(
+            "civicEyeLanguage"
+        );
+
+    if (
+        savedLanguage === "ta" ||
+        savedLanguage === "si" ||
+        savedLanguage === "en"
+    ) {
+
+        return savedLanguage;
+
+    }
+
+    return "en";
+
+}
+
+
+
+// =====================================
+// TRANSLATE PAGE
+// =====================================
+
+function applyLanguage() {
+
+    const language =
+        getCurrentLanguage();
+
+    const lang =
+        translations[language] ||
+        translations.en;
+
+
+    document.documentElement.lang =
+        language === "ta"
+            ? "ta"
+            : language === "si"
+                ? "si"
+                : "en";
+
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(
+            element => {
+
+                const key =
+                    element.getAttribute(
+                        "data-i18n"
+                    );
+
+
+                if (
+                    lang[key] !== undefined
+                ) {
+
+                    element.textContent =
+                        lang[key];
+
+                }
+
+            }
+        );
+
+
+    document.title =
+        language === "ta"
+            ? "CivicEye AI நிர்வாக டாஷ்போர்டு"
+            : language === "si"
+                ? "CivicEye AI පරිපාලක පුවරුව"
+                : "CivicEye AI Admin Dashboard";
+
+
+    renderCurrentReports();
+
+}
+
+
+
+// =====================================
+// LANGUAGE HELPER
+// =====================================
+
+function t(key) {
+
+    const language =
+        getCurrentLanguage();
+
+    return (
+        translations[language]?.[key] ||
+        translations.en[key] ||
+        key
+    );
+
+}
+
+
+
+// =====================================
+// APPLY SAVED THEME
+// =====================================
+
+function applySavedTheme() {
+
+    const savedTheme =
+        localStorage.getItem(
+            "civicEyeTheme"
+        ) || "default";
+
+
+    document.body.classList.remove(
+        "theme-light",
+        "theme-dark"
+    );
+
+
+    if (
+        savedTheme === "light"
+    ) {
+
+        document.body.classList.add(
+            "theme-light"
+        );
+
+    }
+
+
+    if (
+        savedTheme === "dark"
+    ) {
+
+        document.body.classList.add(
+            "theme-dark"
+        );
+
+    }
+
+}
+
+
+applySavedTheme();
+
+applyLanguage();
+
+
+
+// =====================================
+// THREE DOT MENU
+// =====================================
+
+function toggleMoreMenu(event) {
+
+    if (event) {
+
+        event.stopPropagation();
+
+    }
+
+
+    const menu =
+        document.getElementById(
+            "moreMenu"
+        );
+
+
+    const button =
+        document.getElementById(
+            "moreMenuButton"
+        );
+
+
+    if (!menu || !button) {
+
+        return;
+
+    }
+
+
+    const isOpen =
+        menu.classList.toggle(
+            "show"
+        );
+
+
+    button.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+    );
+
+}
+
+
+
+// =====================================
+// CLOSE MENU OUTSIDE
+// =====================================
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const menu =
+            document.getElementById(
+                "moreMenu"
+            );
+
+
+        const button =
+            document.getElementById(
+                "moreMenuButton"
+            );
+
+
+        const container =
+            document.querySelector(
+                ".more-menu-container"
+            );
+
+
+        if (
+            !menu ||
+            !button ||
+            !container
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            !container.contains(
+                event.target
+            )
+        ) {
+
+            menu.classList.remove(
+                "show"
+            );
+
+
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+
+// =====================================
+// ESCAPE KEY
+// =====================================
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key !== "Escape"
+        ) {
+
+            return;
+
+        }
+
+
+        const menu =
+            document.getElementById(
+                "moreMenu"
+            );
+
+
+        const button =
+            document.getElementById(
+                "moreMenuButton"
+            );
+
+
+        if (menu) {
+
+            menu.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        if (button) {
+
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+
+// =====================================
+// LOGOUT
+// =====================================
+
+function logout() {
+
+    localStorage.removeItem(
+        "civicEyeCitizenEmail"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+
+// =====================================
+// LOAD REPORTS
+// =====================================
+
+async function loadReports() {
+
+
+    const container =
+        document.getElementById(
+            "reportsContainer"
+        );
+
+
+    container.innerHTML = `
+
+        <p class="loading-reports">
+
+            ${t("loadingReports")}
+
+        </p>
+
+    `;
+
+
+    try {
+
+
+        const response =
+            await fetch(
+                BACKEND_URL + "/reports"
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Backend response failed: " +
+                response.status
+            );
+
+        }
+
+
+        const reports =
+            await response.json();
+
+
+        console.log(
+            "CivicEye Reports:",
+            reports
+        );
+
+
+        if (!Array.isArray(reports)) {
+
+            throw new Error(
+                "Invalid reports data"
+            );
+
+        }
+
+
+        currentReports =
+            reports;
+
+
+        updateStatistics(
+            reports
+        );
+
+
+        renderCurrentReports();
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(
+            "Unable to load reports:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="error-reports">
+
+                ${t("unableLoad")}
+
+                <br><br>
+
+                ${t("railwayCheck")}
+
+                <br><br>
+
+                Error:
+                ${escapeHTML(error.message)}
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+
+// =====================================
+// RENDER CURRENT REPORTS
+// =====================================
+
+function renderCurrentReports() {
+
+    const container =
+        document.getElementById(
+            "reportsContainer"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    if (!Array.isArray(currentReports)) {
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    if (
+        currentReports.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <p class="loading-reports">
+
+                ${t("noReports")}
+
+            </p>
+
+        `;
+
+        return;
+
+    }
+
+
+    currentReports
+        .slice()
+        .reverse()
+        .forEach(
+            report => {
+
+                renderReportCard(
+                    report,
+                    container
+                );
+
+            }
+        );
+
+}
+
+
+
+// =====================================
+// UPDATE STATISTICS
+// =====================================
+
+function updateStatistics(
+    reports
+) {
+
+    const total =
+        reports.length;
+
+
+    const pending =
+        reports.filter(
+            report =>
+                String(
+                    report.status ||
+                    "Pending"
+                ).toLowerCase()
+                === "pending"
+        ).length;
+
+
+    const processing =
+        reports.filter(
+            report =>
+                String(
+                    report.status ||
+                    ""
+                ).toLowerCase()
+                === "processing"
+        ).length;
+
+
+    const solved =
+        reports.filter(
+            report =>
+                String(
+                    report.status ||
+                    ""
+                ).toLowerCase()
+                === "solved"
+        ).length;
+
+
+    const locations =
+        new Set(
+
+            reports
+
+                .map(
+                    report =>
+                        report.location
+                )
+
+                .filter(
+                    location =>
+                        location &&
+                        String(
+                            location
+                        ).trim() !== ""
+                )
+
+        ).size;
+
+
+
+    document.getElementById(
+        "totalReports"
+    ).textContent =
+        total;
+
+
+    document.getElementById(
+        "pendingReports"
+    ).textContent =
+        pending;
+
+
+    document.getElementById(
+        "processingReports"
+    ).textContent =
+        processing;
+
+
+    document.getElementById(
+        "solvedReports"
+    ).textContent =
+        solved;
+
+
+    document.getElementById(
+        "districtReports"
+    ).textContent =
+        locations;
+
+}
+
+
+
+// =====================================
+// TRANSLATE STATUS
+// =====================================
+
+function translateStatus(status) {
+
+    const value =
+        String(status || "").toLowerCase();
+
+
+    if (value === "pending") {
+
+        return getCurrentLanguage() === "ta"
+            ? "நிலுவையில்"
+            : getCurrentLanguage() === "si"
+                ? "පොරොත්තුවෙන්"
+                : "Pending";
+
+    }
+
+
+    if (value === "processing") {
+
+        return getCurrentLanguage() === "ta"
+            ? "செயலாக்கத்தில்"
+            : getCurrentLanguage() === "si"
+                ? "සැකසෙමින්"
+                : "Processing";
+
+    }
+
+
+    if (value === "solved") {
+
+        return getCurrentLanguage() === "ta"
+            ? "தீர்க்கப்பட்டது"
+            : getCurrentLanguage() === "si"
+                ? "විසඳා ඇත"
+                : "Solved";
+
+    }
+
+
+    return status || "Pending";
+
+}
+
+
+
+// =====================================
+// RENDER REPORT CARD
+// =====================================
+
+function renderReportCard(
+    report,
+    container
+) {
+
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+
+    card.className =
+        "report-card";
+
+
+
+    // =================================
+    // TITLE
+    // =================================
+
+    const title =
+        document.createElement(
+            "h3"
+        );
+
+
+    title.textContent =
+        "🛣️ " +
+        (
+            report.issue ||
+            (
+                getCurrentLanguage() === "ta"
+                    ? "பொது பிரச்சினை"
+                    : getCurrentLanguage() === "si"
+                        ? "පොදු ගැටලුව"
+                        : "Public Issue"
+            )
+        );
+
+
+
+    // =================================
+    // REPORT ID
+    // =================================
+
+    const idText =
+        document.createElement(
+            "p"
+        );
+
+
+    idText.textContent =
+        "🆔 " +
+        t("reportId") +
+        ": " +
+        (
+            report.id ||
+            "N/A"
+        );
+
+
+
+    // =================================
+    // LOCATION
+    // =================================
+
+    const locationText =
+        document.createElement(
+            "p"
+        );
+
+
+    locationText.textContent =
+        "📍 " +
+        t("location") +
+        ": " +
+        (
+            report.location ||
+            t("unknown")
+        );
+
+
+
+    // =================================
+    // DESCRIPTION
+    // =================================
+
+    const descriptionText =
+        document.createElement(
+            "p"
+        );
+
+
+    descriptionText.textContent =
+        "📝 " +
+        t("description") +
+        ": " +
+        (
+            report.description ||
+            t("noDescription")
+        );
+
+
+
+    // =================================
+    // AI CONFIDENCE
+    // =================================
+
+    const confidenceText =
+        document.createElement(
+            "p"
+        );
+
+
+    confidenceText.textContent =
+        "🤖 " +
+        t("aiConfidence") +
+        ": " +
+        (
+            report.confidence ||
+            "N/A"
+        );
+
+
+
+    // =================================
+    // PRIORITY
+    // =================================
+
+    const priorityText =
+        document.createElement(
+            "p"
+        );
+
+
+    priorityText.textContent =
+        "🚨 " +
+        t("priority") +
+        ": " +
+        (
+            report.priority ||
+            t("normal")
+        );
+
+
+
+    // =================================
+    // AUTHORITY
+    // =================================
+
+    const authorityText =
+        document.createElement(
+            "p"
+        );
+
+
+    authorityText.textContent =
+        "🏛️ " +
+        t("authority") +
+        ": " +
+        (
+            report.authority ||
+            t("relevantAuthority")
+        );
+
+
+
+    // =================================
+    // DUPLICATE
+    // =================================
+
+    const duplicateText =
+        document.createElement(
+            "p"
+        );
+
+
+    duplicateText.textContent =
+        "🔍 " +
+        t("duplicate") +
+        ": " +
+        (
+            report.isDuplicate === true
+                ? t("yes")
+                : t("no")
+        );
+
+
+
+    // =================================
+    // STATUS
+    // =================================
+
+    const currentStatus =
+        report.status ||
+        "Pending";
+
+
+    const statusText =
+        document.createElement(
+            "p"
+        );
+
+
+    statusText.innerHTML =
+        "📊 " +
+        t("status") +
+        ": " +
+        "<span class='status-badge'>" +
+        escapeHTML(
+            translateStatus(
+                currentStatus
+            )
+        ) +
+        "</span>";
+
+
+
+    // =================================
+    // CREATED TIME
+    // =================================
+
+    const createdText =
+        document.createElement(
+            "p"
+        );
+
+
+    if (report.createdAt) {
+
+        const date =
+            new Date(
+                report.createdAt
+            );
+
+
+        createdText.textContent =
+            "🕒 " +
+            t("submitted") +
+            ": " +
+            date.toLocaleString();
+
+    }
+
+    else {
+
+        createdText.textContent =
+            "🕒 " +
+            t("submitted") +
+            ": N/A";
+
+    }
+
+
+
+    // =================================
+    // IMAGE
+    // =================================
+
+    if (report.image) {
+
+        const image =
+            document.createElement(
+                "img"
+            );
+
+
+        image.className =
+            "report-image";
+
+
+        image.src =
+            BACKEND_URL +
+            "/uploads/" +
+            encodeURIComponent(
+                report.image
+            );
+
+
+        image.alt =
+            "Reported public issue";
+
+
+        image.onerror =
+            function() {
+
+                this.style.display =
+                    "none";
+
+            };
+
+
+        card.appendChild(
+            image
+        );
+
+    }
+
+
+
+    // =================================
+    // REVIEW BUTTON
+    // =================================
+
+    const reviewButton =
+        document.createElement(
+            "button"
+        );
+
+
+    reviewButton.className =
+        "review-button";
+
+
+    reviewButton.type =
+        "button";
+
+
+    reviewButton.textContent =
+        t("review");
+
+
+    reviewButton.onclick =
+        function() {
+
+            openReviewModal(
+                report
+            );
+
+        };
+
+
+
+    // =================================
+    // STATUS CONTROLS
+    // =================================
+
+    const statusControls =
+        document.createElement(
+            "div"
+        );
+
+
+    statusControls.className =
+        "status-controls";
+
+
+
+    // =================================
+    // PROCESSING BUTTON
+    // =================================
+
+    if (
+        String(currentStatus)
+            .toLowerCase()
+        === "pending"
+    ) {
+
+
+        const processingButton =
+            document.createElement(
+                "button"
+            );
+
+
+        processingButton.className =
+            "status-button";
+
+
+        processingButton.type =
+            "button";
+
+
+        processingButton.textContent =
+            t("startProcessing");
+
+
+        processingButton.onclick =
+            function() {
+
+                updateReportStatus(
+                    report.id,
+                    "Processing"
+                );
+
+            };
+
+
+        statusControls.appendChild(
+            processingButton
+        );
+
+    }
+
+
+
+    // =================================
+    // SOLVED BUTTON
+    // =================================
+
+    if (
+        String(currentStatus)
+            .toLowerCase()
+        === "processing"
+    ) {
+
+
+        const solvedButton =
+            document.createElement(
+                "button"
+            );
+
+
+        solvedButton.className =
+            "status-button";
+
+
+        solvedButton.type =
+            "button";
+
+
+        solvedButton.textContent =
+            t("markSolved");
+
+
+        solvedButton.onclick =
+            function() {
+
+                updateReportStatus(
+                    report.id,
+                    "Solved"
+                );
+
+            };
+
+
+        statusControls.appendChild(
+            solvedButton
+        );
+
+    }
+
+
+
+    // =================================
+    // ADD ELEMENTS
+    // =================================
+
+    card.prepend(
+        title
+    );
+
+
+    card.appendChild(
+        idText
+    );
+
+
+    card.appendChild(
+        locationText
+    );
+
+
+    card.appendChild(
+        descriptionText
+    );
+
+
+    card.appendChild(
+        confidenceText
+    );
+
+
+    card.appendChild(
+        priorityText
+    );
+
+
+    card.appendChild(
+        authorityText
+    );
+
+
+    card.appendChild(
+        duplicateText
+    );
+
+
+    card.appendChild(
+        statusText
+    );
+
+
+    card.appendChild(
+        createdText
+    );
+
+
+    card.appendChild(
+        reviewButton
+    );
+
+
+    card.appendChild(
+        statusControls
+    );
+
+
+    container.appendChild(
+        card
+    );
+
+}
+
+
+
+// =====================================
+// UPDATE REPORT STATUS
+// =====================================
+
+async function updateReportStatus(
+    reportId,
+    newStatus
+) {
+
+
+    try {
+
+
+        const response =
+            await fetch(
+                BACKEND_URL +
+                "/reports/" +
+                encodeURIComponent(
+                    reportId
+                ) +
+                "/status",
+                {
+
+                    method:
+                        "PATCH",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            status:
+                                newStatus
+
+                        })
+
+                }
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                "Status update failed"
+            );
+
+        }
+
+
+        console.log(
+            "Status updated:",
+            result
+        );
+
+
+        await loadReports();
+
+
+        alert(
+            t("statusUpdated") +
+            " " +
+            translateStatus(
+                newStatus
+            ) +
+            " ✅"
+        );
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "Status update error:",
+            error
+        );
+
+
+        alert(
+            t("unableStatus") +
+            "\n\n" +
+            error.message
+        );
+
+    }
+
+}
+
+
+
+// =====================================
+// OPEN REVIEW MODAL
+// =====================================
+
+function openReviewModal(
+    report
+) {
+
+
+    const modal =
+        document.getElementById(
+            "reviewModal"
+        );
+
+
+    const content =
+        document.getElementById(
+            "modalReportContent"
+        );
+
+
+    let imageHTML =
+        "";
+
+
+
+    if (report.image) {
+
+        imageHTML = `
+
+            <img
+                class="modal-image"
+                src="${BACKEND_URL}/uploads/${encodeURIComponent(report.image)}"
+                alt="Reported public issue"
+                onerror="this.style.display='none'"
+            >
+
+        `;
+
+    }
+
+
+
+    const created =
+        report.createdAt
+            ? new Date(
+                report.createdAt
+              ).toLocaleString()
+            : "N/A";
+
+
+
+    content.innerHTML = `
+
+        ${imageHTML}
+
+        <p>
+            🆔 <strong>${t("reportId")}:</strong>
+            ${escapeHTML(
+                report.id ||
+                "N/A"
+            )}
+        </p>
+
+        <p>
+            🛣️ <strong>${t("issue")}:</strong>
+            ${escapeHTML(
+                report.issue ||
+                "Public Issue"
+            )}
+        </p>
+
+        <p>
+            📍 <strong>${t("location")}:</strong>
+            ${escapeHTML(
+                report.location ||
+                t("unknown")
+            )}
+        </p>
+
+        <p>
+            📝 <strong>${t("description")}:</strong>
+            ${escapeHTML(
+                report.description ||
+                t("noDescription")
+            )}
+        </p>
+
+        <p>
+            🤖 <strong>${t("aiConfidence")}:</strong>
+            ${escapeHTML(
+                report.confidence ||
+                "N/A"
+            )}
+        </p>
+
+        <p>
+            🚨 <strong>${t("priority")}:</strong>
+            ${escapeHTML(
+                report.priority ||
+                t("normal")
+            )}
+        </p>
+
+        <p>
+            🏛️ <strong>${t("authority")}:</strong>
+            ${escapeHTML(
+                report.authority ||
+                t("relevantAuthority")
+            )}
+        </p>
+
+        <p>
+            🔍 <strong>${t("duplicate")}:</strong>
+            ${
+                report.isDuplicate === true
+                    ? t("yes")
+                    : t("no")
+            }
+        </p>
+
+        <p>
+            📊 <strong>${t("status")}:</strong>
+            ${escapeHTML(
+                translateStatus(
+                    report.status ||
+                    "Pending"
+                )
+            )}
+        </p>
+
+        <p>
+            🕒 <strong>${t("submitted")}:</strong>
+            ${escapeHTML(
+                created
+            )}
+        </p>
+
+    `;
+
+
+
+    modal.style.display =
+        "flex";
+
+}
+
+
+
+// =====================================
+// CLOSE MODAL
+// =====================================
+
+function closeReviewModal() {
+
+    document.getElementById(
+        "reviewModal"
+    ).style.display =
+        "none";
+
+}
+
+
+
+// =====================================
+// CLOSE MODAL OUTSIDE
+// =====================================
+
+function closeModalOutside(
+    event
+) {
+
+    if (
+        event.target.id ===
+        "reviewModal"
+    ) {
+
+        closeReviewModal();
+
+    }
+
+}
+
+
+
+// =====================================
+// ESCAPE HTML
+// =====================================
+
+function escapeHTML(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        String(value);
+
+
+    return div.innerHTML;
+
+}
+
+
+
+// =====================================
+// LISTEN FOR LANGUAGE CHANGE
+// =====================================
+
+window.addEventListener(
+    "storage",
+    function(event) {
+
+        if (
+            event.key ===
+            "civicEyeLanguage"
+        ) {
+
+            applyLanguage();
+
+        }
+
+    }
+);
+
+
+
+// =====================================
+// INITIAL LOAD
+// =====================================
+
+loadReports();
+
+
+</script>
+
+
+</body>
+
+</html>

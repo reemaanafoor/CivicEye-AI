@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CivicEye AI - Report Issue</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* ==================================================
+   SAVED THEME
+   ================================================== */
+
+body.theme-light {
+    background: #f5f7fa;
+}
+
+body.theme-dark {
+    background: #101010;
+}
+
+
+/* ==================================================
+   REPORT CONTAINER
+   ================================================== */
+
+body.theme-light .report-container {
+    color: #111827;
+}
+
+body.theme-dark .report-container {
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   REPORT CARD
+   ================================================== */
+
+body.theme-light .report-card {
+    background: #ffffff;
+    color: #111827;
+}
+
+body.theme-dark .report-card {
+    background: #1b1b1b;
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   TEXT COLORS
+   ================================================== */
+
+body.theme-light .report-container h1,
+body.theme-light .report-container h2,
+body.theme-light .report-container h3 {
+    color: #111827;
+}
+
+body.theme-light .report-container p {
+    color: #4b5563;
+}
+
+body.theme-light .report-container label {
+    color: #374151;
+}
+
+body.theme-dark .report-container h1,
+body.theme-dark .report-container h2,
+body.theme-dark .report-container h3 {
+    color: #ffffff;
+}
+
+body.theme-dark .report-container p {
+    color: #e5e7eb;
+}
+
+body.theme-dark .report-container label {
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   INPUTS
+   ================================================== */
+
+body.theme-light .report-container input,
+body.theme-light .report-container textarea,
+body.theme-light .report-container select {
+    color: #374151;
+    background: #ffffff;
+}
+
+body.theme-dark .report-container input,
+body.theme-dark .report-container textarea,
+body.theme-dark .report-container select {
+    color: #ffffff;
+    background: #222222;
+    border-color: #555555;
+}
+
+
+/* ==================================================
+   PLACEHOLDER
+   ================================================== */
+
+body.theme-light .report-container input::placeholder,
+body.theme-light .report-container textarea::placeholder {
+    color: #6b7280;
+}
+
+body.theme-dark .report-container input::placeholder,
+body.theme-dark .report-container textarea::placeholder {
+    color: #bdbdbd;
+}
+
+
+/* ==================================================
+   SELECT OPTIONS
+   ================================================== */
+
+body.theme-light .report-container select option {
+    color: #374151;
+    background: #ffffff;
+}
+
+body.theme-dark .report-container select option {
+    color: #ffffff;
+    background: #222222;
+}
+
+
+/* ==================================================
+   FILE INPUT
+   ================================================== */
+
+body.theme-light .report-container input[type="file"] {
+    color: #374151;
+}
+
+body.theme-dark .report-container input[type="file"] {
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   STATUS TEXT
+   ================================================== */
+
+body.theme-light #imageStatus,
+body.theme-light #voiceStatus,
+body.theme-light #locationStatus,
+body.theme-light #submitStatus {
+    color: #374151;
+}
+
+body.theme-dark #imageStatus,
+body.theme-dark #voiceStatus,
+body.theme-dark #locationStatus,
+body.theme-dark #submitStatus {
+    color: #ffffff;
+}
+
+
+/* ==================================================
+   MORE MENU - FINAL FIX
+   ================================================== */
+
+.civic-nav-links {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.more-menu-container {
+    position: relative !important;
+    display: inline-block !important;
+    margin-left: 0 !important;
+    z-index: 999999 !important;
+}
+
+.more-menu-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 42px !important;
+    height: 42px !important;
+
+    padding: 0 !important;
+
+    border: none !important;
+    background: transparent !important;
+
+    font-size: 26px !important;
+    line-height: 1 !important;
+
+    cursor: pointer !important;
+
+    position: relative !important;
+    z-index: 1000000 !important;
+}
+
+
+/* CLOSED */
+
+.more-menu {
+    position: fixed !important;
+
+    top: 70px !important;
+    right: 20px !important;
+
+    width: 235px !important;
+
+    padding: 8px !important;
+
+    display: none !important;
+    flex-direction: column !important;
+
+    background: rgba(255,255,255,0.98) !important;
+
+    border-radius: 16px !important;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.30) !important;
+
+    z-index: 999999 !important;
+
+    animation: moreMenuOpen 0.18s ease;
+
+    pointer-events: auto !important;
+}
+
+
+/* OPEN */
+
+.more-menu.show {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+
+/* EVERY MENU ITEM */
+
+.more-menu a,
+.more-menu button {
+    display: flex !important;
+    align-items: center !important;
+
+    width: 100% !important;
+    min-height: 44px !important;
+
+    box-sizing: border-box !important;
+
+    margin: 0 !important;
+    padding: 11px 14px !important;
+
+    border: none !important;
+    border-radius: 10px !important;
+
+    background: transparent !important;
+
+    color: #374151 !important;
+
+    text-decoration: none !important;
+
+    text-align: left !important;
+
+    font-size: 15px !important;
+    font-family: inherit !important;
+
+    cursor: pointer !important;
+
+    white-space: nowrap !important;
+
+    position: relative !important;
+    z-index: 1000000 !important;
+}
+
+
+/* HOVER */
+
+.more-menu a:hover,
+.more-menu button:hover {
+    background: rgba(0,0,0,0.06) !important;
+}
+
+
+/* DARK MODE */
+
+body.theme-dark .more-menu {
+    background: #1f2937 !important;
+}
+
+body.theme-dark .more-menu a,
+body.theme-dark .more-menu button {
+    color: #ffffff !important;
+}
+
+body.theme-dark .more-menu a:hover,
+body.theme-dark .more-menu button:hover {
+    background: rgba(255,255,255,0.08) !important;
+}
+
+
+/* LOGOUT */
+
+.more-menu .logout-item {
+    color: #dc2626 !important;
+}
+
+body.theme-dark .more-menu .logout-item {
+    color: #f87171 !important;
+}
+
+
+/* MENU ANIMATION */
+
+@keyframes moreMenuOpen {
+
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* ==================================================
+   MODALS
+   ================================================== */
+
+.civic-modal {
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0,0,0,0.55);
+
+    z-index: 2000000;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+.civic-modal.show {
+    display: flex;
+}
+
+.civic-modal-content {
+    width: min(500px, 100%);
+
+    background: #ffffff;
+
+    color: #1f2937;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+
+    position: relative;
+}
+
+body.theme-dark .civic-modal-content {
+    background: #1f2937;
+    color: #ffffff;
+}
+
+.civic-modal-content h2 {
+    margin-top: 0;
+}
+
+.civic-modal-close {
+    position: absolute;
+
+    top: 10px;
+    right: 14px;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 26px;
+
+    cursor: pointer;
+
+    color: inherit;
+}
+
+.civic-modal-content p {
+    line-height: 1.6;
+}
+
+
+/* ==================================================
+   NAVIGATION Z-INDEX
+   ================================================== */
+
+nav {
+    position: relative;
+    z-index: 999998 !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<!-- ==================================================
+     NAVBAR
+     ================================================== -->
+
+<nav class="civic-navbar">
+
+    <div class="civic-logo">
+        👁️ CivicEye AI
+    </div>
+
+    <div class="civic-nav-links">
+
+        <a href="./index.html">
+            🏠 Home
+        </a>
+
+        <div class="more-menu-container">
+
+            <button
+                type="button"
+                class="more-menu-button"
+                id="moreMenuButton"
+                aria-label="More"
+                aria-expanded="false">
+                ⋮
+            </button>
+
+            <div
+                class="more-menu"
+                id="moreMenu">
+
+                <a href="./profile.html">
+                    👤 Profile
+                </a>
+
+                <a href="./settings.html">
+                    ⚙️ Settings
+                </a>
+
+                <a href="./privacy.html">
+                    🔒 Privacy
+                </a>
+
+                <button
+                    type="button"
+                    onclick="showHelp()">
+                    ❓ Help & Support
+                </button>
+
+                <button
+                    type="button"
+                    onclick="showAbout()">
+                    ℹ️ About CivicEye AI
+                </button>
+
+                <a
+                    href="./login.html"
+                    class="logout-item">
+                    🚪 Logout
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ==================================================
+     REPORT CONTENT
+     ================================================== -->
+
+<main class="report-container">
+
+    <div class="report-card">
+
+        <h1>
+            📸 Report a Public Issue
+        </h1>
+
+        <p>
+            Help make Sri Lanka cleaner, safer and better 🇱🇰
+        </p>
+
+
+        <!-- IMAGE -->
+
+        <label for="issueImage">
+            📷 Upload Issue Image
+        </label>
+
+        <input
+            type="file"
+            id="issueImage"
+            accept="image/*"
+            onchange="previewImage(event)">
+
+        <div id="imagePreview"></div>
+
+        <p id="imageStatus"></p>
+
+
+        <!-- ISSUE TYPE -->
+
+        <label for="issueType">
+            🏷️ Issue Type
+        </label>
+
+        <select id="issueType">
+
+            <option value="">
+                Select Issue Type
+            </option>
+
+            <option value="Road Damage">
+                Road Damage
+            </option>
+
+            <option value="Garbage Problem">
+                Garbage Problem
+            </option>
+
+            <option value="Water Leakage">
+                Water Leakage
+            </option>
+
+            <option value="Street Light Issue">
+                Street Light Issue
+            </option>
+
+            <option value="Other">
+                Other
+            </option>
+
+        </select>
+
+
+        <!-- DESCRIPTION -->
+
+        <label for="description">
+            📝 Description
+        </label>
+
+        <textarea
+            id="description"
+            rows="5"
+            placeholder="Describe the issue...">
+        </textarea>
+
+
+        <!-- VOICE -->
+
+        <label for="voiceLanguage">
+            🎤 Voice Language
+        </label>
+
+        <select id="voiceLanguage">
+
+            <option value="en-US">
+                English
+            </option>
+
+            <option value="ta-LK">
+                Tamil
+            </option>
+
+            <option value="si-LK">
+                Sinhala
+            </option>
+
+        </select>
+
+        <button
+            type="button"
+            onclick="startVoiceComplaint()">
+
+            🎤 Speak Complaint
+
+        </button>
+
+        <p id="voiceStatus">
+            Voice ready
+        </p>
+
+
+        <!-- LOCATION -->
+
+        <label for="location">
+            📍 Location
+        </label>
+
+        <input
+            type="text"
+            id="location"
+            placeholder="Enter your location">
+
+        <button
+            type="button"
+            onclick="getCurrentLocation()">
+
+            📍 Use Current Location
+
+        </button>
+
+        <p id="locationStatus"></p>
+
+
+        <!-- SUBMIT -->
+
+        <button
+            type="button"
+            id="submitButton"
+            onclick="submitReport()">
+
+            🚀 Submit Report
+
+        </button>
+
+        <p id="submitStatus"></p>
+
+    </div>
+
+</main>
+
+
+<!-- ==================================================
+     HELP MODAL
+     ================================================== -->
+
+<div
+    class="civic-modal"
+    id="helpModal"
+    onclick="closeModalOutside(event)">
+
+    <div class="civic-modal-content">
+
+        <button
+            class="civic-modal-close"
+            type="button"
+            onclick="closeModal()">
+            ×
+        </button>
+
+        <h2>
+            ❓ Help & Support
+        </h2>
+
+        <p>
+            Need help using CivicEye AI?
+        </p>
+
+        <p>
+            📸 Upload a clear image of the public issue.
+        </p>
+
+        <p>
+            📝 Select the correct issue type and describe the problem.
+        </p>
+
+        <p>
+            📍 Add your location so authorities can identify the issue.
+        </p>
+
+        <p>
+            🚀 Submit the report and track its progress from the Track Issue page.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     ABOUT MODAL
+     ================================================== -->
+
+<div
+    class="civic-modal"
+    id="aboutModal"
+    onclick="closeModalOutside(event)">
+
+    <div class="civic-modal-content">
+
+        <button
+            class="civic-modal-close"
+            type="button"
+            onclick="closeModal()">
+            ×
+        </button>
+
+        <h2>
+            ℹ️ About CivicEye AI
+        </h2>
+
+        <p>
+            CivicEye AI is an AI-powered platform designed to help citizens
+            report and track public issues more easily.
+        </p>
+
+        <p>
+            The system can identify issue types, detect duplicate complaints,
+            recommend the relevant authority and provide status updates.
+        </p>
+
+        <p>
+            🇱🇰 Built with the goal of creating cleaner, safer and smarter communities.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- ==================================================
+     JAVASCRIPT
+     ================================================== -->
+
+<script>
+
+/* ==================================================
+   THEME
+   ================================================== */
+
+(function () {
+
+    const savedTheme =
+        localStorage.getItem("civicEyeTheme") || "default";
+
+    document.body.classList.remove(
+        "theme-light",
+        "theme-dark"
+    );
+
+    if (savedTheme === "light") {
+        document.body.classList.add("theme-light");
+    }
+
+    if (savedTheme === "dark") {
+        document.body.classList.add("theme-dark");
+    }
+
+})();
+
+
+/* ==================================================
+   MORE MENU
+   ================================================== */
+
+const moreMenuButton =
+    document.getElementById("moreMenuButton");
+
+const moreMenu =
+    document.getElementById("moreMenu");
+
+
+moreMenuButton.addEventListener("click", function(event) {
+
+    event.stopPropagation();
+
+    const isOpen =
+        moreMenu.classList.toggle("show");
+
+    moreMenuButton.setAttribute(
+        "aria-expanded",
+        isOpen ? "true" : "false"
+    );
+
+});
+
+
+document.addEventListener("click", function(event) {
+
+    if (
+        !moreMenu.contains(event.target) &&
+        !moreMenuButton.contains(event.target)
+    ) {
+
+        moreMenu.classList.remove("show");
+
+        moreMenuButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+});
+
+
+/* ==================================================
+   MODALS
+   ================================================== */
+
+function showHelp() {
+
+    document
+        .getElementById("helpModal")
+        .classList.add("show");
+
+    moreMenu.classList.remove("show");
+
+    moreMenuButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+}
+
+
+function showAbout() {
+
+    document
+        .getElementById("aboutModal")
+        .classList.add("show");
+
+    moreMenu.classList.remove("show");
+
+    moreMenuButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+}
+
+
+function closeModal() {
+
+    document
+        .querySelectorAll(".civic-modal")
+        .forEach(function(modal) {
+
+            modal.classList.remove("show");
+
+        });
+
+}
+
+
+function closeModalOutside(event) {
+
+    if (
+        event.target.classList.contains("civic-modal")
+    ) {
+
+        closeModal();
+
+    }
+
+}
+
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Escape") {
+
+            closeModal();
+
+            if (moreMenu) {
+
+                moreMenu.classList.remove("show");
+
+                moreMenuButton.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            }
+
+        }
+
+    }
+);
+
+
+/* ==================================================
+   BACKEND
+   ================================================== */
+
+const BACKEND_URL =
+    "https://civiceye-backend-production-eac6.up.railway.app";
+
+
+/* ==================================================
+   IMAGE PREVIEW
+   ================================================== */
+
+function previewImage(event) {
+
+    const file =
+        event.target.files[0];
+
+    const preview =
+        document.getElementById("imagePreview");
+
+    const status =
+        document.getElementById("imageStatus");
+
+
+    preview.innerHTML = "";
+
+    if (!file) {
+
+        status.textContent = "";
+
+        return;
+
+    }
+
+
+    const reader =
+        new FileReader();
+
+
+    reader.onload = function(e) {
+
+        const img =
+            document.createElement("img");
+
+        img.src = e.target.result;
+
+        img.style.maxWidth = "100%";
+        img.style.maxHeight = "300px";
+        img.style.marginTop = "12px";
+        img.style.borderRadius = "12px";
+
+        preview.appendChild(img);
+
+        status.textContent =
+            "✅ Image selected successfully.";
+
+    };
+
+
+    reader.readAsDataURL(file);
+
+}
+
+
+/* ==================================================
+   LOCATION
+   ================================================== */
+
+function getCurrentLocation() {
+
+    const locationInput =
+        document.getElementById("location");
+
+    const locationStatus =
+        document.getElementById("locationStatus");
+
+
+    if (!navigator.geolocation) {
+
+        locationStatus.textContent =
+            "❌ Geolocation is not supported.";
+
+        return;
+
+    }
+
+
+    locationStatus.textContent =
+        "📍 Getting your location...";
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            const latitude =
+                position.coords.latitude;
+
+            const longitude =
+                position.coords.longitude;
+
+
+            locationInput.value =
+                `${latitude}, ${longitude}`;
+
+
+            locationStatus.textContent =
+                "✅ Location detected successfully.";
+
+        },
+
+        function(error) {
+
+            console.error(error);
+
+            locationStatus.textContent =
+                "❌ Unable to get your location. Please enter it manually.";
+
+        }
+
+    );
+
+}
+
+
+/* ==================================================
+   VOICE COMPLAINT
+   ================================================== */
+
+let recognition = null;
+
+let isRecording = false;
+
+
+function startVoiceComplaint() {
+
+    const voiceStatus =
+        document.getElementById("voiceStatus");
+
+    const language =
+        document.getElementById("voiceLanguage").value;
+
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (!SpeechRecognition) {
+
+        voiceStatus.textContent =
+            "❌ Voice recognition is not supported in this browser.";
+
+        return;
+
+    }
+
+
+    if (isRecording && recognition) {
+
+        recognition.stop();
+
+        return;
+
+    }
+
+
+    recognition =
+        new SpeechRecognition();
+
+
+    recognition.lang =
+        language;
+
+    recognition.continuous =
+        false;
+
+    recognition.interimResults =
+        false;
+
+
+    recognition.onstart = function() {
+
+        isRecording = true;
+
+        voiceStatus.textContent =
+            "🎤 Listening... Please speak.";
+
+    };
+
+
+    recognition.onresult = function(event) {
+
+        const transcript =
+            event.results[0][0].transcript;
+
+
+        const description =
+            document.getElementById("description");
+
+
+        if (description.value.trim()) {
+
+            description.value +=
+                " " + transcript;
+
+        } else {
+
+            description.value =
+                transcript;
+
+        }
+
+
+        voiceStatus.textContent =
+            "✅ Voice complaint added.";
+
+    };
+
+
+    recognition.onerror = function(event) {
+
+        console.error(
+            "Voice recognition error:",
+            event.error
+        );
+
+        voiceStatus.textContent =
+            "❌ Voice recognition error.";
+
+        isRecording = false;
+
+    };
+
+
+    recognition.onend = function() {
+
+        isRecording = false;
+
+    };
+
+
+    recognition.start();
+
+}
+
+
+/* ==================================================
+   SUBMIT REPORT
+   ================================================== */
+
+async function submitReport() {
+
+    const submitButton =
+        document.getElementById("submitButton");
+
+    const submitStatus =
+        document.getElementById("submitStatus");
+
+
+    const issueImage =
+        document.getElementById("issueImage").files[0];
+
+    const issueType =
+        document.getElementById("issueType").value;
+
+    const description =
+        document.getElementById("description").value.trim();
+
+    const location =
+        document.getElementById("location").value.trim();
+
+
+    /* IMAGE CHECK */
+
+    if (!issueImage) {
+
+        submitStatus.textContent =
+            "❌ Please upload an image.";
+
+        return;
+
+    }
+
+
+    /* ISSUE TYPE CHECK */
+
+    if (!issueType) {
+
+        submitStatus.textContent =
+            "❌ Please select an issue type.";
+
+        return;
+
+    }
+
+
+    /* DESCRIPTION CHECK */
+
+    if (!description) {
+
+        submitStatus.textContent =
+            "❌ Please describe the issue.";
+
+        return;
+
+    }
+
+
+    /* LOCATION CHECK */
+
+    if (!location) {
+
+        submitStatus.textContent =
+            "❌ Please enter your location.";
+
+        return;
+
+    }
+
+
+    submitButton.disabled =
+        true;
+
+    submitButton.style.opacity =
+        "0.6";
+
+
+    submitStatus.textContent =
+        "⏳ Uploading report...";
+
+
+    try {
+
+        const formData =
+            new FormData();
+
+
+        /* ==========================================
+           REPORT DATA
+           ========================================== */
+
+        formData.append(
+            "image",
+            issueImage
+        );
+
+        formData.append(
+            "issueType",
+            issueType
+        );
+
+        formData.append(
+            "description",
+            description
+        );
+
+        formData.append(
+            "location",
+            location
+        );
+
+
+        /* ==========================================
+           CITIZEN EMAIL
+           ========================================== */
+
+        const citizenEmail =
+            localStorage.getItem("civicEyeCitizenEmail") || "";
+
+
+        formData.append(
+            "citizenEmail",
+            citizenEmail
+        );
+
+
+        /* ==========================================
+           SEND TO BACKEND
+           ========================================== */
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/upload`,
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `Server returned ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const report =
+            data.report || data;
+
+
+        /* ==========================================
+           SAVE REPORT
+           ========================================== */
+
+        sessionStorage.setItem(
+            "civicEyeReport",
+            JSON.stringify(report)
+        );
+
+
+        /* ==========================================
+           DUPLICATE / NORMAL REPORT MESSAGE
+           ========================================== */
+
+        if (data.duplicate === true || report.isDuplicate === true) {
+
+            submitStatus.textContent =
+                "⚠️ Duplicate complaint detected.";
+
+        } else {
+
+            submitStatus.textContent =
+                "✅ Report submitted successfully!";
+
+        }
+
+
+        /* ==========================================
+           REDIRECT
+           ========================================== */
+
+        alert(
+            data.duplicate === true || report.isDuplicate === true
+                ? "⚠️ Duplicate complaint detected. You can view the notification in Notifications."
+                : "✅ Report submitted successfully!"
+        );
+
+
+        window.location.href =
+            "./ai-processing.html";
+
+
+    } catch (error) {
+
+        console.error(
+            "Submit error:",
+            error
+        );
+
+
+        submitStatus.textContent =
+            "❌ Backend unavailable. Please try again.";
+
+        submitButton.disabled =
+            false;
+
+        submitButton.style.opacity =
+            "1";
+
+    }
+
+}
+
+
+/* ==================================================
+   PAGE LANGUAGE
+   ================================================== */
+
+const reportTranslations = {
+
+    en: {
+
+        title:
+            "📸 Report a Public Issue",
+
+        subtitle:
+            "Help make Sri Lanka cleaner, safer and better 🇱🇰",
+
+        uploadLabel:
+            "📷 Upload Issue Image",
+
+        issueTypeLabel:
+            "🏷️ Issue Type",
+
+        roadDamage:
+            "Road Damage",
+
+        garbageProblem:
+            "Garbage Problem",
+
+        waterLeakage:
+            "Water Leakage",
+
+        streetLight:
+            "Street Light Issue",
+
+        other:
+            "Other",
+
+        descriptionLabel:
+            "📝 Description",
+
+        descriptionPlaceholder:
+            "Describe the issue...",
+
+        voiceLanguageLabel:
+            "🎤 Voice Language",
+
+        english:
+            "English",
+
+        tamil:
+            "Tamil",
+
+        sinhala:
+            "Sinhala",
+
+        voiceButton:
+            "🎤 Speak Complaint",
+
+        voiceReady:
+            "Voice ready",
+
+        locationLabel:
+            "📍 Location",
+
+        locationPlaceholder:
+            "Enter your location",
+
+        locationButton:
+            "📍 Use Current Location",
+
+        submitButton:
+            "🚀 Submit Report"
+
+    },
+
+
+    ta: {
+
+        title:
+            "📸 பொது பிரச்சினையை புகாரளிக்கவும்",
+
+        subtitle:
+            "இலங்கையை சுத்தமாகவும் பாதுகாப்பாகவும் சிறப்பாகவும் மாற்ற உதவுங்கள் 🇱🇰",
+
+        uploadLabel:
+            "📷 பிரச்சினையின் படத்தை பதிவேற்றவும்",
+
+        issueTypeLabel:
+            "🏷️ பிரச்சினை வகை",
+
+        roadDamage:
+            "சாலை சேதம்",
+
+        garbageProblem:
+            "குப்பை பிரச்சினை",
+
+        waterLeakage:
+            "நீர் கசிவு",
+
+        streetLight:
+            "தெரு விளக்கு பிரச்சினை",
+
+        other:
+            "மற்றவை",
+
+        descriptionLabel:
+            "📝 விளக்கம்",
+
+        descriptionPlaceholder:
+            "பிரச்சினையை விவரிக்கவும்...",
+
+        voiceLanguageLabel:
+            "🎤 குரல் மொழி",
+
+        english:
+            "ஆங்கிலம்",
+
+        tamil:
+            "தமிழ்",
+
+        sinhala:
+            "சிங்களம்",
+
+        voiceButton:
+            "🎤 புகாரை பேசுங்கள்",
+
+        voiceReady:
+            "குரல் தயாராக உள்ளது",
+
+        locationLabel:
+            "📍 இடம்",
+
+        locationPlaceholder:
+            "உங்கள் இடத்தை உள்ளிடவும்",
+
+        locationButton:
+            "📍 தற்போதைய இடத்தைப் பயன்படுத்தவும்",
+
+        submitButton:
+            "🚀 புகாரை சமர்ப்பிக்கவும்"
+
+    },
+
+
+    si: {
+
+        title:
+            "📸 පොදු ගැටලුවක් වාර්තා කරන්න",
+
+        subtitle:
+            "ශ්‍රී ලංකාව වඩා පිරිසිදු, ආරක්ෂිත සහ යහපත් කිරීමට උදව් කරන්න 🇱🇰",
+
+        uploadLabel:
+            "📷 ගැටලුවේ රූපය උඩුගත කරන්න",
+
+        issueTypeLabel:
+            "🏷️ ගැටලු වර්ගය",
+
+        roadDamage:
+            "මාර්ග හානි",
+
+        garbageProblem:
+            "කසළ ගැටලුව",
+
+        waterLeakage:
+            "ජල කාන්දුව",
+
+        streetLight:
+            "වීදි ආලෝක ගැටලුව",
+
+        other:
+            "වෙනත්",
+
+        descriptionLabel:
+            "📝 විස්තරය",
+
+        descriptionPlaceholder:
+            "ගැටලුව විස්තර කරන්න...",
+
+        voiceLanguageLabel:
+            "🎤 හඬ භාෂාව",
+
+        english:
+            "ඉංග්‍රීසි",
+
+        tamil:
+            "දෙමළ",
+
+        sinhala:
+            "සිංහල",
+
+        voiceButton:
+            "🎤 පැමිණිල්ල කතා කරන්න",
+
+        voiceReady:
+            "හඬ සූදානම්",
+
+        locationLabel:
+            "📍 ස්ථානය",
+
+        locationPlaceholder:
+            "ඔබගේ ස්ථානය ඇතුළත් කරන්න",
+
+        locationButton:
+            "📍 වත්මන් ස්ථානය භාවිතා කරන්න",
+
+        submitButton:
+            "🚀 වාර්තාව ඉදිරිපත් කරන්න"
+
+    }
+
+};
+
+
+function applyLanguage() {
+
+    const savedLanguage =
+        localStorage.getItem("civicEyeLanguage") || "en";
+
+    const t =
+        reportTranslations[savedLanguage] ||
+        reportTranslations.en;
+
+
+    const title =
+        document.querySelector(".report-container h1");
+
+    if (title)
+        title.textContent = t.title;
+
+
+    const paragraphs =
+        document.querySelectorAll(
+            ".report-container > .report-card > p"
+        );
+
+    if (paragraphs[0])
+        paragraphs[0].textContent =
+            t.subtitle;
+
+
+    const labels =
+        document.querySelectorAll(
+            ".report-container label"
+        );
+
+
+    if (labels[0])
+        labels[0].textContent =
+            t.uploadLabel;
+
+    if (labels[1])
+        labels[1].textContent =
+            t.issueTypeLabel;
+
+    if (labels[2])
+        labels[2].textContent =
+            t.descriptionLabel;
+
+    if (labels[3])
+        labels[3].textContent =
+            t.voiceLanguageLabel;
+
+    if (labels[4])
+        labels[4].textContent =
+            t.locationLabel;
+
+
+    const issueOptions =
+        document.querySelectorAll(
+            "#issueType option"
+        );
+
+
+    if (issueOptions.length >= 6) {
+
+        issueOptions[1].textContent =
+            t.roadDamage;
+
+        issueOptions[2].textContent =
+            t.garbageProblem;
+
+        issueOptions[3].textContent =
+            t.waterLeakage;
+
+        issueOptions[4].textContent =
+            t.streetLight;
+
+        issueOptions[5].textContent =
+            t.other;
+
+    }
+
+
+    const description =
+        document.getElementById("description");
+
+    if (description)
+        description.placeholder =
+            t.descriptionPlaceholder;
+
+
+    const voiceOptions =
+        document.querySelectorAll(
+            "#voiceLanguage option"
+        );
+
+
+    if (voiceOptions.length >= 3) {
+
+        voiceOptions[0].textContent =
+            t.english;
+
+        voiceOptions[1].textContent =
+            t.tamil;
+
+        voiceOptions[2].textContent =
+            t.sinhala;
+
+    }
+
+
+    const voiceButton =
+        document.querySelector(
+            'button[onclick="startVoiceComplaint()"]'
+        );
+
+    if (voiceButton)
+        voiceButton.textContent =
+            t.voiceButton;
+
+
+    const voiceStatus =
+        document.getElementById("voiceStatus");
+
+    if (voiceStatus)
+        voiceStatus.textContent =
+            t.voiceReady;
+
+
+    const locationInput =
+        document.getElementById("location");
+
+    if (locationInput)
+        locationInput.placeholder =
+            t.locationPlaceholder;
+
+
+    const locationButton =
+        document.querySelector(
+            'button[onclick="getCurrentLocation()"]'
+        );
+
+    if (locationButton)
+        locationButton.textContent =
+            t.locationButton;
+
+
+    const submitButton =
+        document.getElementById("submitButton");
+
+    if (submitButton)
+        submitButton.textContent =
+            t.submitButton;
+
+}
+
+
+/* ==================================================
+   APPLY SAVED LANGUAGE
+   ================================================== */
+
+applyLanguage();
+
+</script>
+
+</body>
+</html>

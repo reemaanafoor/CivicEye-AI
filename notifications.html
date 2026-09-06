@@ -1,0 +1,2651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>CivicEye AI - Notifications</title>
+
+
+<style>
+
+/* =====================================================
+   DEFAULT THEME
+===================================================== */
+
+:root {
+
+    --page-bg:
+        linear-gradient(
+            135deg,
+            #667eea 0%,
+            #764ba2 100%
+        );
+
+    --main-text: #ffffff;
+
+    --card-bg:
+        rgba(255,255,255,0.16);
+
+    --card-border:
+        rgba(255,255,255,0.25);
+
+    --secondary-bg:
+        rgba(255,255,255,0.10);
+
+    --button-bg:
+        #ffffff;
+
+    --button-text:
+        #222222;
+
+    --muted-text:
+        rgba(255,255,255,0.75);
+
+    --shadow:
+        0 8px 25px rgba(0,0,0,0.15);
+}
+
+
+/* =====================================================
+   LIGHT THEME
+===================================================== */
+
+body.theme-light {
+
+    --page-bg: #f5f7fa;
+
+    --main-text: #222222;
+
+    --card-bg: #ffffff;
+
+    --card-border: #e1e5ea;
+
+    --secondary-bg: #f1f3f6;
+
+    --button-bg: #222222;
+
+    --button-text: #ffffff;
+
+    --muted-text: #666666;
+
+    --shadow:
+        0 8px 25px rgba(0,0,0,0.08);
+}
+
+
+/* =====================================================
+   DARK THEME
+===================================================== */
+
+body.theme-dark {
+
+    --page-bg: #111827;
+
+    --main-text: #ffffff;
+
+    --card-bg: #1f2937;
+
+    --card-border: #374151;
+
+    --secondary-bg: #273449;
+
+    --button-bg: #ffffff;
+
+    --button-text: #111827;
+
+    --muted-text: #b9c0cc;
+
+    --shadow:
+        0 8px 25px rgba(0,0,0,0.35);
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    background:
+        var(--page-bg);
+
+    color:
+        var(--main-text);
+
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+
+    font-family:
+        Arial,
+        "Noto Sans Tamil",
+        "Noto Sans Sinhala",
+        sans-serif;
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    padding:
+        18px 35px;
+
+    background:
+        var(--card-bg);
+
+    border-bottom:
+        1px solid var(--card-border);
+
+    backdrop-filter:
+        blur(15px);
+
+    -webkit-backdrop-filter:
+        blur(15px);
+
+    position:
+        relative;
+
+    z-index:
+        1000;
+}
+
+
+.logo {
+
+    font-size:
+        24px;
+
+    font-weight:
+        bold;
+
+    color:
+        var(--main-text);
+}
+
+
+.nav-links {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+
+    flex-wrap:
+        wrap;
+}
+
+
+.nav-links > a {
+
+    text-decoration:
+        none;
+
+    color:
+        var(--main-text) !important;
+
+    padding:
+        9px 14px;
+
+    border-radius:
+        10px;
+
+    transition:
+        0.2s;
+}
+
+
+.nav-links > a:hover {
+
+    background:
+        var(--secondary-bg);
+}
+
+
+/* =====================================================
+   LIGHT NAVBAR
+===================================================== */
+
+body.theme-light .navbar {
+
+    background:
+        #ffffff;
+
+    border-bottom:
+        1px solid #e1e5ea;
+}
+
+
+body.theme-light .logo {
+
+    color:
+        #222222 !important;
+
+    -webkit-text-fill-color:
+        #222222 !important;
+}
+
+
+body.theme-light .nav-links > a {
+
+    color:
+        #222222 !important;
+
+    -webkit-text-fill-color:
+        #222222 !important;
+}
+
+
+/* =====================================================
+   DARK NAVBAR
+===================================================== */
+
+body.theme-dark .logo {
+
+    color:
+        #ffffff !important;
+
+    -webkit-text-fill-color:
+        #ffffff !important;
+}
+
+
+body.theme-dark .nav-links > a {
+
+    color:
+        #ffffff !important;
+
+    -webkit-text-fill-color:
+        #ffffff !important;
+}
+
+
+/* =====================================================
+   MORE MENU CONTAINER
+===================================================== */
+
+.more-menu-container {
+
+    position:
+        relative;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+}
+
+
+/* =====================================================
+   THREE DOT BUTTON
+===================================================== */
+
+.more-menu-button {
+
+    width:
+        42px;
+
+    height:
+        42px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border:
+        1px solid var(--card-border);
+
+    border-radius:
+        10px;
+
+    background:
+        var(--card-bg);
+
+    color:
+        var(--main-text);
+
+    font-size:
+        25px;
+
+    font-weight:
+        bold;
+
+    line-height:
+        1;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.2s;
+
+    padding:
+        0;
+}
+
+
+.more-menu-button:hover {
+
+    background:
+        var(--secondary-bg);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =====================================================
+   MORE MENU
+===================================================== */
+
+.more-menu {
+
+    position:
+        absolute;
+
+    top:
+        calc(100% + 10px);
+
+    right:
+        0;
+
+    width:
+        230px;
+
+    padding:
+        8px;
+
+    background:
+        #ffffff;
+
+    color:
+        #222222;
+
+    border:
+        1px solid #dddddd;
+
+    border-radius:
+        14px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.15);
+
+    display:
+        none;
+
+    z-index:
+        9999;
+
+    box-sizing:
+        border-box;
+}
+
+
+.more-menu.show {
+
+    display:
+        block;
+}
+
+
+/* =====================================================
+   MORE MENU ITEMS
+===================================================== */
+
+.more-menu a,
+.more-menu button {
+
+    width:
+        100% !important;
+
+    box-sizing:
+        border-box !important;
+
+    display:
+        flex !important;
+
+    align-items:
+        center !important;
+
+    margin:
+        0 !important;
+
+    padding:
+        12px 14px !important;
+
+    gap:
+        10px !important;
+
+    text-align:
+        left !important;
+
+    justify-content:
+        flex-start !important;
+
+    font-family:
+        inherit !important;
+
+    font-size:
+        14px !important;
+
+    font-weight:
+        500 !important;
+
+    line-height:
+        1.2 !important;
+
+    border:
+        none !important;
+
+    outline:
+        none !important;
+
+    background:
+        transparent !important;
+
+    appearance:
+        none !important;
+
+    -webkit-appearance:
+        none !important;
+
+    border-radius:
+        10px !important;
+
+    cursor:
+        pointer !important;
+
+    text-decoration:
+        none !important;
+
+    min-height:
+        42px !important;
+
+    color:
+        #222222 !important;
+
+    -webkit-text-fill-color:
+        #222222 !important;
+}
+
+
+.more-menu a:hover,
+.more-menu button:hover {
+
+    background:
+        #f1f1f1 !important;
+
+    color:
+        #111111 !important;
+
+    -webkit-text-fill-color:
+        #111111 !important;
+}
+
+
+/* =====================================================
+   DARK MENU
+===================================================== */
+
+body.theme-dark .more-menu {
+
+    background:
+        rgba(25,25,35,0.98) !important;
+
+    color:
+        #ffffff !important;
+
+    border:
+        1px solid #374151 !important;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.35) !important;
+}
+
+
+body.theme-dark .more-menu a,
+body.theme-dark .more-menu button {
+
+    color:
+        #ffffff !important;
+
+    -webkit-text-fill-color:
+        #ffffff !important;
+}
+
+
+body.theme-dark .more-menu a:hover,
+body.theme-dark .more-menu button:hover {
+
+    background:
+        rgba(255,255,255,0.10) !important;
+
+    color:
+        #ffffff !important;
+
+    -webkit-text-fill-color:
+        #ffffff !important;
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+.more-menu .menu-danger {
+
+    color:
+        #e74c3c !important;
+
+    -webkit-text-fill-color:
+        #e74c3c !important;
+}
+
+
+body.theme-dark .more-menu .menu-danger {
+
+    color:
+        #ff6b6b !important;
+
+    -webkit-text-fill-color:
+        #ff6b6b !important;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+.container {
+
+    width:
+        90%;
+
+    max-width:
+        900px;
+
+    margin:
+        35px auto;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.page-header {
+
+    text-align:
+        center;
+
+    margin-bottom:
+        30px;
+}
+
+
+.page-header h1 {
+
+    margin:
+        0 0 8px;
+
+    color:
+        var(--main-text);
+}
+
+
+.page-header p {
+
+    margin:
+        0;
+
+    color:
+        var(--muted-text);
+}
+
+
+/* =====================================================
+   NOTIFICATION PANEL
+===================================================== */
+
+.notification-panel {
+
+    background:
+        var(--card-bg);
+
+    border:
+        1px solid var(--card-border);
+
+    border-radius:
+        20px;
+
+    padding:
+        22px;
+
+    box-shadow:
+        var(--shadow);
+
+    backdrop-filter:
+        blur(15px);
+
+    -webkit-backdrop-filter:
+        blur(15px);
+}
+
+
+/* =====================================================
+   PANEL HEADER
+===================================================== */
+
+.notification-header {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        center;
+
+    gap:
+        15px;
+
+    margin-bottom:
+        20px;
+
+    flex-wrap:
+        wrap;
+}
+
+
+.notification-heading {
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        10px;
+}
+
+
+.notification-heading h2 {
+
+    margin:
+        0;
+
+    color:
+        var(--main-text);
+}
+
+
+.count-badge {
+
+    min-width:
+        25px;
+
+    height:
+        25px;
+
+    padding:
+        0 7px;
+
+    border-radius:
+        50px;
+
+    background:
+        #ff4757;
+
+    color:
+        white !important;
+
+    font-size:
+        13px;
+
+    font-weight:
+        bold;
+
+    display:
+        inline-flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+}
+
+
+/* =====================================================
+   MARK ALL BUTTON
+===================================================== */
+
+.mark-all-btn {
+
+    border:
+        none;
+
+    background:
+        var(--button-bg);
+
+    color:
+        var(--button-text);
+
+    padding:
+        9px 15px;
+
+    border-radius:
+        10px;
+
+    cursor:
+        pointer;
+
+    font-weight:
+        bold;
+
+    transition:
+        0.2s;
+}
+
+
+.mark-all-btn:hover {
+
+    opacity:
+        0.85;
+}
+
+
+.mark-all-btn:disabled {
+
+    opacity:
+        0.5;
+
+    cursor:
+        not-allowed;
+}
+
+
+/* =====================================================
+   NOTIFICATION ITEM
+===================================================== */
+
+.notification-item {
+
+    padding:
+        18px;
+
+    margin-bottom:
+        12px;
+
+    background:
+        var(--secondary-bg);
+
+    border-radius:
+        14px;
+
+    border-left:
+        4px solid #3498db;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+
+.notification-item:hover {
+
+    transform:
+        translateY(-2px);
+}
+
+
+.notification-item.unread {
+
+    border-left-color:
+        #2ecc71;
+}
+
+
+/* =====================================================
+   NOTIFICATION TOP
+===================================================== */
+
+.notification-top {
+
+    display:
+        flex;
+
+    justify-content:
+        space-between;
+
+    align-items:
+        flex-start;
+
+    gap:
+        10px;
+}
+
+
+.notification-title {
+
+    font-size:
+        16px;
+
+    font-weight:
+        bold;
+
+    margin-bottom:
+        7px;
+
+    color:
+        var(--main-text);
+}
+
+
+/* =====================================================
+   UNREAD DOT
+===================================================== */
+
+.unread-dot {
+
+    width:
+        9px;
+
+    height:
+        9px;
+
+    border-radius:
+        50%;
+
+    background:
+        #2ecc71;
+
+    flex-shrink:
+        0;
+
+    margin-top:
+        5px;
+}
+
+
+/* =====================================================
+   MESSAGE
+===================================================== */
+
+.notification-message {
+
+    color:
+        var(--muted-text);
+
+    font-size:
+        14px;
+
+    line-height:
+        1.7;
+
+    word-break:
+        break-word;
+}
+
+
+/* =====================================================
+   TIME
+===================================================== */
+
+.notification-time {
+
+    color:
+        var(--muted-text);
+
+    font-size:
+        12px;
+
+    margin-top:
+        8px;
+}
+
+
+/* =====================================================
+   REPORT ID
+===================================================== */
+
+.notification-report {
+
+    display:
+        inline-block;
+
+    margin-top:
+        10px;
+
+    padding:
+        5px 9px;
+
+    border-radius:
+        8px;
+
+    background:
+        var(--card-bg);
+
+    font-size:
+        12px;
+
+    color:
+        var(--muted-text);
+}
+
+
+/* =====================================================
+   MARK READ
+===================================================== */
+
+.mark-read-btn {
+
+    margin-top:
+        12px;
+
+    border:
+        none;
+
+    background:
+        var(--button-bg);
+
+    color:
+        var(--button-text);
+
+    padding:
+        7px 11px;
+
+    border-radius:
+        8px;
+
+    cursor:
+        pointer;
+
+    font-size:
+        12px;
+
+    font-weight:
+        bold;
+}
+
+
+.mark-read-btn:hover {
+
+    opacity:
+        0.85;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.empty-message {
+
+    text-align:
+        center;
+
+    padding:
+        45px 20px;
+
+    color:
+        var(--muted-text);
+
+    line-height:
+        1.8;
+}
+
+
+.empty-message span {
+
+    color:
+        var(--muted-text);
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+.error-message {
+
+    text-align:
+        center;
+
+    padding:
+        35px 20px;
+
+    color:
+        var(--muted-text);
+
+    line-height:
+        1.8;
+}
+
+
+.retry-btn {
+
+    margin-top:
+        15px;
+
+    border:
+        none;
+
+    background:
+        var(--button-bg);
+
+    color:
+        var(--button-text);
+
+    padding:
+        9px 15px;
+
+    border-radius:
+        10px;
+
+    cursor:
+        pointer;
+
+    font-weight:
+        bold;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 700px) {
+
+    .navbar {
+
+        padding:
+            15px 18px;
+
+        flex-direction:
+            column;
+
+        gap:
+            12px;
+    }
+
+
+    .nav-links {
+
+        justify-content:
+            center;
+    }
+
+
+    .more-menu {
+
+        right:
+            0;
+
+        width:
+            220px;
+    }
+
+
+    .container {
+
+        width:
+            92%;
+
+        margin-top:
+            25px;
+    }
+
+
+    .notification-panel {
+
+        padding:
+            16px;
+    }
+
+
+    .notification-header {
+
+        align-items:
+            flex-start;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div
+        class="logo"
+        id="logoText"
+    >
+        👁️ CivicEye AI
+    </div>
+
+
+    <div class="nav-links">
+
+
+        <a
+            href="index.html"
+            id="homeLink"
+        >
+            🏠 Home
+        </a>
+
+
+        <a
+            href="citizen.html"
+            id="portalLink"
+        >
+            👤 Portal
+        </a>
+
+
+        <!-- =================================================
+             THREE DOT MENU
+        ================================================== -->
+
+        <div class="more-menu-container">
+
+
+            <button
+                type="button"
+                class="more-menu-button"
+                id="moreMenuButton"
+                aria-label="More menu"
+                aria-expanded="false"
+                onclick="toggleMoreMenu(event)"
+            >
+                ⋮
+            </button>
+
+
+            <div
+                class="more-menu"
+                id="moreMenu"
+            >
+
+
+                <a href="profile.html">
+                    👤
+                    <span id="profileText">
+                        Profile
+                    </span>
+                </a>
+
+
+                <a href="settings.html">
+                    ⚙️
+                    <span id="settingsText">
+                        Settings
+                    </span>
+                </a>
+
+
+                <a href="privacy.html">
+                    🔒
+                    <span id="privacyText">
+                        Privacy
+                    </span>
+                </a>
+
+
+                <a href="help.html">
+                    ❓
+                    <span id="helpText">
+                        Help &amp; Support
+                    </span>
+                </a>
+
+
+                <a href="about.html">
+                    ℹ️
+                    <span id="aboutText">
+                        About CivicEye AI
+                    </span>
+                </a>
+
+
+                <button
+                    type="button"
+                    class="menu-danger"
+                    onclick="logout()"
+                >
+                    🚪
+                    <span id="logoutText">
+                        Logout
+                    </span>
+                </button>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="container">
+
+
+    <div class="page-header">
+
+
+        <h1 id="notificationsTitle">
+            🔔 Notifications
+        </h1>
+
+
+        <p id="notificationsSubtitle">
+            Stay updated about your reported public issues.
+        </p>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         NOTIFICATION PANEL
+    ================================================= -->
+
+    <section class="notification-panel">
+
+
+        <div class="notification-header">
+
+
+            <div class="notification-heading">
+
+
+                <h2 id="yourNotifications">
+                    Your Notifications
+                </h2>
+
+
+                <span
+                    id="unreadCount"
+                    class="count-badge"
+                >
+                    0
+                </span>
+
+
+            </div>
+
+
+            <button
+                id="markAllBtn"
+                class="mark-all-btn"
+                onclick="markAllNotificationsRead()"
+            >
+                ✓ Mark All Read
+            </button>
+
+
+        </div>
+
+
+        <div id="notificationList">
+
+
+            <div class="empty-message">
+
+                🔄 Loading notifications...
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   BACKEND
+===================================================== */
+
+const BACKEND_URL =
+    "https://civiceye-backend-production-eac6.up.railway.app";
+
+
+/* =====================================================
+   LANGUAGE TRANSLATIONS
+===================================================== */
+
+const translations = {
+
+    en: {
+
+        home:
+            "🏠 Home",
+
+        portal:
+            "👤 Portal",
+
+        profile:
+            "Profile",
+
+        settings:
+            "Settings",
+
+        privacy:
+            "Privacy",
+
+        help:
+            "Help & Support",
+
+        about:
+            "About CivicEye AI",
+
+        logout:
+            "Logout",
+
+        notifications:
+            "🔔 Notifications",
+
+        subtitle:
+            "Stay updated about your reported public issues.",
+
+        yourNotifications:
+            "Your Notifications",
+
+        markAll:
+            "✓ Mark All Read",
+
+        loading:
+            "🔄 Loading notifications...",
+
+        noNotifications:
+            "📭 No notifications yet.",
+
+        welcome:
+            "Welcome to CivicEye AI — Report and track public issues easily 🇱🇰",
+
+        reportId:
+            "📋 Report ID:",
+
+        markRead:
+            "✓ Mark Read",
+
+        timeUnavailable:
+            "Time unavailable",
+
+        unable:
+            "⚠️ Unable to load notifications.",
+
+        connection:
+            "Please check your connection and try again.",
+
+        tryAgain:
+            "🔄 Try Again",
+
+        updating:
+            "⏳ Updating...",
+
+        markReadError:
+            "Unable to mark notification as read. Please try again.",
+
+        markAllError:
+            "Unable to mark all notifications as read. Please try again."
+
+    },
+
+
+    ta: {
+
+        home:
+            "🏠 முகப்பு",
+
+        portal:
+            "👤 குடிமக்கள் தளம்",
+
+        profile:
+            "சுயவிவரம்",
+
+        settings:
+            "அமைப்புகள்",
+
+        privacy:
+            "தனியுரிமை",
+
+        help:
+            "உதவி & ஆதரவு",
+
+        about:
+            "CivicEye AI பற்றி",
+
+        logout:
+            "வெளியேறு",
+
+        notifications:
+            "🔔 அறிவிப்புகள்",
+
+        subtitle:
+            "நீங்கள் புகாரளித்த பொது பிரச்சினைகள் தொடர்பான புதுப்பிப்புகளைப் பெறுங்கள்.",
+
+        yourNotifications:
+            "உங்கள் அறிவிப்புகள்",
+
+        markAll:
+            "✓ அனைத்தையும் படித்ததாகக் குறி",
+
+        loading:
+            "🔄 அறிவிப்புகள் ஏற்றப்படுகின்றன...",
+
+        noNotifications:
+            "📭 அறிவிப்புகள் எதுவும் இல்லை.",
+
+        welcome:
+            "CivicEye AI-க்கு வரவேற்கிறோம் — பொது பிரச்சினைகளை எளிதாகப் புகாரளித்து கண்காணிக்கவும் 🇱🇰",
+
+        reportId:
+            "📋 புகார் இலக்கம்:",
+
+        markRead:
+            "✓ படித்ததாகக் குறி",
+
+        timeUnavailable:
+            "நேரம் கிடைக்கவில்லை",
+
+        unable:
+            "⚠️ அறிவிப்புகளை ஏற்ற முடியவில்லை.",
+
+        connection:
+            "உங்கள் இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
+
+        tryAgain:
+            "🔄 மீண்டும் முயற்சி",
+
+        updating:
+            "⏳ புதுப்பிக்கப்படுகிறது...",
+
+        markReadError:
+            "அறிவிப்பை படித்ததாகக் குறிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.",
+
+        markAllError:
+            "அனைத்து அறிவிப்புகளையும் படித்ததாகக் குறிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்."
+
+    },
+
+
+    si: {
+
+        home:
+            "🏠 මුල් පිටුව",
+
+        portal:
+            "👤 පුරවැසි ද්වාරය",
+
+        profile:
+            "පැතිකඩ",
+
+        settings:
+            "සැකසුම්",
+
+        privacy:
+            "පෞද්ගලිකත්වය",
+
+        help:
+            "උදව් සහ සහාය",
+
+        about:
+            "CivicEye AI ගැන",
+
+        logout:
+            "ඉවත් වන්න",
+
+        notifications:
+            "🔔 දැනුම්දීම්",
+
+        subtitle:
+            "ඔබ වාර්තා කළ පොදු ගැටලු පිළිබඳ යාවත්කාලීන තොරතුරු ලබා ගන්න.",
+
+        yourNotifications:
+            "ඔබගේ දැනුම්දීම්",
+
+        markAll:
+            "✓ සියල්ල කියවූ ලෙස සලකුණු කරන්න",
+
+        loading:
+            "🔄 දැනුම්දීම් පූරණය වෙමින් පවතී...",
+
+        noNotifications:
+            "📭 තවමත් දැනුම්දීම් නොමැත.",
+
+        welcome:
+            "CivicEye AI වෙත සාදරයෙන් පිළිගනිමු — පොදු ගැටලු පහසුවෙන් වාර්තා කර නිරීක්ෂණය කරන්න 🇱🇰",
+
+        reportId:
+            "📋 වාර්තා අංකය:",
+
+        markRead:
+            "✓ කියවූ ලෙස සලකුණු කරන්න",
+
+        timeUnavailable:
+            "වේලාව ලබා ගත නොහැක",
+
+        unable:
+            "⚠️ දැනුම්දීම් පූරණය කළ නොහැක.",
+
+        connection:
+            "ඔබගේ අන්තර්ජාල සම්බන්ධතාව පරීක්ෂා කර නැවත උත්සාහ කරන්න.",
+
+        tryAgain:
+            "🔄 නැවත උත්සාහ කරන්න",
+
+        updating:
+            "⏳ යාවත්කාලීන කරමින්...",
+
+        markReadError:
+            "දැනුම්දීම කියවූ ලෙස සලකුණු කළ නොහැක. නැවත උත්සාහ කරන්න.",
+
+        markAllError:
+            "සියලු දැනුම්දීම් කියවූ ලෙස සලකුණු කළ නොහැක. නැවත උත්සාහ කරන්න."
+
+    }
+
+};
+
+
+/* =====================================================
+   GET CURRENT LANGUAGE
+===================================================== */
+
+function getCurrentLanguage() {
+
+    const savedLanguage =
+        localStorage.getItem(
+            "civicEyeLanguage"
+        );
+
+
+    if (
+        savedLanguage === "ta" ||
+        savedLanguage === "si" ||
+        savedLanguage === "en"
+    ) {
+
+        return savedLanguage;
+
+    }
+
+
+    return "en";
+
+}
+
+
+/* =====================================================
+   TRANSLATION HELPER
+===================================================== */
+
+function t(key) {
+
+    const language =
+        getCurrentLanguage();
+
+
+    return (
+        translations[language]?.[key] ||
+        translations.en[key] ||
+        key
+    );
+
+}
+
+
+/* =====================================================
+   APPLY LANGUAGE
+===================================================== */
+
+function applyLanguage() {
+
+    const language =
+        getCurrentLanguage();
+
+
+    document.documentElement.lang =
+        language;
+
+
+    document.getElementById(
+        "homeLink"
+    ).textContent =
+        t("home");
+
+
+    document.getElementById(
+        "portalLink"
+    ).textContent =
+        t("portal");
+
+
+    document.getElementById(
+        "profileText"
+    ).textContent =
+        t("profile");
+
+
+    document.getElementById(
+        "settingsText"
+    ).textContent =
+        t("settings");
+
+
+    document.getElementById(
+        "privacyText"
+    ).textContent =
+        t("privacy");
+
+
+    document.getElementById(
+        "helpText"
+    ).textContent =
+        t("help");
+
+
+    document.getElementById(
+        "aboutText"
+    ).textContent =
+        t("about");
+
+
+    document.getElementById(
+        "logoutText"
+    ).textContent =
+        t("logout");
+
+
+    document.getElementById(
+        "notificationsTitle"
+    ).textContent =
+        t("notifications");
+
+
+    document.getElementById(
+        "notificationsSubtitle"
+    ).textContent =
+        t("subtitle");
+
+
+    document.getElementById(
+        "yourNotifications"
+    ).textContent =
+        t("yourNotifications");
+
+
+    document.getElementById(
+        "markAllBtn"
+    ).textContent =
+        t("markAll");
+
+
+    loadNotifications();
+
+}
+
+
+/* =====================================================
+   APPLY SAVED THEME
+===================================================== */
+
+function applySavedTheme() {
+
+    const savedTheme =
+        localStorage.getItem(
+            "civicEyeTheme"
+        ) || "default";
+
+
+    document.body.classList.remove(
+        "theme-light",
+        "theme-dark"
+    );
+
+
+    if (
+        savedTheme === "light"
+    ) {
+
+        document.body.classList.add(
+            "theme-light"
+        );
+
+    }
+
+
+    if (
+        savedTheme === "dark"
+    ) {
+
+        document.body.classList.add(
+            "theme-dark"
+        );
+
+    }
+
+}
+
+
+applySavedTheme();
+
+
+/* =====================================================
+   THREE DOT MENU
+===================================================== */
+
+function toggleMoreMenu(event) {
+
+    if (event) {
+
+        event.stopPropagation();
+
+    }
+
+
+    const menu =
+        document.getElementById(
+            "moreMenu"
+        );
+
+
+    const button =
+        document.getElementById(
+            "moreMenuButton"
+        );
+
+
+    if (
+        !menu ||
+        !button
+    ) {
+
+        return;
+
+    }
+
+
+    const isOpen =
+        menu.classList.toggle(
+            "show"
+        );
+
+
+    button.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+    );
+
+}
+
+
+/* =====================================================
+   CLOSE MENU OUTSIDE
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const container =
+            document.querySelector(
+                ".more-menu-container"
+            );
+
+
+        const menu =
+            document.getElementById(
+                "moreMenu"
+            );
+
+
+        const button =
+            document.getElementById(
+                "moreMenuButton"
+            );
+
+
+        if (
+            !container ||
+            !menu ||
+            !button
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            !container.contains(
+                event.target
+            )
+        ) {
+
+            menu.classList.remove(
+                "show"
+            );
+
+
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key !== "Escape"
+        ) {
+
+            return;
+
+        }
+
+
+        const menu =
+            document.getElementById(
+                "moreMenu"
+            );
+
+
+        const button =
+            document.getElementById(
+                "moreMenuButton"
+            );
+
+
+        if (menu) {
+
+            menu.classList.remove(
+                "show"
+            );
+
+        }
+
+
+        if (button) {
+
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    localStorage.removeItem(
+        "civicEyeCitizenEmail"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =====================================================
+   GET CITIZEN EMAIL
+===================================================== */
+
+function getCitizenEmail() {
+
+    return (
+        localStorage.getItem(
+            "civicEyeCitizenEmail"
+        ) || ""
+    ).trim();
+
+}
+
+
+/* =====================================================
+   LOAD NOTIFICATIONS
+===================================================== */
+
+async function loadNotifications() {
+
+    const list =
+        document.getElementById(
+            "notificationList"
+        );
+
+
+    const unreadElement =
+        document.getElementById(
+            "unreadCount"
+        );
+
+
+    const markAllButton =
+        document.getElementById(
+            "markAllBtn"
+        );
+
+
+    try {
+
+        list.innerHTML = `
+
+            <div class="empty-message">
+
+                ${t("loading")}
+
+            </div>
+
+        `;
+
+
+        /* =============================================
+           CITIZEN EMAIL
+        ============================================= */
+
+        const citizenEmail =
+            getCitizenEmail();
+
+
+        /*
+         * If no citizen email is stored,
+         * do NOT request all notifications.
+         */
+
+        if (!citizenEmail) {
+
+            unreadElement.textContent =
+                "0";
+
+
+            markAllButton.disabled =
+                true;
+
+
+            list.innerHTML = `
+
+                <div class="empty-message">
+
+                    ${t("noNotifications")}
+
+                    <br>
+
+                    <span>
+                        ${t("welcome")}
+                    </span>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        /* =============================================
+           FETCH ONLY THIS CITIZEN'S NOTIFICATIONS
+        ============================================= */
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/notifications?email=${encodeURIComponent(citizenEmail)}`,
+                {
+
+                    method:
+                        "GET",
+
+                    headers: {
+
+                        "Accept":
+                            "application/json"
+
+                    },
+
+                    cache:
+                        "no-store"
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        const data =
+            await response.json();
+
+
+        const notifications =
+            Array.isArray(
+                data.notifications
+            )
+                ? data.notifications
+                : [];
+
+
+        const unread =
+            Number(
+                data.unread
+            ) || 0;
+
+
+        unreadElement.textContent =
+            unread;
+
+
+        markAllButton.disabled =
+            notifications.length === 0 ||
+            unread === 0;
+
+
+        list.innerHTML = "";
+
+
+        /* =============================================
+           NO NOTIFICATIONS
+        ============================================= */
+
+        if (
+            notifications.length === 0
+        ) {
+
+            list.innerHTML = `
+
+                <div class="empty-message">
+
+                    ${t("noNotifications")}
+
+                    <br>
+
+                    <span>
+                        ${t("welcome")}
+                    </span>
+
+                </div>
+
+            `;
+
+
+            return;
+
+        }
+
+
+        /* =============================================
+           RENDER
+        ============================================= */
+
+        notifications.forEach(
+            notification => {
+
+                renderNotification(
+                    notification,
+                    list
+                );
+
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Notification loading error:",
+            error
+        );
+
+
+        unreadElement.textContent =
+            "0";
+
+
+        markAllButton.disabled =
+            true;
+
+
+        list.innerHTML = `
+
+            <div class="error-message">
+
+                ${t("unable")}
+
+                <br>
+
+                ${t("connection")}
+
+                <br>
+
+                <button
+                    class="retry-btn"
+                    onclick="loadNotifications()"
+                >
+
+                    ${t("tryAgain")}
+
+                </button>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER NOTIFICATION
+===================================================== */
+
+function renderNotification(
+    notification,
+    container
+) {
+
+    const item =
+        document.createElement(
+            "div"
+        );
+
+
+    const isRead =
+        notification.read === true;
+
+
+    item.className =
+        "notification-item" +
+        (
+            isRead
+                ? ""
+                : " unread"
+        );
+
+
+    /* =============================================
+       DATE
+    ============================================= */
+
+    let formattedDate =
+        t("timeUnavailable");
+
+
+    if (
+        notification.createdAt
+    ) {
+
+        const date =
+            new Date(
+                notification.createdAt
+            );
+
+
+        if (
+            !Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            formattedDate =
+                date.toLocaleString();
+
+        }
+
+    }
+
+
+    /* =============================================
+       REPORT ID
+    ============================================= */
+
+    const reportId =
+        notification.reportId;
+
+
+    const reportHTML =
+        reportId !== undefined &&
+        reportId !== null
+
+            ? `
+
+                <div class="notification-report">
+
+                    ${t("reportId")}
+
+                    ${escapeHTML(
+                        String(reportId)
+                    )}
+
+                </div>
+
+              `
+
+            : "";
+
+
+    /* =============================================
+       READ BUTTON
+    ============================================= */
+
+    const readButtonHTML =
+        !isRead
+
+            ? `
+
+                <button
+                    class="mark-read-btn"
+                    onclick="markNotificationRead(${Number(notification.id)})"
+                >
+
+                    ${t("markRead")}
+
+                </button>
+
+              `
+
+            : "";
+
+
+    /* =============================================
+       ITEM HTML
+    ============================================= */
+
+    item.innerHTML = `
+
+        <div class="notification-top">
+
+            <div>
+
+                <div class="notification-title">
+
+                    ${escapeHTML(
+                        notification.title ||
+                        "Notification"
+                    )}
+
+                </div>
+
+            </div>
+
+
+            ${
+                !isRead
+
+                    ? `
+
+                        <div
+                            class="unread-dot"
+                            title="Unread"
+                        >
+                        </div>
+
+                      `
+
+                    : ""
+            }
+
+        </div>
+
+
+        <div class="notification-message">
+
+            ${escapeHTML(
+                notification.message ||
+                ""
+            )}
+
+        </div>
+
+
+        ${reportHTML}
+
+
+        <div class="notification-time">
+
+            🕒 ${escapeHTML(
+                formattedDate
+            )}
+
+        </div>
+
+
+        ${readButtonHTML}
+
+    `;
+
+
+    container.appendChild(
+        item
+    );
+
+}
+
+
+/* =====================================================
+   MARK SINGLE NOTIFICATION READ
+===================================================== */
+
+async function markNotificationRead(
+    notificationId
+) {
+
+    try {
+
+        const citizenEmail =
+            getCitizenEmail();
+
+
+        if (!citizenEmail) {
+
+            alert(
+                t("markReadError")
+            );
+
+            return;
+
+        }
+
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/notifications/${notificationId}/read`,
+                {
+
+                    method:
+                        "PATCH",
+
+                    headers: {
+
+                        "Accept":
+                            "application/json",
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            citizenEmail:
+                                citizenEmail
+                        })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        await loadNotifications();
+
+
+    } catch (error) {
+
+        console.error(
+            "Mark notification read error:",
+            error
+        );
+
+
+        alert(
+            t("markReadError")
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   MARK ALL NOTIFICATIONS READ
+===================================================== */
+
+async function markAllNotificationsRead() {
+
+    const button =
+        document.getElementById(
+            "markAllBtn"
+        );
+
+
+    try {
+
+        const citizenEmail =
+            getCitizenEmail();
+
+
+        if (!citizenEmail) {
+
+            throw new Error(
+                "Citizen email not found"
+            );
+
+        }
+
+
+        button.disabled =
+            true;
+
+
+        button.textContent =
+            t("updating");
+
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/notifications/read-all`,
+                {
+
+                    method:
+                        "PATCH",
+
+                    headers: {
+
+                        "Accept":
+                            "application/json",
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+                            citizenEmail:
+                                citizenEmail
+                        })
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+
+        await loadNotifications();
+
+
+    } catch (error) {
+
+        console.error(
+            "Mark all notifications error:",
+            error
+        );
+
+
+        alert(
+            t("markAllError")
+        );
+
+
+        button.disabled =
+            false;
+
+
+        button.textContent =
+            t("markAll");
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+applyLanguage();
+
+
+/* =====================================================
+   AUTO REFRESH
+===================================================== */
+
+setInterval(
+    loadNotifications,
+    10000
+);
+
+</script>
+
+
+</body>
+
+</html>

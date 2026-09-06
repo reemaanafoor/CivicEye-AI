@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>CivicEye AI - Privacy & Data</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #667eea,
+                    #764ba2
+                );
+
+            color: white;
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .dashboard-nav {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 18px 30px;
+
+            background:
+                rgba(255,255,255,0.12);
+
+            backdrop-filter: blur(12px);
+
+            -webkit-backdrop-filter: blur(12px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.18);
+
+            position: relative;
+
+            z-index: 999998 !important;
+
+        }
+
+
+        .dashboard-nav h2 {
+
+            margin: 0;
+
+            font-size: 22px;
+
+        }
+
+
+        .dashboard-nav-links {
+
+            display: flex;
+
+            gap: 20px;
+
+            align-items: center;
+
+        }
+
+
+        .dashboard-nav a {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================================
+           MORE MENU
+        ===================================================== */
+
+        .more-menu-container {
+
+            position: relative;
+
+            display: inline-block;
+
+            margin-left: 8px;
+
+            z-index: 999999 !important;
+
+        }
+
+
+        .more-menu-button {
+
+            width: 42px;
+
+            height: 42px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.18);
+
+            color: inherit;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            z-index: 1000000 !important;
+
+            pointer-events: auto !important;
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .more-menu-button:hover {
+
+            transform: scale(1.05);
+
+            background:
+                rgba(255,255,255,0.28);
+
+        }
+
+
+        .more-menu {
+
+            position: fixed !important;
+
+            top: 70px !important;
+
+            right: 20px !important;
+
+            width: 235px;
+
+            padding: 8px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(255,255,255,0.97);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,0.30);
+
+            display: none !important;
+
+            z-index: 999999 !important;
+
+            animation:
+                moreMenuOpen
+                0.18s ease;
+
+            pointer-events: auto !important;
+
+        }
+
+
+        .more-menu.show {
+
+            display: block !important;
+
+            pointer-events: auto !important;
+
+        }
+
+
+        @keyframes moreMenuOpen {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(-8px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        .more-menu a,
+        .more-menu button {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 12px 13px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: transparent;
+
+            color: #222 !important;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            text-align: left;
+
+            position: relative;
+
+            z-index: 1000000 !important;
+
+            pointer-events: auto !important;
+
+            cursor: pointer;
+
+            box-sizing: border-box;
+
+        }
+
+
+        .more-menu a:hover,
+        .more-menu button:hover {
+
+            background:
+                rgba(0,0,0,0.07);
+
+        }
+
+
+        .more-menu .menu-danger {
+
+            color: #d62828 !important;
+
+        }
+
+
+        /* =====================================================
+           PRIVACY CONTAINER
+        ===================================================== */
+
+        .privacy-container {
+
+            max-width: 900px;
+
+            margin: 40px auto;
+
+            padding: 20px;
+
+        }
+
+
+        .privacy-box {
+
+            padding: 35px;
+
+            border-radius: 25px;
+
+            background:
+                rgba(255,255,255,0.14);
+
+            backdrop-filter: blur(15px);
+
+            -webkit-backdrop-filter: blur(15px);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.25);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.25);
+
+        }
+
+
+        .privacy-box h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .privacy-intro {
+
+            opacity: 0.85;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .privacy-section {
+
+            padding: 20px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.15);
+
+        }
+
+
+        .privacy-section:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .privacy-section h3 {
+
+            margin-top: 0;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .privacy-section p {
+
+            line-height: 1.7;
+
+            margin-bottom: 0;
+
+            opacity: 0.9;
+
+        }
+
+
+        /* =====================================================
+           BOTTOM NAVIGATION
+        ===================================================== */
+
+        .bottom-nav {
+
+            display: flex;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            margin-top: 30px;
+
+            flex-wrap: wrap;
+
+        }
+
+
+        .nav-btn {
+
+            display: inline-block;
+
+            padding: 12px 20px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            background: white;
+
+            color: #222;
+
+            font-weight: bold;
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .nav-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+        }
+
+
+        /* =====================================================
+           LIGHT THEME
+        ===================================================== */
+
+        body.theme-light {
+
+            background: #f5f7fa;
+
+            color: #222;
+
+        }
+
+
+        body.theme-light .dashboard-nav {
+
+            background:
+                rgba(255,255,255,0.9);
+
+            border-bottom-color:
+                rgba(0,0,0,0.1);
+
+        }
+
+
+        body.theme-light .dashboard-nav,
+        body.theme-light .dashboard-nav h2,
+        body.theme-light .dashboard-nav a {
+
+            color: #222 !important;
+
+        }
+
+
+        body.theme-light .privacy-box {
+
+            background:
+                rgba(255,255,255,0.95);
+
+            border-color:
+                rgba(0,0,0,0.12);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.12);
+
+        }
+
+
+        body.theme-light .privacy-section {
+
+            border-bottom-color:
+                rgba(0,0,0,0.12);
+
+        }
+
+
+        body.theme-light .nav-btn {
+
+            background: #222;
+
+            color: white;
+
+        }
+
+
+        body.theme-light .more-menu-button {
+
+            background:
+                rgba(0,0,0,0.08);
+
+            color: #222;
+
+        }
+
+
+        /* =====================================================
+           DARK THEME
+        ===================================================== */
+
+        body.theme-dark {
+
+            background: #101010;
+
+            color: white;
+
+        }
+
+
+        body.theme-dark .dashboard-nav {
+
+            background:
+                rgba(20,20,20,0.95);
+
+            border-bottom-color:
+                rgba(255,255,255,0.12);
+
+        }
+
+
+        body.theme-dark .dashboard-nav,
+        body.theme-dark .dashboard-nav h2,
+        body.theme-dark .dashboard-nav a {
+
+            color: white !important;
+
+        }
+
+
+        body.theme-dark .privacy-box {
+
+            background:
+                rgba(20,20,20,0.95);
+
+            border-color:
+                rgba(255,255,255,0.15);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.45);
+
+        }
+
+
+        body.theme-dark .privacy-section {
+
+            border-bottom-color:
+                rgba(255,255,255,0.12);
+
+        }
+
+
+        body.theme-dark .nav-btn {
+
+            background: white;
+
+            color: #222;
+
+        }
+
+
+        body.theme-dark .more-menu-button {
+
+            background:
+                rgba(255,255,255,0.12);
+
+            color: white;
+
+        }
+
+
+        /* =====================================================
+           MODALS
+        ===================================================== */
+
+        .civic-modal {
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0,0,0,0.60);
+
+            display: none;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 2000000;
+
+        }
+
+
+        .civic-modal.show {
+
+            display: flex;
+
+        }
+
+
+        .civic-modal-box {
+
+            width:
+                min(500px, 100%);
+
+            padding: 28px;
+
+            border-radius: 22px;
+
+            background: white;
+
+            color: #222;
+
+            box-shadow:
+                0 20px 60px
+                rgba(0,0,0,0.35);
+
+            text-align: center;
+
+            animation:
+                modalOpen
+                0.2s ease;
+
+        }
+
+
+        @keyframes modalOpen {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    scale(0.95);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    scale(1);
+
+            }
+
+        }
+
+
+        .civic-modal-box h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .civic-modal-box p {
+
+            line-height: 1.6;
+
+            color: #555;
+
+        }
+
+
+        .modal-close {
+
+            margin-top: 15px;
+
+            padding: 10px 22px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #222;
+
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 650px) {
+
+            .dashboard-nav {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .dashboard-nav h2 {
+
+                font-size: 18px;
+
+            }
+
+
+            .dashboard-nav-links {
+
+                gap: 8px;
+
+            }
+
+
+            .privacy-container {
+
+                margin:
+                    20px auto;
+
+                padding:
+                    15px;
+
+            }
+
+
+            .privacy-box {
+
+                padding:
+                    25px 20px;
+
+            }
+
+
+            .more-menu {
+
+                right:
+                    12px !important;
+
+                top:
+                    65px !important;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="dashboard-nav">
+
+    <h2>
+        👁️ CivicEye AI
+    </h2>
+
+
+    <div class="dashboard-nav-links">
+
+        <a
+            href="citizen.html"
+            data-i18n="citizenPortal"
+        >
+            🏠 Citizen Portal
+        </a>
+
+
+        <div class="more-menu-container">
+
+            <button
+                type="button"
+                class="more-menu-button"
+                id="moreMenuButton"
+                aria-label="More"
+                aria-expanded="false"
+            >
+                ⋮
+            </button>
+
+
+            <div
+                class="more-menu"
+                id="moreMenu"
+            >
+
+                <a href="profile.html">
+
+                    👤
+
+                    <span data-menu-text="profile">
+                        Profile
+                    </span>
+
+                </a>
+
+
+                <a href="settings.html">
+
+                    ⚙️
+
+                    <span data-menu-text="settings">
+                        Settings
+                    </span>
+
+                </a>
+
+
+                <a href="privacy.html">
+
+                    🔒
+
+                    <span data-menu-text="privacy">
+                        Privacy
+                    </span>
+
+                </a>
+
+
+                <button
+                    type="button"
+                    onclick="showHelp()"
+                >
+
+                    ❓
+
+                    <span data-menu-text="help">
+                        Help & Support
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="showAbout()"
+                >
+
+                    ℹ️
+
+                    <span data-menu-text="about">
+                        About CivicEye AI
+                    </span>
+
+                </button>
+
+
+                <a
+                    href="login.html"
+                    class="menu-danger"
+                >
+
+                    🚪
+
+                    <span data-menu-text="logout">
+                        Logout
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     PRIVACY
+===================================================== -->
+
+<div class="privacy-container">
+
+    <div class="privacy-box">
+
+        <h1 data-i18n="title">
+            🔐 Privacy & Data Protection
+        </h1>
+
+
+        <p
+            class="privacy-intro"
+            data-i18n="intro"
+        >
+            CivicEye AI respects your privacy and is committed to protecting your information.
+        </p>
+
+
+
+        <div class="privacy-section">
+
+            <h3 data-i18n="accountTitle">
+                👤 Account Information
+            </h3>
+
+            <p data-i18n="accountText">
+                CivicEye AI may store basic account information such as your email address to provide citizen account features and access your reports.
+            </p>
+
+        </div>
+
+
+
+        <div class="privacy-section">
+
+            <h3 data-i18n="complaintTitle">
+                📋 Complaint Data
+            </h3>
+
+            <p data-i18n="complaintText">
+                Information submitted through a public issue report may include the issue type, description, uploaded image, location and report status. This information is used to process and track public complaints.
+            </p>
+
+        </div>
+
+
+
+        <div class="privacy-section">
+
+            <h3 data-i18n="locationTitle">
+                📍 Location Information
+            </h3>
+
+            <p data-i18n="locationText">
+                If you choose to provide your location, CivicEye AI may use the location information to help identify where the reported public issue occurred.
+            </p>
+
+        </div>
+
+
+
+        <div class="privacy-section">
+
+            <h3 data-i18n="imagesTitle">
+                📷 Uploaded Images
+            </h3>
+
+            <p data-i18n="imagesText">
+                Images uploaded with a complaint are used to analyse and document the reported issue.
+            </p>
+
+        </div>
+
+
+
+        <div class="privacy-section">
+
+            <h3 data-i18n="notificationsTitle">
+                🔔 Notifications
+            </h3>
+
+            <p data-i18n="notificationsText">
+                CivicEye AI may send notifications about report status changes and other relevant updates.
+            </p>
+
+        </div>
+
+
+
+        <div class="privacy-section">
+
+            <h3 data-i18n="retentionTitle">
+                🗑️ Data Retention
+            </h3>
+
+            <p data-i18n="retentionText">
+                Solved reports may be automatically removed after the configured retention period.
+            </p>
+
+        </div>
+
+
+
+        <div class="privacy-section">
+
+            <h3 data-i18n="protectionTitle">
+                🛡️ Data Protection
+            </h3>
+
+            <p data-i18n="protectionText">
+                CivicEye AI is designed to use collected information only for providing and improving the public issue reporting and tracking service.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             BOTTOM NAV
+        ================================================== -->
+
+        <div class="bottom-nav">
+
+            <a
+                href="settings.html"
+                class="nav-btn"
+                data-i18n="settings"
+            >
+                ⚙️ Settings
+            </a>
+
+
+            <a
+                href="profile.html"
+                class="nav-btn"
+                data-i18n="profile"
+            >
+                👤 Profile
+            </a>
+
+
+            <a
+                href="citizen.html"
+                class="nav-btn"
+                data-i18n="citizenPortal"
+            >
+                🏠 Citizen Portal
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     HELP MODAL
+===================================================== -->
+
+<div
+    class="civic-modal"
+    id="helpModal"
+    onclick="closeModalOutside(event,'helpModal')"
+>
+
+    <div class="civic-modal-box">
+
+        <h2 data-i18n="helpTitle">
+            ❓ Help & Support
+        </h2>
+
+
+        <p data-i18n="helpText">
+            CivicEye AI helps citizens report public issues,
+            track complaint progress, and receive status updates.
+            If you need assistance, please contact your project
+            administrator.
+        </p>
+
+
+        <button
+            type="button"
+            class="modal-close"
+            onclick="closeModal('helpModal')"
+            data-i18n="close"
+        >
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     ABOUT MODAL
+===================================================== -->
+
+<div
+    class="civic-modal"
+    id="aboutModal"
+    onclick="closeModalOutside(event,'aboutModal')"
+>
+
+    <div class="civic-modal-box">
+
+        <h2 data-i18n="aboutTitle">
+            ℹ️ About CivicEye AI
+        </h2>
+
+
+        <p data-i18n="aboutText">
+            CivicEye AI is a smart civic issue reporting platform
+            designed to help citizens report problems such as road
+            damage, garbage, water leaks and street-light issues.
+        </p>
+
+
+        <button
+            type="button"
+            class="modal-close"
+            onclick="closeModal('aboutModal')"
+            data-i18n="close"
+        >
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   TRANSLATIONS
+===================================================== */
+
+const translations = {
+
+    en: {
+
+        citizenPortal:
+            "🏠 Citizen Portal",
+
+        title:
+            "🔐 Privacy & Data Protection",
+
+        intro:
+            "CivicEye AI respects your privacy and is committed to protecting your information.",
+
+        accountTitle:
+            "👤 Account Information",
+
+        accountText:
+            "CivicEye AI may store basic account information such as your email address to provide citizen account features and access your reports.",
+
+        complaintTitle:
+            "📋 Complaint Data",
+
+        complaintText:
+            "Information submitted through a public issue report may include the issue type, description, uploaded image, location and report status. This information is used to process and track public complaints.",
+
+        locationTitle:
+            "📍 Location Information",
+
+        locationText:
+            "If you choose to provide your location, CivicEye AI may use the location information to help identify where the reported public issue occurred.",
+
+        imagesTitle:
+            "📷 Uploaded Images",
+
+        imagesText:
+            "Images uploaded with a complaint are used to analyse and document the reported issue.",
+
+        notificationsTitle:
+            "🔔 Notifications",
+
+        notificationsText:
+            "CivicEye AI may send notifications about report status changes and other relevant updates.",
+
+        retentionTitle:
+            "🗑️ Data Retention",
+
+        retentionText:
+            "Solved reports may be automatically removed after the configured retention period.",
+
+        protectionTitle:
+            "🛡️ Data Protection",
+
+        protectionText:
+            "CivicEye AI is designed to use collected information only for providing and improving the public issue reporting and tracking service.",
+
+        settings:
+            "⚙️ Settings",
+
+        profile:
+            "👤 Profile",
+
+        helpTitle:
+            "❓ Help & Support",
+
+        helpText:
+            "CivicEye AI helps citizens report public issues, track complaint progress, and receive status updates. If you need assistance, please contact your project administrator.",
+
+        aboutTitle:
+            "ℹ️ About CivicEye AI",
+
+        aboutText:
+            "CivicEye AI is a smart civic issue reporting platform designed to help citizens report problems such as road damage, garbage, water leaks and street-light issues.",
+
+        close:
+            "Close"
+
+    },
+
+
+    ta: {
+
+        citizenPortal:
+            "🏠 குடிமக்கள் தளம்",
+
+        title:
+            "🔐 தனியுரிமை மற்றும் தரவு பாதுகாப்பு",
+
+        intro:
+            "CivicEye AI உங்கள் தனியுரிமையை மதித்து, உங்கள் தகவல்களைப் பாதுகாக்க உறுதிபூண்டுள்ளது.",
+
+        accountTitle:
+            "👤 கணக்கு தகவல்",
+
+        accountText:
+            "குடிமக்கள் கணக்கு அம்சங்களை வழங்கவும் உங்கள் புகார்களை அணுகவும் மின்னஞ்சல் முகவரி போன்ற அடிப்படை கணக்கு தகவல்களை CivicEye AI சேமிக்கலாம்.",
+
+        complaintTitle:
+            "📋 புகார் தரவு",
+
+        complaintText:
+            "பொது பிரச்சினை புகாரில் பிரச்சினை வகை, விளக்கம், பதிவேற்றப்பட்ட படம், இடம் மற்றும் புகார் நிலை போன்ற தகவல்கள் இருக்கலாம். இந்த தகவல்கள் புகார்களை செயலாக்கவும் கண்காணிக்கவும் பயன்படுத்தப்படுகின்றன.",
+
+        locationTitle:
+            "📍 இடத் தகவல்",
+
+        locationText:
+            "நீங்கள் உங்கள் இடத்தை வழங்கத் தேர்வு செய்தால், புகாரளிக்கப்பட்ட பொது பிரச்சினை ஏற்பட்ட இடத்தை அடையாளம் காண CivicEye AI அந்த இடத் தகவலைப் பயன்படுத்தலாம்.",
+
+        imagesTitle:
+            "📷 பதிவேற்றப்பட்ட படங்கள்",
+
+        imagesText:
+            "புகாருடன் பதிவேற்றப்படும் படங்கள், புகாரளிக்கப்பட்ட பிரச்சினையை பகுப்பாய்வு செய்து ஆவணப்படுத்த பயன்படுத்தப்படுகின்றன.",
+
+        notificationsTitle:
+            "🔔 அறிவிப்புகள்",
+
+        notificationsText:
+            "புகாரின் நிலை மாற்றங்கள் மற்றும் தொடர்புடைய புதுப்பிப்புகள் குறித்து CivicEye AI அறிவிப்புகளை அனுப்பலாம்.",
+
+        retentionTitle:
+            "🗑️ தரவு சேமிப்பு காலம்",
+
+        retentionText:
+            "குறிப்பிட்ட சேமிப்பு காலத்திற்குப் பிறகு தீர்க்கப்பட்ட புகார்கள் தானாகவே நீக்கப்படலாம்.",
+
+        protectionTitle:
+            "🛡️ தரவு பாதுகாப்பு",
+
+        protectionText:
+            "பொது பிரச்சினைகளைப் புகாரளிக்கும் மற்றும் கண்காணிக்கும் சேவையை வழங்கவும் மேம்படுத்தவும் மட்டுமே சேகரிக்கப்பட்ட தகவல்களைப் பயன்படுத்த CivicEye AI வடிவமைக்கப்பட்டுள்ளது.",
+
+        settings:
+            "⚙️ அமைப்புகள்",
+
+        profile:
+            "👤 சுயவிவரம்",
+
+        helpTitle:
+            "❓ உதவி மற்றும் ஆதரவு",
+
+        helpText:
+            "CivicEye AI மூலம் குடிமக்கள் பொது பிரச்சினைகளைப் பதிவு செய்யவும், புகார்களின் முன்னேற்றத்தைப் பார்க்கவும் மற்றும் நிலை புதுப்பிப்புகளைப் பெறவும் முடியும். உதவி தேவைப்பட்டால் திட்ட நிர்வாகியைத் தொடர்புகொள்ளவும்.",
+
+        aboutTitle:
+            "ℹ️ CivicEye AI பற்றி",
+
+        aboutText:
+            "CivicEye AI என்பது சாலை சேதம், குப்பை, நீர் கசிவு மற்றும் தெருவிளக்கு பிரச்சினைகள் போன்ற பொது பிரச்சினைகளைப் பதிவு செய்ய குடிமக்களுக்கு உதவும் புத்திசாலித்தனமான தளமாகும்.",
+
+        close:
+            "மூடு"
+
+    },
+
+
+    si: {
+
+        citizenPortal:
+            "🏠 පුරවැසි ද්වාරය",
+
+        title:
+            "🔐 පෞද්ගලිකත්වය සහ දත්ත ආරක්ෂාව",
+
+        intro:
+            "CivicEye AI ඔබගේ පෞද්ගලිකත්වයට ගරු කරන අතර ඔබගේ තොරතුරු ආරක්ෂා කිරීමට කැපවී සිටී.",
+
+        accountTitle:
+            "👤 ගිණුම් තොරතුරු",
+
+        accountText:
+            "පුරවැසි ගිණුම් විශේෂාංග ලබා දීමට සහ ඔබගේ වාර්තා වෙත ප්‍රවේශ වීමට CivicEye AI ඔබගේ විද්‍යුත් තැපැල් ලිපිනය වැනි මූලික ගිණුම් තොරතුරු ගබඩා කළ හැක.",
+
+        complaintTitle:
+            "📋 පැමිණිලි දත්ත",
+
+        complaintText:
+            "පොදු ගැටලුවක් වාර්තා කිරීමේදී ගැටලු වර්ගය, විස්තරය, උඩුගත කළ රූපය, ස්ථානය සහ වාර්තාවේ තත්ත්වය වැනි තොරතුරු ඇතුළත් විය හැක. මෙම තොරතුරු පැමිණිලි සැකසීමට සහ නිරීක්ෂණය කිරීමට භාවිතා කරයි.",
+
+        locationTitle:
+            "📍 ස්ථාන තොරතුරු",
+
+        locationText:
+            "ඔබගේ ස්ථානය ලබා දීමට තෝරා ගන්නේ නම්, වාර්තා කළ පොදු ගැටලුව සිදු වූ ස්ථානය හඳුනා ගැනීමට CivicEye AI එම ස්ථාන තොරතුරු භාවිතා කළ හැක.",
+
+        imagesTitle:
+            "📷 උඩුගත කළ රූප",
+
+        imagesText:
+            "පැමිණිල්ලක් සමඟ උඩුගත කරන රූප වාර්තා කළ ගැටලුව විශ්ලේෂණය කිරීමට සහ ලේඛනගත කිරීමට භාවිතා කරයි.",
+
+        notificationsTitle:
+            "🔔 දැනුම්දීම්",
+
+        notificationsText:
+            "වාර්තාවේ තත්ත්ව වෙනස්වීම් සහ අනෙකුත් අදාළ යාවත්කාලීන පිළිබඳව CivicEye AI දැනුම්දීම් යැවිය හැක.",
+
+        retentionTitle:
+            "🗑️ දත්ත රඳවා තබා ගැනීම",
+
+        retentionText:
+            "වින්‍යාස කර ඇති රඳවා ගැනීමේ කාලයෙන් පසුව විසඳන ලද වාර්තා ස්වයංක්‍රීයව ඉවත් කළ හැක.",
+
+        protectionTitle:
+            "🛡️ දත්ත ආරක්ෂාව",
+
+        protectionText:
+            "පොදු ගැටලු වාර්තා කිරීමේ සහ නිරීක්ෂණය කිරීමේ සේවාව ලබා දීමට සහ වැඩිදියුණු කිරීමට පමණක් එකතු කරන ලද තොරතුරු භාවිතා කිරීමට CivicEye AI නිර්මාණය කර ඇත.",
+
+        settings:
+            "⚙️ සැකසුම්",
+
+        profile:
+            "👤 පැතිකඩ",
+
+        helpTitle:
+            "❓ උදව් සහ සහාය",
+
+        helpText:
+            "CivicEye AI මඟින් පුරවැසියන්ට පොදු ගැටලු වාර්තා කිරීමට, පැමිණිලිවල ප්‍රගතිය නිරීක්ෂණය කිරීමට සහ තත්ත්ව යාවත්කාලීන ලබා ගැනීමට හැකිය. සහාය අවශ්‍ය නම් ව්‍යාපෘති පරිපාලක අමතන්න.",
+
+        aboutTitle:
+            "ℹ️ CivicEye AI ගැන",
+
+        aboutText:
+            "CivicEye AI යනු මාර්ග හානි, කසළ, ජල කාන්දුවීම් සහ වීදි ආලෝක ගැටලු වැනි පොදු ගැටලු වාර්තා කිරීමට පුරවැසියන්ට උපකාර කරන බුද්ධිමත් වේදිකාවකි.",
+
+        close:
+            "වසන්න"
+
+    }
+
+};
+
+
+
+/* =====================================================
+   MENU TRANSLATIONS
+===================================================== */
+
+const menuTranslations = {
+
+    en: {
+
+        profile:
+            "Profile",
+
+        settings:
+            "Settings",
+
+        privacy:
+            "Privacy",
+
+        help:
+            "Help & Support",
+
+        about:
+            "About CivicEye AI",
+
+        logout:
+            "Logout"
+
+    },
+
+
+    ta: {
+
+        profile:
+            "சுயவிவரம்",
+
+        settings:
+            "அமைப்புகள்",
+
+        privacy:
+            "தனியுரிமை",
+
+        help:
+            "உதவி மற்றும் ஆதரவு",
+
+        about:
+            "CivicEye AI பற்றி",
+
+        logout:
+            "வெளியேறு"
+
+    },
+
+
+    si: {
+
+        profile:
+            "පැතිකඩ",
+
+        settings:
+            "සැකසුම්",
+
+        privacy:
+            "පෞද්ගලිකත්වය",
+
+        help:
+            "උදව් සහ සහාය",
+
+        about:
+            "CivicEye AI ගැන",
+
+        logout:
+            "ඉවත් වන්න"
+
+    }
+
+};
+
+
+
+/* =====================================================
+   APPLY LANGUAGE
+===================================================== */
+
+function applyLanguage() {
+
+    const savedLanguage =
+        localStorage.getItem(
+            "civicEyeLanguage"
+        ) || "en";
+
+
+    const language =
+        translations[savedLanguage]
+            ? savedLanguage
+            : "en";
+
+
+    document.documentElement.lang =
+        language === "ta"
+            ? "ta"
+            : language === "si"
+                ? "si"
+                : "en";
+
+
+    /* Page text */
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(function(element) {
+
+            const key =
+                element.getAttribute(
+                    "data-i18n"
+                );
+
+
+            if (
+                translations[language][key]
+                !== undefined
+            ) {
+
+                element.textContent =
+                    translations[language][key];
+
+            }
+
+        });
+
+
+    /* More menu */
+
+    document
+        .querySelectorAll("[data-menu-text]")
+        .forEach(function(element) {
+
+            const key =
+                element.getAttribute(
+                    "data-menu-text"
+                );
+
+
+            if (
+                menuTranslations[language][key]
+                !== undefined
+            ) {
+
+                element.textContent =
+                    menuTranslations[language][key];
+
+            }
+
+        });
+
+}
+
+
+
+/* =====================================================
+   THEME
+===================================================== */
+
+function applySavedTheme() {
+
+    const savedTheme =
+        localStorage.getItem(
+            "civicEyeTheme"
+        ) || "default";
+
+
+    document.body.classList.remove(
+        "theme-light",
+        "theme-dark"
+    );
+
+
+    if (savedTheme === "light") {
+
+        document.body.classList.add(
+            "theme-light"
+        );
+
+    }
+    else if (savedTheme === "dark") {
+
+        document.body.classList.add(
+            "theme-dark"
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   MORE MENU
+===================================================== */
+
+const moreMenuButton =
+    document.getElementById(
+        "moreMenuButton"
+    );
+
+
+const moreMenu =
+    document.getElementById(
+        "moreMenu"
+    );
+
+
+moreMenuButton.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+
+        const isOpen =
+            moreMenu.classList.toggle(
+                "show"
+            );
+
+
+        moreMenuButton.setAttribute(
+            "aria-expanded",
+            isOpen
+                ? "true"
+                : "false"
+        );
+
+    }
+);
+
+
+
+/* =====================================================
+   CLOSE MENU OUTSIDE
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            !moreMenu.contains(event.target) &&
+            !moreMenuButton.contains(event.target)
+        ) {
+
+            moreMenu.classList.remove(
+                "show"
+            );
+
+
+            moreMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   HELP
+===================================================== */
+
+function showHelp() {
+
+    document
+        .getElementById("helpModal")
+        .classList.add("show");
+
+
+    moreMenu.classList.remove(
+        "show"
+    );
+
+
+    moreMenuButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+}
+
+
+
+/* =====================================================
+   ABOUT
+===================================================== */
+
+function showAbout() {
+
+    document
+        .getElementById("aboutModal")
+        .classList.add("show");
+
+
+    moreMenu.classList.remove(
+        "show"
+    );
+
+
+    moreMenuButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+}
+
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal(id) {
+
+    document
+        .getElementById(id)
+        .classList.remove("show");
+
+}
+
+
+
+/* =====================================================
+   CLOSE MODAL OUTSIDE
+===================================================== */
+
+function closeModalOutside(
+    event,
+    id
+) {
+
+    if (
+        event.target.id === id
+    ) {
+
+        closeModal(id);
+
+    }
+
+}
+
+
+
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            document
+                .querySelectorAll(
+                    ".civic-modal.show"
+                )
+                .forEach(function(modal) {
+
+                    modal.classList.remove(
+                        "show"
+                    );
+
+                });
+
+
+            moreMenu.classList.remove(
+                "show"
+            );
+
+
+            moreMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+function initializePage() {
+
+    applySavedTheme();
+
+    applyLanguage();
+
+}
+
+
+
+/* =====================================================
+   DOM READY
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        initializePage();
+
+    }
+);
+
+
+
+/* =====================================================
+   REFRESH WHEN RETURNING TO PAGE
+===================================================== */
+
+window.addEventListener(
+    "pageshow",
+    function() {
+
+        initializePage();
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

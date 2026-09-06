@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CivicEye AI</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* =====================================================
+   CIVICEYE THEME SUPPORT
+===================================================== */
+
+:root {
+    --civic-text: #ffffff;
+    --civic-card-bg: rgba(255,255,255,0.16);
+    --civic-card-border: rgba(255,255,255,0.25);
+    --civic-button-bg: #ffffff;
+    --civic-button-text: #222222;
+}
+
+body.theme-light {
+    --civic-text: #222222;
+    --civic-card-bg: rgba(255,255,255,0.95);
+    --civic-card-border: rgba(0,0,0,0.12);
+    --civic-button-bg: #222222;
+    --civic-button-text: #ffffff;
+    background:#f5f7fa;
+}
+
+body.theme-dark {
+    --civic-text:#ffffff;
+    --civic-card-bg:rgba(20,20,20,0.95);
+    --civic-card-border:rgba(255,255,255,0.15);
+    --civic-button-bg:#ffffff;
+    --civic-button-text:#222222;
+    background:#101010;
+}
+
+body.theme-light h1,
+body.theme-light h2,
+body.theme-light h3,
+body.theme-light h4,
+body.theme-light h5,
+body.theme-light h6,
+body.theme-light p,
+body.theme-light a,
+body.theme-dark h1,
+body.theme-dark h2,
+body.theme-dark h3,
+body.theme-dark h4,
+body.theme-dark h5,
+body.theme-dark h6,
+body.theme-dark p,
+body.theme-dark a {
+    color:var(--civic-text);
+}
+
+body.theme-light .card,
+body.theme-light .notification-card,
+body.theme-dark .card,
+body.theme-dark .notification-card {
+    background:var(--civic-card-bg);
+    border-color:var(--civic-card-border);
+    color:var(--civic-text);
+}
+
+body.theme-light button,
+body.theme-dark button {
+    background:var(--civic-button-bg);
+    color:var(--civic-button-text);
+}
+
+body.theme-light footer,
+body.theme-dark footer {
+    color:var(--civic-text);
+}
+
+
+/* =====================================================
+   COMMON THREE DOT MORE MENU
+===================================================== */
+
+.more-menu-container {
+    position:relative;
+    display:inline-block;
+    margin-left:8px;
+
+    /* FIX: keep menu above hero/cards */
+    z-index:999999 !important;
+}
+
+.more-menu-button {
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,0.18);
+    color:#ffffff;
+    font-size:28px;
+    line-height:35px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:0.2s ease;
+    padding:0;
+
+    /* FIX: make button clickable */
+    position:relative;
+    z-index:1000000 !important;
+    pointer-events:auto !important;
+}
+
+.more-menu-button:hover {
+    background:rgba(255,255,255,0.30);
+    transform:scale(1.05);
+}
+
+body.theme-light .more-menu-button {
+    background:#222222;
+    color:#ffffff;
+}
+
+body.theme-dark .more-menu-button {
+    background:#ffffff;
+    color:#222222;
+}
+
+
+/* =====================================================
+   NAVBAR LAYER FIX
+===================================================== */
+
+nav {
+    position:relative;
+    z-index:999998 !important;
+}
+
+
+/* =====================================================
+   DROPDOWN
+===================================================== */
+
+.more-menu {
+    /* FIX:
+       fixed positioning prevents the hero section
+       from covering/clipping the dropdown
+    */
+    position:fixed !important;
+
+    top:70px !important;
+    right:20px !important;
+
+    width:235px;
+    padding:8px;
+    border-radius:16px;
+
+    background:rgba(255,255,255,0.97);
+    box-shadow:0 15px 40px rgba(0,0,0,0.30);
+
+    display:none !important;
+
+    /* FIX: very high layer */
+    z-index:999999 !important;
+
+    animation:moreMenuOpen 0.18s ease;
+
+    /* FIX: make menu clickable */
+    pointer-events:auto !important;
+}
+
+.more-menu.show {
+    display:block !important;
+    pointer-events:auto !important;
+}
+
+@keyframes moreMenuOpen {
+
+    from {
+        opacity:0;
+        transform:translateY(-8px);
+    }
+
+    to {
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+
+/* =====================================================
+   MENU LINKS AND BUTTONS
+===================================================== */
+
+.more-menu a,
+.more-menu button {
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:12px 14px;
+    margin:2px 0;
+
+    border:none;
+    border-radius:10px;
+
+    background:transparent !important;
+    color:#222222 !important;
+
+    text-decoration:none;
+    font-size:15px;
+    font-family:inherit;
+
+    /* FIX: clickable above everything */
+    position:relative;
+    z-index:1000000 !important;
+    pointer-events:auto !important;
+
+    cursor:pointer;
+    text-align:left;
+
+    transition:0.2s ease;
+}
+
+.more-menu a:hover,
+.more-menu button:hover {
+    background:#f0f2f5 !important;
+}
+
+
+/* Dark menu */
+
+body.theme-dark .more-menu {
+    background:#202020;
+}
+
+body.theme-dark .more-menu a,
+body.theme-dark .more-menu button {
+    color:#ffffff !important;
+}
+
+body.theme-dark .more-menu a:hover,
+body.theme-dark .more-menu button:hover {
+    background:#333333 !important;
+}
+
+
+/* Light menu */
+
+body.theme-light .more-menu {
+    background:#ffffff;
+}
+
+body.theme-light .more-menu a,
+body.theme-light .more-menu button {
+    color:#222222 !important;
+}
+
+
+/* =====================================================
+   CIVICEYE POPUP
+===================================================== */
+
+.civic-modal {
+    position:fixed;
+    inset:0;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(0,0,0,0.55);
+
+    z-index:10000;
+
+    padding:20px;
+}
+
+.civic-modal.show {
+    display:flex;
+}
+
+.civic-modal-box {
+    width:min(500px,100%);
+    max-height:85vh;
+    overflow:auto;
+
+    background:#ffffff;
+    color:#222222;
+
+    border-radius:20px;
+    padding:28px;
+
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+
+    animation:modalOpen 0.2s ease;
+}
+
+@keyframes modalOpen {
+
+    from {
+        opacity:0;
+        transform:scale(0.95);
+    }
+
+    to {
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+body.theme-dark .civic-modal-box {
+    background:#202020;
+    color:#ffffff;
+}
+
+.civic-modal-box h2 {
+    margin-top:0;
+    color:inherit !important;
+}
+
+.civic-modal-box p {
+    color:inherit !important;
+    line-height:1.6;
+}
+
+.civic-modal-close {
+    float:right;
+
+    border:none !important;
+    background:transparent !important;
+
+    color:inherit !important;
+
+    font-size:25px;
+    cursor:pointer;
+
+    padding:0;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width:700px) {
+
+    nav {
+        flex-wrap:wrap;
+        position:relative;
+        z-index:999998 !important;
+    }
+
+    .more-menu-container {
+        margin-top:5px;
+        z-index:999999 !important;
+    }
+
+    .more-menu {
+        position:fixed !important;
+        top:70px !important;
+        right:15px !important;
+        width:230px;
+        z-index:999999 !important;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     SPLASH LOADING SCREEN
+===================================================== -->
+
+<div id="loading-screen">
+
+    <div class="logo">
+        👁️
+    </div>
+
+    <h2>CivicEye AI</h2>
+
+    <p>Initializing AI System...</p>
+
+    <div class="loading-bar">
+        <div class="loading-progress"></div>
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<div id="main-content">
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav>
+
+    <h2>
+        👁️ CivicEye AI
+    </h2>
+
+    <div>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="#features">
+            Features
+        </a>
+
+        <a href="report.html">
+            Report
+        </a>
+
+        <a href="track.html">
+            Track
+        </a>
+
+        <a href="login.html">
+            Login
+        </a>
+
+
+        <!-- =============================================
+             COMMON MORE MENU
+        ============================================== -->
+
+        <div class="more-menu-container">
+
+            <button
+                type="button"
+                class="more-menu-button"
+                id="moreMenuButton"
+                aria-label="More options"
+                aria-expanded="false">
+
+                ⋮
+
+            </button>
+
+
+            <div
+                class="more-menu"
+                id="moreMenu">
+
+
+                <a href="profile.html">
+
+                    👤
+                    <span data-menu-text="Profile">
+                        Profile
+                    </span>
+
+                </a>
+
+
+                <a href="settings.html">
+
+                    ⚙️
+                    <span data-menu-text="Settings">
+                        Settings
+                    </span>
+
+                </a>
+
+
+                <a href="privacy.html">
+
+                    🔒
+                    <span data-menu-text="Privacy">
+                        Privacy
+                    </span>
+
+                </a>
+
+
+                <button
+                    type="button"
+                    onclick="showHelp()">
+
+                    ❓
+                    <span data-menu-text="Help & Support">
+                        Help & Support
+                    </span>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    onclick="showAbout()">
+
+                    ℹ️
+                    <span data-menu-text="About CivicEye AI">
+                        About CivicEye AI
+                    </span>
+
+                </button>
+
+
+                <a href="login.html">
+
+                    🚪
+                    <span data-menu-text="Logout">
+                        Logout
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO SECTION
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-text">
+
+        <h1>
+            👁️ CivicEye AI
+        </h1>
+
+        <h2>
+            Smart AI Solution for a Cleaner Sri Lanka 🇱🇰
+        </h2>
+
+        <p>
+            Report public issues instantly using Artificial Intelligence.
+            CivicEye AI helps identify public problems, capture locations,
+            and connect citizens with authorities for smarter communities.
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                type="button"
+                onclick="window.location.href='report.html'">
+
+                📸 Report an Issue
+
+            </button>
+
+            <button
+                type="button"
+                onclick="window.location.href='track.html'">
+
+                🔎 Track Complaint
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="robot">
+
+        🤖
+
+        <div class="ai-circle">
+            AI
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT CIVICEYE
+===================================================== -->
+
+<section class="about-intro">
+
+    <h1>
+        CivicEye AI
+    </h1>
+
+    <p>
+        CivicEye AI is an intelligent public issue reporting and management
+        platform designed to connect citizens and authorities.
+
+        The system uses AI-assisted analysis to help identify and categorize
+        common public problems such as road damage, garbage, water leaks,
+        and street light failures.
+
+        Citizens can submit an issue using an image, description, and
+        location information. The submitted information can then be
+        processed and monitored through the CivicEye system.
+
+        CivicEye AI aims to demonstrate how technology can support cleaner,
+        safer, and smarter communities across Sri Lanka.
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     HOW IT WORKS
+===================================================== -->
+
+<section class="quick-actions">
+
+    <h2>
+        🚀 How CivicEye AI Works
+    </h2>
+
+    <p>
+        A simple digital process connects citizens with issue management tools.
+    </p>
+
+    <div class="about-cards">
+
+        <div class="card">
+
+            <h3>
+                1️⃣ Report
+            </h3>
+
+            <p>
+                Citizens upload an image and provide information
+                about a public issue.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                2️⃣ AI Analysis
+            </h3>
+
+            <p>
+                AI-assisted analysis can help identify and
+                categorize the reported issue.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                3️⃣ Location
+            </h3>
+
+            <p>
+                Location information can help identify where
+                the public issue was reported.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                4️⃣ Monitor
+            </h3>
+
+            <p>
+                Authorities can review reports and update
+                their progress through the dashboard.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FEATURES
+===================================================== -->
+
+<section class="features" id="features">
+
+    <h2>
+        🚀 Our Smart Features
+    </h2>
+
+    <div class="feature-container">
+
+
+        <div class="card">
+
+            <div class="icon">🤖</div>
+
+            <h3>
+                AI Issue Detection
+            </h3>
+
+            <p>
+                AI-assisted image analysis can identify and
+                categorize common public issues such as
+                road damage and garbage.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">📍</div>
+
+            <h3>
+                Smart Location Tracking
+            </h3>
+
+            <p>
+                Location information can help identify where
+                a public issue has been reported.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🔍</div>
+
+            <h3>
+                Duplicate Complaint Detection
+            </h3>
+
+            <p>
+                Similar reports can be identified to help
+                reduce repeated complaints about the same issue.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🚨</div>
+
+            <h3>
+                Emergency Priority
+            </h3>
+
+            <p>
+                Reported issues can be assigned a priority level
+                to help identify cases that may need faster attention.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🏛️</div>
+
+            <h3>
+                Authority Recommendation
+            </h3>
+
+            <p>
+                The system can recommend a relevant local authority
+                based on the issue category and location.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🔄</div>
+
+            <h3>
+                Complaint Status Tracking
+            </h3>
+
+            <p>
+                Citizens can follow the progress of their submitted
+                complaints through the CivicEye system.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">✅</div>
+
+            <h3>
+                Resolution Verification
+            </h3>
+
+            <p>
+                Citizens can be given an opportunity to verify
+                whether a reported issue has been resolved.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🎙️</div>
+
+            <h3>
+                Tri-Language Voice Complaints
+            </h3>
+
+            <p>
+                Voice input can support English, Tamil, and Sinhala
+                when available through the system.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     REPORT CTA
+===================================================== -->
+
+<section class="report">
+
+    <h2>
+        📸 Report a Public Issue
+    </h2>
+
+    <p>
+        Found a road problem, garbage issue, water leak,
+        street light failure, or another public issue?
+    </p>
+
+    <button
+        type="button"
+        onclick="window.location.href='report.html'">
+
+        🚀 Open Report Form
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     TRACK CTA
+===================================================== -->
+
+<section class="quick-actions">
+
+    <h2>
+        🔎 Track Your Complaint
+    </h2>
+
+    <p>
+        Already submitted a report?
+        Check its current status through CivicEye AI.
+    </p>
+
+    <button
+        type="button"
+        onclick="window.location.href='track.html'">
+
+        🔎 Track Complaint
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     DASHBOARD ACCESS
+===================================================== -->
+
+<section class="dashboard">
+
+    <h2>
+        📊 CivicEye AI Management
+    </h2>
+
+    <p>
+        Authorized administrators can review submitted
+        public issue reports and monitor their progress.
+    </p>
+
+    <button
+        type="button"
+        onclick="window.location.href='login.html'">
+
+        🔐 Login to CivicEye
+
+    </button>
+
+</section>
+
+
+<!-- =====================================================
+     NOTIFICATIONS
+===================================================== -->
+
+<section id="notifications">
+
+    <h2>
+        🔔 Notifications
+    </h2>
+
+    <div class="notification-card">
+
+        <p>
+            📸 Report updates will appear here.
+        </p>
+
+    </div>
+
+    <div class="notification-card">
+
+        <p>
+            🤖 AI analysis updates can be provided after
+            a report is submitted.
+        </p>
+
+    </div>
+
+    <div class="notification-card">
+
+        <p>
+            📊 Complaint status updates can be monitored
+            through the CivicEye system.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     WHY CIVICEYE
+===================================================== -->
+
+<section class="about">
+
+    <h2>
+        🌍 Why Choose CivicEye AI?
+    </h2>
+
+    <p>
+        CivicEye AI demonstrates how artificial intelligence,
+        location information, and digital reporting can work
+        together to support better public issue management.
+
+        The platform connects citizens and authorities through
+        a centralized system designed for faster reporting,
+        better monitoring, and more responsive public services.
+    </p>
+
+
+    <div class="about-cards">
+
+        <div class="card">
+
+            <h3>
+                ⚡ Faster Reporting
+            </h3>
+
+            <p>
+                Submit public issues through a simple
+                digital reporting process.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🤖 AI-Assisted Detection
+            </h3>
+
+            <p>
+                AI-assisted analysis can help identify
+                and classify reported issues.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🤝 Better Communication
+            </h3>
+
+            <p>
+                Connect citizens and authorities through
+                one centralized platform.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                🌱 Smarter Communities
+            </h3>
+
+            <p>
+                Use technology to support cleaner,
+                safer, and more responsive communities.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CONTACT
+===================================================== -->
+
+<section class="contact" id="contact">
+
+    <h2>
+        📞 Connect With CivicEye AI
+    </h2>
+
+    <p>
+        Discover how CivicEye AI can help create cleaner,
+        safer and smarter communities across Sri Lanka.
+    </p>
+
+
+    <div class="contact-info">
+
+        <div class="card">
+
+            <div class="icon">👁️</div>
+
+            <h3>
+                CivicEye AI
+            </h3>
+
+            <p>
+                AI-powered public issue reporting platform
+                connecting citizens and authorities.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🇱🇰</div>
+
+            <h3>
+                Sri Lanka
+            </h3>
+
+            <p>
+                Built with a vision for cleaner,
+                safer and smarter communities.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">💡</div>
+
+            <h3>
+                Innovation
+            </h3>
+
+            <p>
+                Using AI, digital reporting and location
+                technology for real-world public issues.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-main">
+
+
+        <div class="footer-brand">
+
+            <h2>
+                👁️ CivicEye AI
+            </h2>
+
+            <p>
+                Smart AI Solution for a Cleaner Sri Lanka 🇱🇰
+            </p>
+
+            <p>
+                Empowering citizens through technology
+                and intelligent public issue management.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <h3>
+                Quick Links
+            </h3>
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="report.html">
+                Report Issue
+            </a>
+
+            <a href="track.html">
+                Track Complaint
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+        </div>
+
+
+        <div class="footer-project">
+
+            <h3>
+                CivicEye AI
+            </h3>
+
+            <p>
+                🤖 AI Innovation Project
+            </p>
+
+            <p>
+                🇱🇰 Built for Sri Lanka
+            </p>
+
+            <p>
+                🌱 Building smarter communities
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <p>
+            ©️ 2026 CivicEye AI
+        </p>
+
+        <p>
+            An AI Innovation Project by Reema • Sri Lanka 🇱🇰
+        </p>
+
+    </div>
+
+</footer>
+
+
+</div>
+
+
+<!-- =====================================================
+     HELP MODAL
+===================================================== -->
+
+<div
+    class="civic-modal"
+    id="helpModal"
+    onclick="closeModalOutside(event, 'helpModal')">
+
+    <div
+        class="civic-modal-box">
+
+        <button
+            class="civic-modal-close"
+            type="button"
+            onclick="closeModal('helpModal')">
+
+            ×
+
+        </button>
+
+        <h2>
+            ❓ Help & Support
+        </h2>
+
+        <p>
+            Welcome to CivicEye AI.
+        </p>
+
+        <p>
+            📸 <strong>Report an Issue:</strong>
+            Submit a public issue with an image,
+            description and location.
+        </p>
+
+        <p>
+            🔎 <strong>Track Complaint:</strong>
+            Check the current status of your submitted report.
+        </p>
+
+        <p>
+            🔔 <strong>Notifications:</strong>
+            View report and status updates.
+        </p>
+
+        <p>
+            ⚙️ <strong>Settings:</strong>
+            Change your language and theme preferences.
+        </p>
+
+        <p>
+            If you need assistance, please contact the
+            CivicEye AI project team.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ABOUT MODAL
+===================================================== -->
+
+<div
+    class="civic-modal"
+    id="aboutModal"
+    onclick="closeModalOutside(event, 'aboutModal')">
+
+    <div
+        class="civic-modal-box">
+
+        <button
+            class="civic-modal-close"
+            type="button"
+            onclick="closeModal('aboutModal')">
+
+            ×
+
+        </button>
+
+        <h2>
+            👁️ About CivicEye AI
+        </h2>
+
+        <p>
+            CivicEye AI is an AI-assisted public issue reporting
+            and management platform designed to connect citizens
+            and authorities.
+        </p>
+
+        <p>
+            The platform demonstrates how AI-assisted analysis,
+            location information, digital reporting and status
+            tracking can support better public issue management.
+        </p>
+
+        <p>
+            🇱🇰 Built with a vision for cleaner, safer and
+            smarter communities across Sri Lanka.
+        </p>
+
+        <p>
+            <strong>Version:</strong> 2026
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="script.js"></script>
+
+<script>
+
+
+/* =====================================================
+   APPLY SAVED THEME
+===================================================== */
+
+(function () {
+
+    const savedTheme =
+        localStorage.getItem("civicEyeTheme") || "default";
+
+    document.body.classList.remove(
+        "theme-light",
+        "theme-dark"
+    );
+
+    if (savedTheme === "light") {
+
+        document.body.classList.add("theme-light");
+
+    }
+
+    else if (savedTheme === "dark") {
+
+        document.body.classList.add("theme-dark");
+
+    }
+
+})();
+
+
+/* =====================================================
+   COMMON MORE MENU
+===================================================== */
+
+const moreMenuButton =
+    document.getElementById("moreMenuButton");
+
+const moreMenu =
+    document.getElementById("moreMenu");
+
+
+moreMenuButton.addEventListener(
+    "click",
+    function (event) {
+
+        event.stopPropagation();
+
+        const isOpen =
+            moreMenu.classList.toggle("show");
+
+        moreMenuButton.setAttribute(
+            "aria-expanded",
+            isOpen ? "true" : "false"
+        );
+
+    }
+);
+
+
+/* Close menu when clicking outside */
+
+document.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            !moreMenu.contains(event.target) &&
+            !moreMenuButton.contains(event.target)
+        ) {
+
+            moreMenu.classList.remove("show");
+
+            moreMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   HELP
+===================================================== */
+
+function showHelp() {
+
+    moreMenu.classList.remove("show");
+
+    moreMenuButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+    document
+        .getElementById("helpModal")
+        .classList.add("show");
+
+}
+
+
+/* =====================================================
+   ABOUT
+===================================================== */
+
+function showAbout() {
+
+    moreMenu.classList.remove("show");
+
+    moreMenuButton.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+    document
+        .getElementById("aboutModal")
+        .classList.add("show");
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal(id) {
+
+    const modal =
+        document.getElementById(id);
+
+    if (modal) {
+
+        modal.classList.remove("show");
+
+    }
+
+}
+
+
+function closeModalOutside(event, id) {
+
+    if (
+        event.target.id === id
+    ) {
+
+        closeModal(id);
+
+    }
+
+}
+
+
+/* =====================================================
+   ESC KEY
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Escape") {
+
+            moreMenu.classList.remove("show");
+
+            moreMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            closeModal("helpModal");
+            closeModal("aboutModal");
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   CIVICEYE LANGUAGE SYSTEM
+   English / Tamil / Sinhala
+===================================================== */
+
+const civicEyeMenuTranslations = {
+
+    ta: {
+
+        "Profile":
+            "சுயவிவரம்",
+
+        "Settings":
+            "அமைப்புகள்",
+
+        "Privacy":
+            "தனியுரிமை",
+
+        "Help & Support":
+            "உதவி மற்றும் ஆதரவு",
+
+        "About CivicEye AI":
+            "CivicEye AI பற்றி",
+
+        "Logout":
+            "வெளியேறு"
+
+    },
+
+
+    si: {
+
+        "Profile":
+            "පැතිකඩ",
+
+        "Settings":
+            "සැකසුම්",
+
+        "Privacy":
+            "පෞද්ගලිකත්වය",
+
+        "Help & Support":
+            "උදව් සහ සහාය",
+
+        "About CivicEye AI":
+            "CivicEye AI ගැන",
+
+        "Logout":
+            "පිටවීම"
+
+    }
+
+};
+
+
+/* =====================================================
+   NORMALIZE TEXT
+===================================================== */
+
+function normalizeCivicText(text) {
+
+    return text
+        .replace(/\s+/g, " ")
+        .trim();
+
+}
+
+
+/* =====================================================
+   EXISTING FULL PAGE LANGUAGE SYSTEM
+===================================================== */
+
+const civicEyeTranslations = {
+
+    ta: {
+
+        "Initializing AI System...":
+            "AI அமைப்பு தொடங்கப்படுகிறது...",
+
+        "Home":
+            "முகப்பு",
+
+        "Features":
+            "அம்சங்கள்",
+
+        "Report":
+            "புகார்",
+
+        "Track":
+            "கண்காணிப்பு",
+
+        "Login":
+            "உள்நுழைவு",
+
+        "Smart AI Solution for a Cleaner Sri Lanka 🇱🇰":
+            "தூய்மையான இலங்கைக்கான ஸ்மார்ட் AI தீர்வு 🇱🇰",
+
+        "Report public issues instantly using Artificial Intelligence. CivicEye AI helps identify public problems, capture locations, and connect citizens with authorities for smarter communities.":
+            "செயற்கை நுண்ணறிவைப் பயன்படுத்தி பொது பிரச்சினைகளை உடனடியாகப் புகாரளிக்கவும். CivicEye AI பொது பிரச்சினைகளை அடையாளம் காணவும், இடங்களைப் பதிவு செய்யவும், சிறந்த சமூகங்களுக்காக குடிமக்களையும் அதிகாரிகளையும் இணைக்கவும் உதவுகிறது.",
+
+        "📸 Report an Issue":
+            "📸 பிரச்சினையைப் புகாரளிக்கவும்",
+
+        "🔎 Track Complaint":
+            "🔎 புகாரைக் கண்காணிக்கவும்",
+
+        "CivicEye AI":
+            "CivicEye AI",
+
+        "🚀 How CivicEye AI Works":
+            "🚀 CivicEye AI எவ்வாறு செயல்படுகிறது",
+
+        "A simple digital process connects citizens with issue management tools.":
+            "ஒரு எளிய டிஜிட்டல் செயல்முறை குடிமக்களை பிரச்சினை மேலாண்மை கருவிகளுடன் இணைக்கிறது.",
+
+        "1️⃣ Report":
+            "1️⃣ புகாரளிக்கவும்",
+
+        "Citizens upload an image and provide information about a public issue.":
+            "குடிமக்கள் ஒரு படத்தைப் பதிவேற்றி பொது பிரச்சினை பற்றிய தகவல்களை வழங்குகிறார்கள்.",
+
+        "2️⃣ AI Analysis":
+            "2️⃣ AI பகுப்பாய்வு",
+
+        "AI-assisted analysis can help identify and categorize the reported issue.":
+            "AI உதவியுடனான பகுப்பாய்வு புகாரளிக்கப்பட்ட பிரச்சினையை அடையாளம் கண்டு வகைப்படுத்த உதவும்.",
+
+        "3️⃣ Location":
+            "3️⃣ இடம்",
+
+        "Location information can help identify where the public issue was reported.":
+            "பொது பிரச்சினை எங்கு புகாரளிக்கப்பட்டது என்பதை இடத் தகவல் கண்டறிய உதவும்.",
+
+        "4️⃣ Monitor":
+            "4️⃣ கண்காணிக்கவும்",
+
+        "Authorities can review reports and update their progress through the dashboard.":
+            "அதிகாரிகள் புகார்களைப் பார்த்து Dashboard மூலம் அவற்றின் முன்னேற்றத்தைப் புதுப்பிக்கலாம்.",
+
+        "🚀 Our Smart Features":
+            "🚀 எங்கள் ஸ்மார்ட் அம்சங்கள்",
+
+        "AI Issue Detection":
+            "AI பிரச்சினை கண்டறிதல்",
+
+        "Smart Location Tracking":
+            "ஸ்மார்ட் இடக் கண்காணிப்பு",
+
+        "Duplicate Complaint Detection":
+            "மீண்டும் பதிவான புகார் கண்டறிதல்",
+
+        "Emergency Priority":
+            "அவசர முன்னுரிமை",
+
+        "Authority Recommendation":
+            "அதிகார பரிந்துரை",
+
+        "Complaint Status Tracking":
+            "புகார் நிலை கண்காணிப்பு",
+
+        "Resolution Verification":
+            "தீர்வு சரிபார்ப்பு",
+
+        "Tri-Language Voice Complaints":
+            "மும்மொழி குரல் புகார்கள்",
+
+        "📸 Report a Public Issue":
+            "📸 பொது பிரச்சினையைப் புகாரளிக்கவும்",
+
+        "🚀 Open Report Form":
+            "🚀 புகார் படிவத்தைத் திறக்கவும்",
+
+        "🔎 Track Your Complaint":
+            "🔎 உங்கள் புகாரைக் கண்காணிக்கவும்",
+
+        "📊 CivicEye AI Management":
+            "📊 CivicEye AI மேலாண்மை",
+
+        "🔐 Login to CivicEye":
+            "🔐 CivicEye-ல் உள்நுழையவும்",
+
+        "🔔 Notifications":
+            "🔔 அறிவிப்புகள்",
+
+        "🌍 Why Choose CivicEye AI?":
+            "🌍 ஏன் CivicEye AI-ஐ தேர்வு செய்ய வேண்டும்?",
+
+        "⚡ Faster Reporting":
+            "⚡ விரைவான புகாரளிப்பு",
+
+        "🤖 AI-Assisted Detection":
+            "🤖 AI உதவியுடனான கண்டறிதல்",
+
+        "🤝 Better Communication":
+            "🤝 சிறந்த தொடர்பு",
+
+        "🌱 Smarter Communities":
+            "🌱 புத்திசாலித்தனமான சமூகங்கள்",
+
+        "📞 Connect With CivicEye AI":
+            "📞 CivicEye AI உடன் இணைந்திருங்கள்",
+
+        "Quick Links":
+            "விரைவு இணைப்புகள்",
+
+        "Report Issue":
+            "பிரச்சினையைப் புகாரளிக்கவும்",
+
+        "Sri Lanka":
+            "இலங்கை",
+
+        "Innovation":
+            "புதுமை"
+
+    },
+
+
+    si: {
+
+        "Initializing AI System...":
+            "AI පද්ධතිය ආරම්භ කරමින්...",
+
+        "Home":
+            "මුල් පිටුව",
+
+        "Features":
+            "විශේෂාංග",
+
+        "Report":
+            "වාර්තා කරන්න",
+
+        "Track":
+            "හඹා යන්න",
+
+        "Login":
+            "පිවිසෙන්න",
+
+        "Smart AI Solution for a Cleaner Sri Lanka 🇱🇰":
+            "පිරිසිදු ශ්‍රී ලංකාවක් සඳහා ස්මාර්ට් AI විසඳුම 🇱🇰",
+
+        "📸 Report an Issue":
+            "📸 ගැටලුවක් වාර්තා කරන්න",
+
+        "🔎 Track Complaint":
+            "🔎 පැමිණිල්ල හඹා යන්න",
+
+        "🚀 How CivicEye AI Works":
+            "🚀 CivicEye AI ක්‍රියා කරන ආකාරය",
+
+        "A simple digital process connects citizens with issue management tools.":
+            "සරල ඩිජිටල් ක්‍රියාවලියක් මඟින් පුරවැසියන් ගැටලු කළමනාකරණ මෙවලම් සමඟ සම්බන්ධ කරයි.",
+
+        "1️⃣ Report":
+            "1️⃣ වාර්තා කරන්න",
+
+        "2️⃣ AI Analysis":
+            "2️⃣ AI විශ්ලේෂණය",
+
+        "3️⃣ Location":
+            "3️⃣ ස්ථානය",
+
+        "4️⃣ Monitor":
+            "4️⃣ නිරීක්ෂණය කරන්න",
+
+        "🚀 Our Smart Features":
+            "🚀 අපගේ ස්මාර්ට් විශේෂාංග",
+
+        "AI Issue Detection":
+            "AI ගැටලු හඳුනාගැනීම",
+
+        "Smart Location Tracking":
+            "ස්මාර්ට් ස්ථාන නිරීක්ෂණය",
+
+        "Duplicate Complaint Detection":
+            "පුනරාවර්තන පැමිණිලි හඳුනාගැනීම",
+
+        "Emergency Priority":
+            "හදිසි ප්‍රමුඛතාව",
+
+        "Authority Recommendation":
+            "බලධාරී නිර්දේශය",
+
+        "Complaint Status Tracking":
+            "පැමිණිලි තත්ත්වය නිරීක්ෂණය",
+
+        "Resolution Verification":
+            "විසඳුම තහවුරු කිරීම",
+
+        "Tri-Language Voice Complaints":
+            "භාෂා තුනක හඬ පැමිණිලි",
+
+        "📸 Report a Public Issue":
+            "📸 පොදු ගැටලුවක් වාර්තා කරන්න",
+
+        "🚀 Open Report Form":
+            "🚀 වාර්තා පෝරමය විවෘත කරන්න",
+
+        "🔎 Track Your Complaint":
+            "🔎 ඔබගේ පැමිණිල්ල හඹා යන්න",
+
+        "📊 CivicEye AI Management":
+            "📊 CivicEye AI කළමනාකරණය",
+
+        "🔐 Login to CivicEye":
+            "🔐 CivicEye වෙත පිවිසෙන්න",
+
+        "🔔 Notifications":
+            "🔔 දැනුම්දීම්",
+
+        "🌍 Why Choose CivicEye AI?":
+            "🌍 CivicEye AI තෝරාගන්නේ ඇයි?",
+
+        "⚡ Faster Reporting":
+            "⚡ වේගවත් වාර්තා කිරීම",
+
+        "🤖 AI-Assisted Detection":
+            "🤖 AI සහාය ඇති හඳුනාගැනීම",
+
+        "🤝 Better Communication":
+            "🤝 වඩා හොඳ සන්නිවේදනය",
+
+        "🌱 Smarter Communities":
+            "🌱 වඩාත් බුද්ධිමත් ප්‍රජාවන්",
+
+        "📞 Connect With CivicEye AI":
+            "📞 CivicEye AI සමඟ සම්බන්ධ වන්න",
+
+        "Quick Links":
+            "ඉක්මන් සබැඳි",
+
+        "Report Issue":
+            "ගැටලුව වාර්තා කරන්න",
+
+        "Sri Lanka":
+            "ශ්‍රී ලංකාව",
+
+        "Innovation":
+            "නවෝත්පාදනය"
+
+    }
+
+};
+
+
+/* =====================================================
+   APPLY SAVED LANGUAGE
+===================================================== */
+
+function applySavedLanguage() {
+
+    const savedLanguage =
+        localStorage.getItem("civicEyeLanguage") || "en";
+
+    const translations =
+        civicEyeTranslations[savedLanguage] || {};
+
+
+    document.querySelectorAll("body *").forEach(function(element) {
+
+        /*
+           Do not translate modal/menu elements here.
+           They have their own translation handling.
+        */
+
+        if (
+            element.closest(".more-menu") ||
+            element.closest(".civic-modal")
+        ) {
+            return;
+        }
+
+
+        if (
+            element.children.length === 0 &&
+            element.textContent.trim() !== ""
+        ) {
+
+            if (!element.dataset.civicOriginal) {
+
+                element.dataset.civicOriginal =
+                    normalizeCivicText(element.textContent);
+
+            }
+
+
+            const originalText =
+                element.dataset.civicOriginal;
+
+
+            if (savedLanguage === "en") {
+
+                element.textContent =
+                    originalText;
+
+            }
+
+            else if (translations[originalText]) {
+
+                element.textContent =
+                    translations[originalText];
+
+            }
+
+        }
+
+    });
+
+
+    /* Translate More menu */
+
+    document
+        .querySelectorAll("[data-menu-text]")
+        .forEach(function(element) {
+
+            const original =
+                element.getAttribute("data-menu-text");
+
+            if (savedLanguage === "en") {
+
+                element.textContent =
+                    original;
+
+            }
+
+            else if (
+                civicEyeMenuTranslations[savedLanguage] &&
+                civicEyeMenuTranslations[savedLanguage][original]
+            ) {
+
+                element.textContent =
+                    civicEyeMenuTranslations[savedLanguage][original];
+
+            }
+
+        });
+
+
+    document.documentElement.lang =
+        savedLanguage === "ta"
+            ? "ta"
+            : savedLanguage === "si"
+                ? "si"
+                : "en";
+
+}
+
+
+/* =====================================================
+   SPLASH SCREEN
+===================================================== */
+
+window.onload = function() {
+
+    setTimeout(function() {
+
+        const loadingScreen =
+            document.getElementById("loading-screen");
+
+        const mainContent =
+            document.getElementById("main-content");
+
+
+        if (loadingScreen) {
+
+            loadingScreen.classList.add("hide");
+
+        }
+
+
+        if (mainContent) {
+
+            mainContent.style.display = "block";
+
+        }
+
+
+        applySavedLanguage();
+
+    }, 2500);
+
+};
+
+
+/* =====================================================
+   UPDATE LANGUAGE WHEN PAGE RETURNS
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function(event) {
+
+        if (
+            event.key === "civicEyeLanguage" ||
+            event.key === "civicEyeTheme"
+        ) {
+
+            location.reload();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
