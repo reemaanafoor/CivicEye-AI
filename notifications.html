@@ -11,35 +11,34 @@
 
     <title>CivicEye AI - Notifications</title>
 
-    <!-- CivicEye AI Favicon -->
+    <!-- Favicon -->
     <link
         rel="icon"
         type="image/png"
-        href="images/civic-eye-logo.png"
+        href="./images/civic-eye-logo.png"
     >
 
     <style>
         :root {
-            --bg-1: #080b2a;
-            --bg-2: #10195c;
+            --bg1: #080b2a;
+            --bg2: #10195c;
             --text: #ffffff;
             --muted: rgba(255,255,255,0.72);
             --card: rgba(255,255,255,0.10);
-            --card-border: rgba(255,255,255,0.16);
-            --button: rgba(255,255,255,0.13);
+            --border: rgba(255,255,255,0.16);
+            --button: rgba(255,255,255,0.12);
             --button-hover: rgba(255,255,255,0.20);
             --danger: #ff4757;
-            --success: #2ed573;
             --shadow: rgba(0,0,0,0.25);
         }
 
         body.light {
-            --bg-1: #eef4ff;
-            --bg-2: #dcecff;
+            --bg1: #eef4ff;
+            --bg2: #dcecff;
             --text: #18213d;
             --muted: rgba(24,33,61,0.68);
             --card: rgba(255,255,255,0.72);
-            --card-border: rgba(80,100,150,0.16);
+            --border: rgba(80,100,150,0.16);
             --button: rgba(80,100,150,0.10);
             --button-hover: rgba(80,100,150,0.16);
             --shadow: rgba(30,50,100,0.12);
@@ -54,57 +53,92 @@
         body {
             min-height: 100vh;
             color: var(--text);
+
             background:
-                radial-gradient(circle at top left, rgba(106,90,249,0.35), transparent 35%),
-                radial-gradient(circle at bottom right, rgba(69,199,255,0.25), transparent 35%),
-                linear-gradient(135deg, var(--bg-1), var(--bg-2));
-            transition: background 0.3s ease, color 0.3s ease;
+                radial-gradient(
+                    circle at top left,
+                    rgba(106,90,249,0.35),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(69,199,255,0.25),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    var(--bg1),
+                    var(--bg2)
+                );
+
+            transition:
+                background 0.3s ease,
+                color 0.3s ease;
         }
+
+        /* =========================
+           NAVBAR
+        ========================= */
 
         .navbar {
             width: 100%;
             padding: 18px 6%;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--card-border);
+
+            border-bottom: 1px solid var(--border);
+
             background: rgba(0,0,0,0.12);
+
             backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
         }
 
         .brand {
             display: flex;
             align-items: center;
             gap: 10px;
-            text-decoration: none;
+
             color: var(--text);
+            text-decoration: none;
+
             font-size: 20px;
             font-weight: 700;
         }
 
-        .brand img {
-            width: 38px;
-            height: 38px;
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+
             object-fit: contain;
+            display: block;
         }
 
-        .nav-links {
+        .nav-right {
             display: flex;
             align-items: center;
             gap: 24px;
         }
 
-        .nav-links a {
+        .nav-right a {
             color: var(--text);
             text-decoration: none;
+
             font-size: 15px;
             font-weight: 600;
+
             opacity: 0.9;
         }
 
-        .nav-links a:hover {
+        .nav-right a:hover {
             opacity: 1;
         }
+
+        /* =========================
+           NOTIFICATION BADGE
+        ========================= */
 
         .notification-link {
             position: relative;
@@ -112,21 +146,136 @@
 
         .notification-badge {
             display: none;
+
             position: absolute;
+
             top: -11px;
             right: -15px;
+
             min-width: 19px;
             height: 19px;
+
             padding: 0 5px;
+
             align-items: center;
             justify-content: center;
+
             border-radius: 50px;
+
             background: var(--danger);
             color: white;
+
             font-size: 11px;
             font-weight: 700;
-            line-height: 1;
         }
+
+        /* =========================
+           THREE DOT MENU
+        ========================= */
+
+        .menu-wrapper {
+            position: relative;
+        }
+
+        .menu-button {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid var(--border);
+            border-radius: 12px;
+
+            background: var(--button);
+            color: var(--text);
+
+            cursor: pointer;
+
+            font-size: 22px;
+            line-height: 1;
+
+            transition: 0.2s ease;
+        }
+
+        .menu-button:hover {
+            background: var(--button-hover);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+
+            top: 48px;
+            right: 0;
+
+            width: 220px;
+
+            padding: 8px;
+
+            border: 1px solid var(--border);
+            border-radius: 16px;
+
+            background: rgba(15,20,65,0.94);
+
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,0.30);
+
+            display: none;
+
+            z-index: 1000;
+        }
+
+        body.light .dropdown-menu {
+            background: rgba(255,255,255,0.95);
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            padding: 12px 13px;
+
+            border: 0;
+            border-radius: 10px;
+
+            background: transparent;
+            color: var(--text);
+
+            text-align: left;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            text-decoration: none;
+        }
+
+        .dropdown-item:hover {
+            background: var(--button-hover);
+        }
+
+        .dropdown-icon {
+            width: 23px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
 
         .container {
             width: min(1000px, 92%);
@@ -153,6 +302,10 @@
             font-size: 16px;
         }
 
+        /* =========================
+           ACTION
+        ========================= */
+
         .actions {
             display: flex;
             justify-content: flex-end;
@@ -160,14 +313,20 @@
         }
 
         .mark-all-btn {
-            border: 1px solid var(--card-border);
+            border: 1px solid var(--border);
+
             background: var(--button);
             color: var(--text);
+
             padding: 11px 17px;
+
             border-radius: 12px;
+
             cursor: pointer;
+
             font-size: 14px;
             font-weight: 600;
+
             transition: 0.2s ease;
         }
 
@@ -175,6 +334,10 @@
             background: var(--button-hover);
             transform: translateY(-1px);
         }
+
+        /* =========================
+           NOTIFICATIONS
+        ========================= */
 
         .notifications-list {
             display: flex;
@@ -184,12 +347,21 @@
 
         .notification-card {
             position: relative;
+
             padding: 20px;
+
             border-radius: 18px;
-            border: 1px solid var(--card-border);
+
+            border: 1px solid var(--border);
+
             background: var(--card);
+
             backdrop-filter: blur(18px);
-            box-shadow: 0 10px 30px var(--shadow);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 10px 30px var(--shadow);
+
             transition: 0.2s ease;
         }
 
@@ -233,20 +405,30 @@
         .unread-dot {
             width: 9px;
             height: 9px;
+
             border-radius: 50%;
+
             background: var(--danger);
+
             display: inline-block;
+
             margin-right: 7px;
         }
 
         .read-btn {
-            border: 1px solid var(--card-border);
+            border: 1px solid var(--border);
+
             background: var(--button);
             color: var(--text);
+
             padding: 8px 12px;
+
             border-radius: 9px;
+
             cursor: pointer;
+
             font-size: 12px;
+
             white-space: nowrap;
         }
 
@@ -254,16 +436,28 @@
             background: var(--button-hover);
         }
 
+        /* =========================
+           EMPTY / ERROR
+        ========================= */
+
         .empty-state,
         .error-state,
         .loading-state {
             text-align: center;
+
             padding: 65px 20px;
+
             border-radius: 22px;
-            border: 1px solid var(--card-border);
+
+            border: 1px solid var(--border);
+
             background: var(--card);
+
             backdrop-filter: blur(18px);
-            box-shadow: 0 10px 30px var(--shadow);
+            -webkit-backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 10px 30px var(--shadow);
         }
 
         .empty-icon,
@@ -290,14 +484,97 @@
 
         .retry-btn {
             margin-top: 18px;
+
             border: 0;
+
             padding: 10px 18px;
+
             border-radius: 10px;
+
             background: #6a5af9;
             color: white;
+
             cursor: pointer;
+
             font-weight: 600;
         }
+
+        /* =========================
+           MODALS
+        ========================= */
+
+        .modal-overlay {
+            position: fixed;
+
+            inset: 0;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(0,0,0,0.55);
+
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+
+            z-index: 2000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal {
+            width: min(460px, 100%);
+
+            padding: 28px;
+
+            border-radius: 20px;
+
+            border: 1px solid var(--border);
+
+            background: rgba(15,20,65,0.96);
+
+            color: var(--text);
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.35);
+        }
+
+        body.light .modal {
+            background: rgba(255,255,255,0.97);
+        }
+
+        .modal h2 {
+            margin-bottom: 12px;
+            font-size: 23px;
+        }
+
+        .modal p {
+            color: var(--muted);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .modal-close {
+            margin-top: 20px;
+
+            padding: 10px 18px;
+
+            border: 1px solid var(--border);
+            border-radius: 10px;
+
+            background: var(--button);
+            color: var(--text);
+
+            cursor: pointer;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 700px) {
 
@@ -309,16 +586,16 @@
                 font-size: 17px;
             }
 
-            .brand img {
+            .brand-logo {
                 width: 32px;
                 height: 32px;
             }
 
-            .nav-links {
-                gap: 15px;
+            .nav-right {
+                gap: 13px;
             }
 
-            .nav-links a {
+            .nav-right a {
                 font-size: 13px;
             }
 
@@ -341,34 +618,57 @@
             .actions {
                 justify-content: center;
             }
+
+            .dropdown-menu {
+                right: -5px;
+            }
         }
     </style>
 </head>
 
+
 <body>
 
-    <!-- NAVBAR -->
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
     <nav class="navbar">
 
-        <a href="./index.html" class="brand">
+        <a
+            href="./index.html"
+            class="brand"
+        >
+
             <img
-                src="images/civic-eye-logo.png"
+                class="brand-logo"
+                src="./images/civic-eye-logo.png"
                 alt="CivicEye AI"
                 onerror="this.style.display='none';"
             >
-            <span>CivicEye AI</span>
+
+            <span>
+                CivicEye AI
+            </span>
+
         </a>
 
-        <div class="nav-links">
 
-            <a href="./index.html" data-i18n="home">
+        <div class="nav-right">
+
+            <a
+                href="./index.html"
+                data-i18n="home"
+            >
                 Home
             </a>
+
 
             <a
                 href="./notifications.html"
                 class="notification-link"
             >
+
                 <span data-i18n="notifications">
                     Notifications
                 </span>
@@ -379,14 +679,91 @@
                 >
                     0
                 </span>
+
             </a>
+
+
+            <!-- THREE DOTS -->
+
+            <div class="menu-wrapper">
+
+                <button
+                    class="menu-button"
+                    id="menuButton"
+                    type="button"
+                    aria-label="Menu"
+                >
+                    ⋮
+                </button>
+
+
+                <div
+                    class="dropdown-menu"
+                    id="dropdownMenu"
+                >
+
+                    <a
+                        href="./settings.html"
+                        class="dropdown-item"
+                    >
+
+                        <span class="dropdown-icon">
+                            ⚙️
+                        </span>
+
+                        <span data-i18n="settings">
+                            Settings
+                        </span>
+
+                    </a>
+
+
+                    <button
+                        class="dropdown-item"
+                        type="button"
+                        onclick="openHelp()"
+                    >
+
+                        <span class="dropdown-icon">
+                            ❓
+                        </span>
+
+                        <span data-i18n="help">
+                            Help & Support
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="dropdown-item"
+                        type="button"
+                        onclick="openAbout()"
+                    >
+
+                        <span class="dropdown-icon">
+                            ℹ️
+                        </span>
+
+                        <span data-i18n="about">
+                            About CivicEye AI
+                        </span>
+
+                    </button>
+
+                </div>
+
+            </div>
 
         </div>
 
     </nav>
 
 
-    <!-- MAIN -->
+    <!-- =========================
+         MAIN
+    ========================= -->
+
     <main class="container">
 
         <section class="header">
@@ -413,10 +790,13 @@
                 class="mark-all-btn"
                 onclick="markAllAsRead()"
             >
+
                 ✓
+
                 <span data-i18n="markAll">
                     Mark all as read
                 </span>
+
             </button>
 
         </div>
@@ -444,19 +824,83 @@
     </main>
 
 
+    <!-- =========================
+         HELP MODAL
+    ========================= -->
+
+    <div
+        class="modal-overlay"
+        id="helpModal"
+    >
+
+        <div class="modal">
+
+            <h2 data-i18n="helpTitle">
+                Help & Support
+            </h2>
+
+            <p data-i18n="helpText">
+                If you need help using CivicEye AI, please check the Report, Track, Notifications and Settings sections.
+            </p>
+
+            <button
+                class="modal-close"
+                onclick="closeHelp()"
+                data-i18n="close"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         ABOUT MODAL
+    ========================= -->
+
+    <div
+        class="modal-overlay"
+        id="aboutModal"
+    >
+
+        <div class="modal">
+
+            <h2>
+                CivicEye AI
+            </h2>
+
+            <p data-i18n="aboutText">
+                CivicEye AI is an AI-powered public issue reporting and civic monitoring prototype designed for Sri Lanka.
+            </p>
+
+            <button
+                class="modal-close"
+                onclick="closeAbout()"
+                data-i18n="close"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+
     <script>
 
-        /* ==============================
+        /* =========================
            BACKEND
-        ============================== */
+        ========================= */
 
         const BACKEND_URL =
             "https://civiceye-backend-production-eac6.up.railway.app";
 
 
-        /* ==============================
-           LANGUAGE
-        ============================== */
+        /* =========================
+           TRANSLATIONS
+        ========================= */
 
         const translations = {
 
@@ -464,15 +908,26 @@
 
                 home: "Home",
 
-                notifications: "Notifications",
+                notifications:
+                    "Notifications",
 
-                notificationsTitle: "Notifications",
+                notificationsTitle:
+                    "Notifications",
 
                 notificationsSubtitle:
                     "Stay updated about your reported issues",
 
                 markAll:
                     "Mark all as read",
+
+                settings:
+                    "Settings",
+
+                help:
+                    "Help & Support",
+
+                about:
+                    "About CivicEye AI",
 
                 loading:
                     "Loading notifications...",
@@ -495,16 +950,28 @@
                 markRead:
                     "Mark as read",
 
-                allRead:
-                    "All notifications marked as read"
+                helpTitle:
+                    "Help & Support",
+
+                helpText:
+                    "If you need help using CivicEye AI, please check the Report, Track, Notifications and Settings sections.",
+
+                aboutText:
+                    "CivicEye AI is an AI-powered public issue reporting and civic monitoring prototype designed for Sri Lanka.",
+
+                close:
+                    "Close"
 
             },
 
+
             ta: {
 
-                home: "முகப்பு",
+                home:
+                    "முகப்பு",
 
-                notifications: "அறிவிப்புகள்",
+                notifications:
+                    "அறிவிப்புகள்",
 
                 notificationsTitle:
                     "அறிவிப்புகள்",
@@ -514,6 +981,15 @@
 
                 markAll:
                     "அனைத்தையும் படித்ததாகக் குறிக்கவும்",
+
+                settings:
+                    "அமைப்புகள்",
+
+                help:
+                    "உதவி & ஆதரவு",
+
+                about:
+                    "CivicEye AI பற்றி",
 
                 loading:
                     "அறிவிப்புகள் ஏற்றப்படுகின்றன...",
@@ -528,7 +1004,7 @@
                     "அறிவிப்புகளை ஏற்ற முடியவில்லை",
 
                 errorText:
-                    "உங்கள் இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
+                    "உங்கள் இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சி செய்யவும்.",
 
                 retry:
                     "மீண்டும் முயற்சி",
@@ -536,16 +1012,28 @@
                 markRead:
                     "படித்ததாகக் குறிக்கவும்",
 
-                allRead:
-                    "அனைத்து அறிவிப்புகளும் படித்ததாகக் குறிக்கப்பட்டன"
+                helpTitle:
+                    "உதவி & ஆதரவு",
+
+                helpText:
+                    "CivicEye AI பயன்படுத்த உதவி தேவைப்பட்டால் Report, Track, Notifications மற்றும் Settings பகுதிகளைப் பார்க்கவும்.",
+
+                aboutText:
+                    "CivicEye AI என்பது இலங்கைக்காக உருவாக்கப்பட்ட AI அடிப்படையிலான பொது பிரச்சினை அறிக்கை மற்றும் கண்காணிப்பு prototype ஆகும்.",
+
+                close:
+                    "மூடு"
 
             },
 
+
             si: {
 
-                home: "මුල් පිටුව",
+                home:
+                    "මුල් පිටුව",
 
-                notifications: "දැනුම්දීම්",
+                notifications:
+                    "දැනුම්දීම්",
 
                 notificationsTitle:
                     "දැනුම්දීම්",
@@ -555,6 +1043,15 @@
 
                 markAll:
                     "සියල්ල කියවූ ලෙස සලකුණු කරන්න",
+
+                settings:
+                    "සැකසුම්",
+
+                help:
+                    "උදව් සහ සහාය",
+
+                about:
+                    "CivicEye AI ගැන",
 
                 loading:
                     "දැනුම්දීම් පූරණය වෙමින් පවතී...",
@@ -577,17 +1074,26 @@
                 markRead:
                     "කියවූ ලෙස සලකුණු කරන්න",
 
-                allRead:
-                    "සියලු දැනුම්දීම් කියවූ ලෙස සලකුණු කර ඇත"
+                helpTitle:
+                    "උදව් සහ සහාය",
+
+                helpText:
+                    "CivicEye AI භාවිතා කිරීමට උදව් අවශ්‍ය නම් Report, Track, Notifications සහ Settings කොටස් පරීක්ෂා කරන්න.",
+
+                aboutText:
+                    "CivicEye AI යනු ශ්‍රී ලංකාව සඳහා නිර්මාණය කරන ලද AI මත පදනම් වූ පොදු ගැටලු වාර්තා කිරීමේ සහ නිරීක්ෂණ prototype එකකි.",
+
+                close:
+                    "වසන්න"
 
             }
 
         };
 
 
-        /* ==============================
-           LOCAL STORAGE
-        ============================== */
+        /* =========================
+           EMAIL
+        ========================= */
 
         function getCitizenEmail() {
 
@@ -600,6 +1106,10 @@
         }
 
 
+        /* =========================
+           LANGUAGE
+        ========================= */
+
         function getLanguage() {
 
             return (
@@ -610,10 +1120,6 @@
 
         }
 
-
-        /* ==============================
-           APPLY LANGUAGE
-        ============================== */
 
         function applyLanguage() {
 
@@ -628,7 +1134,9 @@
                 language;
 
             document
-                .querySelectorAll("[data-i18n]")
+                .querySelectorAll(
+                    "[data-i18n]"
+                )
                 .forEach(element => {
 
                     const key =
@@ -648,9 +1156,9 @@
         }
 
 
-        /* ==============================
+        /* =========================
            THEME
-        ============================== */
+        ========================= */
 
         function applyTheme() {
 
@@ -674,9 +1182,114 @@
         }
 
 
-        /* ==============================
-           NOTIFICATION READ CHECK
-           ============================== */
+        /* =========================
+           MENU
+        ========================= */
+
+        const menuButton =
+            document.getElementById(
+                "menuButton"
+            );
+
+        const dropdownMenu =
+            document.getElementById(
+                "dropdownMenu"
+            );
+
+
+        menuButton.addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+                dropdownMenu.classList.toggle(
+                    "show"
+                );
+
+            }
+        );
+
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    !event.target.closest(
+                        ".menu-wrapper"
+                    )
+                ) {
+
+                    dropdownMenu.classList.remove(
+                        "show"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =========================
+           HELP / ABOUT
+        ========================= */
+
+        function openHelp() {
+
+            dropdownMenu.classList.remove(
+                "show"
+            );
+
+            document
+                .getElementById(
+                    "helpModal"
+                )
+                .classList.add("show");
+
+        }
+
+
+        function closeHelp() {
+
+            document
+                .getElementById(
+                    "helpModal"
+                )
+                .classList.remove("show");
+
+        }
+
+
+        function openAbout() {
+
+            dropdownMenu.classList.remove(
+                "show"
+            );
+
+            document
+                .getElementById(
+                    "aboutModal"
+                )
+                .classList.add("show");
+
+        }
+
+
+        function closeAbout() {
+
+            document
+                .getElementById(
+                    "aboutModal"
+                )
+                .classList.remove("show");
+
+        }
+
+
+        /* =========================
+           READ CHECK
+        ========================= */
 
         function isNotificationRead(
             notification
@@ -692,9 +1305,9 @@
         }
 
 
-        /* ==============================
-           NOTIFICATION BADGE
-           ============================== */
+        /* =========================
+           BADGE
+        ========================= */
 
         async function loadNotificationCount() {
 
@@ -710,8 +1323,8 @@
 
             if (!email) {
 
-                badge.textContent = "0";
-                badge.style.display = "none";
+                badge.style.display =
+                    "none";
 
                 return;
 
@@ -724,10 +1337,12 @@
                         `${BACKEND_URL}/notifications?email=${encodeURIComponent(email)}`,
                         {
                             method: "GET",
+
                             headers: {
                                 "Accept":
                                     "application/json"
                             },
+
                             cache: "no-store"
                         }
                     );
@@ -743,38 +1358,36 @@
                 const data =
                     await response.json();
 
-                let unreadCount =
+                let unread =
                     Number(data.unread);
 
-                if (!Number.isFinite(unreadCount)) {
+                if (!Number.isFinite(unread)) {
 
-                    unreadCount =
+                    unread =
                         Array.isArray(
                             data.notifications
                         )
                             ? data.notifications.filter(
-                                notification =>
+                                item =>
                                     !isNotificationRead(
-                                        notification
+                                        item
                                     )
                             ).length
                             : 0;
 
                 }
 
-                if (unreadCount > 0) {
+                if (unread > 0) {
 
                     badge.textContent =
-                        unreadCount > 99
+                        unread > 99
                             ? "99+"
-                            : unreadCount;
+                            : unread;
 
                     badge.style.display =
                         "inline-flex";
 
                 } else {
-
-                    badge.textContent = "0";
 
                     badge.style.display =
                         "none";
@@ -784,7 +1397,7 @@
             } catch (error) {
 
                 console.error(
-                    "Notification count error:",
+                    "Notification badge error:",
                     error
                 );
 
@@ -796,9 +1409,9 @@
         }
 
 
-        /* ==============================
+        /* =========================
            LOAD NOTIFICATIONS
-           ============================== */
+        ========================= */
 
         async function loadNotifications() {
 
@@ -807,37 +1420,19 @@
                     "notificationsList"
                 );
 
-            const language =
-                getLanguage();
-
             const dictionary =
-                translations[language] ||
-                translations.en;
+                translations[
+                    getLanguage()
+                ] || translations.en;
 
             const email =
                 getCitizenEmail();
 
             if (!email) {
 
-                list.innerHTML = `
-
-                    <div class="empty-state">
-
-                        <div class="empty-icon">
-                            🔔
-                        </div>
-
-                        <h2>
-                            ${dictionary.noNotifications}
-                        </h2>
-
-                        <p>
-                            ${dictionary.noNotificationsText}
-                        </p>
-
-                    </div>
-
-                `;
+                showEmptyState(
+                    dictionary
+                );
 
                 return;
 
@@ -850,10 +1445,12 @@
                         `${BACKEND_URL}/notifications?email=${encodeURIComponent(email)}`,
                         {
                             method: "GET",
+
                             headers: {
                                 "Accept":
                                     "application/json"
                             },
+
                             cache: "no-store"
                         }
                     );
@@ -880,25 +1477,9 @@
                     notifications.length === 0
                 ) {
 
-                    list.innerHTML = `
-
-                        <div class="empty-state">
-
-                            <div class="empty-icon">
-                                🔔
-                            </div>
-
-                            <h2>
-                                ${dictionary.noNotifications}
-                            </h2>
-
-                            <p>
-                                ${dictionary.noNotificationsText}
-                            </p>
-
-                        </div>
-
-                    `;
+                    showEmptyState(
+                        dictionary
+                    );
 
                     return;
 
@@ -908,7 +1489,7 @@
                     notifications
                         .map(
                             notification =>
-                                createNotificationHTML(
+                                createNotification(
                                     notification,
                                     dictionary
                                 )
@@ -918,7 +1499,7 @@
             } catch (error) {
 
                 console.error(
-                    "Notification loading error:",
+                    "Notifications error:",
                     error
                 );
 
@@ -954,11 +1535,46 @@
         }
 
 
-        /* ==============================
-           CREATE NOTIFICATION CARD
-           ============================== */
+        /* =========================
+           EMPTY
+        ========================= */
 
-        function createNotificationHTML(
+        function showEmptyState(
+            dictionary
+        ) {
+
+            document
+                .getElementById(
+                    "notificationsList"
+                )
+                .innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🔔
+                        </div>
+
+                        <h2>
+                            ${dictionary.noNotifications}
+                        </h2>
+
+                        <p>
+                            ${dictionary.noNotificationsText}
+                        </p>
+
+                    </div>
+
+                `;
+
+        }
+
+
+        /* =========================
+           CARD
+        ========================= */
+
+        function createNotification(
             notification,
             dictionary
         ) {
@@ -990,7 +1606,9 @@
             return `
 
                 <article
-                    class="notification-card ${read ? "" : "unread"}"
+                    class="notification-card ${
+                        read ? "" : "unread"
+                    }"
                 >
 
                     <div class="notification-top">
@@ -1025,17 +1643,19 @@
 
                         </div>
 
+
                         ${
                             !read
                                 ? `
-                                    <button
-                                        class="read-btn"
-                                        onclick="markAsRead('${escapeAttribute(
-                                            notification.id
-                                        )}')"
-                                    >
-                                        ✓ ${dictionary.markRead}
-                                    </button>
+                                <button
+                                    class="read-btn"
+                                    onclick="markAsRead('${escapeAttribute(
+                                        notification.id
+                                    )}')"
+                                >
+                                    ✓
+                                    ${dictionary.markRead}
+                                </button>
                                 `
                                 : ""
                         }
@@ -1049,9 +1669,9 @@
         }
 
 
-        /* ==============================
-           MARK ONE AS READ
-           ============================== */
+        /* =========================
+           MARK ONE READ
+        ========================= */
 
         async function markAsRead(id) {
 
@@ -1071,12 +1691,14 @@
                             headers: {
                                 "Content-Type":
                                     "application/json",
+
                                 "Accept":
                                     "application/json"
                             },
 
                             body: JSON.stringify({
-                                citizenEmail: email
+                                citizenEmail:
+                                    email
                             })
                         }
                     );
@@ -1096,7 +1718,7 @@
             } catch (error) {
 
                 console.error(
-                    "Mark notification read error:",
+                    "Mark read error:",
                     error
                 );
 
@@ -1105,9 +1727,9 @@
         }
 
 
-        /* ==============================
-           MARK ALL AS READ
-           ============================== */
+        /* =========================
+           MARK ALL READ
+        ========================= */
 
         async function markAllAsRead() {
 
@@ -1127,12 +1749,14 @@
                             headers: {
                                 "Content-Type":
                                     "application/json",
+
                                 "Accept":
                                     "application/json"
                             },
 
                             body: JSON.stringify({
-                                citizenEmail: email
+                                citizenEmail:
+                                    email
                             })
                         }
                     );
@@ -1152,7 +1776,7 @@
             } catch (error) {
 
                 console.error(
-                    "Mark all notifications error:",
+                    "Mark all read error:",
                     error
                 );
 
@@ -1161,9 +1785,9 @@
         }
 
 
-        /* ==============================
-           DATE FORMAT
-           ============================== */
+        /* =========================
+           DATE
+        ========================= */
 
         function formatDate(value) {
 
@@ -1187,9 +1811,9 @@
         }
 
 
-        /* ==============================
-           HTML SECURITY
-           ============================== */
+        /* =========================
+           SECURITY
+        ========================= */
 
         function escapeHTML(value) {
 
@@ -1212,9 +1836,9 @@
         }
 
 
-        /* ==============================
+        /* =========================
            STORAGE SYNC
-           ============================== */
+        ========================= */
 
         window.addEventListener(
             "storage",
@@ -1226,6 +1850,7 @@
                 ) {
 
                     applyLanguage();
+
                     loadNotifications();
 
                 }
@@ -1245,6 +1870,7 @@
                 ) {
 
                     loadNotifications();
+
                     loadNotificationCount();
 
                 }
@@ -1253,9 +1879,49 @@
         );
 
 
-        /* ==============================
-           INITIAL LOAD
-           ============================== */
+        /* =========================
+           CLOSE MODALS OUTSIDE
+        ========================= */
+
+        document
+            .getElementById("helpModal")
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target === this
+                    ) {
+
+                        closeHelp();
+
+                    }
+
+                }
+            );
+
+
+        document
+            .getElementById("aboutModal")
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target === this
+                    ) {
+
+                        closeAbout();
+
+                    }
+
+                }
+            );
+
+
+        /* =========================
+           START
+        ========================= */
 
         applyTheme();
 
@@ -1266,9 +1932,9 @@
         loadNotificationCount();
 
 
-        /* ==============================
+        /* =========================
            AUTO REFRESH
-           ============================== */
+        ========================= */
 
         setInterval(
             loadNotificationCount,
