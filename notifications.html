@@ -3,295 +3,194 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>CivicEye AI - Notifications</title>
 
+    <!-- CivicEye AI Favicon -->
+    <link
+        rel="icon"
+        type="image/png"
+        href="images/civic-eye-logo.png"
+    >
+
     <style>
         :root {
+            --bg-1: #080b2a;
+            --bg-2: #10195c;
             --text: #ffffff;
-            --muted: rgba(255, 255, 255, 0.72);
-            --card: rgba(255, 255, 255, 0.12);
-            --border: rgba(255, 255, 255, 0.22);
-            --shadow: rgba(0, 0, 0, 0.25);
+            --muted: rgba(255,255,255,0.72);
+            --card: rgba(255,255,255,0.10);
+            --card-border: rgba(255,255,255,0.16);
+            --button: rgba(255,255,255,0.13);
+            --button-hover: rgba(255,255,255,0.20);
+            --danger: #ff4757;
+            --success: #2ed573;
+            --shadow: rgba(0,0,0,0.25);
         }
 
         body.light {
-            --text: #182033;
-            --muted: #596174;
-            --card: rgba(255, 255, 255, 0.72);
-            --border: rgba(0, 0, 0, 0.10);
-            --shadow: rgba(0, 0, 0, 0.12);
-        }
-
-        body.dark {
-            --text: #ffffff;
-            --muted: rgba(255, 255, 255, 0.72);
-            --card: rgba(255, 255, 255, 0.12);
-            --border: rgba(255, 255, 255, 0.22);
-            --shadow: rgba(0, 0, 0, 0.30);
+            --bg-1: #eef4ff;
+            --bg-2: #dcecff;
+            --text: #18213d;
+            --muted: rgba(24,33,61,0.68);
+            --card: rgba(255,255,255,0.72);
+            --card-border: rgba(80,100,150,0.16);
+            --button: rgba(80,100,150,0.10);
+            --button-hover: rgba(80,100,150,0.16);
+            --shadow: rgba(30,50,100,0.12);
         }
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
             min-height: 100vh;
             color: var(--text);
-
             background:
-                radial-gradient(
-                    circle at top left,
-                    rgba(106, 90, 249, 0.55),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at bottom right,
-                    rgba(69, 199, 255, 0.45),
-                    transparent 35%
-                ),
-                linear-gradient(
-                    135deg,
-                    #6a5af9,
-                    #45c7ff
-                );
-
-            transition: 0.3s ease;
+                radial-gradient(circle at top left, rgba(106,90,249,0.35), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(69,199,255,0.25), transparent 35%),
+                linear-gradient(135deg, var(--bg-1), var(--bg-2));
+            transition: background 0.3s ease, color 0.3s ease;
         }
-
-        body.light {
-            background:
-                radial-gradient(
-                    circle at top left,
-                    rgba(106, 90, 249, 0.25),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at bottom right,
-                    rgba(69, 199, 255, 0.25),
-                    transparent 35%
-                ),
-                linear-gradient(
-                    135deg,
-                    #eef2ff,
-                    #e7f8ff
-                );
-        }
-
-        /* ==========================
-           NAVBAR
-        ========================== */
 
         .navbar {
-            height: 70px;
-
+            width: 100%;
+            padding: 18px 6%;
             display: flex;
             align-items: center;
             justify-content: space-between;
-
-            padding: 0 28px;
-
-            border-bottom: 1px solid var(--border);
-
-            background: rgba(255, 255, 255, 0.08);
-
+            border-bottom: 1px solid var(--card-border);
+            background: rgba(0,0,0,0.12);
             backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-
-            position: sticky;
-            top: 0;
-
-            z-index: 1000;
         }
 
-        .logo-area {
+        .brand {
             display: flex;
             align-items: center;
-
             gap: 10px;
-
+            text-decoration: none;
+            color: var(--text);
             font-size: 20px;
             font-weight: 700;
         }
 
-        .logo {
+        .brand img {
             width: 38px;
             height: 38px;
-
-            border-radius: 50%;
-
-            object-fit: cover;
+            object-fit: contain;
         }
 
-        .nav-right {
+        .nav-links {
             display: flex;
             align-items: center;
-
-            gap: 18px;
+            gap: 24px;
         }
 
-        .nav-link {
+        .nav-links a {
             color: var(--text);
-
             text-decoration: none;
-
             font-size: 15px;
             font-weight: 600;
-
             opacity: 0.9;
-
-            transition: 0.2s ease;
         }
 
-        .nav-link:hover {
+        .nav-links a:hover {
             opacity: 1;
-            transform: translateY(-1px);
         }
 
         .notification-link {
-            display: flex;
-            align-items: center;
-
-            gap: 6px;
-
             position: relative;
         }
-
-        /* ==========================
-           BADGE
-        ========================== */
 
         .notification-badge {
             display: none;
-
-            align-items: center;
-            justify-content: center;
-
+            position: absolute;
+            top: -11px;
+            right: -15px;
             min-width: 19px;
             height: 19px;
-
             padding: 0 5px;
-
-            border-radius: 20px;
-
-            background: #ff4757;
-
+            align-items: center;
+            justify-content: center;
+            border-radius: 50px;
+            background: var(--danger);
             color: white;
-
             font-size: 11px;
             font-weight: 700;
-
             line-height: 1;
         }
 
-        /* ==========================
-           PAGE
-        ========================== */
-
         .container {
-            width: min(900px, calc(100% - 32px));
-
-            margin: 45px auto;
+            width: min(1000px, 92%);
+            margin: 55px auto;
         }
 
-        .page-header {
+        .header {
             text-align: center;
-
-            margin-bottom: 28px;
+            margin-bottom: 35px;
         }
 
-        .page-header h1 {
-            margin: 0 0 8px;
-
-            font-size: 32px;
+        .header-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
         }
 
-        .page-header p {
-            margin: 0;
+        .header h1 {
+            font-size: 38px;
+            margin-bottom: 8px;
+        }
 
+        .header p {
             color: var(--muted);
+            font-size: 16px;
         }
 
-        /* ==========================
-           ACTION BAR
-        ========================== */
-
-        .action-bar {
+        .actions {
             display: flex;
-
             justify-content: flex-end;
-
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
 
-        .read-all-btn {
-            border: 1px solid var(--border);
-
-            background: rgba(255, 255, 255, 0.12);
-
+        .mark-all-btn {
+            border: 1px solid var(--card-border);
+            background: var(--button);
             color: var(--text);
-
-            padding: 10px 16px;
-
+            padding: 11px 17px;
             border-radius: 12px;
-
             cursor: pointer;
-
+            font-size: 14px;
             font-weight: 600;
-
             transition: 0.2s ease;
         }
 
-        .read-all-btn:hover {
-            transform: translateY(-2px);
-
-            background: rgba(255, 255, 255, 0.20);
+        .mark-all-btn:hover {
+            background: var(--button-hover);
+            transform: translateY(-1px);
         }
 
-        .read-all-btn:disabled {
-            opacity: 0.5;
-
-            cursor: not-allowed;
-
-            transform: none;
-        }
-
-        /* ==========================
-           LIST
-        ========================== */
-
-        #notificationsList {
+        .notifications-list {
             display: flex;
-
             flex-direction: column;
-
-            gap: 14px;
+            gap: 15px;
         }
-
-        /* ==========================
-           CARD
-        ========================== */
 
         .notification-card {
             position: relative;
-
-            padding: 18px 20px;
-
+            padding: 20px;
             border-radius: 18px;
-
-            border: 1px solid var(--border);
-
+            border: 1px solid var(--card-border);
             background: var(--card);
-
-            box-shadow:
-                0 10px 30px var(--shadow);
-
             backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-
-            transition: 0.25s ease;
+            box-shadow: 0 10px 30px var(--shadow);
+            transition: 0.2s ease;
         }
 
         .notification-card:hover {
@@ -299,208 +198,179 @@
         }
 
         .notification-card.unread {
-            border-left: 4px solid #45c7ff;
+            border-left: 4px solid var(--danger);
         }
 
         .notification-top {
             display: flex;
-
             align-items: flex-start;
-
             justify-content: space-between;
-
             gap: 15px;
         }
 
+        .notification-content {
+            flex: 1;
+        }
+
         .notification-title {
-            margin: 0;
-
-            font-size: 17px;
-
+            font-size: 18px;
             font-weight: 700;
+            margin-bottom: 7px;
         }
 
         .notification-message {
-            margin: 8px 0 0;
-
             color: var(--muted);
-
-            line-height: 1.5;
+            line-height: 1.6;
+            font-size: 14px;
         }
 
         .notification-time {
-            margin-top: 12px;
-
             color: var(--muted);
-
             font-size: 12px;
+            margin-top: 12px;
         }
 
         .unread-dot {
             width: 9px;
             height: 9px;
-
-            min-width: 9px;
-
             border-radius: 50%;
-
-            background: #45c7ff;
-
-            margin-top: 5px;
+            background: var(--danger);
+            display: inline-block;
+            margin-right: 7px;
         }
 
         .read-btn {
-            margin-top: 12px;
-
-            border: 0;
-
-            background: transparent;
-
-            color: #45c7ff;
-
+            border: 1px solid var(--card-border);
+            background: var(--button);
+            color: var(--text);
+            padding: 8px 12px;
+            border-radius: 9px;
             cursor: pointer;
-
-            font-size: 13px;
-
-            font-weight: 700;
-
-            padding: 0;
+            font-size: 12px;
+            white-space: nowrap;
         }
 
         .read-btn:hover {
-            text-decoration: underline;
+            background: var(--button-hover);
         }
 
-        /* ==========================
-           EMPTY
-        ========================== */
-
-        .empty-state {
+        .empty-state,
+        .error-state,
+        .loading-state {
             text-align: center;
-
-            padding: 55px 20px;
-
-            border-radius: 20px;
-
-            border: 1px solid var(--border);
-
+            padding: 65px 20px;
+            border-radius: 22px;
+            border: 1px solid var(--card-border);
             background: var(--card);
-
-            box-shadow:
-                0 10px 30px var(--shadow);
-
             backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+            box-shadow: 0 10px 30px var(--shadow);
         }
 
-        .empty-icon {
-            font-size: 45px;
-
-            margin-bottom: 12px;
+        .empty-icon,
+        .error-icon,
+        .loading-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
         }
 
-        .empty-state h2 {
-            margin: 0 0 8px;
+        .empty-state h2,
+        .error-state h2,
+        .loading-state h2 {
+            font-size: 23px;
+            margin-bottom: 8px;
         }
 
-        .empty-state p {
-            margin: 0;
-
+        .empty-state p,
+        .error-state p,
+        .loading-state p {
             color: var(--muted);
+            font-size: 14px;
+            line-height: 1.6;
         }
 
-        /* ==========================
-           ERROR
-        ========================== */
-
-        .error-message {
-            text-align: center;
-
-            padding: 20px;
-
-            border-radius: 16px;
-
-            background: rgba(255, 71, 87, 0.15);
-
-            border: 1px solid rgba(255, 71, 87, 0.35);
-
-            color: var(--text);
+        .retry-btn {
+            margin-top: 18px;
+            border: 0;
+            padding: 10px 18px;
+            border-radius: 10px;
+            background: #6a5af9;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
         }
-
-        /* ==========================
-           MOBILE
-        ========================== */
 
         @media (max-width: 700px) {
 
             .navbar {
-                padding: 0 16px;
+                padding: 15px 5%;
             }
 
-            .logo-area {
+            .brand {
                 font-size: 17px;
             }
 
+            .brand img {
+                width: 32px;
+                height: 32px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 13px;
+            }
+
             .container {
-                width: min(100% - 22px, 900px);
-
-                margin: 30px auto;
+                margin: 35px auto;
             }
 
-            .page-header h1 {
-                font-size: 27px;
+            .header h1 {
+                font-size: 30px;
             }
 
-            .notification-card {
-                padding: 16px;
+            .notification-top {
+                flex-direction: column;
+            }
+
+            .read-btn {
+                align-self: flex-start;
+            }
+
+            .actions {
+                justify-content: center;
             }
         }
     </style>
 </head>
 
-
 <body>
 
-    <!-- ==========================
-         NAVBAR
-    ========================== -->
-
+    <!-- NAVBAR -->
     <nav class="navbar">
 
-        <div class="logo-area">
-
+        <a href="./index.html" class="brand">
             <img
-                src="images/civiceye-logo.png"
+                src="images/civic-eye-logo.png"
                 alt="CivicEye AI"
-                class="logo"
+                onerror="this.style.display='none';"
             >
+            <span>CivicEye AI</span>
+        </a>
 
-            <span>
-                CivicEye AI
-            </span>
+        <div class="nav-links">
 
-        </div>
-
-
-        <div class="nav-right">
-
-            <a
-                href="./citizen.html"
-                class="nav-link"
-            >
-                <span data-i18n="home">
-                    Home
-                </span>
+            <a href="./index.html" data-i18n="home">
+                Home
             </a>
-
 
             <a
                 href="./notifications.html"
-                class="nav-link notification-link"
+                class="notification-link"
             >
-
                 <span data-i18n="notifications">
-                    🔔 Notifications
+                    Notifications
                 </span>
 
                 <span
@@ -509,7 +379,6 @@
                 >
                     0
                 </span>
-
             </a>
 
         </div>
@@ -517,221 +386,208 @@
     </nav>
 
 
-    <!-- ==========================
-         MAIN
-    ========================== -->
-
+    <!-- MAIN -->
     <main class="container">
 
-        <div class="page-header">
+        <section class="header">
 
-            <h1 data-i18n="notificationTitle">
-                🔔 Notifications
+            <div class="header-icon">
+                🔔
+            </div>
+
+            <h1 data-i18n="notificationsTitle">
+                Notifications
             </h1>
 
-            <p data-i18n="notificationSubtitle">
-                Stay updated about your reported issues.
+            <p data-i18n="notificationsSubtitle">
+                Stay updated about your reported issues
             </p>
 
-        </div>
+        </section>
 
 
-        <div class="action-bar">
+        <div class="actions">
 
             <button
                 id="markAllBtn"
-                class="read-all-btn"
+                class="mark-all-btn"
                 onclick="markAllAsRead()"
             >
-                ✓ Mark all as read
+                ✓
+                <span data-i18n="markAll">
+                    Mark all as read
+                </span>
             </button>
 
         </div>
 
 
-        <div id="notificationsList">
+        <section
+            id="notificationsList"
+            class="notifications-list"
+        >
 
-            <div class="empty-state">
+            <div class="loading-state">
 
-                <div class="empty-icon">
+                <div class="loading-icon">
                     ⏳
                 </div>
 
                 <h2 data-i18n="loading">
-                    Loading...
+                    Loading notifications...
                 </h2>
-
-                <p data-i18n="pleaseWait">
-                    Please wait while we load your notifications.
-                </p>
 
             </div>
 
-        </div>
+        </section>
 
     </main>
 
 
     <script>
 
-        /* ==========================
+        /* ==============================
            BACKEND
-        ========================== */
+        ============================== */
 
         const BACKEND_URL =
             "https://civiceye-backend-production-eac6.up.railway.app";
 
 
-        /* ==========================
-           TRANSLATIONS
-        ========================== */
+        /* ==============================
+           LANGUAGE
+        ============================== */
 
         const translations = {
 
             en: {
+
                 home: "Home",
-                notifications: "🔔 Notifications",
-                notificationTitle: "🔔 Notifications",
-                notificationSubtitle:
-                    "Stay updated about your reported issues.",
+
+                notifications: "Notifications",
+
+                notificationsTitle: "Notifications",
+
+                notificationsSubtitle:
+                    "Stay updated about your reported issues",
+
                 markAll:
-                    "✓ Mark all as read",
+                    "Mark all as read",
+
                 loading:
-                    "Loading...",
-                pleaseWait:
-                    "Please wait while we load your notifications.",
+                    "Loading notifications...",
+
                 noNotifications:
                     "No notifications yet",
+
                 noNotificationsText:
-                    "You will see updates about your reported issues here.",
-                unable:
-                    "Unable to load notifications.",
+                    "You will see updates about your reported issues here",
+
+                error:
+                    "Unable to load notifications",
+
+                errorText:
+                    "Please check your connection and try again.",
+
                 retry:
-                    "Please try again later.",
+                    "Try again",
+
                 markRead:
-                    "Mark as read"
+                    "Mark as read",
+
+                allRead:
+                    "All notifications marked as read"
+
             },
 
             ta: {
+
                 home: "முகப்பு",
-                notifications: "🔔 அறிவிப்புகள்",
-                notificationTitle: "🔔 அறிவிப்புகள்",
-                notificationSubtitle:
-                    "உங்கள் புகார்களின் புதுப்பிப்புகளை அறிந்து கொள்ளுங்கள்.",
+
+                notifications: "அறிவிப்புகள்",
+
+                notificationsTitle:
+                    "அறிவிப்புகள்",
+
+                notificationsSubtitle:
+                    "நீங்கள் பதிவு செய்த புகார்கள் குறித்த தகவல்களைப் பெறுங்கள்",
+
                 markAll:
-                    "✓ அனைத்தையும் படித்ததாக குறிக்கவும்",
+                    "அனைத்தையும் படித்ததாகக் குறிக்கவும்",
+
                 loading:
-                    "ஏற்றுகிறது...",
-                pleaseWait:
-                    "உங்கள் அறிவிப்புகளை ஏற்றுகிறது.",
+                    "அறிவிப்புகள் ஏற்றப்படுகின்றன...",
+
                 noNotifications:
-                    "அறிவிப்புகள் இல்லை",
+                    "அறிவிப்புகள் எதுவும் இல்லை",
+
                 noNotificationsText:
-                    "உங்கள் புகார்களின் புதுப்பிப்புகள் இங்கே காணப்படும்.",
-                unable:
-                    "அறிவிப்புகளை ஏற்ற முடியவில்லை.",
+                    "உங்கள் புகார்களின் நிலை மாற்றங்கள் இங்கே காட்டப்படும்",
+
+                error:
+                    "அறிவிப்புகளை ஏற்ற முடியவில்லை",
+
+                errorText:
+                    "உங்கள் இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
+
                 retry:
-                    "பின்னர் மீண்டும் முயற்சிக்கவும்.",
+                    "மீண்டும் முயற்சி",
+
                 markRead:
-                    "படித்ததாக குறிக்கவும்"
+                    "படித்ததாகக் குறிக்கவும்",
+
+                allRead:
+                    "அனைத்து அறிவிப்புகளும் படித்ததாகக் குறிக்கப்பட்டன"
+
             },
 
             si: {
+
                 home: "මුල් පිටුව",
-                notifications: "🔔 දැනුම්දීම්",
-                notificationTitle: "🔔 දැනුම්දීම්",
-                notificationSubtitle:
-                    "ඔබ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන ලබා ගන්න.",
+
+                notifications: "දැනුම්දීම්",
+
+                notificationsTitle:
+                    "දැනුම්දීම්",
+
+                notificationsSubtitle:
+                    "ඔබ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන තොරතුරු ලබා ගන්න",
+
                 markAll:
-                    "✓ සියල්ල කියවූ ලෙස සලකුණු කරන්න",
+                    "සියල්ල කියවූ ලෙස සලකුණු කරන්න",
+
                 loading:
-                    "පූරණය වෙමින්...",
-                pleaseWait:
-                    "ඔබගේ දැනුම්දීම් පූරණය කරමින් පවතී.",
+                    "දැනුම්දීම් පූරණය වෙමින් පවතී...",
+
                 noNotifications:
-                    "දැනුම්දීම් නොමැත",
+                    "තවම දැනුම්දීම් නොමැත",
+
                 noNotificationsText:
-                    "ඔබගේ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන මෙහි පෙන්වනු ඇත.",
-                unable:
-                    "දැනුම්දීම් පූරණය කළ නොහැක.",
+                    "ඔබ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන තොරතුරු මෙහි පෙන්වනු ඇත",
+
+                error:
+                    "දැනුම්දීම් පූරණය කළ නොහැක",
+
+                errorText:
+                    "ඔබගේ අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න.",
+
                 retry:
-                    "පසුව නැවත උත්සාහ කරන්න.",
+                    "නැවත උත්සාහ කරන්න",
+
                 markRead:
-                    "කියවූ ලෙස සලකුණු කරන්න"
+                    "කියවූ ලෙස සලකුණු කරන්න",
+
+                allRead:
+                    "සියලු දැනුම්දීම් කියවූ ලෙස සලකුණු කර ඇත"
+
             }
 
         };
 
 
-        /* ==========================
-           LANGUAGE
-        ========================== */
-
-        function getLanguage() {
-
-            const saved =
-                localStorage.getItem(
-                    "civicEyeLanguage"
-                );
-
-            if (
-                saved === "ta" ||
-                saved === "si"
-            ) {
-                return saved;
-            }
-
-            return "en";
-        }
-
-
-        function applyLanguage() {
-
-            const language =
-                getLanguage();
-
-            const lang =
-                translations[language];
-
-            document.documentElement.lang =
-                language;
-
-
-            document
-                .querySelectorAll("[data-i18n]")
-                .forEach(element => {
-
-                    const key =
-                        element.getAttribute(
-                            "data-i18n"
-                        );
-
-                    if (lang[key]) {
-                        element.textContent =
-                            lang[key];
-                    }
-
-                });
-
-
-            const markAllBtn =
-                document.getElementById(
-                    "markAllBtn"
-                );
-
-            if (markAllBtn) {
-
-                markAllBtn.textContent =
-                    lang.markAll;
-
-            }
-
-        }
-
-
-        /* ==========================
-           CITIZEN EMAIL
-        ========================== */
+        /* ==============================
+           LOCAL STORAGE
+        ============================== */
 
         function getCitizenEmail() {
 
@@ -744,58 +600,83 @@
         }
 
 
-        /* ==========================
-           SAFE HTML
-        ========================== */
+        function getLanguage() {
 
-        function escapeHTML(value) {
-
-            if (
-                value === null ||
-                value === undefined
-            ) {
-                return "";
-            }
-
-            return String(value)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+            return (
+                localStorage.getItem(
+                    "civicEyeLanguage"
+                ) || "en"
+            );
 
         }
 
 
-        /* ==========================
-           DATE
-        ========================== */
+        /* ==============================
+           APPLY LANGUAGE
+        ============================== */
 
-        function formatDate(value) {
+        function applyLanguage() {
 
-            if (!value) {
-                return "";
-            }
+            const language =
+                getLanguage();
 
-            const date =
-                new Date(value);
+            const dictionary =
+                translations[language] ||
+                translations.en;
 
-            if (
-                Number.isNaN(
-                    date.getTime()
-                )
-            ) {
-                return "";
-            }
+            document.documentElement.lang =
+                language;
 
-            return date.toLocaleString();
+            document
+                .querySelectorAll("[data-i18n]")
+                .forEach(element => {
+
+                    const key =
+                        element.getAttribute(
+                            "data-i18n"
+                        );
+
+                    if (dictionary[key]) {
+
+                        element.textContent =
+                            dictionary[key];
+
+                    }
+
+                });
 
         }
 
 
-        /* ==========================
-           READ STATUS
-        ========================== */
+        /* ==============================
+           THEME
+        ============================== */
+
+        function applyTheme() {
+
+            const theme =
+                localStorage.getItem(
+                    "civicEyeTheme"
+                ) || "dark";
+
+            document.body.classList.remove(
+                "light"
+            );
+
+            if (theme === "light") {
+
+                document.body.classList.add(
+                    "light"
+                );
+
+            }
+
+        }
+
+
+        /* ==============================
+           NOTIFICATION READ CHECK
+           ============================== */
 
         function isNotificationRead(
             notification
@@ -811,9 +692,9 @@
         }
 
 
-        /* ==========================
-           LOAD BADGE
-        ========================== */
+        /* ==============================
+           NOTIFICATION BADGE
+           ============================== */
 
         async function loadNotificationCount() {
 
@@ -822,26 +703,19 @@
                     "notificationBadge"
                 );
 
-            if (!badge) {
-                return;
-            }
-
+            if (!badge) return;
 
             const email =
                 getCitizenEmail();
 
-
             if (!email) {
 
                 badge.textContent = "0";
-
-                badge.style.display =
-                    "none";
+                badge.style.display = "none";
 
                 return;
 
             }
-
 
             try {
 
@@ -850,62 +724,50 @@
                         `${BACKEND_URL}/notifications?email=${encodeURIComponent(email)}`,
                         {
                             method: "GET",
-
                             headers: {
                                 "Accept":
                                     "application/json"
                             },
-
                             cache: "no-store"
                         }
                     );
 
-
                 if (!response.ok) {
+
                     throw new Error(
                         `HTTP ${response.status}`
                     );
-                }
 
+                }
 
                 const data =
                     await response.json();
 
+                let unreadCount =
+                    Number(data.unread);
 
-                let unread =
-                    Number(
-                        data.unread
-                    );
+                if (!Number.isFinite(unreadCount)) {
 
-
-                if (
-                    !Number.isFinite(unread)
-                ) {
-
-                    const notifications =
+                    unreadCount =
                         Array.isArray(
                             data.notifications
                         )
-                            ? data.notifications
-                            : [];
-
-                    unread =
-                        notifications.filter(
-                            notification =>
-                                !isNotificationRead(
-                                    notification
-                                )
-                        ).length;
+                            ? data.notifications.filter(
+                                notification =>
+                                    !isNotificationRead(
+                                        notification
+                                    )
+                            ).length
+                            : 0;
 
                 }
 
-
-                if (unread > 0) {
+                if (unreadCount > 0) {
 
                     badge.textContent =
-                        unread > 99
+                        unreadCount > 99
                             ? "99+"
-                            : String(unread);
+                            : unreadCount;
 
                     badge.style.display =
                         "inline-flex";
@@ -922,11 +784,9 @@
             } catch (error) {
 
                 console.error(
-                    "Notification badge error:",
+                    "Notification count error:",
                     error
                 );
-
-                badge.textContent = "0";
 
                 badge.style.display =
                     "none";
@@ -936,9 +796,9 @@
         }
 
 
-        /* ==========================
+        /* ==============================
            LOAD NOTIFICATIONS
-        ========================== */
+           ============================== */
 
         async function loadNotifications() {
 
@@ -947,17 +807,15 @@
                     "notificationsList"
                 );
 
-
-            const email =
-                getCitizenEmail();
-
-
             const language =
                 getLanguage();
 
-            const lang =
-                translations[language];
+            const dictionary =
+                translations[language] ||
+                translations.en;
 
+            const email =
+                getCitizenEmail();
 
             if (!email) {
 
@@ -970,27 +828,20 @@
                         </div>
 
                         <h2>
-                            ${escapeHTML(
-                                lang.noNotifications
-                            )}
+                            ${dictionary.noNotifications}
                         </h2>
 
                         <p>
-                            ${escapeHTML(
-                                lang.noNotificationsText
-                            )}
+                            ${dictionary.noNotificationsText}
                         </p>
 
                     </div>
 
                 `;
 
-                await loadNotificationCount();
-
                 return;
 
             }
-
 
             try {
 
@@ -999,16 +850,13 @@
                         `${BACKEND_URL}/notifications?email=${encodeURIComponent(email)}`,
                         {
                             method: "GET",
-
                             headers: {
                                 "Accept":
                                     "application/json"
                             },
-
                             cache: "no-store"
                         }
                     );
-
 
                 if (!response.ok) {
 
@@ -1018,10 +866,8 @@
 
                 }
 
-
                 const data =
                     await response.json();
-
 
                 const notifications =
                     Array.isArray(
@@ -1029,7 +875,6 @@
                     )
                         ? data.notifications
                         : [];
-
 
                 if (
                     notifications.length === 0
@@ -1044,137 +889,31 @@
                             </div>
 
                             <h2>
-                                ${escapeHTML(
-                                    lang.noNotifications
-                                )}
+                                ${dictionary.noNotifications}
                             </h2>
 
                             <p>
-                                ${escapeHTML(
-                                    lang.noNotificationsText
-                                )}
+                                ${dictionary.noNotificationsText}
                             </p>
 
                         </div>
 
                     `;
 
-                    await loadNotificationCount();
-
                     return;
 
                 }
 
-
                 list.innerHTML =
                     notifications
-                        .map(notification => {
-
-                            const id =
-                                notification.id;
-
-                            const title =
-                                notification.title ||
-                                notification.type ||
-                                "CivicEye AI";
-
-                            const message =
-                                notification.message ||
-                                "You have a new notification.";
-
-                            const read =
-                                isNotificationRead(
-                                    notification
-                                );
-
-                            const createdAt =
-                                notification.createdAt ||
-                                notification.created_at ||
-                                notification.timestamp ||
-                                notification.date;
-
-
-                            return `
-
-                                <div
-                                    class="notification-card ${read ? "" : "unread"}"
-                                    data-id="${escapeHTML(id)}"
-                                >
-
-                                    <div class="notification-top">
-
-                                        <div>
-
-                                            <h3 class="notification-title">
-
-                                                ${escapeHTML(
-                                                    title
-                                                )}
-
-                                            </h3>
-
-
-                                            <p class="notification-message">
-
-                                                ${escapeHTML(
-                                                    message
-                                                )}
-
-                                            </p>
-
-                                        </div>
-
-
-                                        ${
-                                            !read
-                                                ? `
-                                                    <span
-                                                        class="unread-dot"
-                                                        title="Unread"
-                                                    ></span>
-                                                `
-                                                : ""
-                                        }
-
-                                    </div>
-
-
-                                    <div class="notification-time">
-
-                                        ${escapeHTML(
-                                            formatDate(
-                                                createdAt
-                                            )
-                                        )}
-
-                                    </div>
-
-
-                                    ${
-                                        !read
-                                            ? `
-                                                <button
-                                                    type="button"
-                                                    class="read-btn"
-                                                    onclick="markAsRead('${escapeHTML(id)}')"
-                                                >
-                                                    ✓ ${escapeHTML(
-                                                        lang.markRead
-                                                    )}
-                                                </button>
-                                            `
-                                            : ""
-                                    }
-
-                                </div>
-
-                            `;
-
-                        })
+                        .map(
+                            notification =>
+                                createNotificationHTML(
+                                    notification,
+                                    dictionary
+                                )
+                        )
                         .join("");
-
-
-                await loadNotificationCount();
 
             } catch (error) {
 
@@ -1183,22 +922,28 @@
                     error
                 );
 
-
                 list.innerHTML = `
 
-                    <div class="error-message">
+                    <div class="error-state">
 
-                        <strong>
-                            ${escapeHTML(
-                                lang.unable
-                            )}
-                        </strong>
+                        <div class="error-icon">
+                            ⚠️
+                        </div>
 
-                        <br><br>
+                        <h2>
+                            ${dictionary.error}
+                        </h2>
 
-                        ${escapeHTML(
-                            lang.retry
-                        )}
+                        <p>
+                            ${dictionary.errorText}
+                        </p>
+
+                        <button
+                            class="retry-btn"
+                            onclick="loadNotifications()"
+                        >
+                            ${dictionary.retry}
+                        </button>
 
                     </div>
 
@@ -1209,50 +954,132 @@
         }
 
 
-        /* ==========================
-           MARK ONE READ
-        ========================== */
+        /* ==============================
+           CREATE NOTIFICATION CARD
+           ============================== */
 
-        async function markAsRead(
-            notificationId
+        function createNotificationHTML(
+            notification,
+            dictionary
         ) {
+
+            const read =
+                isNotificationRead(
+                    notification
+                );
+
+            const title =
+                escapeHTML(
+                    notification.title ||
+                    "CivicEye AI"
+                );
+
+            const message =
+                escapeHTML(
+                    notification.message ||
+                    ""
+                );
+
+            const time =
+                formatDate(
+                    notification.createdAt ||
+                    notification.timestamp ||
+                    notification.date
+                );
+
+            return `
+
+                <article
+                    class="notification-card ${read ? "" : "unread"}"
+                >
+
+                    <div class="notification-top">
+
+                        <div class="notification-content">
+
+                            <div class="notification-title">
+
+                                ${
+                                    !read
+                                        ? `<span class="unread-dot"></span>`
+                                        : ""
+                                }
+
+                                ${title}
+
+                            </div>
+
+                            <div class="notification-message">
+                                ${message}
+                            </div>
+
+                            ${
+                                time
+                                    ? `
+                                    <div class="notification-time">
+                                        ${time}
+                                    </div>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+
+                        ${
+                            !read
+                                ? `
+                                    <button
+                                        class="read-btn"
+                                        onclick="markAsRead('${escapeAttribute(
+                                            notification.id
+                                        )}')"
+                                    >
+                                        ✓ ${dictionary.markRead}
+                                    </button>
+                                `
+                                : ""
+                        }
+
+                    </div>
+
+                </article>
+
+            `;
+
+        }
+
+
+        /* ==============================
+           MARK ONE AS READ
+           ============================== */
+
+        async function markAsRead(id) {
 
             const email =
                 getCitizenEmail();
 
-
-            if (
-                !email ||
-                !notificationId
-            ) {
-                return;
-            }
-
+            if (!id || !email) return;
 
             try {
 
                 const response =
                     await fetch(
-                        `${BACKEND_URL}/notifications/${encodeURIComponent(notificationId)}/read`,
+                        `${BACKEND_URL}/notifications/${encodeURIComponent(id)}/read`,
                         {
                             method: "PATCH",
 
                             headers: {
                                 "Content-Type":
                                     "application/json",
-
                                 "Accept":
                                     "application/json"
                             },
 
-                            body:
-                                JSON.stringify({
-                                    citizenEmail:
-                                        email
-                                })
+                            body: JSON.stringify({
+                                citizenEmail: email
+                            })
                         }
                     );
-
 
                 if (!response.ok) {
 
@@ -1262,11 +1089,9 @@
 
                 }
 
-
                 await loadNotifications();
 
                 await loadNotificationCount();
-
 
             } catch (error) {
 
@@ -1280,31 +1105,18 @@
         }
 
 
-        /* ==========================
-           MARK ALL READ
-        ========================== */
+        /* ==============================
+           MARK ALL AS READ
+           ============================== */
 
         async function markAllAsRead() {
 
             const email =
                 getCitizenEmail();
 
-
-            if (!email) {
-                return;
-            }
-
-
-            const button =
-                document.getElementById(
-                    "markAllBtn"
-                );
-
+            if (!email) return;
 
             try {
-
-                button.disabled = true;
-
 
                 const response =
                     await fetch(
@@ -1315,19 +1127,15 @@
                             headers: {
                                 "Content-Type":
                                     "application/json",
-
                                 "Accept":
                                     "application/json"
                             },
 
-                            body:
-                                JSON.stringify({
-                                    citizenEmail:
-                                        email
-                                })
+                            body: JSON.stringify({
+                                citizenEmail: email
+                            })
                         }
                     );
-
 
                 if (!response.ok) {
 
@@ -1337,133 +1145,139 @@
 
                 }
 
-
                 await loadNotifications();
 
                 await loadNotificationCount();
-
 
             } catch (error) {
 
                 console.error(
-                    "Mark all notifications read error:",
+                    "Mark all notifications error:",
                     error
                 );
 
-            } finally {
-
-                button.disabled = false;
-
             }
 
         }
 
 
-        /* ==========================
-           THEME
-        ========================== */
+        /* ==============================
+           DATE FORMAT
+           ============================== */
 
-        function applyTheme() {
+        function formatDate(value) {
 
-            const theme =
-                localStorage.getItem(
+            if (!value) return "";
+
+            const date =
+                new Date(value);
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return "";
+
+            }
+
+            return date.toLocaleString();
+
+        }
+
+
+        /* ==============================
+           HTML SECURITY
+           ============================== */
+
+        function escapeHTML(value) {
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        function escapeAttribute(value) {
+
+            return String(value)
+                .replace(/\\/g, "\\\\")
+                .replace(/'/g, "\\'");
+
+        }
+
+
+        /* ==============================
+           STORAGE SYNC
+           ============================== */
+
+        window.addEventListener(
+            "storage",
+            function(event) {
+
+                if (
+                    event.key ===
+                    "civicEyeLanguage"
+                ) {
+
+                    applyLanguage();
+                    loadNotifications();
+
+                }
+
+                if (
+                    event.key ===
                     "civicEyeTheme"
-                ) || "default";
+                ) {
 
+                    applyTheme();
 
-            document.body.classList.remove(
-                "light",
-                "dark"
-            );
+                }
 
+                if (
+                    event.key ===
+                    "civicEyeCitizenEmail"
+                ) {
 
-            if (theme === "light") {
+                    loadNotifications();
+                    loadNotificationCount();
 
-                document.body.classList.add(
-                    "light"
-                );
-
-            } else {
-
-                document.body.classList.add(
-                    "dark"
-                );
-
-            }
-
-        }
-
-
-        /* ==========================
-           START
-        ========================== */
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            async function () {
-
-                applyTheme();
-
-                applyLanguage();
-
-                await loadNotifications();
-
-                await loadNotificationCount();
+                }
 
             }
         );
 
 
-        /* ==========================
-           BADGE REFRESH
-        ========================== */
+        /* ==============================
+           INITIAL LOAD
+           ============================== */
+
+        applyTheme();
+
+        applyLanguage();
+
+        loadNotifications();
+
+        loadNotificationCount();
+
+
+        /* ==============================
+           AUTO REFRESH
+           ============================== */
 
         setInterval(
             loadNotificationCount,
             10000
         );
 
-
-        /* ==========================
-           NOTIFICATION REFRESH
-        ========================== */
-
         setInterval(
             loadNotifications,
             30000
-        );
-
-
-        /* ==========================
-           SYNC WITH SETTINGS
-        ========================== */
-
-        window.addEventListener(
-            "storage",
-            function (event) {
-
-                if (
-                    event.key ===
-                        "civicEyeLanguage" ||
-
-                    event.key ===
-                        "civicEyeTheme" ||
-
-                    event.key ===
-                        "civicEyeCitizenEmail"
-                ) {
-
-                    applyTheme();
-
-                    applyLanguage();
-
-                    loadNotifications();
-
-                    loadNotificationCount();
-
-                }
-
-            }
         );
 
     </script>
