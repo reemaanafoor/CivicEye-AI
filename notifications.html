@@ -2,1952 +2,1813 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>CivicEye AI - Notifications</title>
-
-    <!-- Favicon -->
-    <link
-        rel="icon"
-        type="image/png"
-        href="./images/civic-eye-logo.png"
-    >
-
-    <style>
-        :root {
-            --bg1: #080b2a;
-            --bg2: #10195c;
-            --text: #ffffff;
-            --muted: rgba(255,255,255,0.72);
-            --card: rgba(255,255,255,0.10);
-            --border: rgba(255,255,255,0.16);
-            --button: rgba(255,255,255,0.12);
-            --button-hover: rgba(255,255,255,0.20);
-            --danger: #ff4757;
-            --shadow: rgba(0,0,0,0.25);
-        }
-
-        body.light {
-            --bg1: #eef4ff;
-            --bg2: #dcecff;
-            --text: #18213d;
-            --muted: rgba(24,33,61,0.68);
-            --card: rgba(255,255,255,0.72);
-            --border: rgba(80,100,150,0.16);
-            --button: rgba(80,100,150,0.10);
-            --button-hover: rgba(80,100,150,0.16);
-            --shadow: rgba(30,50,100,0.12);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            min-height: 100vh;
-            color: var(--text);
-
-            background:
-                radial-gradient(
-                    circle at top left,
-                    rgba(106,90,249,0.35),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at bottom right,
-                    rgba(69,199,255,0.25),
-                    transparent 35%
-                ),
-                linear-gradient(
-                    135deg,
-                    var(--bg1),
-                    var(--bg2)
-                );
-
-            transition:
-                background 0.3s ease,
-                color 0.3s ease;
-        }
-
-        /* =========================
-           NAVBAR
-        ========================= */
-
-        .navbar {
-            width: 100%;
-            padding: 18px 6%;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            border-bottom: 1px solid var(--border);
-
-            background: rgba(0,0,0,0.12);
-
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            color: var(--text);
-            text-decoration: none;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CivicEye AI - Notifications</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg1: #1e4155;
+    --bg2: #c197dd;
+    --text: #ffffff;
+    --muted: rgba(255,255,255,.70);
+    --card: rgba(118, 126, 161, 0.144);
+    --border: rgba(255,255,255,.16);
+    --button: rgba(255,255,255,.12);
+    --button-hover: rgba(255,255,255,.20);
+    --danger: #ff4757;
+    --primary: #6a5af9;
+    --shadow: rgba(0,0,0,.28);
+}
+
+body.light {
+    --bg1: #97a2b6;
+    --bg2: #a2b8d3;
+    --text: #47484b;
+    --muted: rgba(67, 98, 116, 0.68);
+    --card: rgba(255,255,255,.72);
+    --border: rgba(119, 134, 172, 0.16);
+    --button: rgba(80,100,150,.10);
+    --button-hover: rgba(80,100,150,.16);
+    --shadow: rgba(30,50,100,.12);
+}
+
+body {
+    min-height: 100vh;
+    color: var(--text);
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(106,90,249,.35),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at bottom right,
+            rgba(69,199,255,.25),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            var(--bg1),
+            var(--bg2)
+        );
+
+    transition: .3s ease;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    width: 100%;
+    height: 76px;
+    padding: 0 6%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid var(--border);
+
+    background: rgba(0,0,0,.12);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: var(--text);
+    text-decoration: none;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.brand-eye {
+    font-size: 29px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
 
-            font-size: 20px;
-            font-weight: 700;
-        }
+.nav-link {
+    color: var(--text);
+    text-decoration: none;
 
-        .brand-logo {
-            width: 40px;
-            height: 40px;
+    font-size: 14px;
+    font-weight: 600;
 
-            object-fit: contain;
-            display: block;
-        }
+    opacity: .9;
+}
 
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
+.nav-link:hover {
+    opacity: 1;
+}
 
-        .nav-right a {
-            color: var(--text);
-            text-decoration: none;
+/* =========================
+   NOTIFICATION BADGE
+========================= */
 
-            font-size: 15px;
-            font-weight: 600;
+.notification-link {
+    position: relative;
+}
 
-            opacity: 0.9;
-        }
+.notification-badge {
+    display: none;
 
-        .nav-right a:hover {
-            opacity: 1;
-        }
+    position: absolute;
+    top: -11px;
+    right: -15px;
 
-        /* =========================
-           NOTIFICATION BADGE
-        ========================= */
+    min-width: 19px;
+    height: 19px;
 
-        .notification-link {
-            position: relative;
-        }
+    padding: 0 5px;
 
-        .notification-badge {
-            display: none;
+    align-items: center;
+    justify-content: center;
 
-            position: absolute;
+    border-radius: 50px;
 
-            top: -11px;
-            right: -15px;
+    background: var(--danger);
+    color: white;
 
-            min-width: 19px;
-            height: 19px;
+    font-size: 10px;
+    font-weight: 700;
+}
 
-            padding: 0 5px;
+/* =========================
+   MENU
+========================= */
 
-            align-items: center;
-            justify-content: center;
+.menu-wrapper {
+    position: relative;
+}
 
-            border-radius: 50px;
+.menu-button {
+    width: 40px;
+    height: 40px;
 
-            background: var(--danger);
-            color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-            font-size: 11px;
-            font-weight: 700;
-        }
+    border: 1px solid var(--border);
+    border-radius: 12px;
 
-        /* =========================
-           THREE DOT MENU
-        ========================= */
+    background: var(--button);
+    color: var(--text);
 
-        .menu-wrapper {
-            position: relative;
-        }
+    cursor: pointer;
 
-        .menu-button {
-            width: 38px;
-            height: 38px;
+    font-size: 23px;
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+.menu-button:hover {
+    background: var(--button-hover);
+}
 
-            border: 1px solid var(--border);
-            border-radius: 12px;
+.dropdown-menu {
+    position: absolute;
 
-            background: var(--button);
-            color: var(--text);
+    top: 50px;
+    right: 0;
 
-            cursor: pointer;
+    width: 225px;
 
-            font-size: 22px;
-            line-height: 1;
+    padding: 8px;
 
-            transition: 0.2s ease;
-        }
+    display: none;
 
-        .menu-button:hover {
-            background: var(--button-hover);
-        }
+    border: 1px solid var(--border);
+    border-radius: 16px;
 
-        .dropdown-menu {
-            position: absolute;
+    background: rgba(128, 158, 167, 0.96);
 
-            top: 48px;
-            right: 0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 
-            width: 220px;
+    box-shadow: 0 18px 45px rgba(0,0,0,.30);
 
-            padding: 8px;
+    z-index: 1000;
+}
 
-            border: 1px solid var(--border);
-            border-radius: 16px;
+body.light .dropdown-menu {
+    background: rgba(255,255,255,.96);
+}
 
-            background: rgba(15,20,65,0.94);
+.dropdown-menu.show {
+    display: block;
+}
 
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+.dropdown-item {
+    width: 100%;
 
-            box-shadow:
-                0 15px 40px rgba(0,0,0,0.30);
+    display: flex;
+    align-items: center;
+    gap: 11px;
 
-            display: none;
+    padding: 12px;
 
-            z-index: 1000;
-        }
+    border: 0;
+    border-radius: 10px;
 
-        body.light .dropdown-menu {
-            background: rgba(255,255,255,0.95);
-        }
+    background: transparent;
+    color: var(--text);
 
-        .dropdown-menu.show {
-            display: block;
-        }
+    font-size: 14px;
 
-        .dropdown-item {
-            width: 100%;
+    text-align: left;
+    text-decoration: none;
 
-            display: flex;
-            align-items: center;
+    cursor: pointer;
+}
 
-            gap: 11px;
+.dropdown-item:hover {
+    background: var(--button-hover);
+}
 
-            padding: 12px 13px;
+.dropdown-icon {
+    width: 22px;
+    min-width: 22px;
 
-            border: 0;
-            border-radius: 10px;
+    text-align: center;
+    font-size: 17px;
+}
 
-            background: transparent;
-            color: var(--text);
+/* =========================
+   MAIN
+========================= */
 
-            text-align: left;
+.container {
+    width: min(920px, 92%);
+    margin: 55px auto 70px;
+}
 
-            font-size: 14px;
-            font-weight: 600;
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
 
-            cursor: pointer;
+.page-header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
 
-            text-decoration: none;
-        }
+.page-header p {
+    color: var(--muted);
+    font-size: 15px;
+}
 
-        .dropdown-item:hover {
-            background: var(--button-hover);
-        }
+/* =========================
+   ACTION
+========================= */
 
-        .dropdown-icon {
-            width: 23px;
-            text-align: center;
-            font-size: 17px;
-        }
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+}
 
-        /* =========================
-           MAIN
-        ========================= */
+.mark-all-btn {
+    padding: 10px 16px;
 
-        .container {
-            width: min(1000px, 92%);
-            margin: 55px auto;
-        }
+    border: 1px solid var(--border);
+    border-radius: 11px;
 
-        .header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
+    background: var(--button);
+    color: var(--text);
 
-        .header-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
-        }
+    font-size: 13px;
+    font-weight: 600;
 
-        .header h1 {
-            font-size: 38px;
-            margin-bottom: 8px;
-        }
+    cursor: pointer;
 
-        .header p {
-            color: var(--muted);
-            font-size: 16px;
-        }
+    transition: .2s ease;
+}
 
-        /* =========================
-           ACTION
-        ========================= */
+.mark-all-btn:hover {
+    background: var(--button-hover);
+    transform: translateY(-1px);
+}
 
-        .actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 20px;
-        }
+/* =========================
+   NOTIFICATIONS
+========================= */
 
-        .mark-all-btn {
-            border: 1px solid var(--border);
+.notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
 
-            background: var(--button);
-            color: var(--text);
+.notification-card {
+    position: relative;
 
-            padding: 11px 17px;
+    padding: 19px 20px;
 
-            border-radius: 12px;
+    border: 1px solid var(--border);
+    border-radius: 17px;
 
-            cursor: pointer;
+    background: var(--card);
 
-            font-size: 14px;
-            font-weight: 600;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-            transition: 0.2s ease;
-        }
+    box-shadow: 0 10px 30px var(--shadow);
 
-        .mark-all-btn:hover {
-            background: var(--button-hover);
-            transform: translateY(-1px);
-        }
+    transition: .2s ease;
+}
 
-        /* =========================
-           NOTIFICATIONS
-        ========================= */
+.notification-card:hover {
+    transform: translateY(-2px);
+}
 
-        .notifications-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+.notification-card.unread {
+    border-left: 4px solid var(--danger);
+}
 
-        .notification-card {
-            position: relative;
+.notification-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
 
-            padding: 20px;
+    gap: 18px;
+}
 
-            border-radius: 18px;
+.notification-content {
+    flex: 1;
+}
 
-            border: 1px solid var(--border);
+.notification-title {
+    margin-bottom: 6px;
 
-            background: var(--card);
+    font-size: 17px;
+    font-weight: 700;
+}
 
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+.notification-message {
+    color: var(--muted);
 
-            box-shadow:
-                0 10px 30px var(--shadow);
+    font-size: 14px;
+    line-height: 1.6;
+}
 
-            transition: 0.2s ease;
-        }
+.notification-time {
+    margin-top: 10px;
 
-        .notification-card:hover {
-            transform: translateY(-2px);
-        }
+    color: var(--muted);
+    font-size: 11px;
+}
 
-        .notification-card.unread {
-            border-left: 4px solid var(--danger);
-        }
+.unread-dot {
+    display: inline-block;
 
-        .notification-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 15px;
-        }
+    width: 8px;
+    height: 8px;
 
-        .notification-content {
-            flex: 1;
-        }
+    margin-right: 7px;
 
-        .notification-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 7px;
-        }
+    border-radius: 50%;
 
-        .notification-message {
-            color: var(--muted);
-            line-height: 1.6;
-            font-size: 14px;
-        }
+    background: var(--danger);
+}
 
-        .notification-time {
-            color: var(--muted);
-            font-size: 12px;
-            margin-top: 12px;
-        }
+.read-btn {
+    padding: 8px 11px;
 
-        .unread-dot {
-            width: 9px;
-            height: 9px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
 
-            border-radius: 50%;
+    background: var(--button);
+    color: var(--text);
 
-            background: var(--danger);
+    font-size: 11px;
 
-            display: inline-block;
+    cursor: pointer;
+    white-space: nowrap;
+}
 
-            margin-right: 7px;
-        }
+.read-btn:hover {
+    background: var(--button-hover);
+}
 
-        .read-btn {
-            border: 1px solid var(--border);
+/* =========================
+   STATES
+========================= */
 
-            background: var(--button);
-            color: var(--text);
+.state-box {
+    padding: 55px 20px;
 
-            padding: 8px 12px;
+    text-align: center;
 
-            border-radius: 9px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
 
-            cursor: pointer;
+    background: var(--card);
 
-            font-size: 12px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-            white-space: nowrap;
-        }
+    box-shadow: 0 10px 30px var(--shadow);
+}
 
-        .read-btn:hover {
-            background: var(--button-hover);
-        }
+.state-icon {
+    font-size: 44px;
+    margin-bottom: 12px;
+}
 
-        /* =========================
-           EMPTY / ERROR
-        ========================= */
+.state-box h2 {
+    margin-bottom: 7px;
+    font-size: 21px;
+}
 
-        .empty-state,
-        .error-state,
-        .loading-state {
-            text-align: center;
+.state-box p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
 
-            padding: 65px 20px;
+.retry-btn {
+    margin-top: 17px;
 
-            border-radius: 22px;
+    padding: 10px 18px;
 
-            border: 1px solid var(--border);
+    border: 0;
+    border-radius: 10px;
 
-            background: var(--card);
+    background: var(--primary);
+    color: white;
 
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+    font-weight: 600;
 
-            box-shadow:
-                0 10px 30px var(--shadow);
-        }
+    cursor: pointer;
+}
 
-        .empty-icon,
-        .error-icon,
-        .loading-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
+/* =========================
+   MODAL
+========================= */
 
-        .empty-state h2,
-        .error-state h2,
-        .loading-state h2 {
-            font-size: 23px;
-            margin-bottom: 8px;
-        }
+.modal-overlay {
+    position: fixed;
+    inset: 0;
 
-        .empty-state p,
-        .error-state p,
-        .loading-state p {
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 1.6;
-        }
+    display: none;
+    align-items: center;
+    justify-content: center;
 
-        .retry-btn {
-            margin-top: 18px;
+    padding: 20px;
 
-            border: 0;
+    background: rgba(0,0,0,.55);
 
-            padding: 10px 18px;
+    backdrop-filter: blur(8px);
 
-            border-radius: 10px;
+    z-index: 2000;
+}
 
-            background: #6a5af9;
-            color: white;
+.modal-overlay.show {
+    display: flex;
+}
 
-            cursor: pointer;
+.modal {
+    width: min(450px, 100%);
 
-            font-weight: 600;
-        }
+    padding: 27px;
 
-        /* =========================
-           MODALS
-        ========================= */
+    border: 1px solid var(--border);
+    border-radius: 20px;
 
-        .modal-overlay {
-            position: fixed;
+    background: rgba(188, 150, 206, 0.97);
+    color: var(--text);
 
-            inset: 0;
+    box-shadow: 0 20px 60px rgba(0,0,0,.35);
+}
 
-            display: none;
-            align-items: center;
-            justify-content: center;
+body.light .modal {
+    background: rgba(255,255,255,.97);
+}
 
-            padding: 20px;
+.modal h2 {
+    margin-bottom: 11px;
+    font-size: 22px;
+}
 
-            background: rgba(0,0,0,0.55);
+.modal p {
+    color: var(--muted);
 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+    font-size: 14px;
+    line-height: 1.7;
+}
 
-            z-index: 2000;
-        }
+.modal-close {
+    margin-top: 19px;
 
-        .modal-overlay.show {
-            display: flex;
-        }
+    padding: 9px 16px;
 
-        .modal {
-            width: min(460px, 100%);
+    border: 1px solid var(--border);
+    border-radius: 10px;
 
-            padding: 28px;
+    background: var(--button);
+    color: var(--text);
 
-            border-radius: 20px;
+    cursor: pointer;
+}
 
-            border: 1px solid var(--border);
+.modal-close:hover {
+    background: var(--button-hover);
+}
 
-            background: rgba(15,20,65,0.96);
+/* =========================
+   MOBILE
+========================= */
 
-            color: var(--text);
+@media (max-width: 700px) {
 
-            box-shadow:
-                0 20px 60px rgba(0,0,0,0.35);
-        }
+    .navbar {
+        height: 68px;
+        padding: 0 5%;
+    }
 
-        body.light .modal {
-            background: rgba(255,255,255,0.97);
-        }
+    .brand {
+        font-size: 17px;
+    }
 
-        .modal h2 {
-            margin-bottom: 12px;
-            font-size: 23px;
-        }
+    .brand-eye {
+        font-size: 25px;
+    }
 
-        .modal p {
-            color: var(--muted);
-            line-height: 1.7;
-            font-size: 14px;
-        }
+    .nav-right {
+        gap: 13px;
+    }
 
-        .modal-close {
-            margin-top: 20px;
+    .nav-link {
+        font-size: 12px;
+    }
 
-            padding: 10px 18px;
+    .container {
+        margin-top: 35px;
+    }
 
-            border: 1px solid var(--border);
-            border-radius: 10px;
+    .page-header h1 {
+        font-size: 29px;
+    }
 
-            background: var(--button);
-            color: var(--text);
+    .notification-top {
+        flex-direction: column;
+    }
 
-            cursor: pointer;
-        }
+    .read-btn {
+        align-self: flex-start;
+    }
 
-        /* =========================
-           MOBILE
-        ========================= */
-
-        @media (max-width: 700px) {
-
-            .navbar {
-                padding: 15px 5%;
-            }
-
-            .brand {
-                font-size: 17px;
-            }
-
-            .brand-logo {
-                width: 32px;
-                height: 32px;
-            }
-
-            .nav-right {
-                gap: 13px;
-            }
-
-            .nav-right a {
-                font-size: 13px;
-            }
-
-            .container {
-                margin: 35px auto;
-            }
-
-            .header h1 {
-                font-size: 30px;
-            }
-
-            .notification-top {
-                flex-direction: column;
-            }
-
-            .read-btn {
-                align-self: flex-start;
-            }
-
-            .actions {
-                justify-content: center;
-            }
-
-            .dropdown-menu {
-                right: -5px;
-            }
-        }
-    </style>
+    .actions {
+        justify-content: center;
+    }
+}
+</style>
 </head>
 
 
 <body>
 
-    <!-- =========================
-         NAVBAR
-    ========================= -->
+<!-- =========================
+     NAVBAR
+========================= -->
 
-    <nav class="navbar">
+<nav class="navbar">
+
+    <a href="./index.html" class="brand">
+
+        <span class="brand-eye">👁️</span>
+
+        <span>CivicEye AI</span>
+
+    </a>
+
+
+    <div class="nav-right">
 
         <a
             href="./index.html"
-            class="brand"
+            class="nav-link"
+            data-i18n="home"
         >
-
-            <img
-                class="brand-logo"
-                src="./images/civic-eye-logo.png"
-                alt="CivicEye AI"
-                onerror="this.style.display='none';"
-            >
-
-            <span>
-                CivicEye AI
-            </span>
-
+            🏠 Home
         </a>
 
 
-        <div class="nav-right">
+        <a
+            href="./notifications.html"
+            class="nav-link notification-link"
+        >
+            <span data-i18n="notifications">
+                🔔 Notifications
+            </span>
 
-            <a
-                href="./index.html"
-                data-i18n="home"
+            <span
+                id="notificationBadge"
+                class="notification-badge"
             >
-                Home
-            </a>
+                0
+            </span>
+        </a>
 
 
-            <a
-                href="./notifications.html"
-                class="notification-link"
+        <div class="menu-wrapper">
+
+            <button
+                id="menuButton"
+                class="menu-button"
+                type="button"
+            >
+                ⋮
+            </button>
+
+
+            <div
+                id="dropdownMenu"
+                class="dropdown-menu"
             >
 
-                <span data-i18n="notifications">
-                    Notifications
-                </span>
-
-                <span
-                    id="notificationBadge"
-                    class="notification-badge"
+                <a
+                    href="./settings.html"
+                    class="dropdown-item"
                 >
-                    0
-                </span>
 
-            </a>
+                    <span class="dropdown-icon">
+                        ⚙️
+                    </span>
 
+                    <span data-i18n="settings">
+                        Settings
+                    </span>
 
-            <!-- THREE DOTS -->
+                </a>
 
-            <div class="menu-wrapper">
 
                 <button
-                    class="menu-button"
-                    id="menuButton"
                     type="button"
-                    aria-label="Menu"
+                    class="dropdown-item"
+                    onclick="openHelp()"
                 >
-                    ⋮
+
+                    <span class="dropdown-icon">
+                        ❓
+                    </span>
+
+                    <span data-i18n="help">
+                        Help & Support
+                    </span>
+
                 </button>
 
 
-                <div
-                    class="dropdown-menu"
-                    id="dropdownMenu"
+                <button
+                    type="button"
+                    class="dropdown-item"
+                    onclick="openAbout()"
                 >
 
-                    <a
-                        href="./settings.html"
-                        class="dropdown-item"
-                    >
+                    <span class="dropdown-icon">
+                        ℹ️
+                    </span>
 
-                        <span class="dropdown-icon">
-                            ⚙️
-                        </span>
+                    <span data-i18n="about">
+                        About CivicEye AI
+                    </span>
 
-                        <span data-i18n="settings">
-                            Settings
-                        </span>
-
-                    </a>
-
-
-                    <button
-                        class="dropdown-item"
-                        type="button"
-                        onclick="openHelp()"
-                    >
-
-                        <span class="dropdown-icon">
-                            ❓
-                        </span>
-
-                        <span data-i18n="help">
-                            Help & Support
-                        </span>
-
-                    </button>
-
-
-                    <button
-                        class="dropdown-item"
-                        type="button"
-                        onclick="openAbout()"
-                    >
-
-                        <span class="dropdown-icon">
-                            ℹ️
-                        </span>
-
-                        <span data-i18n="about">
-                            About CivicEye AI
-                        </span>
-
-                    </button>
-
-                </div>
+                </button>
 
             </div>
 
         </div>
 
-    </nav>
+    </div>
+
+</nav>
 
 
-    <!-- =========================
-         MAIN
-    ========================= -->
+<!-- =========================
+     MAIN
+========================= -->
 
-    <main class="container">
+<main class="container">
 
-        <section class="header">
+    <header class="page-header">
 
-            <div class="header-icon">
-                🔔
-            </div>
+        <h1 data-i18n="notificationsTitle">
+            🔔 Notifications
+        </h1>
 
-            <h1 data-i18n="notificationsTitle">
-                Notifications
-            </h1>
+        <p data-i18n="notificationsSubtitle">
+            Stay updated about your reported issues
+        </p>
 
-            <p data-i18n="notificationsSubtitle">
-                Stay updated about your reported issues
-            </p>
-
-        </section>
+    </header>
 
 
-        <div class="actions">
+    <div class="actions">
 
-            <button
-                id="markAllBtn"
-                class="mark-all-btn"
-                onclick="markAllAsRead()"
-            >
-
-                ✓
-
-                <span data-i18n="markAll">
-                    Mark all as read
-                </span>
-
-            </button>
-
-        </div>
-
-
-        <section
-            id="notificationsList"
-            class="notifications-list"
+        <button
+            id="markAllBtn"
+            class="mark-all-btn"
+            onclick="markAllAsRead()"
         >
+            ✓
+            <span data-i18n="markAll">
+                Mark all as read
+            </span>
+        </button>
 
-            <div class="loading-state">
+    </div>
 
-                <div class="loading-icon">
-                    ⏳
+
+    <section
+        id="notificationsList"
+        class="notifications-list"
+    >
+
+        <div class="state-box">
+
+            <div class="state-icon">
+                ⏳
+            </div>
+
+            <h2 data-i18n="loading">
+                Loading notifications...
+            </h2>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =========================
+     HELP
+========================= -->
+
+<div
+    id="helpModal"
+    class="modal-overlay"
+>
+
+    <div class="modal">
+
+        <h2 data-i18n="helpTitle">
+            ❓ Help & Support
+        </h2>
+
+        <p data-i18n="helpText">
+            If you need help using CivicEye AI, please check the Report, Track, Notifications and Settings sections.
+        </p>
+
+        <button
+            class="modal-close"
+            onclick="closeHelp()"
+            data-i18n="close"
+        >
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     ABOUT
+========================= -->
+
+<div
+    id="aboutModal"
+    class="modal-overlay"
+>
+
+    <div class="modal">
+
+        <h2>
+            👁️ CivicEye AI
+        </h2>
+
+        <p data-i18n="aboutText">
+            CivicEye AI is an AI-powered public issue reporting and civic monitoring prototype designed for Sri Lanka.
+        </p>
+
+        <button
+            class="modal-close"
+            onclick="closeAbout()"
+            data-i18n="close"
+        >
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   BACKEND
+========================= */
+
+const BACKEND_URL =
+    "https://civiceye-backend-production-eac6.up.railway.app";
+
+
+/* =========================
+   TRANSLATIONS
+========================= */
+
+const translations = {
+
+    en: {
+
+        home:
+            "🏠 Home",
+
+        notifications:
+            "🔔 Notifications",
+
+        notificationsTitle:
+            "🔔 Notifications",
+
+        notificationsSubtitle:
+            "Stay updated about your reported issues",
+
+        markAll:
+            "Mark all as read",
+
+        settings:
+            "Settings",
+
+        help:
+            "Help & Support",
+
+        about:
+            "About CivicEye AI",
+
+        loading:
+            "Loading notifications...",
+
+        noNotifications:
+            "No notifications yet",
+
+        noNotificationsText:
+            "You will see updates about your reported issues here.",
+
+        error:
+            "Unable to load notifications",
+
+        errorText:
+            "Please check your connection and try again.",
+
+        retry:
+            "Try again",
+
+        markRead:
+            "Mark as read",
+
+        helpTitle:
+            "❓ Help & Support",
+
+        helpText:
+            "If you need help using CivicEye AI, please check the Report, Track, Notifications and Settings sections.",
+
+        aboutText:
+            "CivicEye AI is an AI-powered public issue reporting and civic monitoring prototype designed for Sri Lanka.",
+
+        close:
+            "Close"
+    },
+
+
+    ta: {
+
+        home:
+            "🏠 முகப்பு",
+
+        notifications:
+            "🔔 அறிவிப்புகள்",
+
+        notificationsTitle:
+            "🔔 அறிவிப்புகள்",
+
+        notificationsSubtitle:
+            "நீங்கள் பதிவு செய்த புகார்கள் குறித்த தகவல்களைப் பெறுங்கள்",
+
+        markAll:
+            "அனைத்தையும் படித்ததாகக் குறிக்கவும்",
+
+        settings:
+            "அமைப்புகள்",
+
+        help:
+            "உதவி & ஆதரவு",
+
+        about:
+            "CivicEye AI பற்றி",
+
+        loading:
+            "அறிவிப்புகள் ஏற்றப்படுகின்றன...",
+
+        noNotifications:
+            "அறிவிப்புகள் எதுவும் இல்லை",
+
+        noNotificationsText:
+            "உங்கள் புகார்களின் நிலை மாற்றங்கள் இங்கே காட்டப்படும்.",
+
+        error:
+            "அறிவிப்புகளை ஏற்ற முடியவில்லை",
+
+        errorText:
+            "உங்கள் இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சி செய்யவும்.",
+
+        retry:
+            "மீண்டும் முயற்சி",
+
+        markRead:
+            "படித்ததாகக் குறிக்கவும்",
+
+        helpTitle:
+            "❓ உதவி & ஆதரவு",
+
+        helpText:
+            "CivicEye AI பயன்படுத்த உதவி தேவைப்பட்டால் Report, Track, Notifications மற்றும் Settings பகுதிகளைப் பார்க்கவும்.",
+
+        aboutText:
+            "CivicEye AI என்பது இலங்கைக்காக உருவாக்கப்பட்ட AI அடிப்படையிலான பொது பிரச்சினை அறிக்கை மற்றும் கண்காணிப்பு prototype ஆகும்.",
+
+        close:
+            "மூடு"
+    },
+
+
+    si: {
+
+        home:
+            "🏠 මුල් පිටුව",
+
+        notifications:
+            "🔔 දැනුම්දීම්",
+
+        notificationsTitle:
+            "🔔 දැනුම්දීම්",
+
+        notificationsSubtitle:
+            "ඔබ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන තොරතුරු ලබා ගන්න",
+
+        markAll:
+            "සියල්ල කියවූ ලෙස සලකුණු කරන්න",
+
+        settings:
+            "සැකසුම්",
+
+        help:
+            "උදව් සහ සහාය",
+
+        about:
+            "CivicEye AI ගැන",
+
+        loading:
+            "දැනුම්දීම් පූරණය වෙමින් පවතී...",
+
+        noNotifications:
+            "තවම දැනුම්දීම් නොමැත",
+
+        noNotificationsText:
+            "ඔබ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන තොරතුරු මෙහි පෙන්වනු ඇත.",
+
+        error:
+            "දැනුම්දීම් පූරණය කළ නොහැක",
+
+        errorText:
+            "ඔබගේ අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න.",
+
+        retry:
+            "නැවත උත්සාහ කරන්න",
+
+        markRead:
+            "කියවූ ලෙස සලකුණු කරන්න",
+
+        helpTitle:
+            "❓ උදව් සහ සහාය",
+
+        helpText:
+            "CivicEye AI භාවිතා කිරීමට උදව් අවශ්‍ය නම් Report, Track, Notifications සහ Settings කොටස් පරීක්ෂා කරන්න.",
+
+        aboutText:
+            "CivicEye AI යනු ශ්‍රී ලංකාව සඳහා නිර්මාණය කරන ලද AI මත පදනම් වූ පොදු ගැටලු වාර්තා කිරීමේ සහ නිරීක්ෂණ prototype එකකි.",
+
+        close:
+            "වසන්න"
+    }
+
+};
+
+
+/* =========================
+   EMAIL
+========================= */
+
+function getCitizenEmail() {
+
+    return localStorage.getItem(
+        "civicEyeCitizenEmail"
+    ) || "";
+}
+
+
+/* =========================
+   LANGUAGE
+========================= */
+
+function getLanguage() {
+
+    return localStorage.getItem(
+        "civicEyeLanguage"
+    ) || "en";
+}
+
+
+function applyLanguage() {
+
+    const language =
+        getLanguage();
+
+    const dictionary =
+        translations[language] ||
+        translations.en;
+
+    document.documentElement.lang =
+        language;
+
+    document
+        .querySelectorAll("[data-i18n]")
+        .forEach(element => {
+
+            const key =
+                element.getAttribute(
+                    "data-i18n"
+                );
+
+            if (dictionary[key]) {
+
+                element.textContent =
+                    dictionary[key];
+
+            }
+
+        });
+}
+
+
+/* =========================
+   THEME
+========================= */
+
+function applyTheme() {
+
+    const theme =
+        localStorage.getItem(
+            "civicEyeTheme"
+        ) || "dark";
+
+    document.body.classList.toggle(
+        "light",
+        theme === "light"
+    );
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+const menuButton =
+    document.getElementById(
+        "menuButton"
+    );
+
+const dropdownMenu =
+    document.getElementById(
+        "dropdownMenu"
+    );
+
+menuButton.addEventListener(
+    "click",
+    event => {
+
+        event.stopPropagation();
+
+        dropdownMenu.classList.toggle(
+            "show"
+        );
+    }
+);
+
+document.addEventListener(
+    "click",
+    event => {
+
+        if (
+            !event.target.closest(
+                ".menu-wrapper"
+            )
+        ) {
+
+            dropdownMenu.classList.remove(
+                "show"
+            );
+        }
+    }
+);
+
+
+/* =========================
+   HELP / ABOUT
+========================= */
+
+function openHelp() {
+
+    dropdownMenu.classList.remove(
+        "show"
+    );
+
+    document
+        .getElementById("helpModal")
+        .classList.add("show");
+}
+
+
+function closeHelp() {
+
+    document
+        .getElementById("helpModal")
+        .classList.remove("show");
+}
+
+
+function openAbout() {
+
+    dropdownMenu.classList.remove(
+        "show"
+    );
+
+    document
+        .getElementById("aboutModal")
+        .classList.add("show");
+}
+
+
+function closeAbout() {
+
+    document
+        .getElementById("aboutModal")
+        .classList.remove("show");
+}
+
+
+/* =========================
+   READ STATUS
+========================= */
+
+function isNotificationRead(
+    notification
+) {
+
+    return (
+        notification.read === true ||
+        notification.isRead === true ||
+        notification.read === 1 ||
+        notification.isRead === 1
+    );
+}
+
+
+/* =========================
+   LOAD NOTIFICATIONS
+========================= */
+
+async function loadNotifications() {
+
+    const list =
+        document.getElementById(
+            "notificationsList"
+        );
+
+    const dictionary =
+        translations[
+            getLanguage()
+        ] || translations.en;
+
+    const email =
+        getCitizenEmail();
+
+    if (!email) {
+
+        showEmptyState(
+            dictionary
+        );
+
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/notifications?email=${encodeURIComponent(email)}`,
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    },
+
+                    cache: "no-store"
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+        const data =
+            await response.json();
+
+        const notifications =
+            Array.isArray(
+                data.notifications
+            )
+                ? data.notifications
+                : [];
+
+        if (
+            notifications.length === 0
+        ) {
+
+            showEmptyState(
+                dictionary
+            );
+
+            return;
+        }
+
+        list.innerHTML =
+            notifications
+                .map(
+                    notification =>
+                        createNotification(
+                            notification,
+                            dictionary
+                        )
+                )
+                .join("");
+
+    } catch (error) {
+
+        console.error(
+            "Notifications error:",
+            error
+        );
+
+        list.innerHTML = `
+
+            <div class="state-box">
+
+                <div class="state-icon">
+                    ⚠️
                 </div>
 
-                <h2 data-i18n="loading">
-                    Loading notifications...
+                <h2>
+                    ${dictionary.error}
                 </h2>
 
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =========================
-         HELP MODAL
-    ========================= -->
-
-    <div
-        class="modal-overlay"
-        id="helpModal"
-    >
-
-        <div class="modal">
-
-            <h2 data-i18n="helpTitle">
-                Help & Support
-            </h2>
-
-            <p data-i18n="helpText">
-                If you need help using CivicEye AI, please check the Report, Track, Notifications and Settings sections.
-            </p>
-
-            <button
-                class="modal-close"
-                onclick="closeHelp()"
-                data-i18n="close"
-            >
-                Close
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <!-- =========================
-         ABOUT MODAL
-    ========================= -->
-
-    <div
-        class="modal-overlay"
-        id="aboutModal"
-    >
-
-        <div class="modal">
-
-            <h2>
-                CivicEye AI
-            </h2>
-
-            <p data-i18n="aboutText">
-                CivicEye AI is an AI-powered public issue reporting and civic monitoring prototype designed for Sri Lanka.
-            </p>
-
-            <button
-                class="modal-close"
-                onclick="closeAbout()"
-                data-i18n="close"
-            >
-                Close
-            </button>
-
-        </div>
-
-    </div>
-
-
-    <script>
-
-        /* =========================
-           BACKEND
-        ========================= */
-
-        const BACKEND_URL =
-            "https://civiceye-backend-production-eac6.up.railway.app";
-
-
-        /* =========================
-           TRANSLATIONS
-        ========================= */
-
-        const translations = {
-
-            en: {
-
-                home: "Home",
-
-                notifications:
-                    "Notifications",
-
-                notificationsTitle:
-                    "Notifications",
-
-                notificationsSubtitle:
-                    "Stay updated about your reported issues",
-
-                markAll:
-                    "Mark all as read",
-
-                settings:
-                    "Settings",
-
-                help:
-                    "Help & Support",
-
-                about:
-                    "About CivicEye AI",
-
-                loading:
-                    "Loading notifications...",
-
-                noNotifications:
-                    "No notifications yet",
-
-                noNotificationsText:
-                    "You will see updates about your reported issues here",
-
-                error:
-                    "Unable to load notifications",
-
-                errorText:
-                    "Please check your connection and try again.",
-
-                retry:
-                    "Try again",
-
-                markRead:
-                    "Mark as read",
-
-                helpTitle:
-                    "Help & Support",
-
-                helpText:
-                    "If you need help using CivicEye AI, please check the Report, Track, Notifications and Settings sections.",
-
-                aboutText:
-                    "CivicEye AI is an AI-powered public issue reporting and civic monitoring prototype designed for Sri Lanka.",
-
-                close:
-                    "Close"
-
-            },
-
-
-            ta: {
-
-                home:
-                    "முகப்பு",
-
-                notifications:
-                    "அறிவிப்புகள்",
-
-                notificationsTitle:
-                    "அறிவிப்புகள்",
-
-                notificationsSubtitle:
-                    "நீங்கள் பதிவு செய்த புகார்கள் குறித்த தகவல்களைப் பெறுங்கள்",
-
-                markAll:
-                    "அனைத்தையும் படித்ததாகக் குறிக்கவும்",
-
-                settings:
-                    "அமைப்புகள்",
-
-                help:
-                    "உதவி & ஆதரவு",
-
-                about:
-                    "CivicEye AI பற்றி",
-
-                loading:
-                    "அறிவிப்புகள் ஏற்றப்படுகின்றன...",
-
-                noNotifications:
-                    "அறிவிப்புகள் எதுவும் இல்லை",
-
-                noNotificationsText:
-                    "உங்கள் புகார்களின் நிலை மாற்றங்கள் இங்கே காட்டப்படும்",
-
-                error:
-                    "அறிவிப்புகளை ஏற்ற முடியவில்லை",
-
-                errorText:
-                    "உங்கள் இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சி செய்யவும்.",
-
-                retry:
-                    "மீண்டும் முயற்சி",
-
-                markRead:
-                    "படித்ததாகக் குறிக்கவும்",
-
-                helpTitle:
-                    "உதவி & ஆதரவு",
-
-                helpText:
-                    "CivicEye AI பயன்படுத்த உதவி தேவைப்பட்டால் Report, Track, Notifications மற்றும் Settings பகுதிகளைப் பார்க்கவும்.",
-
-                aboutText:
-                    "CivicEye AI என்பது இலங்கைக்காக உருவாக்கப்பட்ட AI அடிப்படையிலான பொது பிரச்சினை அறிக்கை மற்றும் கண்காணிப்பு prototype ஆகும்.",
-
-                close:
-                    "மூடு"
-
-            },
-
-
-            si: {
-
-                home:
-                    "මුල් පිටුව",
-
-                notifications:
-                    "දැනුම්දීම්",
-
-                notificationsTitle:
-                    "දැනුම්දීම්",
-
-                notificationsSubtitle:
-                    "ඔබ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන තොරතුරු ලබා ගන්න",
-
-                markAll:
-                    "සියල්ල කියවූ ලෙස සලකුණු කරන්න",
-
-                settings:
-                    "සැකසුම්",
-
-                help:
-                    "උදව් සහ සහාය",
-
-                about:
-                    "CivicEye AI ගැන",
-
-                loading:
-                    "දැනුම්දීම් පූරණය වෙමින් පවතී...",
-
-                noNotifications:
-                    "තවම දැනුම්දීම් නොමැත",
-
-                noNotificationsText:
-                    "ඔබ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන තොරතුරු මෙහි පෙන්වනු ඇත",
-
-                error:
-                    "දැනුම්දීම් පූරණය කළ නොහැක",
-
-                errorText:
-                    "ඔබගේ අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න.",
-
-                retry:
-                    "නැවත උත්සාහ කරන්න",
-
-                markRead:
-                    "කියවූ ලෙස සලකුණු කරන්න",
-
-                helpTitle:
-                    "උදව් සහ සහාය",
-
-                helpText:
-                    "CivicEye AI භාවිතා කිරීමට උදව් අවශ්‍ය නම් Report, Track, Notifications සහ Settings කොටස් පරීක්ෂා කරන්න.",
-
-                aboutText:
-                    "CivicEye AI යනු ශ්‍රී ලංකාව සඳහා නිර්මාණය කරන ලද AI මත පදනම් වූ පොදු ගැටලු වාර්තා කිරීමේ සහ නිරීක්ෂණ prototype එකකි.",
-
-                close:
-                    "වසන්න"
-
-            }
-
-        };
-
-
-        /* =========================
-           EMAIL
-        ========================= */
-
-        function getCitizenEmail() {
-
-            return (
-                localStorage.getItem(
-                    "civicEyeCitizenEmail"
-                ) || ""
-            );
-
-        }
-
-
-        /* =========================
-           LANGUAGE
-        ========================= */
-
-        function getLanguage() {
-
-            return (
-                localStorage.getItem(
-                    "civicEyeLanguage"
-                ) || "en"
-            );
-
-        }
-
-
-        function applyLanguage() {
-
-            const language =
-                getLanguage();
-
-            const dictionary =
-                translations[language] ||
-                translations.en;
-
-            document.documentElement.lang =
-                language;
-
-            document
-                .querySelectorAll(
-                    "[data-i18n]"
-                )
-                .forEach(element => {
-
-                    const key =
-                        element.getAttribute(
-                            "data-i18n"
-                        );
-
-                    if (dictionary[key]) {
-
-                        element.textContent =
-                            dictionary[key];
-
-                    }
-
-                });
-
-        }
-
-
-        /* =========================
-           THEME
-        ========================= */
-
-        function applyTheme() {
-
-            const theme =
-                localStorage.getItem(
-                    "civicEyeTheme"
-                ) || "dark";
-
-            document.body.classList.remove(
-                "light"
-            );
-
-            if (theme === "light") {
-
-                document.body.classList.add(
-                    "light"
-                );
-
-            }
-
-        }
-
-
-        /* =========================
-           MENU
-        ========================= */
-
-        const menuButton =
-            document.getElementById(
-                "menuButton"
-            );
-
-        const dropdownMenu =
-            document.getElementById(
-                "dropdownMenu"
-            );
-
-
-        menuButton.addEventListener(
-            "click",
-            function(event) {
-
-                event.stopPropagation();
-
-                dropdownMenu.classList.toggle(
-                    "show"
-                );
-
-            }
-        );
-
-
-        document.addEventListener(
-            "click",
-            function(event) {
-
-                if (
-                    !event.target.closest(
-                        ".menu-wrapper"
-                    )
-                ) {
-
-                    dropdownMenu.classList.remove(
-                        "show"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* =========================
-           HELP / ABOUT
-        ========================= */
-
-        function openHelp() {
-
-            dropdownMenu.classList.remove(
-                "show"
-            );
-
-            document
-                .getElementById(
-                    "helpModal"
-                )
-                .classList.add("show");
-
-        }
-
-
-        function closeHelp() {
-
-            document
-                .getElementById(
-                    "helpModal"
-                )
-                .classList.remove("show");
-
-        }
-
-
-        function openAbout() {
-
-            dropdownMenu.classList.remove(
-                "show"
-            );
-
-            document
-                .getElementById(
-                    "aboutModal"
-                )
-                .classList.add("show");
-
-        }
-
-
-        function closeAbout() {
-
-            document
-                .getElementById(
-                    "aboutModal"
-                )
-                .classList.remove("show");
-
-        }
-
-
-        /* =========================
-           READ CHECK
-        ========================= */
-
-        function isNotificationRead(
-            notification
-        ) {
-
-            return (
-                notification.read === true ||
-                notification.isRead === true ||
-                notification.read === 1 ||
-                notification.isRead === 1
-            );
-
-        }
-
-
-        /* =========================
-           BADGE
-        ========================= */
-
-        async function loadNotificationCount() {
-
-            const badge =
-                document.getElementById(
-                    "notificationBadge"
-                );
-
-            if (!badge) return;
-
-            const email =
-                getCitizenEmail();
-
-            if (!email) {
-
-                badge.style.display =
-                    "none";
-
-                return;
-
-            }
-
-            try {
-
-                const response =
-                    await fetch(
-                        `${BACKEND_URL}/notifications?email=${encodeURIComponent(email)}`,
-                        {
-                            method: "GET",
-
-                            headers: {
-                                "Accept":
-                                    "application/json"
-                            },
-
-                            cache: "no-store"
-                        }
-                    );
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        `HTTP ${response.status}`
-                    );
-
-                }
-
-                const data =
-                    await response.json();
-
-                let unread =
-                    Number(data.unread);
-
-                if (!Number.isFinite(unread)) {
-
-                    unread =
-                        Array.isArray(
-                            data.notifications
-                        )
-                            ? data.notifications.filter(
-                                item =>
-                                    !isNotificationRead(
-                                        item
-                                    )
-                            ).length
-                            : 0;
-
-                }
-
-                if (unread > 0) {
-
-                    badge.textContent =
-                        unread > 99
-                            ? "99+"
-                            : unread;
-
-                    badge.style.display =
-                        "inline-flex";
-
-                } else {
-
-                    badge.style.display =
-                        "none";
-
-                }
-
-            } catch (error) {
-
-                console.error(
-                    "Notification badge error:",
-                    error
-                );
-
-                badge.style.display =
-                    "none";
-
-            }
-
-        }
-
-
-        /* =========================
-           LOAD NOTIFICATIONS
-        ========================= */
-
-        async function loadNotifications() {
-
-            const list =
-                document.getElementById(
-                    "notificationsList"
-                );
-
-            const dictionary =
-                translations[
-                    getLanguage()
-                ] || translations.en;
-
-            const email =
-                getCitizenEmail();
-
-            if (!email) {
-
-                showEmptyState(
-                    dictionary
-                );
-
-                return;
-
-            }
-
-            try {
-
-                const response =
-                    await fetch(
-                        `${BACKEND_URL}/notifications?email=${encodeURIComponent(email)}`,
-                        {
-                            method: "GET",
-
-                            headers: {
-                                "Accept":
-                                    "application/json"
-                            },
-
-                            cache: "no-store"
-                        }
-                    );
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        `HTTP ${response.status}`
-                    );
-
-                }
-
-                const data =
-                    await response.json();
-
-                const notifications =
-                    Array.isArray(
-                        data.notifications
-                    )
-                        ? data.notifications
-                        : [];
-
-                if (
-                    notifications.length === 0
-                ) {
-
-                    showEmptyState(
-                        dictionary
-                    );
-
-                    return;
-
-                }
-
-                list.innerHTML =
-                    notifications
-                        .map(
-                            notification =>
-                                createNotification(
-                                    notification,
-                                    dictionary
-                                )
-                        )
-                        .join("");
-
-            } catch (error) {
-
-                console.error(
-                    "Notifications error:",
-                    error
-                );
-
-                list.innerHTML = `
-
-                    <div class="error-state">
-
-                        <div class="error-icon">
-                            ⚠️
-                        </div>
-
-                        <h2>
-                            ${dictionary.error}
-                        </h2>
-
-                        <p>
-                            ${dictionary.errorText}
-                        </p>
-
-                        <button
-                            class="retry-btn"
-                            onclick="loadNotifications()"
-                        >
-                            ${dictionary.retry}
-                        </button>
-
-                    </div>
-
-                `;
-
-            }
-
-        }
-
-
-        /* =========================
-           EMPTY
-        ========================= */
-
-        function showEmptyState(
-            dictionary
-        ) {
-
-            document
-                .getElementById(
-                    "notificationsList"
-                )
-                .innerHTML = `
-
-                    <div class="empty-state">
-
-                        <div class="empty-icon">
-                            🔔
-                        </div>
-
-                        <h2>
-                            ${dictionary.noNotifications}
-                        </h2>
-
-                        <p>
-                            ${dictionary.noNotificationsText}
-                        </p>
-
-                    </div>
-
-                `;
-
-        }
-
-
-        /* =========================
-           CARD
-        ========================= */
-
-        function createNotification(
-            notification,
-            dictionary
-        ) {
-
-            const read =
-                isNotificationRead(
-                    notification
-                );
-
-            const title =
-                escapeHTML(
-                    notification.title ||
-                    "CivicEye AI"
-                );
-
-            const message =
-                escapeHTML(
-                    notification.message ||
-                    ""
-                );
-
-            const time =
-                formatDate(
-                    notification.createdAt ||
-                    notification.timestamp ||
-                    notification.date
-                );
-
-            return `
-
-                <article
-                    class="notification-card ${
-                        read ? "" : "unread"
-                    }"
+                <p>
+                    ${dictionary.errorText}
+                </p>
+
+                <button
+                    class="retry-btn"
+                    onclick="loadNotifications()"
                 >
+                    ${dictionary.retry}
+                </button>
 
-                    <div class="notification-top">
+            </div>
+        `;
+    }
+}
 
-                        <div class="notification-content">
 
-                            <div class="notification-title">
+/* =========================
+   EMPTY
+========================= */
 
-                                ${
-                                    !read
-                                        ? `<span class="unread-dot"></span>`
-                                        : ""
-                                }
+function showEmptyState(
+    dictionary
+) {
 
-                                ${title}
+    document
+        .getElementById(
+            "notificationsList"
+        )
+        .innerHTML = `
 
-                            </div>
+            <div class="state-box">
 
-                            <div class="notification-message">
-                                ${message}
-                            </div>
+                <div class="state-icon">
+                    🔔
+                </div>
 
-                            ${
-                                time
-                                    ? `
-                                    <div class="notification-time">
-                                        ${time}
-                                    </div>
-                                    `
-                                    : ""
-                            }
+                <h2>
+                    ${dictionary.noNotifications}
+                </h2>
 
-                        </div>
+                <p>
+                    ${dictionary.noNotificationsText}
+                </p>
 
+            </div>
+        `;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+function createNotification(
+    notification,
+    dictionary
+) {
+
+    const read =
+        isNotificationRead(
+            notification
+        );
+
+    const title =
+        escapeHTML(
+            notification.title ||
+            "CivicEye AI"
+        );
+
+    const message =
+        escapeHTML(
+            notification.message ||
+            ""
+        );
+
+    const time =
+        formatDate(
+            notification.createdAt ||
+            notification.timestamp ||
+            notification.date
+        );
+
+    return `
+
+        <article
+            class="notification-card ${
+                read ? "" : "unread"
+            }"
+        >
+
+            <div class="notification-top">
+
+                <div class="notification-content">
+
+                    <div class="notification-title">
 
                         ${
                             !read
-                                ? `
-                                <button
-                                    class="read-btn"
-                                    onclick="markAsRead('${escapeAttribute(
-                                        notification.id
-                                    )}')"
-                                >
-                                    ✓
-                                    ${dictionary.markRead}
-                                </button>
-                                `
+                                ? '<span class="unread-dot"></span>'
                                 : ""
                         }
 
+                        ${title}
+
                     </div>
 
-                </article>
+                    <div class="notification-message">
+                        ${message}
+                    </div>
 
-            `;
+                    ${
+                        time
+                            ? `
+                                <div class="notification-time">
+                                    🕒 ${time}
+                                </div>
+                              `
+                            : ""
+                    }
 
-        }
+                </div>
 
-
-        /* =========================
-           MARK ONE READ
-        ========================= */
-
-        async function markAsRead(id) {
-
-            const email =
-                getCitizenEmail();
-
-            if (!id || !email) return;
-
-            try {
-
-                const response =
-                    await fetch(
-                        `${BACKEND_URL}/notifications/${encodeURIComponent(id)}/read`,
-                        {
-                            method: "PATCH",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json",
-
-                                "Accept":
-                                    "application/json"
-                            },
-
-                            body: JSON.stringify({
-                                citizenEmail:
-                                    email
-                            })
-                        }
-                    );
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        `HTTP ${response.status}`
-                    );
-
+                ${
+                    !read
+                        ? `
+                            <button
+                                class="read-btn"
+                                onclick="markAsRead('${escapeAttribute(notification.id)}')"
+                            >
+                                ✓
+                                ${dictionary.markRead}
+                            </button>
+                          `
+                        : ""
                 }
 
-                await loadNotifications();
+            </div>
 
-                await loadNotificationCount();
-
-            } catch (error) {
-
-                console.error(
-                    "Mark read error:",
-                    error
-                );
-
-            }
-
-        }
+        </article>
+    `;
+}
 
 
-        /* =========================
-           MARK ALL READ
-        ========================= */
+/* =========================
+   MARK ONE READ
+========================= */
 
-        async function markAllAsRead() {
+async function markAsRead(id) {
 
-            const email =
-                getCitizenEmail();
+    const email =
+        getCitizenEmail();
 
-            if (!email) return;
+    if (!id || !email) return;
 
-            try {
+    try {
 
-                const response =
-                    await fetch(
-                        `${BACKEND_URL}/notifications/read-all`,
-                        {
-                            method: "PATCH",
+        const response =
+            await fetch(
+                `${BACKEND_URL}/notifications/${encodeURIComponent(id)}/read`,
+                {
+                    method: "PATCH",
 
-                            headers: {
-                                "Content-Type":
-                                    "application/json",
+                    headers: {
+                        "Content-Type":
+                            "application/json",
 
-                                "Accept":
-                                    "application/json"
-                            },
+                        "Accept":
+                            "application/json"
+                    },
 
-                            body: JSON.stringify({
-                                citizenEmail:
-                                    email
-                            })
-                        }
-                    );
-
-                if (!response.ok) {
-
-                    throw new Error(
-                        `HTTP ${response.status}`
-                    );
-
+                    body: JSON.stringify({
+                        citizenEmail:
+                            email
+                    })
                 }
+            );
 
-                await loadNotifications();
+        if (!response.ok) {
 
-                await loadNotificationCount();
-
-            } catch (error) {
-
-                console.error(
-                    "Mark all read error:",
-                    error
-                );
-
-            }
-
+            throw new Error(
+                `HTTP ${response.status}`
+            );
         }
 
+        await loadNotifications();
 
-        /* =========================
-           DATE
-        ========================= */
+        await loadNotificationCount();
 
-        function formatDate(value) {
+    } catch (error) {
 
-            if (!value) return "";
+        console.error(
+            "Mark read error:",
+            error
+        );
+    }
+}
 
-            const date =
-                new Date(value);
+
+/* =========================
+   MARK ALL READ
+========================= */
+
+async function markAllAsRead() {
+
+    const email =
+        getCitizenEmail();
+
+    if (!email) return;
+
+    try {
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/notifications/read-all`,
+                {
+                    method: "PATCH",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        citizenEmail:
+                            email
+                    })
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+        await loadNotifications();
+
+        await loadNotificationCount();
+
+    } catch (error) {
+
+        console.error(
+            "Mark all read error:",
+            error
+        );
+    }
+}
+
+
+/* =========================
+   BADGE
+========================= */
+
+async function loadNotificationCount() {
+
+    const badge =
+        document.getElementById(
+            "notificationBadge"
+        );
+
+    const email =
+        getCitizenEmail();
+
+    if (!email) {
+
+        badge.style.display =
+            "none";
+
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                `${BACKEND_URL}/notifications?email=${encodeURIComponent(email)}`,
+                {
+                    method: "GET",
+
+                    headers: {
+                        "Accept":
+                            "application/json"
+                    },
+
+                    cache: "no-store"
+                }
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+        }
+
+        const data =
+            await response.json();
+
+        let unread =
+            Number(data.unread);
+
+        if (!Number.isFinite(unread)) {
+
+            unread =
+                Array.isArray(
+                    data.notifications
+                )
+                    ? data.notifications.filter(
+                        item =>
+                            !isNotificationRead(
+                                item
+                            )
+                    ).length
+                    : 0;
+        }
+
+        if (unread > 0) {
+
+            badge.textContent =
+                unread > 99
+                    ? "99+"
+                    : unread;
+
+            badge.style.display =
+                "inline-flex";
+
+        } else {
+
+            badge.style.display =
+                "none";
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Badge error:",
+            error
+        );
+
+        badge.style.display =
+            "none";
+    }
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(value) {
+
+    if (!value) return "";
+
+    const date =
+        new Date(value);
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "";
+    }
+
+    return date.toLocaleString();
+}
+
+
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+function escapeAttribute(value) {
+
+    return String(value)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'");
+}
+
+
+/* =========================
+   STORAGE SYNC
+========================= */
+
+window.addEventListener(
+    "storage",
+    event => {
+
+        if (
+            event.key ===
+            "civicEyeLanguage"
+        ) {
+
+            applyLanguage();
+
+            loadNotifications();
+        }
+
+        if (
+            event.key ===
+            "civicEyeTheme"
+        ) {
+
+            applyTheme();
+        }
+
+        if (
+            event.key ===
+            "civicEyeCitizenEmail"
+        ) {
+
+            loadNotifications();
+
+            loadNotificationCount();
+        }
+    }
+);
+
+
+/* =========================
+   MODAL OUTSIDE CLICK
+========================= */
+
+document
+    .getElementById("helpModal")
+    .addEventListener(
+        "click",
+        function(event) {
 
             if (
-                Number.isNaN(
-                    date.getTime()
-                )
+                event.target === this
             ) {
 
-                return "";
-
+                closeHelp();
             }
-
-            return date.toLocaleString();
-
         }
+    );
 
 
-        /* =========================
-           SECURITY
-        ========================= */
+document
+    .getElementById("aboutModal")
+    .addEventListener(
+        "click",
+        function(event) {
 
-        function escapeHTML(value) {
+            if (
+                event.target === this
+            ) {
 
-            return String(value)
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-
-        }
-
-
-        function escapeAttribute(value) {
-
-            return String(value)
-                .replace(/\\/g, "\\\\")
-                .replace(/'/g, "\\'");
-
-        }
-
-
-        /* =========================
-           STORAGE SYNC
-        ========================= */
-
-        window.addEventListener(
-            "storage",
-            function(event) {
-
-                if (
-                    event.key ===
-                    "civicEyeLanguage"
-                ) {
-
-                    applyLanguage();
-
-                    loadNotifications();
-
-                }
-
-                if (
-                    event.key ===
-                    "civicEyeTheme"
-                ) {
-
-                    applyTheme();
-
-                }
-
-                if (
-                    event.key ===
-                    "civicEyeCitizenEmail"
-                ) {
-
-                    loadNotifications();
-
-                    loadNotificationCount();
-
-                }
-
+                closeAbout();
             }
-        );
+        }
+    );
 
 
-        /* =========================
-           CLOSE MODALS OUTSIDE
-        ========================= */
+/* =========================
+   START
+========================= */
 
-        document
-            .getElementById("helpModal")
-            .addEventListener(
-                "click",
-                function(event) {
+applyTheme();
 
-                    if (
-                        event.target === this
-                    ) {
+applyLanguage();
 
-                        closeHelp();
+loadNotifications();
 
-                    }
-
-                }
-            );
+loadNotificationCount();
 
 
-        document
-            .getElementById("aboutModal")
-            .addEventListener(
-                "click",
-                function(event) {
+/* =========================
+   AUTO REFRESH
+========================= */
 
-                    if (
-                        event.target === this
-                    ) {
+setInterval(
+    loadNotificationCount,
+    10000
+);
 
-                        closeAbout();
+setInterval(
+    loadNotifications,
+    30000
+);
 
-                    }
-
-                }
-            );
-
-
-        /* =========================
-           START
-        ========================= */
-
-        applyTheme();
-
-        applyLanguage();
-
-        loadNotifications();
-
-        loadNotificationCount();
-
-
-        /* =========================
-           AUTO REFRESH
-        ========================= */
-
-        setInterval(
-            loadNotificationCount,
-            10000
-        );
-
-        setInterval(
-            loadNotifications,
-            30000
-        );
-
-    </script>
+</script>
 
 </body>
-
 </html>
