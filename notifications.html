@@ -2,2649 +2,1471 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CivicEye AI - Notifications</title>
+
+    <style>
+        :root {
+            --text: #ffffff;
+            --muted: rgba(255, 255, 255, 0.72);
+            --card: rgba(255, 255, 255, 0.12);
+            --border: rgba(255, 255, 255, 0.22);
+            --shadow: rgba(0, 0, 0, 0.25);
+        }
+
+        body.light {
+            --text: #182033;
+            --muted: #596174;
+            --card: rgba(255, 255, 255, 0.72);
+            --border: rgba(0, 0, 0, 0.10);
+            --shadow: rgba(0, 0, 0, 0.12);
+        }
+
+        body.dark {
+            --text: #ffffff;
+            --muted: rgba(255, 255, 255, 0.72);
+            --card: rgba(255, 255, 255, 0.12);
+            --border: rgba(255, 255, 255, 0.22);
+            --shadow: rgba(0, 0, 0, 0.30);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(106, 90, 249, 0.55),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(69, 199, 255, 0.45),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #6a5af9,
+                    #45c7ff
+                );
+
+            transition: 0.3s ease;
+        }
+
+        body.light {
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(106, 90, 249, 0.25),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at bottom right,
+                    rgba(69, 199, 255, 0.25),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #e7f8ff
+                );
+        }
+
+        /* ==========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+            height: 70px;
 
-<meta charset="UTF-8">
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
 
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
->
+            padding: 0 28px;
+
+            border-bottom: 1px solid var(--border);
 
-<title>CivicEye AI - Notifications</title>
+            background: rgba(255, 255, 255, 0.08);
 
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
 
-<style>
+            position: sticky;
+            top: 0;
 
-/* =====================================================
-   DEFAULT THEME
-===================================================== */
+            z-index: 1000;
+        }
 
-:root {
+        .logo-area {
+            display: flex;
+            align-items: center;
 
-    --page-bg:
-        linear-gradient(
-            135deg,
-            #667eea 0%,
-            #764ba2 100%
-        );
+            gap: 10px;
 
-    --main-text: #ffffff;
+            font-size: 20px;
+            font-weight: 700;
+        }
 
-    --card-bg:
-        rgba(255,255,255,0.16);
+        .logo {
+            width: 38px;
+            height: 38px;
 
-    --card-border:
-        rgba(255,255,255,0.25);
+            border-radius: 50%;
 
-    --secondary-bg:
-        rgba(255,255,255,0.10);
+            object-fit: cover;
+        }
 
-    --button-bg:
-        #ffffff;
+        .nav-right {
+            display: flex;
+            align-items: center;
 
-    --button-text:
-        #222222;
+            gap: 18px;
+        }
 
-    --muted-text:
-        rgba(255,255,255,0.75);
+        .nav-link {
+            color: var(--text);
 
-    --shadow:
-        0 8px 25px rgba(0,0,0,0.15);
-}
+            text-decoration: none;
 
+            font-size: 15px;
+            font-weight: 600;
 
-/* =====================================================
-   LIGHT THEME
-===================================================== */
+            opacity: 0.9;
 
-body.theme-light {
+            transition: 0.2s ease;
+        }
 
-    --page-bg: #f5f7fa;
+        .nav-link:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
 
-    --main-text: #222222;
+        .notification-link {
+            display: flex;
+            align-items: center;
 
-    --card-bg: #ffffff;
+            gap: 6px;
 
-    --card-border: #e1e5ea;
+            position: relative;
+        }
 
-    --secondary-bg: #f1f3f6;
+        /* ==========================
+           BADGE
+        ========================== */
 
-    --button-bg: #222222;
+        .notification-badge {
+            display: none;
 
-    --button-text: #ffffff;
+            align-items: center;
+            justify-content: center;
 
-    --muted-text: #666666;
+            min-width: 19px;
+            height: 19px;
 
-    --shadow:
-        0 8px 25px rgba(0,0,0,0.08);
-}
+            padding: 0 5px;
 
+            border-radius: 20px;
 
-/* =====================================================
-   DARK THEME
-===================================================== */
+            background: #ff4757;
 
-body.theme-dark {
+            color: white;
 
-    --page-bg: #111827;
+            font-size: 11px;
+            font-weight: 700;
 
-    --main-text: #ffffff;
+            line-height: 1;
+        }
 
-    --card-bg: #1f2937;
+        /* ==========================
+           PAGE
+        ========================== */
 
-    --card-border: #374151;
+        .container {
+            width: min(900px, calc(100% - 32px));
 
-    --secondary-bg: #273449;
+            margin: 45px auto;
+        }
 
-    --button-bg: #ffffff;
+        .page-header {
+            text-align: center;
 
-    --button-text: #111827;
+            margin-bottom: 28px;
+        }
 
-    --muted-text: #b9c0cc;
+        .page-header h1 {
+            margin: 0 0 8px;
 
-    --shadow:
-        0 8px 25px rgba(0,0,0,0.35);
-}
+            font-size: 32px;
+        }
 
+        .page-header p {
+            margin: 0;
 
-/* =====================================================
-   BODY
-===================================================== */
+            color: var(--muted);
+        }
 
-body {
+        /* ==========================
+           ACTION BAR
+        ========================== */
 
-    margin: 0;
+        .action-bar {
+            display: flex;
 
-    min-height: 100vh;
+            justify-content: flex-end;
 
-    background:
-        var(--page-bg);
+            margin-bottom: 18px;
+        }
 
-    color:
-        var(--main-text);
+        .read-all-btn {
+            border: 1px solid var(--border);
 
-    transition:
-        background 0.3s ease,
-        color 0.3s ease;
+            background: rgba(255, 255, 255, 0.12);
 
-    font-family:
-        Arial,
-        "Noto Sans Tamil",
-        "Noto Sans Sinhala",
-        sans-serif;
-}
+            color: var(--text);
 
+            padding: 10px 16px;
 
-/* =====================================================
-   NAVBAR
-===================================================== */
+            border-radius: 12px;
 
-.navbar {
+            cursor: pointer;
 
-    display:
-        flex;
+            font-weight: 600;
 
-    justify-content:
-        space-between;
+            transition: 0.2s ease;
+        }
 
-    align-items:
-        center;
+        .read-all-btn:hover {
+            transform: translateY(-2px);
 
-    padding:
-        18px 35px;
+            background: rgba(255, 255, 255, 0.20);
+        }
 
-    background:
-        var(--card-bg);
+        .read-all-btn:disabled {
+            opacity: 0.5;
 
-    border-bottom:
-        1px solid var(--card-border);
+            cursor: not-allowed;
 
-    backdrop-filter:
-        blur(15px);
+            transform: none;
+        }
 
-    -webkit-backdrop-filter:
-        blur(15px);
+        /* ==========================
+           LIST
+        ========================== */
 
-    position:
-        relative;
+        #notificationsList {
+            display: flex;
 
-    z-index:
-        1000;
-}
+            flex-direction: column;
 
+            gap: 14px;
+        }
 
-.logo {
+        /* ==========================
+           CARD
+        ========================== */
 
-    font-size:
-        24px;
+        .notification-card {
+            position: relative;
 
-    font-weight:
-        bold;
+            padding: 18px 20px;
 
-    color:
-        var(--main-text);
-}
+            border-radius: 18px;
 
+            border: 1px solid var(--border);
 
-.nav-links {
+            background: var(--card);
 
-    display:
-        flex;
+            box-shadow:
+                0 10px 30px var(--shadow);
 
-    align-items:
-        center;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
 
-    gap:
-        10px;
+            transition: 0.25s ease;
+        }
 
-    flex-wrap:
-        wrap;
-}
+        .notification-card:hover {
+            transform: translateY(-2px);
+        }
 
+        .notification-card.unread {
+            border-left: 4px solid #45c7ff;
+        }
 
-.nav-links > a {
+        .notification-top {
+            display: flex;
 
-    text-decoration:
-        none;
+            align-items: flex-start;
 
-    color:
-        var(--main-text) !important;
+            justify-content: space-between;
 
-    padding:
-        9px 14px;
+            gap: 15px;
+        }
 
-    border-radius:
-        10px;
+        .notification-title {
+            margin: 0;
 
-    transition:
-        0.2s;
-}
+            font-size: 17px;
 
+            font-weight: 700;
+        }
 
-.nav-links > a:hover {
+        .notification-message {
+            margin: 8px 0 0;
 
-    background:
-        var(--secondary-bg);
-}
+            color: var(--muted);
 
+            line-height: 1.5;
+        }
 
-/* =====================================================
-   LIGHT NAVBAR
-===================================================== */
+        .notification-time {
+            margin-top: 12px;
 
-body.theme-light .navbar {
+            color: var(--muted);
 
-    background:
-        #ffffff;
+            font-size: 12px;
+        }
 
-    border-bottom:
-        1px solid #e1e5ea;
-}
+        .unread-dot {
+            width: 9px;
+            height: 9px;
 
+            min-width: 9px;
 
-body.theme-light .logo {
+            border-radius: 50%;
 
-    color:
-        #222222 !important;
+            background: #45c7ff;
 
-    -webkit-text-fill-color:
-        #222222 !important;
-}
+            margin-top: 5px;
+        }
 
+        .read-btn {
+            margin-top: 12px;
 
-body.theme-light .nav-links > a {
+            border: 0;
 
-    color:
-        #222222 !important;
+            background: transparent;
 
-    -webkit-text-fill-color:
-        #222222 !important;
-}
+            color: #45c7ff;
 
+            cursor: pointer;
 
-/* =====================================================
-   DARK NAVBAR
-===================================================== */
+            font-size: 13px;
 
-body.theme-dark .logo {
+            font-weight: 700;
 
-    color:
-        #ffffff !important;
+            padding: 0;
+        }
 
-    -webkit-text-fill-color:
-        #ffffff !important;
-}
+        .read-btn:hover {
+            text-decoration: underline;
+        }
 
+        /* ==========================
+           EMPTY
+        ========================== */
 
-body.theme-dark .nav-links > a {
+        .empty-state {
+            text-align: center;
 
-    color:
-        #ffffff !important;
+            padding: 55px 20px;
 
-    -webkit-text-fill-color:
-        #ffffff !important;
-}
+            border-radius: 20px;
 
+            border: 1px solid var(--border);
 
-/* =====================================================
-   MORE MENU CONTAINER
-===================================================== */
+            background: var(--card);
 
-.more-menu-container {
+            box-shadow:
+                0 10px 30px var(--shadow);
 
-    position:
-        relative;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
 
-    display:
-        flex;
+        .empty-icon {
+            font-size: 45px;
 
-    align-items:
-        center;
-}
+            margin-bottom: 12px;
+        }
 
+        .empty-state h2 {
+            margin: 0 0 8px;
+        }
 
-/* =====================================================
-   THREE DOT BUTTON
-===================================================== */
+        .empty-state p {
+            margin: 0;
 
-.more-menu-button {
+            color: var(--muted);
+        }
 
-    width:
-        42px;
+        /* ==========================
+           ERROR
+        ========================== */
 
-    height:
-        42px;
+        .error-message {
+            text-align: center;
 
-    display:
-        flex;
+            padding: 20px;
 
-    align-items:
-        center;
+            border-radius: 16px;
 
-    justify-content:
-        center;
+            background: rgba(255, 71, 87, 0.15);
 
-    border:
-        1px solid var(--card-border);
+            border: 1px solid rgba(255, 71, 87, 0.35);
 
-    border-radius:
-        10px;
+            color: var(--text);
+        }
 
-    background:
-        var(--card-bg);
+        /* ==========================
+           MOBILE
+        ========================== */
 
-    color:
-        var(--main-text);
+        @media (max-width: 700px) {
 
-    font-size:
-        25px;
+            .navbar {
+                padding: 0 16px;
+            }
 
-    font-weight:
-        bold;
+            .logo-area {
+                font-size: 17px;
+            }
 
-    line-height:
-        1;
+            .container {
+                width: min(100% - 22px, 900px);
 
-    cursor:
-        pointer;
+                margin: 30px auto;
+            }
 
-    transition:
-        0.2s;
+            .page-header h1 {
+                font-size: 27px;
+            }
 
-    padding:
-        0;
-}
-
-
-.more-menu-button:hover {
-
-    background:
-        var(--secondary-bg);
-
-    transform:
-        translateY(-1px);
-}
-
-
-/* =====================================================
-   MORE MENU
-===================================================== */
-
-.more-menu {
-
-    position:
-        absolute;
-
-    top:
-        calc(100% + 10px);
-
-    right:
-        0;
-
-    width:
-        230px;
-
-    padding:
-        8px;
-
-    background:
-        #ffffff;
-
-    color:
-        #222222;
-
-    border:
-        1px solid #dddddd;
-
-    border-radius:
-        14px;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.15);
-
-    display:
-        none;
-
-    z-index:
-        9999;
-
-    box-sizing:
-        border-box;
-}
-
-
-.more-menu.show {
-
-    display:
-        block;
-}
-
-
-/* =====================================================
-   MORE MENU ITEMS
-===================================================== */
-
-.more-menu a,
-.more-menu button {
-
-    width:
-        100% !important;
-
-    box-sizing:
-        border-box !important;
-
-    display:
-        flex !important;
-
-    align-items:
-        center !important;
-
-    margin:
-        0 !important;
-
-    padding:
-        12px 14px !important;
-
-    gap:
-        10px !important;
-
-    text-align:
-        left !important;
-
-    justify-content:
-        flex-start !important;
-
-    font-family:
-        inherit !important;
-
-    font-size:
-        14px !important;
-
-    font-weight:
-        500 !important;
-
-    line-height:
-        1.2 !important;
-
-    border:
-        none !important;
-
-    outline:
-        none !important;
-
-    background:
-        transparent !important;
-
-    appearance:
-        none !important;
-
-    -webkit-appearance:
-        none !important;
-
-    border-radius:
-        10px !important;
-
-    cursor:
-        pointer !important;
-
-    text-decoration:
-        none !important;
-
-    min-height:
-        42px !important;
-
-    color:
-        #222222 !important;
-
-    -webkit-text-fill-color:
-        #222222 !important;
-}
-
-
-.more-menu a:hover,
-.more-menu button:hover {
-
-    background:
-        #f1f1f1 !important;
-
-    color:
-        #111111 !important;
-
-    -webkit-text-fill-color:
-        #111111 !important;
-}
-
-
-/* =====================================================
-   DARK MENU
-===================================================== */
-
-body.theme-dark .more-menu {
-
-    background:
-        rgba(25,25,35,0.98) !important;
-
-    color:
-        #ffffff !important;
-
-    border:
-        1px solid #374151 !important;
-
-    box-shadow:
-        0 10px 30px rgba(0,0,0,0.35) !important;
-}
-
-
-body.theme-dark .more-menu a,
-body.theme-dark .more-menu button {
-
-    color:
-        #ffffff !important;
-
-    -webkit-text-fill-color:
-        #ffffff !important;
-}
-
-
-body.theme-dark .more-menu a:hover,
-body.theme-dark .more-menu button:hover {
-
-    background:
-        rgba(255,255,255,0.10) !important;
-
-    color:
-        #ffffff !important;
-
-    -webkit-text-fill-color:
-        #ffffff !important;
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-.more-menu .menu-danger {
-
-    color:
-        #e74c3c !important;
-
-    -webkit-text-fill-color:
-        #e74c3c !important;
-}
-
-
-body.theme-dark .more-menu .menu-danger {
-
-    color:
-        #ff6b6b !important;
-
-    -webkit-text-fill-color:
-        #ff6b6b !important;
-}
-
-
-/* =====================================================
-   MAIN CONTAINER
-===================================================== */
-
-.container {
-
-    width:
-        90%;
-
-    max-width:
-        900px;
-
-    margin:
-        35px auto;
-}
-
-
-/* =====================================================
-   HEADER
-===================================================== */
-
-.page-header {
-
-    text-align:
-        center;
-
-    margin-bottom:
-        30px;
-}
-
-
-.page-header h1 {
-
-    margin:
-        0 0 8px;
-
-    color:
-        var(--main-text);
-}
-
-
-.page-header p {
-
-    margin:
-        0;
-
-    color:
-        var(--muted-text);
-}
-
-
-/* =====================================================
-   NOTIFICATION PANEL
-===================================================== */
-
-.notification-panel {
-
-    background:
-        var(--card-bg);
-
-    border:
-        1px solid var(--card-border);
-
-    border-radius:
-        20px;
-
-    padding:
-        22px;
-
-    box-shadow:
-        var(--shadow);
-
-    backdrop-filter:
-        blur(15px);
-
-    -webkit-backdrop-filter:
-        blur(15px);
-}
-
-
-/* =====================================================
-   PANEL HEADER
-===================================================== */
-
-.notification-header {
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        center;
-
-    gap:
-        15px;
-
-    margin-bottom:
-        20px;
-
-    flex-wrap:
-        wrap;
-}
-
-
-.notification-heading {
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
-    gap:
-        10px;
-}
-
-
-.notification-heading h2 {
-
-    margin:
-        0;
-
-    color:
-        var(--main-text);
-}
-
-
-.count-badge {
-
-    min-width:
-        25px;
-
-    height:
-        25px;
-
-    padding:
-        0 7px;
-
-    border-radius:
-        50px;
-
-    background:
-        #ff4757;
-
-    color:
-        white !important;
-
-    font-size:
-        13px;
-
-    font-weight:
-        bold;
-
-    display:
-        inline-flex;
-
-    align-items:
-        center;
-
-    justify-content:
-        center;
-}
-
-
-/* =====================================================
-   MARK ALL BUTTON
-===================================================== */
-
-.mark-all-btn {
-
-    border:
-        none;
-
-    background:
-        var(--button-bg);
-
-    color:
-        var(--button-text);
-
-    padding:
-        9px 15px;
-
-    border-radius:
-        10px;
-
-    cursor:
-        pointer;
-
-    font-weight:
-        bold;
-
-    transition:
-        0.2s;
-}
-
-
-.mark-all-btn:hover {
-
-    opacity:
-        0.85;
-}
-
-
-.mark-all-btn:disabled {
-
-    opacity:
-        0.5;
-
-    cursor:
-        not-allowed;
-}
-
-
-/* =====================================================
-   NOTIFICATION ITEM
-===================================================== */
-
-.notification-item {
-
-    padding:
-        18px;
-
-    margin-bottom:
-        12px;
-
-    background:
-        var(--secondary-bg);
-
-    border-radius:
-        14px;
-
-    border-left:
-        4px solid #3498db;
-
-    transition:
-        transform 0.2s ease,
-        background 0.2s ease;
-}
-
-
-.notification-item:hover {
-
-    transform:
-        translateY(-2px);
-}
-
-
-.notification-item.unread {
-
-    border-left-color:
-        #2ecc71;
-}
-
-
-/* =====================================================
-   NOTIFICATION TOP
-===================================================== */
-
-.notification-top {
-
-    display:
-        flex;
-
-    justify-content:
-        space-between;
-
-    align-items:
-        flex-start;
-
-    gap:
-        10px;
-}
-
-
-.notification-title {
-
-    font-size:
-        16px;
-
-    font-weight:
-        bold;
-
-    margin-bottom:
-        7px;
-
-    color:
-        var(--main-text);
-}
-
-
-/* =====================================================
-   UNREAD DOT
-===================================================== */
-
-.unread-dot {
-
-    width:
-        9px;
-
-    height:
-        9px;
-
-    border-radius:
-        50%;
-
-    background:
-        #2ecc71;
-
-    flex-shrink:
-        0;
-
-    margin-top:
-        5px;
-}
-
-
-/* =====================================================
-   MESSAGE
-===================================================== */
-
-.notification-message {
-
-    color:
-        var(--muted-text);
-
-    font-size:
-        14px;
-
-    line-height:
-        1.7;
-
-    word-break:
-        break-word;
-}
-
-
-/* =====================================================
-   TIME
-===================================================== */
-
-.notification-time {
-
-    color:
-        var(--muted-text);
-
-    font-size:
-        12px;
-
-    margin-top:
-        8px;
-}
-
-
-/* =====================================================
-   REPORT ID
-===================================================== */
-
-.notification-report {
-
-    display:
-        inline-block;
-
-    margin-top:
-        10px;
-
-    padding:
-        5px 9px;
-
-    border-radius:
-        8px;
-
-    background:
-        var(--card-bg);
-
-    font-size:
-        12px;
-
-    color:
-        var(--muted-text);
-}
-
-
-/* =====================================================
-   MARK READ
-===================================================== */
-
-.mark-read-btn {
-
-    margin-top:
-        12px;
-
-    border:
-        none;
-
-    background:
-        var(--button-bg);
-
-    color:
-        var(--button-text);
-
-    padding:
-        7px 11px;
-
-    border-radius:
-        8px;
-
-    cursor:
-        pointer;
-
-    font-size:
-        12px;
-
-    font-weight:
-        bold;
-}
-
-
-.mark-read-btn:hover {
-
-    opacity:
-        0.85;
-}
-
-
-/* =====================================================
-   EMPTY
-===================================================== */
-
-.empty-message {
-
-    text-align:
-        center;
-
-    padding:
-        45px 20px;
-
-    color:
-        var(--muted-text);
-
-    line-height:
-        1.8;
-}
-
-
-.empty-message span {
-
-    color:
-        var(--muted-text);
-}
-
-
-/* =====================================================
-   ERROR
-===================================================== */
-
-.error-message {
-
-    text-align:
-        center;
-
-    padding:
-        35px 20px;
-
-    color:
-        var(--muted-text);
-
-    line-height:
-        1.8;
-}
-
-
-.retry-btn {
-
-    margin-top:
-        15px;
-
-    border:
-        none;
-
-    background:
-        var(--button-bg);
-
-    color:
-        var(--button-text);
-
-    padding:
-        9px 15px;
-
-    border-radius:
-        10px;
-
-    cursor:
-        pointer;
-
-    font-weight:
-        bold;
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media (max-width: 700px) {
-
-    .navbar {
-
-        padding:
-            15px 18px;
-
-        flex-direction:
-            column;
-
-        gap:
-            12px;
-    }
-
-
-    .nav-links {
-
-        justify-content:
-            center;
-    }
-
-
-    .more-menu {
-
-        right:
-            0;
-
-        width:
-            220px;
-    }
-
-
-    .container {
-
-        width:
-            92%;
-
-        margin-top:
-            25px;
-    }
-
-
-    .notification-panel {
-
-        padding:
-            16px;
-    }
-
-
-    .notification-header {
-
-        align-items:
-            flex-start;
-    }
-
-}
-
-</style>
-
+            .notification-card {
+                padding: 16px;
+            }
+        }
+    </style>
 </head>
 
 
 <body>
 
+    <!-- ==========================
+         NAVBAR
+    ========================== -->
 
-<!-- =====================================================
-     NAVBAR
-===================================================== -->
+    <nav class="navbar">
 
-<nav class="navbar">
+        <div class="logo-area">
 
-    <div
-        class="logo"
-        id="logoText"
-    >
-        👁️ CivicEye AI
-    </div>
-
-
-    <div class="nav-links">
-
-
-        <a
-            href="index.html"
-            id="homeLink"
-        >
-            🏠 Home
-        </a>
-
-
-        <a
-            href="citizen.html"
-            id="portalLink"
-        >
-            👤 Portal
-        </a>
-
-
-        <!-- =================================================
-             THREE DOT MENU
-        ================================================== -->
-
-        <div class="more-menu-container">
-
-
-            <button
-                type="button"
-                class="more-menu-button"
-                id="moreMenuButton"
-                aria-label="More menu"
-                aria-expanded="false"
-                onclick="toggleMoreMenu(event)"
-            >
-                ⋮
-            </button>
-
-
-            <div
-                class="more-menu"
-                id="moreMenu"
+            <img
+                src="images/civiceye-logo.png"
+                alt="CivicEye AI"
+                class="logo"
             >
 
-
-                <a href="profile.html">
-                    👤
-                    <span id="profileText">
-                        Profile
-                    </span>
-                </a>
-
-
-                <a href="settings.html">
-                    ⚙️
-                    <span id="settingsText">
-                        Settings
-                    </span>
-                </a>
-
-
-                <a href="privacy.html">
-                    🔒
-                    <span id="privacyText">
-                        Privacy
-                    </span>
-                </a>
-
-
-                <a href="help.html">
-                    ❓
-                    <span id="helpText">
-                        Help &amp; Support
-                    </span>
-                </a>
-
-
-                <a href="about.html">
-                    ℹ️
-                    <span id="aboutText">
-                        About CivicEye AI
-                    </span>
-                </a>
-
-
-                <button
-                    type="button"
-                    class="menu-danger"
-                    onclick="logout()"
-                >
-                    🚪
-                    <span id="logoutText">
-                        Logout
-                    </span>
-                </button>
-
-
-            </div>
+            <span>
+                CivicEye AI
+            </span>
 
         </div>
 
-    </div>
 
-</nav>
+        <div class="nav-right">
 
-
-
-<!-- =====================================================
-     MAIN
-===================================================== -->
-
-<div class="container">
-
-
-    <div class="page-header">
+            <a
+                href="./citizen.html"
+                class="nav-link"
+            >
+                <span data-i18n="home">
+                    Home
+                </span>
+            </a>
 
 
-        <h1 id="notificationsTitle">
-            🔔 Notifications
-        </h1>
+            <a
+                href="./notifications.html"
+                class="nav-link notification-link"
+            >
 
-
-        <p id="notificationsSubtitle">
-            Stay updated about your reported public issues.
-        </p>
-
-
-    </div>
-
-
-
-    <!-- =================================================
-         NOTIFICATION PANEL
-    ================================================= -->
-
-    <section class="notification-panel">
-
-
-        <div class="notification-header">
-
-
-            <div class="notification-heading">
-
-
-                <h2 id="yourNotifications">
-                    Your Notifications
-                </h2>
-
+                <span data-i18n="notifications">
+                    🔔 Notifications
+                </span>
 
                 <span
-                    id="unreadCount"
-                    class="count-badge"
+                    id="notificationBadge"
+                    class="notification-badge"
                 >
                     0
                 </span>
 
+            </a>
 
-            </div>
+        </div>
 
+    </nav>
+
+
+    <!-- ==========================
+         MAIN
+    ========================== -->
+
+    <main class="container">
+
+        <div class="page-header">
+
+            <h1 data-i18n="notificationTitle">
+                🔔 Notifications
+            </h1>
+
+            <p data-i18n="notificationSubtitle">
+                Stay updated about your reported issues.
+            </p>
+
+        </div>
+
+
+        <div class="action-bar">
 
             <button
                 id="markAllBtn"
-                class="mark-all-btn"
-                onclick="markAllNotificationsRead()"
+                class="read-all-btn"
+                onclick="markAllAsRead()"
             >
-                ✓ Mark All Read
+                ✓ Mark all as read
             </button>
 
-
         </div>
 
 
-        <div id="notificationList">
+        <div id="notificationsList">
 
+            <div class="empty-state">
 
-            <div class="empty-message">
-
-                🔄 Loading notifications...
-
-            </div>
-
-
-        </div>
-
-
-    </section>
-
-
-</div>
-
-
-
-<script>
-
-/* =====================================================
-   BACKEND
-===================================================== */
-
-const BACKEND_URL =
-    "https://civiceye-backend-production-eac6.up.railway.app";
-
-
-/* =====================================================
-   LANGUAGE TRANSLATIONS
-===================================================== */
-
-const translations = {
-
-    en: {
-
-        home:
-            "🏠 Home",
-
-        portal:
-            "👤 Portal",
-
-        profile:
-            "Profile",
-
-        settings:
-            "Settings",
-
-        privacy:
-            "Privacy",
-
-        help:
-            "Help & Support",
-
-        about:
-            "About CivicEye AI",
-
-        logout:
-            "Logout",
-
-        notifications:
-            "🔔 Notifications",
-
-        subtitle:
-            "Stay updated about your reported public issues.",
-
-        yourNotifications:
-            "Your Notifications",
-
-        markAll:
-            "✓ Mark All Read",
-
-        loading:
-            "🔄 Loading notifications...",
-
-        noNotifications:
-            "📭 No notifications yet.",
-
-        welcome:
-            "Welcome to CivicEye AI — Report and track public issues easily 🇱🇰",
-
-        reportId:
-            "📋 Report ID:",
-
-        markRead:
-            "✓ Mark Read",
-
-        timeUnavailable:
-            "Time unavailable",
-
-        unable:
-            "⚠️ Unable to load notifications.",
-
-        connection:
-            "Please check your connection and try again.",
-
-        tryAgain:
-            "🔄 Try Again",
-
-        updating:
-            "⏳ Updating...",
-
-        markReadError:
-            "Unable to mark notification as read. Please try again.",
-
-        markAllError:
-            "Unable to mark all notifications as read. Please try again."
-
-    },
-
-
-    ta: {
-
-        home:
-            "🏠 முகப்பு",
-
-        portal:
-            "👤 குடிமக்கள் தளம்",
-
-        profile:
-            "சுயவிவரம்",
-
-        settings:
-            "அமைப்புகள்",
-
-        privacy:
-            "தனியுரிமை",
-
-        help:
-            "உதவி & ஆதரவு",
-
-        about:
-            "CivicEye AI பற்றி",
-
-        logout:
-            "வெளியேறு",
-
-        notifications:
-            "🔔 அறிவிப்புகள்",
-
-        subtitle:
-            "நீங்கள் புகாரளித்த பொது பிரச்சினைகள் தொடர்பான புதுப்பிப்புகளைப் பெறுங்கள்.",
-
-        yourNotifications:
-            "உங்கள் அறிவிப்புகள்",
-
-        markAll:
-            "✓ அனைத்தையும் படித்ததாகக் குறி",
-
-        loading:
-            "🔄 அறிவிப்புகள் ஏற்றப்படுகின்றன...",
-
-        noNotifications:
-            "📭 அறிவிப்புகள் எதுவும் இல்லை.",
-
-        welcome:
-            "CivicEye AI-க்கு வரவேற்கிறோம் — பொது பிரச்சினைகளை எளிதாகப் புகாரளித்து கண்காணிக்கவும் 🇱🇰",
-
-        reportId:
-            "📋 புகார் இலக்கம்:",
-
-        markRead:
-            "✓ படித்ததாகக் குறி",
-
-        timeUnavailable:
-            "நேரம் கிடைக்கவில்லை",
-
-        unable:
-            "⚠️ அறிவிப்புகளை ஏற்ற முடியவில்லை.",
-
-        connection:
-            "உங்கள் இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
-
-        tryAgain:
-            "🔄 மீண்டும் முயற்சி",
-
-        updating:
-            "⏳ புதுப்பிக்கப்படுகிறது...",
-
-        markReadError:
-            "அறிவிப்பை படித்ததாகக் குறிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.",
-
-        markAllError:
-            "அனைத்து அறிவிப்புகளையும் படித்ததாகக் குறிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்."
-
-    },
-
-
-    si: {
-
-        home:
-            "🏠 මුල් පිටුව",
-
-        portal:
-            "👤 පුරවැසි ද්වාරය",
-
-        profile:
-            "පැතිකඩ",
-
-        settings:
-            "සැකසුම්",
-
-        privacy:
-            "පෞද්ගලිකත්වය",
-
-        help:
-            "උදව් සහ සහාය",
-
-        about:
-            "CivicEye AI ගැන",
-
-        logout:
-            "ඉවත් වන්න",
-
-        notifications:
-            "🔔 දැනුම්දීම්",
-
-        subtitle:
-            "ඔබ වාර්තා කළ පොදු ගැටලු පිළිබඳ යාවත්කාලීන තොරතුරු ලබා ගන්න.",
-
-        yourNotifications:
-            "ඔබගේ දැනුම්දීම්",
-
-        markAll:
-            "✓ සියල්ල කියවූ ලෙස සලකුණු කරන්න",
-
-        loading:
-            "🔄 දැනුම්දීම් පූරණය වෙමින් පවතී...",
-
-        noNotifications:
-            "📭 තවමත් දැනුම්දීම් නොමැත.",
-
-        welcome:
-            "CivicEye AI වෙත සාදරයෙන් පිළිගනිමු — පොදු ගැටලු පහසුවෙන් වාර්තා කර නිරීක්ෂණය කරන්න 🇱🇰",
-
-        reportId:
-            "📋 වාර්තා අංකය:",
-
-        markRead:
-            "✓ කියවූ ලෙස සලකුණු කරන්න",
-
-        timeUnavailable:
-            "වේලාව ලබා ගත නොහැක",
-
-        unable:
-            "⚠️ දැනුම්දීම් පූරණය කළ නොහැක.",
-
-        connection:
-            "ඔබගේ අන්තර්ජාල සම්බන්ධතාව පරීක්ෂා කර නැවත උත්සාහ කරන්න.",
-
-        tryAgain:
-            "🔄 නැවත උත්සාහ කරන්න",
-
-        updating:
-            "⏳ යාවත්කාලීන කරමින්...",
-
-        markReadError:
-            "දැනුම්දීම කියවූ ලෙස සලකුණු කළ නොහැක. නැවත උත්සාහ කරන්න.",
-
-        markAllError:
-            "සියලු දැනුම්දීම් කියවූ ලෙස සලකුණු කළ නොහැක. නැවත උත්සාහ කරන්න."
-
-    }
-
-};
-
-
-/* =====================================================
-   GET CURRENT LANGUAGE
-===================================================== */
-
-function getCurrentLanguage() {
-
-    const savedLanguage =
-        localStorage.getItem(
-            "civicEyeLanguage"
-        );
-
-
-    if (
-        savedLanguage === "ta" ||
-        savedLanguage === "si" ||
-        savedLanguage === "en"
-    ) {
-
-        return savedLanguage;
-
-    }
-
-
-    return "en";
-
-}
-
-
-/* =====================================================
-   TRANSLATION HELPER
-===================================================== */
-
-function t(key) {
-
-    const language =
-        getCurrentLanguage();
-
-
-    return (
-        translations[language]?.[key] ||
-        translations.en[key] ||
-        key
-    );
-
-}
-
-
-/* =====================================================
-   APPLY LANGUAGE
-===================================================== */
-
-function applyLanguage() {
-
-    const language =
-        getCurrentLanguage();
-
-
-    document.documentElement.lang =
-        language;
-
-
-    document.getElementById(
-        "homeLink"
-    ).textContent =
-        t("home");
-
-
-    document.getElementById(
-        "portalLink"
-    ).textContent =
-        t("portal");
-
-
-    document.getElementById(
-        "profileText"
-    ).textContent =
-        t("profile");
-
-
-    document.getElementById(
-        "settingsText"
-    ).textContent =
-        t("settings");
-
-
-    document.getElementById(
-        "privacyText"
-    ).textContent =
-        t("privacy");
-
-
-    document.getElementById(
-        "helpText"
-    ).textContent =
-        t("help");
-
-
-    document.getElementById(
-        "aboutText"
-    ).textContent =
-        t("about");
-
-
-    document.getElementById(
-        "logoutText"
-    ).textContent =
-        t("logout");
-
-
-    document.getElementById(
-        "notificationsTitle"
-    ).textContent =
-        t("notifications");
-
-
-    document.getElementById(
-        "notificationsSubtitle"
-    ).textContent =
-        t("subtitle");
-
-
-    document.getElementById(
-        "yourNotifications"
-    ).textContent =
-        t("yourNotifications");
-
-
-    document.getElementById(
-        "markAllBtn"
-    ).textContent =
-        t("markAll");
-
-
-    loadNotifications();
-
-}
-
-
-/* =====================================================
-   APPLY SAVED THEME
-===================================================== */
-
-function applySavedTheme() {
-
-    const savedTheme =
-        localStorage.getItem(
-            "civicEyeTheme"
-        ) || "default";
-
-
-    document.body.classList.remove(
-        "theme-light",
-        "theme-dark"
-    );
-
-
-    if (
-        savedTheme === "light"
-    ) {
-
-        document.body.classList.add(
-            "theme-light"
-        );
-
-    }
-
-
-    if (
-        savedTheme === "dark"
-    ) {
-
-        document.body.classList.add(
-            "theme-dark"
-        );
-
-    }
-
-}
-
-
-applySavedTheme();
-
-
-/* =====================================================
-   THREE DOT MENU
-===================================================== */
-
-function toggleMoreMenu(event) {
-
-    if (event) {
-
-        event.stopPropagation();
-
-    }
-
-
-    const menu =
-        document.getElementById(
-            "moreMenu"
-        );
-
-
-    const button =
-        document.getElementById(
-            "moreMenuButton"
-        );
-
-
-    if (
-        !menu ||
-        !button
-    ) {
-
-        return;
-
-    }
-
-
-    const isOpen =
-        menu.classList.toggle(
-            "show"
-        );
-
-
-    button.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-    );
-
-}
-
-
-/* =====================================================
-   CLOSE MENU OUTSIDE
-===================================================== */
-
-document.addEventListener(
-    "click",
-    function(event) {
-
-        const container =
-            document.querySelector(
-                ".more-menu-container"
-            );
-
-
-        const menu =
-            document.getElementById(
-                "moreMenu"
-            );
-
-
-        const button =
-            document.getElementById(
-                "moreMenuButton"
-            );
-
-
-        if (
-            !container ||
-            !menu ||
-            !button
-        ) {
-
-            return;
-
-        }
-
-
-        if (
-            !container.contains(
-                event.target
-            )
-        ) {
-
-            menu.classList.remove(
-                "show"
-            );
-
-
-            button.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   ESCAPE KEY
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function(event) {
-
-        if (
-            event.key !== "Escape"
-        ) {
-
-            return;
-
-        }
-
-
-        const menu =
-            document.getElementById(
-                "moreMenu"
-            );
-
-
-        const button =
-            document.getElementById(
-                "moreMenuButton"
-            );
-
-
-        if (menu) {
-
-            menu.classList.remove(
-                "show"
-            );
-
-        }
-
-
-        if (button) {
-
-            button.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-function logout() {
-
-    localStorage.removeItem(
-        "civicEyeCitizenEmail"
-    );
-
-
-    window.location.href =
-        "login.html";
-
-}
-
-
-/* =====================================================
-   GET CITIZEN EMAIL
-===================================================== */
-
-function getCitizenEmail() {
-
-    return (
-        localStorage.getItem(
-            "civicEyeCitizenEmail"
-        ) || ""
-    ).trim();
-
-}
-
-
-/* =====================================================
-   LOAD NOTIFICATIONS
-===================================================== */
-
-async function loadNotifications() {
-
-    const list =
-        document.getElementById(
-            "notificationList"
-        );
-
-
-    const unreadElement =
-        document.getElementById(
-            "unreadCount"
-        );
-
-
-    const markAllButton =
-        document.getElementById(
-            "markAllBtn"
-        );
-
-
-    try {
-
-        list.innerHTML = `
-
-            <div class="empty-message">
-
-                ${t("loading")}
-
-            </div>
-
-        `;
-
-
-        /* =============================================
-           CITIZEN EMAIL
-        ============================================= */
-
-        const citizenEmail =
-            getCitizenEmail();
-
-
-        /*
-         * If no citizen email is stored,
-         * do NOT request all notifications.
-         */
-
-        if (!citizenEmail) {
-
-            unreadElement.textContent =
-                "0";
-
-
-            markAllButton.disabled =
-                true;
-
-
-            list.innerHTML = `
-
-                <div class="empty-message">
-
-                    ${t("noNotifications")}
-
-                    <br>
-
-                    <span>
-                        ${t("welcome")}
-                    </span>
-
+                <div class="empty-icon">
+                    ⏳
                 </div>
 
-            `;
+                <h2 data-i18n="loading">
+                    Loading...
+                </h2>
 
-            return;
+                <p data-i18n="pleaseWait">
+                    Please wait while we load your notifications.
+                </p>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <script>
+
+        /* ==========================
+           BACKEND
+        ========================== */
+
+        const BACKEND_URL =
+            "https://civiceye-backend-production-eac6.up.railway.app";
+
+
+        /* ==========================
+           TRANSLATIONS
+        ========================== */
+
+        const translations = {
+
+            en: {
+                home: "Home",
+                notifications: "🔔 Notifications",
+                notificationTitle: "🔔 Notifications",
+                notificationSubtitle:
+                    "Stay updated about your reported issues.",
+                markAll:
+                    "✓ Mark all as read",
+                loading:
+                    "Loading...",
+                pleaseWait:
+                    "Please wait while we load your notifications.",
+                noNotifications:
+                    "No notifications yet",
+                noNotificationsText:
+                    "You will see updates about your reported issues here.",
+                unable:
+                    "Unable to load notifications.",
+                retry:
+                    "Please try again later.",
+                markRead:
+                    "Mark as read"
+            },
+
+            ta: {
+                home: "முகப்பு",
+                notifications: "🔔 அறிவிப்புகள்",
+                notificationTitle: "🔔 அறிவிப்புகள்",
+                notificationSubtitle:
+                    "உங்கள் புகார்களின் புதுப்பிப்புகளை அறிந்து கொள்ளுங்கள்.",
+                markAll:
+                    "✓ அனைத்தையும் படித்ததாக குறிக்கவும்",
+                loading:
+                    "ஏற்றுகிறது...",
+                pleaseWait:
+                    "உங்கள் அறிவிப்புகளை ஏற்றுகிறது.",
+                noNotifications:
+                    "அறிவிப்புகள் இல்லை",
+                noNotificationsText:
+                    "உங்கள் புகார்களின் புதுப்பிப்புகள் இங்கே காணப்படும்.",
+                unable:
+                    "அறிவிப்புகளை ஏற்ற முடியவில்லை.",
+                retry:
+                    "பின்னர் மீண்டும் முயற்சிக்கவும்.",
+                markRead:
+                    "படித்ததாக குறிக்கவும்"
+            },
+
+            si: {
+                home: "මුල් පිටුව",
+                notifications: "🔔 දැනුම්දීම්",
+                notificationTitle: "🔔 දැනුම්දීම්",
+                notificationSubtitle:
+                    "ඔබ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන ලබා ගන්න.",
+                markAll:
+                    "✓ සියල්ල කියවූ ලෙස සලකුණු කරන්න",
+                loading:
+                    "පූරණය වෙමින්...",
+                pleaseWait:
+                    "ඔබගේ දැනුම්දීම් පූරණය කරමින් පවතී.",
+                noNotifications:
+                    "දැනුම්දීම් නොමැත",
+                noNotificationsText:
+                    "ඔබගේ වාර්තා කළ ගැටලු පිළිබඳ යාවත්කාලීන මෙහි පෙන්වනු ඇත.",
+                unable:
+                    "දැනුම්දීම් පූරණය කළ නොහැක.",
+                retry:
+                    "පසුව නැවත උත්සාහ කරන්න.",
+                markRead:
+                    "කියවූ ලෙස සලකුණු කරන්න"
+            }
+
+        };
+
+
+        /* ==========================
+           LANGUAGE
+        ========================== */
+
+        function getLanguage() {
+
+            const saved =
+                localStorage.getItem(
+                    "civicEyeLanguage"
+                );
+
+            if (
+                saved === "ta" ||
+                saved === "si"
+            ) {
+                return saved;
+            }
+
+            return "en";
+        }
+
+
+        function applyLanguage() {
+
+            const language =
+                getLanguage();
+
+            const lang =
+                translations[language];
+
+            document.documentElement.lang =
+                language;
+
+
+            document
+                .querySelectorAll("[data-i18n]")
+                .forEach(element => {
+
+                    const key =
+                        element.getAttribute(
+                            "data-i18n"
+                        );
+
+                    if (lang[key]) {
+                        element.textContent =
+                            lang[key];
+                    }
+
+                });
+
+
+            const markAllBtn =
+                document.getElementById(
+                    "markAllBtn"
+                );
+
+            if (markAllBtn) {
+
+                markAllBtn.textContent =
+                    lang.markAll;
+
+            }
 
         }
 
 
-        /* =============================================
-           FETCH ONLY THIS CITIZEN'S NOTIFICATIONS
-        ============================================= */
+        /* ==========================
+           CITIZEN EMAIL
+        ========================== */
 
-        const response =
-            await fetch(
-                `${BACKEND_URL}/notifications?email=${encodeURIComponent(citizenEmail)}`,
-                {
+        function getCitizenEmail() {
 
-                    method:
-                        "GET",
+            return (
+                localStorage.getItem(
+                    "civicEyeCitizenEmail"
+                ) || ""
+            );
 
-                    headers: {
+        }
 
-                        "Accept":
-                            "application/json"
 
-                    },
+        /* ==========================
+           SAFE HTML
+        ========================== */
 
-                    cache:
-                        "no-store"
+        function escapeHTML(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+                return "";
+            }
+
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        /* ==========================
+           DATE
+        ========================== */
+
+        function formatDate(value) {
+
+            if (!value) {
+                return "";
+            }
+
+            const date =
+                new Date(value);
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+                return "";
+            }
+
+            return date.toLocaleString();
+
+        }
+
+
+        /* ==========================
+           READ STATUS
+        ========================== */
+
+        function isNotificationRead(
+            notification
+        ) {
+
+            return (
+                notification.read === true ||
+                notification.isRead === true ||
+                notification.read === 1 ||
+                notification.isRead === 1
+            );
+
+        }
+
+
+        /* ==========================
+           LOAD BADGE
+        ========================== */
+
+        async function loadNotificationCount() {
+
+            const badge =
+                document.getElementById(
+                    "notificationBadge"
+                );
+
+            if (!badge) {
+                return;
+            }
+
+
+            const email =
+                getCitizenEmail();
+
+
+            if (!email) {
+
+                badge.textContent = "0";
+
+                badge.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${BACKEND_URL}/notifications?email=${encodeURIComponent(email)}`,
+                        {
+                            method: "GET",
+
+                            headers: {
+                                "Accept":
+                                    "application/json"
+                            },
+
+                            cache: "no-store"
+                        }
+                    );
+
+
+                if (!response.ok) {
+                    throw new Error(
+                        `HTTP ${response.status}`
+                    );
+                }
+
+
+                const data =
+                    await response.json();
+
+
+                let unread =
+                    Number(
+                        data.unread
+                    );
+
+
+                if (
+                    !Number.isFinite(unread)
+                ) {
+
+                    const notifications =
+                        Array.isArray(
+                            data.notifications
+                        )
+                            ? data.notifications
+                            : [];
+
+                    unread =
+                        notifications.filter(
+                            notification =>
+                                !isNotificationRead(
+                                    notification
+                                )
+                        ).length;
 
                 }
-            );
 
 
-        if (!response.ok) {
+                if (unread > 0) {
 
-            throw new Error(
-                `HTTP ${response.status}`
-            );
+                    badge.textContent =
+                        unread > 99
+                            ? "99+"
+                            : String(unread);
+
+                    badge.style.display =
+                        "inline-flex";
+
+                } else {
+
+                    badge.textContent = "0";
+
+                    badge.style.display =
+                        "none";
+
+                }
+
+            } catch (error) {
+
+                console.error(
+                    "Notification badge error:",
+                    error
+                );
+
+                badge.textContent = "0";
+
+                badge.style.display =
+                    "none";
+
+            }
 
         }
 
 
-        const data =
-            await response.json();
+        /* ==========================
+           LOAD NOTIFICATIONS
+        ========================== */
+
+        async function loadNotifications() {
+
+            const list =
+                document.getElementById(
+                    "notificationsList"
+                );
 
 
-        const notifications =
-            Array.isArray(
-                data.notifications
-            )
-                ? data.notifications
-                : [];
+            const email =
+                getCitizenEmail();
 
 
-        const unread =
-            Number(
-                data.unread
-            ) || 0;
+            const language =
+                getLanguage();
+
+            const lang =
+                translations[language];
 
 
-        unreadElement.textContent =
-            unread;
+            if (!email) {
+
+                list.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🔔
+                        </div>
+
+                        <h2>
+                            ${escapeHTML(
+                                lang.noNotifications
+                            )}
+                        </h2>
+
+                        <p>
+                            ${escapeHTML(
+                                lang.noNotificationsText
+                            )}
+                        </p>
+
+                    </div>
+
+                `;
+
+                await loadNotificationCount();
+
+                return;
+
+            }
 
 
-        markAllButton.disabled =
-            notifications.length === 0 ||
-            unread === 0;
+            try {
+
+                const response =
+                    await fetch(
+                        `${BACKEND_URL}/notifications?email=${encodeURIComponent(email)}`,
+                        {
+                            method: "GET",
+
+                            headers: {
+                                "Accept":
+                                    "application/json"
+                            },
+
+                            cache: "no-store"
+                        }
+                    );
 
 
-        list.innerHTML = "";
+                if (!response.ok) {
+
+                    throw new Error(
+                        `HTTP ${response.status}`
+                    );
+
+                }
 
 
-        /* =============================================
-           NO NOTIFICATIONS
-        ============================================= */
+                const data =
+                    await response.json();
 
-        if (
-            notifications.length === 0
+
+                const notifications =
+                    Array.isArray(
+                        data.notifications
+                    )
+                        ? data.notifications
+                        : [];
+
+
+                if (
+                    notifications.length === 0
+                ) {
+
+                    list.innerHTML = `
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+                                🔔
+                            </div>
+
+                            <h2>
+                                ${escapeHTML(
+                                    lang.noNotifications
+                                )}
+                            </h2>
+
+                            <p>
+                                ${escapeHTML(
+                                    lang.noNotificationsText
+                                )}
+                            </p>
+
+                        </div>
+
+                    `;
+
+                    await loadNotificationCount();
+
+                    return;
+
+                }
+
+
+                list.innerHTML =
+                    notifications
+                        .map(notification => {
+
+                            const id =
+                                notification.id;
+
+                            const title =
+                                notification.title ||
+                                notification.type ||
+                                "CivicEye AI";
+
+                            const message =
+                                notification.message ||
+                                "You have a new notification.";
+
+                            const read =
+                                isNotificationRead(
+                                    notification
+                                );
+
+                            const createdAt =
+                                notification.createdAt ||
+                                notification.created_at ||
+                                notification.timestamp ||
+                                notification.date;
+
+
+                            return `
+
+                                <div
+                                    class="notification-card ${read ? "" : "unread"}"
+                                    data-id="${escapeHTML(id)}"
+                                >
+
+                                    <div class="notification-top">
+
+                                        <div>
+
+                                            <h3 class="notification-title">
+
+                                                ${escapeHTML(
+                                                    title
+                                                )}
+
+                                            </h3>
+
+
+                                            <p class="notification-message">
+
+                                                ${escapeHTML(
+                                                    message
+                                                )}
+
+                                            </p>
+
+                                        </div>
+
+
+                                        ${
+                                            !read
+                                                ? `
+                                                    <span
+                                                        class="unread-dot"
+                                                        title="Unread"
+                                                    ></span>
+                                                `
+                                                : ""
+                                        }
+
+                                    </div>
+
+
+                                    <div class="notification-time">
+
+                                        ${escapeHTML(
+                                            formatDate(
+                                                createdAt
+                                            )
+                                        )}
+
+                                    </div>
+
+
+                                    ${
+                                        !read
+                                            ? `
+                                                <button
+                                                    type="button"
+                                                    class="read-btn"
+                                                    onclick="markAsRead('${escapeHTML(id)}')"
+                                                >
+                                                    ✓ ${escapeHTML(
+                                                        lang.markRead
+                                                    )}
+                                                </button>
+                                            `
+                                            : ""
+                                    }
+
+                                </div>
+
+                            `;
+
+                        })
+                        .join("");
+
+
+                await loadNotificationCount();
+
+            } catch (error) {
+
+                console.error(
+                    "Notification loading error:",
+                    error
+                );
+
+
+                list.innerHTML = `
+
+                    <div class="error-message">
+
+                        <strong>
+                            ${escapeHTML(
+                                lang.unable
+                            )}
+                        </strong>
+
+                        <br><br>
+
+                        ${escapeHTML(
+                            lang.retry
+                        )}
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        /* ==========================
+           MARK ONE READ
+        ========================== */
+
+        async function markAsRead(
+            notificationId
         ) {
 
-            list.innerHTML = `
-
-                <div class="empty-message">
-
-                    ${t("noNotifications")}
-
-                    <br>
-
-                    <span>
-                        ${t("welcome")}
-                    </span>
-
-                </div>
-
-            `;
+            const email =
+                getCitizenEmail();
 
 
-            return;
+            if (
+                !email ||
+                !notificationId
+            ) {
+                return;
+            }
 
-        }
+
+            try {
+
+                const response =
+                    await fetch(
+                        `${BACKEND_URL}/notifications/${encodeURIComponent(notificationId)}/read`,
+                        {
+                            method: "PATCH",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "Accept":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    citizenEmail:
+                                        email
+                                })
+                        }
+                    );
 
 
-        /* =============================================
-           RENDER
-        ============================================= */
+                if (!response.ok) {
 
-        notifications.forEach(
-            notification => {
+                    throw new Error(
+                        `HTTP ${response.status}`
+                    );
 
-                renderNotification(
-                    notification,
-                    list
+                }
+
+
+                await loadNotifications();
+
+                await loadNotificationCount();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Mark notification read error:",
+                    error
                 );
 
             }
-        );
-
-
-    } catch (error) {
-
-        console.error(
-            "Notification loading error:",
-            error
-        );
-
-
-        unreadElement.textContent =
-            "0";
-
-
-        markAllButton.disabled =
-            true;
-
-
-        list.innerHTML = `
-
-            <div class="error-message">
-
-                ${t("unable")}
-
-                <br>
-
-                ${t("connection")}
-
-                <br>
-
-                <button
-                    class="retry-btn"
-                    onclick="loadNotifications()"
-                >
-
-                    ${t("tryAgain")}
-
-                </button>
-
-            </div>
-
-        `;
-
-    }
-
-}
-
-
-/* =====================================================
-   RENDER NOTIFICATION
-===================================================== */
-
-function renderNotification(
-    notification,
-    container
-) {
-
-    const item =
-        document.createElement(
-            "div"
-        );
-
-
-    const isRead =
-        notification.read === true;
-
-
-    item.className =
-        "notification-item" +
-        (
-            isRead
-                ? ""
-                : " unread"
-        );
-
-
-    /* =============================================
-       DATE
-    ============================================= */
-
-    let formattedDate =
-        t("timeUnavailable");
-
-
-    if (
-        notification.createdAt
-    ) {
-
-        const date =
-            new Date(
-                notification.createdAt
-            );
-
-
-        if (
-            !Number.isNaN(
-                date.getTime()
-            )
-        ) {
-
-            formattedDate =
-                date.toLocaleString();
 
         }
 
-    }
+
+        /* ==========================
+           MARK ALL READ
+        ========================== */
+
+        async function markAllAsRead() {
+
+            const email =
+                getCitizenEmail();
 
 
-    /* =============================================
-       REPORT ID
-    ============================================= */
-
-    const reportId =
-        notification.reportId;
-
-
-    const reportHTML =
-        reportId !== undefined &&
-        reportId !== null
-
-            ? `
-
-                <div class="notification-report">
-
-                    ${t("reportId")}
-
-                    ${escapeHTML(
-                        String(reportId)
-                    )}
-
-                </div>
-
-              `
-
-            : "";
-
-
-    /* =============================================
-       READ BUTTON
-    ============================================= */
-
-    const readButtonHTML =
-        !isRead
-
-            ? `
-
-                <button
-                    class="mark-read-btn"
-                    onclick="markNotificationRead(${Number(notification.id)})"
-                >
-
-                    ${t("markRead")}
-
-                </button>
-
-              `
-
-            : "";
-
-
-    /* =============================================
-       ITEM HTML
-    ============================================= */
-
-    item.innerHTML = `
-
-        <div class="notification-top">
-
-            <div>
-
-                <div class="notification-title">
-
-                    ${escapeHTML(
-                        notification.title ||
-                        "Notification"
-                    )}
-
-                </div>
-
-            </div>
-
-
-            ${
-                !isRead
-
-                    ? `
-
-                        <div
-                            class="unread-dot"
-                            title="Unread"
-                        >
-                        </div>
-
-                      `
-
-                    : ""
+            if (!email) {
+                return;
             }
 
-        </div>
+
+            const button =
+                document.getElementById(
+                    "markAllBtn"
+                );
 
 
-        <div class="notification-message">
+            try {
 
-            ${escapeHTML(
-                notification.message ||
-                ""
-            )}
-
-        </div>
+                button.disabled = true;
 
 
-        ${reportHTML}
+                const response =
+                    await fetch(
+                        `${BACKEND_URL}/notifications/read-all`,
+                        {
+                            method: "PATCH",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json",
+
+                                "Accept":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    citizenEmail:
+                                        email
+                                })
+                        }
+                    );
 
 
-        <div class="notification-time">
+                if (!response.ok) {
 
-            🕒 ${escapeHTML(
-                formattedDate
-            )}
-
-        </div>
-
-
-        ${readButtonHTML}
-
-    `;
-
-
-    container.appendChild(
-        item
-    );
-
-}
-
-
-/* =====================================================
-   MARK SINGLE NOTIFICATION READ
-===================================================== */
-
-async function markNotificationRead(
-    notificationId
-) {
-
-    try {
-
-        const citizenEmail =
-            getCitizenEmail();
-
-
-        if (!citizenEmail) {
-
-            alert(
-                t("markReadError")
-            );
-
-            return;
-
-        }
-
-
-        const response =
-            await fetch(
-                `${BACKEND_URL}/notifications/${notificationId}/read`,
-                {
-
-                    method:
-                        "PATCH",
-
-                    headers: {
-
-                        "Accept":
-                            "application/json",
-
-                        "Content-Type":
-                            "application/json"
-
-                    },
-
-                    body:
-                        JSON.stringify({
-                            citizenEmail:
-                                citizenEmail
-                        })
+                    throw new Error(
+                        `HTTP ${response.status}`
+                    );
 
                 }
-            );
 
 
-        if (!response.ok) {
+                await loadNotifications();
 
-            throw new Error(
-                `HTTP ${response.status}`
-            );
-
-        }
+                await loadNotificationCount();
 
 
-        await loadNotifications();
+            } catch (error) {
 
+                console.error(
+                    "Mark all notifications read error:",
+                    error
+                );
 
-    } catch (error) {
+            } finally {
 
-        console.error(
-            "Mark notification read error:",
-            error
-        );
+                button.disabled = false;
 
-
-        alert(
-            t("markReadError")
-        );
-
-    }
-
-}
-
-
-/* =====================================================
-   MARK ALL NOTIFICATIONS READ
-===================================================== */
-
-async function markAllNotificationsRead() {
-
-    const button =
-        document.getElementById(
-            "markAllBtn"
-        );
-
-
-    try {
-
-        const citizenEmail =
-            getCitizenEmail();
-
-
-        if (!citizenEmail) {
-
-            throw new Error(
-                "Citizen email not found"
-            );
+            }
 
         }
 
 
-        button.disabled =
-            true;
+        /* ==========================
+           THEME
+        ========================== */
+
+        function applyTheme() {
+
+            const theme =
+                localStorage.getItem(
+                    "civicEyeTheme"
+                ) || "default";
 
 
-        button.textContent =
-            t("updating");
+            document.body.classList.remove(
+                "light",
+                "dark"
+            );
 
 
-        const response =
-            await fetch(
-                `${BACKEND_URL}/notifications/read-all`,
-                {
+            if (theme === "light") {
 
-                    method:
-                        "PATCH",
+                document.body.classList.add(
+                    "light"
+                );
 
-                    headers: {
+            } else {
 
-                        "Accept":
-                            "application/json",
+                document.body.classList.add(
+                    "dark"
+                );
 
-                        "Content-Type":
-                            "application/json"
+            }
 
-                    },
+        }
 
-                    body:
-                        JSON.stringify({
-                            citizenEmail:
-                                citizenEmail
-                        })
+
+        /* ==========================
+           START
+        ========================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            async function () {
+
+                applyTheme();
+
+                applyLanguage();
+
+                await loadNotifications();
+
+                await loadNotificationCount();
+
+            }
+        );
+
+
+        /* ==========================
+           BADGE REFRESH
+        ========================== */
+
+        setInterval(
+            loadNotificationCount,
+            10000
+        );
+
+
+        /* ==========================
+           NOTIFICATION REFRESH
+        ========================== */
+
+        setInterval(
+            loadNotifications,
+            30000
+        );
+
+
+        /* ==========================
+           SYNC WITH SETTINGS
+        ========================== */
+
+        window.addEventListener(
+            "storage",
+            function (event) {
+
+                if (
+                    event.key ===
+                        "civicEyeLanguage" ||
+
+                    event.key ===
+                        "civicEyeTheme" ||
+
+                    event.key ===
+                        "civicEyeCitizenEmail"
+                ) {
+
+                    applyTheme();
+
+                    applyLanguage();
+
+                    loadNotifications();
+
+                    loadNotificationCount();
 
                 }
-            );
 
-
-        if (!response.ok) {
-
-            throw new Error(
-                `HTTP ${response.status}`
-            );
-
-        }
-
-
-        await loadNotifications();
-
-
-    } catch (error) {
-
-        console.error(
-            "Mark all notifications error:",
-            error
+            }
         );
 
-
-        alert(
-            t("markAllError")
-        );
-
-
-        button.disabled =
-            false;
-
-
-        button.textContent =
-            t("markAll");
-
-    }
-
-}
-
-
-/* =====================================================
-   ESCAPE HTML
-===================================================== */
-
-function escapeHTML(value) {
-
-    return String(
-        value ?? ""
-    )
-
-    .replace(
-        /&/g,
-        "&amp;"
-    )
-
-    .replace(
-        /</g,
-        "&lt;"
-    )
-
-    .replace(
-        />/g,
-        "&gt;"
-    )
-
-    .replace(
-        /"/g,
-        "&quot;"
-    )
-
-    .replace(
-        /'/g,
-        "&#039;"
-    );
-
-}
-
-
-/* =====================================================
-   INITIAL LOAD
-===================================================== */
-
-applyLanguage();
-
-
-/* =====================================================
-   AUTO REFRESH
-===================================================== */
-
-setInterval(
-    loadNotifications,
-    10000
-);
-
-</script>
-
+    </script>
 
 </body>
 

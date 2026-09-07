@@ -165,6 +165,7 @@ body {
         opacity:0;
         transform:translateY(-8px) scale(.97);
     }
+
     to {
         opacity:1;
         transform:translateY(0) scale(1);
@@ -237,6 +238,7 @@ body {
         opacity:0;
         transform:translateY(10px) scale(.97);
     }
+
     to {
         opacity:1;
         transform:translateY(0) scale(1);
@@ -511,13 +513,18 @@ body {
             🏠 Home
         </a>
 
-        <a href="./notifications.html" class="notification-link">
+        <a
+            href="./notifications.html"
+            class="notification-link"
+            id="notificationsLink">
 
             <span data-i18n="notifications">
                 🔔 Notifications
             </span>
 
-            <span id="notificationBadge" class="notification-badge">
+            <span
+                id="notificationBadge"
+                class="notification-badge">
                 0
             </span>
 
@@ -795,15 +802,11 @@ function applySavedTheme() {
     );
 
     if (savedTheme === "light") {
-
         document.body.classList.add("theme-light");
-
     }
 
     if (savedTheme === "dark") {
-
         document.body.classList.add("theme-dark");
-
     }
 }
 
@@ -955,7 +958,6 @@ const citizenTranslations = {
 
     },
 
-
     ta: {
 
         portalTitle:
@@ -1064,7 +1066,7 @@ const citizenTranslations = {
             "விளக்கம் வழங்கப்படவில்லை.",
 
         normal:
-            "சாதாரணம்",
+            "சாதாரண",
 
         relevantAuthority:
             "சம்பந்தப்பட்ட அதிகாரம்",
@@ -1094,7 +1096,6 @@ const citizenTranslations = {
             "இலங்கையில் புத்திசாலித்தனமான மற்றும் விரைவாக செயல்படும் சமூகங்களை ஆதரிப்பதற்காக உருவாக்கப்பட்டது. 🇱🇰"
 
     },
-
 
     si: {
 
@@ -1297,6 +1298,7 @@ function t(key) {
         citizenTranslations.en[key] ||
         key
     );
+
 }
 
 
@@ -1413,9 +1415,7 @@ if (moreMenuButton && moreMenu) {
 function showHelp() {
 
     if (moreMenu) {
-
         moreMenu.classList.remove("show");
-
     }
 
     if (moreMenuButton) {
@@ -1431,9 +1431,7 @@ function showHelp() {
         document.getElementById("helpModal");
 
     if (modal) {
-
         modal.classList.add("show");
-
     }
 
 }
@@ -1442,9 +1440,7 @@ function showHelp() {
 function showAbout() {
 
     if (moreMenu) {
-
         moreMenu.classList.remove("show");
-
     }
 
     if (moreMenuButton) {
@@ -1460,9 +1456,7 @@ function showAbout() {
         document.getElementById("aboutModal");
 
     if (modal) {
-
         modal.classList.add("show");
-
     }
 
 }
@@ -1503,9 +1497,7 @@ document.addEventListener(
             closeModal();
 
             if (moreMenu) {
-
                 moreMenu.classList.remove("show");
-
             }
 
             if (moreMenuButton) {
@@ -1544,18 +1536,14 @@ function isSolvedReportExpired(report) {
         report.createdAt;
 
     if (!solvedDate) {
-
         return false;
-
     }
 
     const solvedTime =
         new Date(solvedDate).getTime();
 
     if (Number.isNaN(solvedTime)) {
-
         return false;
-
     }
 
     return (
@@ -1568,6 +1556,7 @@ function isSolvedReportExpired(report) {
 
 /* =====================================================
    NOTIFICATION COUNT
+   CORRECTED - USE CITIZEN EMAIL
 ===================================================== */
 
 async function loadNotificationCount() {
@@ -1576,21 +1565,36 @@ async function loadNotificationCount() {
         document.getElementById("notificationBadge");
 
     if (!badge) {
+        return;
+    }
+
+
+    const citizenEmail =
+        localStorage.getItem("civicEyeCitizenEmail") || "";
+
+
+    if (!citizenEmail) {
+
+        badge.textContent = "0";
+        badge.style.display = "none";
 
         return;
 
     }
 
+
     try {
 
         const response =
             await fetch(
-                `${BACKEND_URL}/notifications`,
+                `${BACKEND_URL}/notifications?email=${encodeURIComponent(citizenEmail)}`,
                 {
                     method:"GET",
+
                     headers:{
                         "Accept":"application/json"
                     },
+
                     cache:"no-store"
                 }
             );
@@ -1609,24 +1613,8 @@ async function loadNotificationCount() {
             await response.json();
 
 
-        const notifications =
-            Array.isArray(data)
-                ? data
-                : Array.isArray(data.notifications)
-                    ? data.notifications
-                    : [];
-
-
         const unreadCount =
-            notifications.filter(
-                notification =>
-                    notification &&
-                    (
-                        notification.read === false ||
-                        notification.read === 0 ||
-                        notification.read === "false"
-                    )
-            ).length;
+            Number(data.unread || 0);
 
 
         if (unreadCount > 0) {
@@ -1646,6 +1634,7 @@ async function loadNotificationCount() {
             badge.style.display = "none";
 
         }
+
 
     } catch (error) {
 
@@ -1671,10 +1660,9 @@ async function loadCitizenReports() {
         document.getElementById("reportsContainer");
 
     if (!container) {
-
         return;
-
     }
+
 
     try {
 
@@ -1683,9 +1671,11 @@ async function loadCitizenReports() {
                 `${BACKEND_URL}/reports`,
                 {
                     method:"GET",
+
                     headers:{
                         "Accept":"application/json"
                     },
+
                     cache:"no-store"
                 }
             );
@@ -1759,6 +1749,7 @@ async function loadCitizenReports() {
             "Reports error:",
             error
         );
+
 
         container.innerHTML = `
 
@@ -1857,6 +1848,7 @@ function renderCitizenReport(
                 ${escapeHTML(issue)}
 
             </div>
+
 
             <span class="status-badge ${statusClass}">
 
@@ -2077,15 +2069,11 @@ function createTimeline(status) {
 function getStatusDisplay(status) {
 
     if (status === "processing") {
-
         return t("processing");
-
     }
 
     if (status === "solved") {
-
         return t("solved");
-
     }
 
     return t("pending");
@@ -2104,9 +2092,7 @@ function getIssueIcon(issue) {
 
 
     if (value.includes("road")) {
-
         return "🛣️";
-
     }
 
 
@@ -2141,9 +2127,7 @@ function getIssueIcon(issue) {
 
 
     if (value.includes("drain")) {
-
         return "🚰";
-
     }
 
 
@@ -2212,6 +2196,7 @@ window.addEventListener(
             currentCitizenLanguage =
                 event.newValue || "en";
 
+
             if (
                 !citizenTranslations[
                     currentCitizenLanguage
@@ -2221,6 +2206,7 @@ window.addEventListener(
                 currentCitizenLanguage = "en";
 
             }
+
 
             applyCitizenLanguage();
 
