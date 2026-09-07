@@ -19,7 +19,7 @@
     --bg2: #c197dd;
     --text: #ffffff;
     --muted: rgba(255,255,255,.70);
-    --card: rgba(118, 126, 161, 0.144);
+    --card: rgba(118,126,161,.144);
     --border: rgba(255,255,255,.16);
     --button: rgba(255,255,255,.12);
     --button-hover: rgba(255,255,255,.20);
@@ -32,9 +32,9 @@ body.light {
     --bg1: #97a2b6;
     --bg2: #a2b8d3;
     --text: #47484b;
-    --muted: rgba(67, 98, 116, 0.68);
+    --muted: rgba(67,98,116,.68);
     --card: rgba(255,255,255,.72);
-    --border: rgba(119, 134, 172, 0.16);
+    --border: rgba(119,134,172,.16);
     --button: rgba(80,100,150,.10);
     --button-hover: rgba(80,100,150,.16);
     --shadow: rgba(30,50,100,.12);
@@ -199,7 +199,7 @@ body {
     border: 1px solid var(--border);
     border-radius: 16px;
 
-    background: rgba(128, 158, 167, 0.96);
+    background: rgba(128,158,167,.96);
 
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -257,7 +257,7 @@ body.light .dropdown-menu {
 ========================= */
 
 .container {
-    width: min(920px, 92%);
+    width: min(920px,92%);
     margin: 55px auto 70px;
 }
 
@@ -488,14 +488,14 @@ body.light .dropdown-menu {
 }
 
 .modal {
-    width: min(450px, 100%);
+    width: min(450px,100%);
 
     padding: 27px;
 
     border: 1px solid var(--border);
     border-radius: 20px;
 
-    background: rgba(188, 150, 206, 0.97);
+    background: rgba(188,150,206,.97);
     color: var(--text);
 
     box-shadow: 0 20px 60px rgba(0,0,0,.35);
@@ -539,7 +539,7 @@ body.light .modal {
    MOBILE
 ========================= */
 
-@media (max-width: 700px) {
+@media (max-width:700px) {
 
     .navbar {
         height: 68px;
@@ -585,7 +585,6 @@ body.light .modal {
 </style>
 </head>
 
-
 <body>
 
 <!-- =========================
@@ -595,13 +594,9 @@ body.light .modal {
 <nav class="navbar">
 
     <a href="./index.html" class="brand">
-
         <span class="brand-eye">👁️</span>
-
         <span>CivicEye AI</span>
-
     </a>
-
 
     <div class="nav-right">
 
@@ -610,16 +605,15 @@ body.light .modal {
             class="nav-link"
             data-i18n="home"
         >
-            Home
+            🏠 Home
         </a>
-
 
         <a
             href="./citizen.html"
             class="nav-link citizen"
         >
-            <span data-i18n="notifications">
-                citizen portal
+            <span data-i18n="citizenPortal">
+                👤 Citizen Portal
             </span>
 
             <span
@@ -630,17 +624,16 @@ body.light .modal {
             </span>
         </a>
 
-
         <div class="menu-wrapper">
 
             <button
                 id="menuButton"
                 class="menu-button"
                 type="button"
+                aria-label="Open menu"
             >
                 ⋮
             </button>
-
 
             <div
                 id="dropdownMenu"
@@ -651,49 +644,35 @@ body.light .modal {
                     href="./settings.html"
                     class="dropdown-item"
                 >
-
-                    <span class="dropdown-icon">
-                        ⚙️
-                    </span>
+                    <span class="dropdown-icon">⚙️</span>
 
                     <span data-i18n="settings">
                         Settings
                     </span>
-
                 </a>
-
 
                 <button
                     type="button"
                     class="dropdown-item"
                     onclick="openHelp()"
                 >
-
-                    <span class="dropdown-icon">
-                        ❓
-                    </span>
+                    <span class="dropdown-icon">❓</span>
 
                     <span data-i18n="help">
                         Help & Support
                     </span>
-
                 </button>
-
 
                 <button
                     type="button"
                     class="dropdown-item"
                     onclick="openAbout()"
                 >
-
-                    <span class="dropdown-icon">
-                        ℹ️
-                    </span>
+                    <span class="dropdown-icon">ℹ️</span>
 
                     <span data-i18n="about">
                         About CivicEye AI
                     </span>
-
                 </button>
 
             </div>
@@ -723,7 +702,6 @@ body.light .modal {
 
     </header>
 
-
     <div class="actions">
 
         <button
@@ -738,7 +716,6 @@ body.light .modal {
         </button>
 
     </div>
-
 
     <section
         id="notificationsList"
@@ -847,8 +824,8 @@ const translations = {
         home:
             "🏠 Home",
 
-        notifications:
-            "🔔 Notifications",
+        citizenPortal:
+            "👤 Citizen Portal",
 
         notificationsTitle:
             "🔔 Notifications",
@@ -902,14 +879,13 @@ const translations = {
             "Close"
     },
 
-
     ta: {
 
         home:
             "🏠 முகப்பு",
 
-        notifications:
-            "🔔 அறிவிப்புகள்",
+        citizenPortal:
+            "👤 குடிமக்கள் போர்டல்",
 
         notificationsTitle:
             "🔔 அறிவிப்புகள்",
@@ -963,14 +939,13 @@ const translations = {
             "மூடு"
     },
 
-
     si: {
 
         home:
             "🏠 මුල් පිටුව",
 
-        notifications:
-            "🔔 දැනුම්දීම්",
+        citizenPortal:
+            "👤 පුරවැසි ද්වාරය",
 
         notificationsTitle:
             "🔔 දැනුම්දීම්",
@@ -1193,9 +1168,7 @@ function closeAbout() {
    READ STATUS
 ========================= */
 
-function isNotificationRead(
-    notification
-) {
+function isNotificationRead(notification) {
 
     return (
         notification.read === true ||
@@ -1227,9 +1200,7 @@ async function loadNotifications() {
 
     if (!email) {
 
-        showEmptyState(
-            dictionary
-        );
+        showEmptyState(dictionary);
 
         return;
     }
@@ -1272,9 +1243,7 @@ async function loadNotifications() {
             notifications.length === 0
         ) {
 
-            showEmptyState(
-                dictionary
-            );
+            showEmptyState(dictionary);
 
             return;
         }
@@ -1306,18 +1275,18 @@ async function loadNotifications() {
                 </div>
 
                 <h2>
-                    ${dictionary.error}
+                    ${escapeHTML(dictionary.error)}
                 </h2>
 
                 <p>
-                    ${dictionary.errorText}
+                    ${escapeHTML(dictionary.errorText)}
                 </p>
 
                 <button
                     class="retry-btn"
                     onclick="loadNotifications()"
                 >
-                    ${dictionary.retry}
+                    ${escapeHTML(dictionary.retry)}
                 </button>
 
             </div>
@@ -1330,9 +1299,7 @@ async function loadNotifications() {
    EMPTY
 ========================= */
 
-function showEmptyState(
-    dictionary
-) {
+function showEmptyState(dictionary) {
 
     document
         .getElementById(
@@ -1347,11 +1314,11 @@ function showEmptyState(
                 </div>
 
                 <h2>
-                    ${dictionary.noNotifications}
+                    ${escapeHTML(dictionary.noNotifications)}
                 </h2>
 
                 <p>
-                    ${dictionary.noNotificationsText}
+                    ${escapeHTML(dictionary.noNotificationsText)}
                 </p>
 
             </div>
@@ -1392,6 +1359,11 @@ function createNotification(
             notification.date
         );
 
+    const notificationId =
+        escapeAttribute(
+            notification.id || ""
+        );
+
     return `
 
         <article
@@ -1424,7 +1396,7 @@ function createNotification(
                         time
                             ? `
                                 <div class="notification-time">
-                                    🕒 ${time}
+                                    🕒 ${escapeHTML(time)}
                                 </div>
                               `
                             : ""
@@ -1433,14 +1405,14 @@ function createNotification(
                 </div>
 
                 ${
-                    !read
+                    !read && notificationId
                         ? `
                             <button
                                 class="read-btn"
-                                onclick="markAsRead('${escapeAttribute(notification.id)}')"
+                                onclick="markAsRead('${notificationId}')"
                             >
                                 ✓
-                                ${dictionary.markRead}
+                                ${escapeHTML(dictionary.markRead)}
                             </button>
                           `
                         : ""
