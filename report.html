@@ -158,239 +158,259 @@ body.theme-dark #submitStatus {
 }
 
 /* ==================================================
-   CITIZEN HTML NAVBAR / MENU - EXACT STYLE
+   CIVICEYE COMMON THREE-DOT MENU
+   SAME STYLE USED ACROSS CIVICEYE PAGES
    ================================================== */
 
 .civic-navbar {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:18px 35px;
-    background:var(--card-bg);
-    border-bottom:1px solid var(--card-border);
-    backdrop-filter:blur(15px);
-    position:relative;
-    z-index:999998;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 35px;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--card-border);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    position: relative;
+    z-index: 999998;
 }
 
-/* CIVICEYE AI - WHITE */
 .civic-logo {
-    font-size:24px;
-    font-weight:bold;
-    color:#ffffff !important;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffffff !important;
 }
 
-/* NAV LINKS - WHITE */
 .civic-nav-links {
-    display:flex;
-    align-items:center;
-    gap:10px;
-    flex-wrap:wrap;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
 }
 
 .civic-nav-links > a {
-    text-decoration:none;
-    color:#ffffff !important;
-    padding:9px 14px;
-    border-radius:10px;
-    transition:.2s;
-    position:relative;
+    text-decoration: none;
+    color: #ffffff !important;
+    padding: 9px 14px;
+    border-radius: 10px;
+    transition: 0.2s;
 }
 
 .civic-nav-links > a:hover {
-    background:var(--secondary-bg);
+    background: var(--secondary-bg);
 }
 
-/* THREE DOTS - WHITE */
+/* ==================================================
+   CIVICEYE THREE-DOT MENU
+   EXACT SAME AS INDEX.HTML
+   ================================================== */
+
 .more-menu-container {
-    position:relative;
-    display:inline-block;
-    margin-left:8px;
-    z-index:999999 !important;
+    position: relative;
+    display: inline-block;
+    margin-left: 8px;
+    z-index: 999999 !important;
 }
 
 .more-menu-button {
-    border:1px solid var(--card-border);
-    background:var(--secondary-bg);
-    color:#ffffff !important;
-    padding:9px 13px;
-    border-radius:10px;
-    font-size:20px;
-    line-height:1;
-    cursor:pointer;
-    position:relative;
-    z-index:1000000 !important;
-    pointer-events:auto !important;
-    transition:.2s;
+    width: 58px !important;
+    height: 58px !important;
+
+    padding: 0 !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    border: 1px solid rgba(255,255,255,0.28) !important;
+    border-radius: 16px !important;
+
+    background: rgba(40,50,80,0.08) !important;
+    color: #26324a !important;
+
+    font-family: Arial, sans-serif !important;
+    font-size: 25px !important;
+    font-weight: 400 !important;
+    line-height: 1 !important;
+
+    cursor: pointer !important;
+
+    box-shadow: none !important;
+
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease !important;
+
+    position: relative;
+    z-index: 1000000 !important;
 }
 
 .more-menu-button:hover {
-    background:var(--soft-bg);
-    transform:scale(1.03);
+    background: rgba(40,50,80,0.14) !important;
+    border-color: rgba(255,255,255,0.40) !important;
+    color: #26324a !important;
+    transform: none !important;
 }
 
-/* MORE MENU */
+/* ==================================================
+   MORE MENU
+   ================================================== */
+
 .more-menu {
-    position:fixed !important;
-    top:70px !important;
-    right:20px !important;
-    width:235px;
-    padding:8px;
-    border-radius:16px;
-    background:var(--card-bg);
-    border:1px solid var(--card-border);
-    box-shadow:0 15px 40px rgba(0,0,0,.30);
-    display:none !important;
-    z-index:999999 !important;
-    animation:moreMenuOpen .18s ease;
-    pointer-events:auto !important;
-    backdrop-filter:blur(20px);
+    position: fixed !important;
+
+    top: 70px !important;
+    right: 20px !important;
+
+    width: 235px !important;
+
+    padding: 8px !important;
+
+    border-radius: 16px !important;
+
+    background: var(--card-bg);
+
+    border: 1px solid var(--card-border);
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.30);
+
+    display: none !important;
+
+    z-index: 999999 !important;
+
+    pointer-events: auto !important;
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    animation: moreMenuOpen 0.18s ease;
 }
 
 .more-menu.show {
-    display:block !important;
-    pointer-events:auto !important;
+    display: block !important;
+    pointer-events: auto !important;
 }
 
-/* MENU ITEMS */
+/* ==================================================
+   MENU ITEMS
+   ================================================== */
+
 .more-menu a,
 .more-menu button {
-    width:100%;
-    box-sizing:border-box;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:12px 13px;
-    margin:2px 0;
-    border:none;
-    background:transparent;
-    color:var(--main-text);
-    text-decoration:none;
-    font-size:14px;
-    font-weight:400 !important;
-    border-radius:10px;
-    cursor:pointer;
-    text-align:left;
-    position:relative;
-    z-index:1000000 !important;
-    pointer-events:auto !important;
-    transition:.2s;
+    width: 100% !important;
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    align-items: center !important;
+
+    gap: 10px !important;
+
+    padding: 12px 13px !important;
+
+    margin: 2px 0 !important;
+
+    border: none !important;
+
+    background: transparent !important;
+
+    color: var(--main-text) !important;
+
+    text-decoration: none !important;
+
+    font-family: "Poppins", sans-serif !important;
+font-size: 16px !important;
+font-weight: 400 !important;
+font-style: normal !important;
+   
+    border-radius: 10px !important;
+
+    cursor: pointer !important;
+
+    text-align: left !important;
+
+    box-shadow: none !important;
+    outline: none !important;
+
+    transition: 0.2s;
 }
 
 .more-menu a:hover,
 .more-menu button:hover {
-    background:var(--secondary-bg);
+    background: var(--secondary-bg) !important;
+    color: var(--main-text) !important;
 }
 
 /* ==================================================
-   HELP & SUPPORT + ABOUT - EXACT SAME AS OTHER ITEMS
+   HELP + ABOUT
    ================================================== */
 
-.more-menu a,
-.more-menu button,
-.more-menu button[onclick="showHelp()"],
-.more-menu button[onclick="showAbout()"] {
-    width:100% !important;
-    box-sizing:border-box !important;
-    display:flex !important;
-    align-items:center !important;
-    gap:10px !important;
-    padding:12px 13px !important;
-    margin:2px 0 !important;
-    border:none !important;
-    background:transparent !important;
-    color:var(--main-text) !important;
-    text-decoration:none !important;
-    font-family:inherit !important;
-    font-size:14px !important;
-    font-weight:400 !important;
-    font-style:normal !important;
-    border-radius:10px !important;
-    cursor:pointer !important;
-    text-align:left !important;
-    box-shadow:none !important;
-    outline:none !important;
+.more-menu .menu-help-item,
+.more-menu .menu-about-item {
+    width: 100% !important;
+    background: transparent !important;
+    color: var(--main-text) !important;
 }
 
-.more-menu a:hover,
-.more-menu button:hover,
-.more-menu button[onclick="showHelp()"]:hover,
-.more-menu button[onclick="showAbout()"]:hover {
-    background:var(--secondary-bg) !important;
-    color:var(--main-text) !important;
-    font-weight:400 !important;
-    box-shadow:none !important;
+.more-menu .menu-help-item:hover,
+.more-menu .menu-about-item:hover {
+    background: var(--secondary-bg) !important;
+    color: var(--main-text) !important;
 }
 
-/* LOGOUT */
+/* ==================================================
+   LOGOUT
+   ================================================== */
+
 .more-menu .logout-item {
-    color:#ff4757;
+    color: #ff4757 !important;
 }
+
+.more-menu .logout-item:hover {
+    background: rgba(255,71,87,0.08) !important;
+    color: #ff4757 !important;
+}
+
+/* ==================================================
+   ANIMATION
+   ================================================== */
 
 @keyframes moreMenuOpen {
     from {
-        opacity:0;
-        transform:translateY(-8px) scale(.97);
+        opacity: 0;
+        transform: translateY(-8px) scale(0.97);
     }
 
     to {
-        opacity:1;
-        transform:translateY(0) scale(1);
+        opacity: 1;
+        transform: translateY(0) scale(1);
     }
 }
 
 /* ==================================================
-   MODALS
+   DARK THEME
    ================================================== */
 
-.civic-modal {
-    position:fixed;
-    inset:0;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    background:rgba(0,0,0,0.55);
-    z-index:2000000;
-    padding:20px;
-    box-sizing:border-box;
+body.theme-dark .more-menu {
+    background: rgba(25,28,45,0.97) !important;
+    border-color: rgba(255,255,255,0.12) !important;
 }
 
-.civic-modal.show {
-    display:flex;
+body.theme-dark .more-menu a,
+body.theme-dark .more-menu button {
+    color: #ffffff !important;
 }
 
-.civic-modal-content {
-    width:min(500px,100%);
-    background:#ffffff;
-    color:#1f2937;
-    border-radius:18px;
-    padding:25px;
-    box-shadow:0 20px 60px rgba(0,0,0,0.35);
-    position:relative;
+body.theme-dark .more-menu a:hover,
+body.theme-dark .more-menu button:hover {
+    background: rgba(255,255,255,0.10) !important;
+    color: #ffffff !important;
 }
 
-body.theme-dark .civic-modal-content {
-    background:#1f2937;
-    color:#ffffff;
-}
-
-.civic-modal-content h2 {
-    margin-top:0;
-}
-
-.civic-modal-close {
-    position:absolute;
-    top:10px;
-    right:14px;
-    border:none;
-    background:transparent;
-    font-size:26px;
-    cursor:pointer;
-    color:inherit;
-}
-
-.civic-modal-content p {
-    line-height:1.6;
+body.theme-dark .more-menu .logout-item {
+    color: #ff6b7a !important;
 }
 
 /* ==================================================
@@ -398,40 +418,24 @@ body.theme-dark .civic-modal-content {
    ================================================== */
 
 nav {
-    position:relative;
-    z-index:999998 !important;
+    position: relative;
+    z-index: 999998 !important;
 }
 
 /* ==================================================
-   MOBILE - SAME CITIZEN HTML STYLE
+   MOBILE
    ================================================== */
 
-@media (max-width:700px) {
-
-    .civic-navbar {
-        padding:15px 18px;
-        flex-direction:column;
-        gap:12px;
-        position:relative;
-        z-index:999998;
-    }
-
-    .civic-nav-links {
-        justify-content:center;
-        z-index:999999;
-    }
+@media (max-width: 700px) {
 
     .more-menu-container {
-        margin-top:5px;
-        z-index:999999 !important;
+        margin-top: 5px;
     }
 
     .more-menu {
-        position:fixed !important;
-        top:70px !important;
-        right:15px !important;
-        width:230px;
-        z-index:999999 !important;
+        top: 70px !important;
+        right: 15px !important;
+        width: 230px !important;
     }
 }
 
@@ -443,6 +447,7 @@ nav {
 
 <!-- ==================================================
      NAVBAR
+     SAME CIVICEYE COMMON MENU
      ================================================== -->
 
 <nav class="civic-navbar">
@@ -482,19 +487,24 @@ nav {
 
                 <a href="./privacy.html">
                     🔒 Privacy
+                
+                </a>
+                
+                <a href="help.html">
+                    ❓
+                    <span>
+                        Help &amp; Support
+                    </span>
                 </a>
 
-                <button
-                    type="button"
-                    onclick="showHelp()">
-                    ❓ Help & Support
-                </button>
 
-                <button
-                    type="button"
-                    onclick="showAbout()">
-                    ℹ️ About CivicEye AI
-                </button>
+                <a href="about.html">
+                    ℹ️
+                    <span>
+                        About CivicEye AI
+                    </span>
+                </a>
+
 
                 <a
                     href="./login.html"
@@ -509,7 +519,6 @@ nav {
     </div>
 
 </nav>
-
 <!-- ==================================================
      REPORT CONTENT
      ================================================== -->
@@ -660,91 +669,7 @@ nav {
 
 </main>
 
-<!-- ==================================================
-     HELP MODAL
-     ================================================== -->
 
-<div
-    class="civic-modal"
-    id="helpModal"
-    onclick="closeModalOutside(event)">
-
-    <div class="civic-modal-content">
-
-        <button
-            class="civic-modal-close"
-            type="button"
-            onclick="closeModal()">
-            ×
-        </button>
-
-        <h2>
-            ❓ Help & Support
-        </h2>
-
-        <p>
-            Need help using CivicEye AI?
-        </p>
-
-        <p>
-            📸 Upload a clear image of the public issue.
-        </p>
-
-        <p>
-            📝 Select the correct issue type and describe the problem.
-        </p>
-
-        <p>
-            📍 Add your location so authorities can identify the issue.
-        </p>
-
-        <p>
-            🚀 Submit the report and track its progress from the Track Issue page.
-        </p>
-
-    </div>
-
-</div>
-
-<!-- ==================================================
-     ABOUT MODAL
-     ================================================== -->
-
-<div
-    class="civic-modal"
-    id="aboutModal"
-    onclick="closeModalOutside(event)">
-
-    <div class="civic-modal-content">
-
-        <button
-            class="civic-modal-close"
-            type="button"
-            onclick="closeModal()">
-            ×
-        </button>
-
-        <h2>
-            ℹ️ About CivicEye AI
-        </h2>
-
-        <p>
-            CivicEye AI is an AI-powered platform designed to help citizens
-            report and track public issues more easily.
-        </p>
-
-        <p>
-            The system can identify issue types, detect duplicate complaints,
-            recommend the relevant authority and provide status updates.
-        </p>
-
-        <p>
-            🇱🇰 Built with the goal of creating cleaner, safer and smarter communities.
-        </p>
-
-    </div>
-
-</div>
 
 <!-- ==================================================
      JAVASCRIPT
@@ -1186,8 +1111,13 @@ async function submitReport() {
     submitButton.style.opacity =
         "0.6";
 
+    /*
+     * FIRST STATUS:
+     * SUBMITTED
+     */
+
     submitStatus.textContent =
-        "⏳ Uploading report...";
+        "📨 Report Submitted";
 
     try {
 
@@ -1215,12 +1145,29 @@ async function submitReport() {
         );
 
         const citizenEmail =
-            localStorage.getItem("civicEyeCitizenEmail") || "";
+    localStorage.getItem("civicEyeCitizenEmail") ||
+    localStorage.getItem("civicEyeEmail") ||
+    localStorage.getItem("citizenEmail") ||
+    localStorage.getItem("userEmail") ||
+    localStorage.getItem("email") ||
+    sessionStorage.getItem("civicEyeCitizenEmail") ||
+    sessionStorage.getItem("civicEyeEmail") ||
+    sessionStorage.getItem("citizenEmail") ||
+    sessionStorage.getItem("userEmail") ||
+    sessionStorage.getItem("email") ||
+    "";
 
-        formData.append(
-            "citizenEmail",
-            citizenEmail
-        );
+formData.append(
+    "citizenEmail",
+    citizenEmail.trim().toLowerCase()
+);
+
+        /*
+         * AI PROCESSING
+         */
+
+        submitStatus.textContent =
+            "🤖 AI is processing your complaint...";
 
         const response =
             await fetch(
@@ -1242,37 +1189,61 @@ async function submitReport() {
         const data =
             await response.json();
 
+        /*
+         * GET BACKEND REPORT
+         */
+
         const report =
             data.report || data;
+
+        /*
+         * DETECT DUPLICATE FROM ALL
+         * SUPPORTED BACKEND FIELDS
+         */
+
+        const isDuplicate =
+            data.isDuplicate === true ||
+            data.duplicate === true ||
+            report.isDuplicate === true ||
+            report.duplicate === true;
+
+        /*
+         * KEEP BOTH FIELD NAMES
+         * FOR AI PROCESSING PAGE
+         */
+
+        report.isDuplicate =
+            isDuplicate;
+
+        report.duplicate =
+            isDuplicate;
+
+        /*
+         * FIRST STATUS MUST BE
+         * SUBMITTED
+         */
+
+        report.status =
+            "Submitted";
+
+        /*
+         * SAVE RESULT
+         */
 
         sessionStorage.setItem(
             "civicEyeReport",
             JSON.stringify(report)
         );
 
-        if (
-            data.duplicate === true ||
-            report.isDuplicate === true
-        ) {
-
-            submitStatus.textContent =
-                "⚠️ Duplicate complaint detected.";
-
-        } else {
-
-            submitStatus.textContent =
-                "✅ Report submitted successfully!";
-
-        }
-
-        alert(
-            data.duplicate === true ||
-            report.isDuplicate === true
-
-                ? "⚠️ Duplicate complaint detected. You can view the notification in Notifications."
-
-                : "✅ Report submitted successfully!"
-        );
+        /*
+         * NO ALERT HERE.
+         *
+         * Duplicate complaint will be shown
+         * on ai-processing.html.
+         *
+         * Both normal and duplicate reports
+         * continue to AI processing.
+         */
 
         window.location.href =
             "./ai-processing.html";
