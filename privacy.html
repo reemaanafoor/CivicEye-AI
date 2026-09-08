@@ -18,7 +18,6 @@
             box-sizing: border-box;
         }
 
-
         body {
 
             margin: 0;
@@ -35,7 +34,6 @@
             color: white;
 
         }
-
 
         /* =====================================================
            NAVBAR
@@ -67,7 +65,6 @@
 
         }
 
-
         .dashboard-nav h2 {
 
             margin: 0;
@@ -75,7 +72,6 @@
             font-size: 22px;
 
         }
-
 
         .dashboard-nav-links {
 
@@ -87,7 +83,6 @@
 
         }
 
-
         .dashboard-nav a {
 
             color: white;
@@ -98,195 +93,303 @@
 
         }
 
-
         /* =====================================================
            MORE MENU
         ===================================================== */
 
         .more-menu-container {
-
-            position: relative;
-
-            display: inline-block;
-
-            margin-left: 8px;
-
+            position: relative !important;
+            display: inline-block !important;
+            margin-left: 8px !important;
             z-index: 999999 !important;
-
         }
 
-
         .more-menu-button {
+            width: 58px !important;
+            height: 58px !important;
+            padding: 0 !important;
 
-            width: 42px;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
 
-            height: 42px;
+            border: 1px solid rgba(40,50,80,0.20) !important;
 
-            border: none;
+            background: rgba(40,50,80,0.08) !important;
 
-            border-radius: 50%;
+            color: #26324a !important;
 
-            background:
-                rgba(255,255,255,0.18);
+            border-radius: 16px !important;
 
-            color: inherit;
+            font-family: Arial, sans-serif !important;
+            font-size: 28px !important;
+            font-weight: 400 !important;
+            line-height: 1 !important;
 
-            font-size: 24px;
+            cursor: pointer !important;
 
-            font-weight: bold;
-
-            cursor: pointer;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            position: relative;
+            position: relative !important;
 
             z-index: 1000000 !important;
 
             pointer-events: auto !important;
 
-            transition: 0.2s ease;
+            box-shadow: none !important;
 
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease !important;
+
+            outline: none !important;
         }
 
+        .more-menu-button:hover,
+        .more-menu-button:focus,
+        .more-menu-button:active,
+        .more-menu-button:focus-visible {
+            transform: none !important;
+            box-shadow: none !important;
+            outline: none !important;
+        }
 
         .more-menu-button:hover {
+            background: rgba(40,50,80,0.14) !important;
+            border-color: rgba(40,50,80,0.28) !important;
+            color: #1e293b !important;
+        }
 
-            transform: scale(1.05);
+        /* DEFAULT THEME — GLASS */
 
-            background:
-                rgba(255,255,255,0.28);
+        body:not(.theme-light):not(.theme-dark) .more-menu-button {
+            background: rgba(255,255,255,0.16) !important;
+            border-color: rgba(255,255,255,0.22) !important;
+            color: #ffffff !important;
+        }
 
+        body:not(.theme-light):not(.theme-dark) .more-menu-button:hover {
+            background: rgba(255,255,255,0.22) !important;
+            border-color: rgba(255,255,255,0.30) !important;
+            color: #ffffff !important;
+        }
+
+        /* LIGHT THEME */
+
+        body.theme-light .more-menu-button {
+            background: rgba(40,50,80,0.08) !important;
+            border-color: rgba(40,50,80,0.20) !important;
+            color: #26324a !important;
+        }
+
+        body.theme-light .more-menu-button:hover {
+            background: rgba(40,50,80,0.14) !important;
+            border-color: rgba(40,50,80,0.28) !important;
+            color: #1e293b !important;
+        }
+
+        /* DARK THEME */
+
+        body.theme-dark .more-menu-button {
+            background: rgba(255,255,255,0.10) !important;
+            border-color: rgba(255,255,255,0.16) !important;
+            color: #ffffff !important;
+        }
+
+        body.theme-dark .more-menu-button:hover {
+            background: rgba(255,255,255,0.16) !important;
+            border-color: rgba(255,255,255,0.24) !important;
+            color: #ffffff !important;
         }
 
 
-        .more-menu {
+        /* MENU CARD */
 
+        .more-menu {
             position: fixed !important;
 
             top: 70px !important;
-
             right: 20px !important;
 
-            width: 235px;
+            width: 235px !important;
 
-            padding: 8px;
+            padding: 8px !important;
 
-            border-radius: 16px;
+            border-radius: 16px !important;
 
-            background:
-                rgba(255,255,255,0.97);
+            background: rgba(255,255,255,0.16) !important;
+
+            border: 1px solid rgba(255,255,255,0.22) !important;
+
+            color: #ffffff !important;
+
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
 
             box-shadow:
-                0 15px 40px
-                rgba(0,0,0,0.30);
+                0 15px 40px rgba(0,0,0,0.30) !important;
 
             display: none !important;
 
-            z-index: 999999 !important;
-
-            animation:
-                moreMenuOpen
-                0.18s ease;
+            z-index: 1000001 !important;
 
             pointer-events: auto !important;
 
+            animation: moreMenuOpen 0.18s ease;
         }
-
 
         .more-menu.show {
-
             display: block !important;
-
             pointer-events: auto !important;
-
+            z-index: 1000001 !important;
         }
 
-
         @keyframes moreMenuOpen {
-
             from {
-
                 opacity: 0;
-
-                transform:
-                    translateY(-8px);
-
+                transform: translateY(-8px) scale(0.97);
             }
 
             to {
-
                 opacity: 1;
-
-                transform:
-                    translateY(0);
-
+                transform: translateY(0) scale(1);
             }
-
         }
 
+
+        /* MENU ITEMS */
 
         .more-menu a,
         .more-menu button {
+            width: 100% !important;
 
-            width: 100%;
+            display: flex !important;
+            align-items: center !important;
 
-            display: flex;
+            gap: 10px !important;
 
-            align-items: center;
+            padding: 12px 13px !important;
+            margin: 2px 0 !important;
 
-            gap: 10px;
+            border: none !important;
+            border-radius: 10px !important;
 
-            padding: 12px 13px;
+            background: transparent !important;
 
-            border: none;
+            color: #ffffff !important;
 
-            border-radius: 10px;
+            text-decoration: none !important;
 
-            background: transparent;
+            font-family: Arial, sans-serif !important;
+            font-size: 15px !important;
+            font-weight: 500 !important;
 
-            color: #222 !important;
+            text-align: left !important;
 
-            text-decoration: none;
+            position: relative !important;
 
-            font-size: 14px;
-
-            font-weight: 600;
-
-            text-align: left;
-
-            position: relative;
-
-            z-index: 1000000 !important;
+            z-index: 1000002 !important;
 
             pointer-events: auto !important;
 
-            cursor: pointer;
+            cursor: pointer !important;
 
-            box-sizing: border-box;
+            box-sizing: border-box !important;
 
+            outline: none !important;
+
+            box-shadow: none !important;
         }
-
 
         .more-menu a:hover,
         .more-menu button:hover {
+            background: rgba(255,255,255,0.12) !important;
+            color: #ffffff !important;
+        }
 
-            background:
-                rgba(0,0,0,0.07);
-
+        .more-menu a:focus,
+        .more-menu button:focus,
+        .more-menu a:active,
+        .more-menu button:active,
+        .more-menu a:focus-visible,
+        .more-menu button:focus-visible {
+            outline: none !important;
+            box-shadow: none !important;
         }
 
 
-        .more-menu .menu-danger {
+        /* LIGHT MENU */
 
+        body.theme-light .more-menu {
+            background: rgba(255,255,255,0.97) !important;
+            border-color: rgba(0,0,0,0.10) !important;
+            color: #222222 !important;
+        }
+
+        body.theme-light .more-menu a,
+        body.theme-light .more-menu button {
+            color: #222222 !important;
+        }
+
+        body.theme-light .more-menu a:hover,
+        body.theme-light .more-menu button:hover {
+            background: rgba(0,0,0,0.06) !important;
+            color: #222222 !important;
+        }
+
+
+        /* DARK MENU */
+
+        body.theme-dark .more-menu {
+            background: #10202b !important;
+            border-color: rgba(255,255,255,0.14) !important;
+            color: #ffffff !important;
+        }
+
+        body.theme-dark .more-menu a,
+        body.theme-dark .more-menu button {
+            color: #ffffff !important;
+        }
+
+        body.theme-dark .more-menu a:hover,
+        body.theme-dark .more-menu button:hover {
+            background: rgba(255,255,255,0.10) !important;
+            color: #ffffff !important;
+        }
+
+
+        /* LOGOUT — NEVER HIGHLIGHT */
+
+        .more-menu .menu-danger,
+        .more-menu .menu-danger:hover,
+        .more-menu .menu-danger:focus,
+        .more-menu .menu-danger:active,
+        .more-menu .menu-danger:focus-visible {
+            background: transparent !important;
+            box-shadow: none !important;
+            outline: none !important;
+            color: #ff4757 !important;
+        }
+
+        body.theme-light .more-menu .menu-danger,
+        body.theme-light .more-menu .menu-danger:hover,
+        body.theme-light .more-menu .menu-danger:focus,
+        body.theme-light .more-menu .menu-danger:active,
+        body.theme-light .more-menu .menu-danger:focus-visible {
+            background: transparent !important;
             color: #d62828 !important;
-
         }
 
+        body.theme-dark .more-menu .menu-danger,
+        body.theme-dark .more-menu .menu-danger:hover,
+        body.theme-dark .more-menu .menu-danger:focus,
+        body.theme-dark .more-menu .menu-danger:active,
+        body.theme-dark .more-menu .menu-danger:focus-visible {
+            background: transparent !important;
+            color: #ff6b7a !important;
+        }
 
         /* =====================================================
            PRIVACY CONTAINER
@@ -301,7 +404,6 @@
             padding: 20px;
 
         }
-
 
         .privacy-box {
 
@@ -326,7 +428,6 @@
 
         }
 
-
         .privacy-box h1 {
 
             margin-top: 0;
@@ -335,7 +436,6 @@
 
         }
 
-
         .privacy-intro {
 
             opacity: 0.85;
@@ -343,7 +443,6 @@
             margin-bottom: 30px;
 
         }
-
 
         .privacy-section {
 
@@ -355,13 +454,11 @@
 
         }
 
-
         .privacy-section:last-child {
 
             border-bottom: none;
 
         }
-
 
         .privacy-section h3 {
 
@@ -370,7 +467,6 @@
             margin-bottom: 10px;
 
         }
-
 
         .privacy-section p {
 
@@ -381,7 +477,6 @@
             opacity: 0.9;
 
         }
-
 
         /* =====================================================
            BOTTOM NAVIGATION
@@ -400,7 +495,6 @@
             flex-wrap: wrap;
 
         }
-
 
         .nav-btn {
 
@@ -422,14 +516,12 @@
 
         }
 
-
         .nav-btn:hover {
 
             transform:
                 translateY(-2px);
 
         }
-
 
         /* =====================================================
            LIGHT THEME
@@ -443,7 +535,6 @@
 
         }
 
-
         body.theme-light .dashboard-nav {
 
             background:
@@ -454,7 +545,6 @@
 
         }
 
-
         body.theme-light .dashboard-nav,
         body.theme-light .dashboard-nav h2,
         body.theme-light .dashboard-nav a {
@@ -462,7 +552,6 @@
             color: #222 !important;
 
         }
-
 
         body.theme-light .privacy-box {
 
@@ -478,14 +567,12 @@
 
         }
 
-
         body.theme-light .privacy-section {
 
             border-bottom-color:
                 rgba(0,0,0,0.12);
 
         }
-
 
         body.theme-light .nav-btn {
 
@@ -495,7 +582,6 @@
 
         }
 
-
         body.theme-light .more-menu-button {
 
             background:
@@ -504,7 +590,6 @@
             color: #222;
 
         }
-
 
         /* =====================================================
            DARK THEME
@@ -518,7 +603,6 @@
 
         }
 
-
         body.theme-dark .dashboard-nav {
 
             background:
@@ -529,7 +613,6 @@
 
         }
 
-
         body.theme-dark .dashboard-nav,
         body.theme-dark .dashboard-nav h2,
         body.theme-dark .dashboard-nav a {
@@ -537,7 +620,6 @@
             color: white !important;
 
         }
-
 
         body.theme-dark .privacy-box {
 
@@ -553,14 +635,12 @@
 
         }
 
-
         body.theme-dark .privacy-section {
 
             border-bottom-color:
                 rgba(255,255,255,0.12);
 
         }
-
 
         body.theme-dark .nav-btn {
 
@@ -570,7 +650,6 @@
 
         }
 
-
         body.theme-dark .more-menu-button {
 
             background:
@@ -579,7 +658,6 @@
             color: white;
 
         }
-
 
         /* =====================================================
            MODALS
@@ -606,13 +684,11 @@
 
         }
 
-
         .civic-modal.show {
 
             display: flex;
 
         }
-
 
         .civic-modal-box {
 
@@ -639,7 +715,6 @@
 
         }
 
-
         @keyframes modalOpen {
 
             from {
@@ -662,7 +737,6 @@
 
         }
 
-
         .civic-modal-box h2 {
 
             margin-top: 0;
@@ -671,7 +745,6 @@
 
         }
 
-
         .civic-modal-box p {
 
             line-height: 1.6;
@@ -679,7 +752,6 @@
             color: #555;
 
         }
-
 
         .modal-close {
 
@@ -701,7 +773,6 @@
 
         }
 
-
         /* =====================================================
            MOBILE
         ===================================================== */
@@ -715,20 +786,17 @@
 
             }
 
-
             .dashboard-nav h2 {
 
                 font-size: 18px;
 
             }
 
-
             .dashboard-nav-links {
 
                 gap: 8px;
 
             }
-
 
             .privacy-container {
 
@@ -740,14 +808,12 @@
 
             }
 
-
             .privacy-box {
 
                 padding:
                     25px 20px;
 
             }
-
 
             .more-menu {
 
@@ -765,9 +831,7 @@
 
 </head>
 
-
 <body>
-
 
 <!-- =====================================================
      NAVBAR
@@ -779,7 +843,6 @@
         👁️ CivicEye AI
     </h2>
 
-
     <div class="dashboard-nav-links">
 
         <a
@@ -788,7 +851,6 @@
         >
             🏠 Citizen Portal
         </a>
-
 
         <div class="more-menu-container">
 
@@ -801,7 +863,6 @@
             >
                 ⋮
             </button>
-
 
             <div
                 class="more-menu"
@@ -818,7 +879,6 @@
 
                 </a>
 
-
                 <a href="settings.html">
 
                     ⚙️
@@ -829,7 +889,6 @@
 
                 </a>
 
-
                 <a href="privacy.html">
 
                     🔒
@@ -839,7 +898,6 @@
                     </span>
 
                 </a>
-
 
                 <button
                     type="button"
@@ -854,7 +912,6 @@
 
                 </button>
 
-
                 <button
                     type="button"
                     onclick="showAbout()"
@@ -867,7 +924,6 @@
                     </span>
 
                 </button>
-
 
                 <a
                     href="login.html"
@@ -890,8 +946,6 @@
 
 </nav>
 
-
-
 <!-- =====================================================
      PRIVACY
 ===================================================== -->
@@ -904,15 +958,12 @@
             🔐 Privacy & Data Protection
         </h1>
 
-
         <p
             class="privacy-intro"
             data-i18n="intro"
         >
             CivicEye AI respects your privacy and is committed to protecting your information.
         </p>
-
-
 
         <div class="privacy-section">
 
@@ -926,8 +977,6 @@
 
         </div>
 
-
-
         <div class="privacy-section">
 
             <h3 data-i18n="complaintTitle">
@@ -939,8 +988,6 @@
             </p>
 
         </div>
-
-
 
         <div class="privacy-section">
 
@@ -954,8 +1001,6 @@
 
         </div>
 
-
-
         <div class="privacy-section">
 
             <h3 data-i18n="imagesTitle">
@@ -967,8 +1012,6 @@
             </p>
 
         </div>
-
-
 
         <div class="privacy-section">
 
@@ -982,8 +1025,6 @@
 
         </div>
 
-
-
         <div class="privacy-section">
 
             <h3 data-i18n="retentionTitle">
@@ -995,8 +1036,6 @@
             </p>
 
         </div>
-
-
 
         <div class="privacy-section">
 
@@ -1010,47 +1049,7 @@
 
         </div>
 
-
-
-        <!-- =================================================
-             BOTTOM NAV
-        ================================================== -->
-
-        <div class="bottom-nav">
-
-            <a
-                href="settings.html"
-                class="nav-btn"
-                data-i18n="settings"
-            >
-                ⚙️ Settings
-            </a>
-
-
-            <a
-                href="profile.html"
-                class="nav-btn"
-                data-i18n="profile"
-            >
-                👤 Profile
-            </a>
-
-
-            <a
-                href="citizen.html"
-                class="nav-btn"
-                data-i18n="citizenPortal"
-            >
-                🏠 Citizen Portal
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
-
-
+        
 
 <!-- =====================================================
      HELP MODAL
@@ -1068,14 +1067,12 @@
             ❓ Help & Support
         </h2>
 
-
         <p data-i18n="helpText">
             CivicEye AI helps citizens report public issues,
             track complaint progress, and receive status updates.
             If you need assistance, please contact your project
             administrator.
         </p>
-
 
         <button
             type="button"
@@ -1089,8 +1086,6 @@
     </div>
 
 </div>
-
-
 
 <!-- =====================================================
      ABOUT MODAL
@@ -1108,13 +1103,11 @@
             ℹ️ About CivicEye AI
         </h2>
 
-
         <p data-i18n="aboutText">
             CivicEye AI is a smart civic issue reporting platform
             designed to help citizens report problems such as road
             damage, garbage, water leaks and street-light issues.
         </p>
-
 
         <button
             type="button"
@@ -1128,8 +1121,6 @@
     </div>
 
 </div>
-
-
 
 <script>
 
@@ -1215,7 +1206,6 @@ const translations = {
 
     },
 
-
     ta: {
 
         citizenPortal:
@@ -1291,7 +1281,6 @@ const translations = {
             "மூடு"
 
     },
-
 
     si: {
 
@@ -1371,8 +1360,6 @@ const translations = {
 
 };
 
-
-
 /* =====================================================
    MENU TRANSLATIONS
 ===================================================== */
@@ -1401,7 +1388,6 @@ const menuTranslations = {
 
     },
 
-
     ta: {
 
         profile:
@@ -1423,7 +1409,6 @@ const menuTranslations = {
             "வெளியேறு"
 
     },
-
 
     si: {
 
@@ -1449,8 +1434,6 @@ const menuTranslations = {
 
 };
 
-
-
 /* =====================================================
    APPLY LANGUAGE
 ===================================================== */
@@ -1462,12 +1445,10 @@ function applyLanguage() {
             "civicEyeLanguage"
         ) || "en";
 
-
     const language =
         translations[savedLanguage]
             ? savedLanguage
             : "en";
-
 
     document.documentElement.lang =
         language === "ta"
@@ -1475,7 +1456,6 @@ function applyLanguage() {
             : language === "si"
                 ? "si"
                 : "en";
-
 
     /* Page text */
 
@@ -1487,7 +1467,6 @@ function applyLanguage() {
                 element.getAttribute(
                     "data-i18n"
                 );
-
 
             if (
                 translations[language][key]
@@ -1501,7 +1480,6 @@ function applyLanguage() {
 
         });
 
-
     /* More menu */
 
     document
@@ -1512,7 +1490,6 @@ function applyLanguage() {
                 element.getAttribute(
                     "data-menu-text"
                 );
-
 
             if (
                 menuTranslations[language][key]
@@ -1528,8 +1505,6 @@ function applyLanguage() {
 
 }
 
-
-
 /* =====================================================
    THEME
 ===================================================== */
@@ -1541,12 +1516,10 @@ function applySavedTheme() {
             "civicEyeTheme"
         ) || "default";
 
-
     document.body.classList.remove(
         "theme-light",
         "theme-dark"
     );
-
 
     if (savedTheme === "light") {
 
@@ -1565,8 +1538,6 @@ function applySavedTheme() {
 
 }
 
-
-
 /* =====================================================
    MORE MENU
 ===================================================== */
@@ -1576,12 +1547,10 @@ const moreMenuButton =
         "moreMenuButton"
     );
 
-
 const moreMenu =
     document.getElementById(
         "moreMenu"
     );
-
 
 moreMenuButton.addEventListener(
     "click",
@@ -1589,12 +1558,10 @@ moreMenuButton.addEventListener(
 
         event.stopPropagation();
 
-
         const isOpen =
             moreMenu.classList.toggle(
                 "show"
             );
-
 
         moreMenuButton.setAttribute(
             "aria-expanded",
@@ -1605,8 +1572,6 @@ moreMenuButton.addEventListener(
 
     }
 );
-
-
 
 /* =====================================================
    CLOSE MENU OUTSIDE
@@ -1625,7 +1590,6 @@ document.addEventListener(
                 "show"
             );
 
-
             moreMenuButton.setAttribute(
                 "aria-expanded",
                 "false"
@@ -1635,8 +1599,6 @@ document.addEventListener(
 
     }
 );
-
-
 
 /* =====================================================
    HELP
@@ -1648,11 +1610,9 @@ function showHelp() {
         .getElementById("helpModal")
         .classList.add("show");
 
-
     moreMenu.classList.remove(
         "show"
     );
-
 
     moreMenuButton.setAttribute(
         "aria-expanded",
@@ -1660,8 +1620,6 @@ function showHelp() {
     );
 
 }
-
-
 
 /* =====================================================
    ABOUT
@@ -1673,11 +1631,9 @@ function showAbout() {
         .getElementById("aboutModal")
         .classList.add("show");
 
-
     moreMenu.classList.remove(
         "show"
     );
-
 
     moreMenuButton.setAttribute(
         "aria-expanded",
@@ -1685,8 +1641,6 @@ function showAbout() {
     );
 
 }
-
-
 
 /* =====================================================
    CLOSE MODAL
@@ -1699,8 +1653,6 @@ function closeModal(id) {
         .classList.remove("show");
 
 }
-
-
 
 /* =====================================================
    CLOSE MODAL OUTSIDE
@@ -1720,8 +1672,6 @@ function closeModalOutside(
     }
 
 }
-
-
 
 /* =====================================================
    ESCAPE KEY
@@ -1747,11 +1697,9 @@ document.addEventListener(
 
                 });
 
-
             moreMenu.classList.remove(
                 "show"
             );
-
 
             moreMenuButton.setAttribute(
                 "aria-expanded",
@@ -1762,8 +1710,6 @@ document.addEventListener(
 
     }
 );
-
-
 
 /* =====================================================
    INITIAL LOAD
@@ -1777,8 +1723,6 @@ function initializePage() {
 
 }
 
-
-
 /* =====================================================
    DOM READY
 ===================================================== */
@@ -1791,8 +1735,6 @@ document.addEventListener(
 
     }
 );
-
-
 
 /* =====================================================
    REFRESH WHEN RETURNING TO PAGE
@@ -1808,7 +1750,6 @@ window.addEventListener(
 );
 
 </script>
-
 
 </body>
 

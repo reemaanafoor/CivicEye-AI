@@ -48,41 +48,26 @@ function recommendAuthority(issue) {
             .toLowerCase()
             .trim();
 
-    if (
-        issueText.includes("water")
-    ) {
-
+    if (issueText.includes("water")) {
         return "Water Supply Authority";
-
     }
 
-    if (
-        issueText.includes("garbage")
-    ) {
-
+    if (issueText.includes("garbage")) {
         return "Local Municipal Authority";
-
     }
 
-    if (
-        issueText.includes("road")
-    ) {
-
+    if (issueText.includes("road")) {
         return "Road Development / Local Authority";
-
     }
 
     if (
         issueText.includes("street light") ||
         issueText.includes("streetlight")
     ) {
-
         return "Local Authority / Electricity Provider";
-
     }
 
     return "Relevant Local Authority";
-
 }
 
 // ==========================================
@@ -102,7 +87,6 @@ function determinePriority(
         ).toLowerCase();
 
     const emergencyKeywords = [
-
         "flood",
         "flooding",
         "fire",
@@ -113,11 +97,9 @@ function determinePriority(
         "accident",
         "blocked emergency",
         "life threatening"
-
     ];
 
     const highKeywords = [
-
         "large pothole",
         "major pothole",
         "severe damage",
@@ -125,7 +107,6 @@ function determinePriority(
         "burst pipe",
         "heavy leak",
         "dangerous road"
-
     ];
 
     if (
@@ -134,9 +115,7 @@ function determinePriority(
                 text.includes(keyword)
         )
     ) {
-
         return "Emergency";
-
     }
 
     if (
@@ -145,46 +124,34 @@ function determinePriority(
                 text.includes(keyword)
         )
     ) {
-
         return "High";
-
     }
 
     if (
         String(issue || "")
             .toLowerCase()
-            .trim() ===
-        "road damage"
+            .trim() === "road damage"
     ) {
-
         return "High";
-
     }
 
     if (
         String(issue || "")
             .toLowerCase()
-            .trim() ===
-        "water leakage"
+            .trim() === "water leakage"
     ) {
-
         return "High";
-
     }
 
     if (
         String(issue || "")
             .toLowerCase()
-            .trim() ===
-        "street light issue"
+            .trim() === "street light issue"
     ) {
-
         return "Medium";
-
     }
 
     return "Normal";
-
 }
 
 // ==========================================
@@ -221,8 +188,7 @@ function checkDuplicate(
 
             return (
                 oldIssue === normalizedIssue &&
-                oldLocation === normalizedLocation &&
-                report.isDuplicate !== true
+                oldLocation === normalizedLocation
             );
 
         });
@@ -231,8 +197,7 @@ function checkDuplicate(
 
         return {
 
-            isDuplicate:
-                true,
+            isDuplicate: true,
 
             duplicateReportId:
                 duplicate.id
@@ -243,11 +208,9 @@ function checkDuplicate(
 
     return {
 
-        isDuplicate:
-            false,
+        isDuplicate: false,
 
-        duplicateReportId:
-            null
+        duplicateReportId: null
 
     };
 
@@ -283,8 +246,7 @@ function createNotification(
 
         message,
 
-        read:
-            false,
+        read: false,
 
         createdAt:
             new Date().toISOString()
@@ -331,8 +293,7 @@ function createAdminAlert(
 
         message,
 
-        read:
-            false,
+        read: false,
 
         createdAt:
             new Date().toISOString()
@@ -405,12 +366,28 @@ app.post(
                     req.body.userEmail ||
                     ""
                 )
-                .trim()
-                .toLowerCase() ||
+                    .trim()
+                    .toLowerCase() ||
                 null;
 
+            // ==================================
+            // AI PROCESSING
+            // ==================================
+
+            console.log(
+                "🤖 AI Processing started..."
+            );
+
+            console.log(
+                `Issue: ${issue}`
+            );
+
+            console.log(
+                `Location: ${location}`
+            );
+
             // ----------------------------------
-            // DUPLICATE CHECK
+            // DUPLICATE DETECTION
             // ----------------------------------
 
             const duplicateResult =
@@ -419,9 +396,84 @@ app.post(
                     location
                 );
 
-            // ----------------------------------
+            // ==================================
+            // DUPLICATE COMPLAINT
+            // ==================================
+
+            if (
+                duplicateResult.isDuplicate
+            ) {
+
+                console.log(
+                    "⚠️ AI detected duplicate complaint"
+                );
+
+                console.log(
+                    `🔗 Existing complaint ID: ${duplicateResult.duplicateReportId}`
+                );
+
+                // --------------------------------
+                // IMPORTANT
+                // --------------------------------
+                // DO NOT CREATE A NEW REPORT
+                // DO NOT PUSH TO reports[]
+                // DO NOT CREATE ADMIN ALERT
+                // DO NOT SEND TO ADMIN DASHBOARD
+                // --------------------------------
+
+                const duplicateNotification =
+                    createNotification(
+
+                        duplicateResult.duplicateReportId,
+
+                        "duplicate",
+
+                        "⚠️ Duplicate Complaint Detected",
+
+                        "This complaint cannot be accepted because it has already been submitted.",
+
+                        citizenEmail
+
+                    );
+
+                console.log(
+                    "🚫 Duplicate complaint rejected"
+                );
+
+                console.log(
+                    "🚫 No new report created"
+                );
+
+                console.log(
+                    "🚫 No admin alert created"
+                );
+
+                return res.status(200).json({
+
+                    success: false,
+
+                    message:
+                        "Duplicate complaint detected. This complaint cannot be accepted because it has already been submitted.",
+
+                    duplicate: true,
+
+                    accepted: false,
+
+                    adminSubmitted: false,
+
+                    existingReportId:
+                        duplicateResult.duplicateReportId,
+
+                    notification:
+                        duplicateNotification
+
+                });
+
+            }
+
+            // ==================================
             // PRIORITY
-            // ----------------------------------
+            // ==================================
 
             const priority =
                 determinePriority(
@@ -429,18 +481,18 @@ app.post(
                     description
                 );
 
-            // ----------------------------------
+            // ==================================
             // AUTHORITY
-            // ----------------------------------
+            // ==================================
 
             const authority =
                 recommendAuthority(
                     issue
                 );
 
-            // ----------------------------------
-            // CREATE REPORT
-            // ----------------------------------
+            // ==================================
+            // CREATE NORMAL REPORT
+            // ==================================
 
             const report = {
 
@@ -464,10 +516,10 @@ app.post(
                 authority,
 
                 isDuplicate:
-                    duplicateResult.isDuplicate,
+                    false,
 
                 duplicateReportId:
-                    duplicateResult.duplicateReportId,
+                    null,
 
                 citizenEmail,
 
@@ -482,87 +534,21 @@ app.post(
 
             };
 
-            // ----------------------------------
-            // SAVE REPORT
-            // ----------------------------------
+            // ==================================
+            // SAVE NORMAL REPORT
+            // ==================================
 
             reports.push(
                 report
             );
 
-            // ==================================
-            // DUPLICATE REPORT
-            // ==================================
-
-            if (
-                duplicateResult.isDuplicate
-            ) {
-
-                console.log(
-                    `⚠️ Duplicate complaint detected: ${report.id}`
-                );
-
-                console.log(
-                    `🔗 Existing report: ${duplicateResult.duplicateReportId}`
-                );
-
-                // --------------------------------
-                // CITIZEN NOTIFICATION ONLY
-                // --------------------------------
-
-                createNotification(
-
-                    report.id,
-
-                    "duplicate",
-
-                    "⚠️ Duplicate Complaint Detected",
-
-                    `Your ${issue} complaint appears to be a duplicate. A similar complaint already exists for this issue and location. Existing Complaint ID: ${duplicateResult.duplicateReportId}`,
-
-                    citizenEmail
-
-                );
-
-                // --------------------------------
-                // IMPORTANT:
-                // NO ADMIN ALERT
-                // NO NORMAL ADMIN REPORT
-                // --------------------------------
-
-                console.log(
-                    "🚫 Duplicate report excluded from Admin Dashboard"
-                );
-
-                console.log(
-                    "🚫 Duplicate report excluded from Admin Alerts"
-                );
-
-                return res.status(200).json({
-
-                    message:
-                        "Duplicate complaint detected",
-
-                    duplicate:
-                        true,
-
-                    report
-
-                });
-
-            }
-
-            // ==================================
-            // NORMAL REPORT
-            // ==================================
-
             console.log(
-                `✅ New normal report created: ${report.id}`
+                `✅ AI accepted new report: ${report.id}`
             );
 
-            // ----------------------------------
+            // ==================================
             // CITIZEN NOTIFICATION
-            // ----------------------------------
+            // ==================================
 
             createNotification(
 
@@ -578,9 +564,9 @@ app.post(
 
             );
 
-            // ----------------------------------
+            // ==================================
             // ADMIN ALERT
-            // ----------------------------------
+            // ==================================
 
             createAdminAlert(
 
@@ -594,13 +580,22 @@ app.post(
 
             );
 
+            // ==================================
+            // SUCCESS RESPONSE
+            // ==================================
+
             return res.status(200).json({
+
+                success: true,
 
                 message:
                     "Report analysed successfully 🚀",
 
-                duplicate:
-                    false,
+                duplicate: false,
+
+                accepted: true,
+
+                adminSubmitted: true,
 
                 report
 
@@ -614,6 +609,8 @@ app.post(
             );
 
             return res.status(500).json({
+
+                success: false,
 
                 message:
                     "Server error while uploading image"
@@ -635,19 +632,8 @@ app.get(
 
         cleanupOldSolvedReports();
 
-        // ======================================
-        // DUPLICATE REPORTS ARE NOT SENT
-        // TO ADMIN DASHBOARD
-        // ======================================
-
-        const adminReports =
-            reports.filter(
-                report =>
-                    report.isDuplicate !== true
-            );
-
         res.status(200).json(
-            adminReports
+            reports
         );
 
     }
@@ -714,11 +700,9 @@ app.patch(
                 ).trim();
 
             const allowedStatuses = [
-
                 "Pending",
                 "Processing",
                 "Solved"
-
             ];
 
             if (
@@ -805,9 +789,7 @@ app.patch(
             }
 
             console.log(
-
                 `Report ${reportId} status updated from ${oldStatus} to ${newStatus}`
-
             );
 
             // ==================================
@@ -901,70 +883,6 @@ app.patch(
 );
 
 // ==========================================
-// DELETE REPORT
-// ==========================================
-
-app.delete(
-    "/reports/:id",
-    (req, res) => {
-
-        try {
-
-            const reportId =
-                Number(
-                    req.params.id
-                );
-
-            const index =
-                reports.findIndex(
-                    report =>
-                        report.id ===
-                        reportId
-                );
-
-            if (index === -1) {
-
-                return res.status(404).json({
-
-                    message:
-                        "Report not found"
-
-                });
-
-            }
-
-            reports.splice(
-                index,
-                1
-            );
-
-            return res.status(200).json({
-
-                message:
-                    "Report deleted successfully"
-
-            });
-
-        } catch (error) {
-
-            console.error(
-                "Delete report error:",
-                error
-            );
-
-            return res.status(500).json({
-
-                message:
-                    "Server error while deleting report"
-
-            });
-
-        }
-
-    }
-);
-
-// ==========================================
 // CITIZEN NOTIFICATIONS - GET
 // ==========================================
 
@@ -972,22 +890,14 @@ app.get(
     "/notifications",
     (req, res) => {
 
-        // ======================================
-        // GET CITIZEN EMAIL
-        // ======================================
-
         const citizenEmail =
             String(
                 req.query.email ||
                 req.query.citizenEmail ||
                 ""
             )
-            .trim()
-            .toLowerCase();
-
-        // ======================================
-        // FILTER NOTIFICATIONS
-        // ======================================
+                .trim()
+                .toLowerCase();
 
         let citizenNotifications = [];
 
@@ -1000,34 +910,22 @@ app.get(
                             notification.citizenEmail ||
                             ""
                         )
-                        .trim()
-                        .toLowerCase() ===
+                            .trim()
+                            .toLowerCase() ===
                         citizenEmail
                 );
 
         } else {
 
-            // No email = return empty list.
-            // This prevents one citizen from
-            // seeing another citizen's notifications.
-
             citizenNotifications = [];
 
         }
-
-        // ======================================
-        // UNREAD COUNT
-        // ======================================
 
         const unreadCount =
             citizenNotifications.filter(
                 notification =>
                     notification.read === false
             ).length;
-
-        // ======================================
-        // RESPONSE
-        // ======================================
 
         res.status(200).json({
 
@@ -1060,10 +958,6 @@ app.patch(
                 req.params.id
             );
 
-        // ======================================
-        // FIND NOTIFICATION
-        // ======================================
-
         const notification =
             notifications.find(
                 item =>
@@ -1082,10 +976,6 @@ app.patch(
 
         }
 
-        // ======================================
-        // GET CITIZEN EMAIL
-        // ======================================
-
         const citizenEmail =
             String(
                 req.body.citizenEmail ||
@@ -1094,38 +984,21 @@ app.patch(
                 req.query.citizenEmail ||
                 ""
             )
-            .trim()
-            .toLowerCase();
-
-        // ======================================
-        // GET NOTIFICATION OWNER
-        // ======================================
+                .trim()
+                .toLowerCase();
 
         const notificationEmail =
             String(
                 notification.citizenEmail ||
                 ""
             )
-            .trim()
-            .toLowerCase();
-
-        // ======================================
-        // SECURITY CHECK
-        // ======================================
-
-        /*
-         * If the notification belongs to a citizen,
-         * only that same citizen can mark it as read.
-         */
+                .trim()
+                .toLowerCase();
 
         if (
             notificationEmail &&
             notificationEmail !== citizenEmail
         ) {
-
-            console.log(
-                `🚫 Unauthorized notification access attempt: ${notificationId}`
-            );
 
             return res.status(403).json({
 
@@ -1135,10 +1008,6 @@ app.patch(
             });
 
         }
-
-        // ======================================
-        // EMAIL REQUIRED
-        // ======================================
 
         if (
             notificationEmail &&
@@ -1154,16 +1023,8 @@ app.patch(
 
         }
 
-        // ======================================
-        // MARK AS READ
-        // ======================================
-
         notification.read =
             true;
-
-        console.log(
-            `✅ Notification ${notificationId} marked as read for ${citizenEmail}`
-        );
 
         return res.status(200).json({
 
@@ -1191,12 +1052,8 @@ app.patch(
                 req.body.citizenEmail ||
                 ""
             )
-            .trim()
-            .toLowerCase();
-
-        // ======================================
-        // REQUIRE CITIZEN EMAIL
-        // ======================================
+                .trim()
+                .toLowerCase();
 
         if (!citizenEmail) {
 
@@ -1209,10 +1066,6 @@ app.patch(
 
         }
 
-        // ======================================
-        // ONLY MARK THIS CITIZEN'S NOTIFICATIONS
-        // ======================================
-
         notifications.forEach(
             notification => {
 
@@ -1221,8 +1074,8 @@ app.patch(
                         notification.citizenEmail ||
                         ""
                     )
-                    .trim()
-                    .toLowerCase();
+                        .trim()
+                        .toLowerCase();
 
                 if (
                     notificationEmail ===
@@ -1237,10 +1090,6 @@ app.patch(
             }
         );
 
-        // ======================================
-        // REMAINING UNREAD COUNT
-        // ======================================
-
         const remainingUnread =
             notifications.filter(
                 notification => {
@@ -1250,8 +1099,8 @@ app.patch(
                             notification.citizenEmail ||
                             ""
                         )
-                        .trim()
-                        .toLowerCase();
+                            .trim()
+                            .toLowerCase();
 
                     return (
                         notificationEmail ===
@@ -1367,8 +1216,8 @@ app.post(
                 req.body.citizenEmail ||
                 ""
             )
-            .trim()
-            .toLowerCase() ||
+                .trim()
+                .toLowerCase() ||
             null;
 
         const notification =
@@ -1421,10 +1270,6 @@ function cleanupOldSolvedReports() {
         reports.filter(
             report => {
 
-                // --------------------------------
-                // KEEP UNSOLVED REPORTS
-                // --------------------------------
-
                 if (
                     String(
                         report.status || ""
@@ -1435,10 +1280,6 @@ function cleanupOldSolvedReports() {
                     return true;
 
                 }
-
-                // --------------------------------
-                // KEEP IF SOLVED TIME MISSING
-                // --------------------------------
 
                 if (
                     !report.solvedAt
@@ -1453,10 +1294,6 @@ function cleanupOldSolvedReports() {
                         report.solvedAt
                     ).getTime();
 
-                // --------------------------------
-                // KEEP INVALID DATES
-                // --------------------------------
-
                 if (
                     Number.isNaN(
                         solvedTime
@@ -1470,10 +1307,6 @@ function cleanupOldSolvedReports() {
                 const age =
                     now -
                     solvedTime;
-
-                // --------------------------------
-                // DELETE AFTER 14 DAYS
-                // --------------------------------
 
                 return (
                     age <
@@ -1492,9 +1325,7 @@ function cleanupOldSolvedReports() {
     ) {
 
         console.log(
-
             `🗑️ 14-day auto cleanup: ${deletedCount} solved report(s) deleted`
-
         );
 
     }
@@ -1527,7 +1358,15 @@ app.listen(
         );
 
         console.log(
+            "🤖 AI complaint processing: ACTIVE"
+        );
+
+        console.log(
             "🔍 Duplicate complaint detection: ACTIVE"
+        );
+
+        console.log(
+            "🚫 Duplicate complaint rejection: ACTIVE"
         );
 
         console.log(
@@ -1540,14 +1379,6 @@ app.listen(
 
         console.log(
             "🔔 Admin alerts: ACTIVE"
-        );
-
-        console.log(
-            "🚫 Duplicate reports hidden from Admin Dashboard: ACTIVE"
-        );
-
-        console.log(
-            "🔐 Notification ownership security: ACTIVE"
         );
 
         console.log(

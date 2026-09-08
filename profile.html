@@ -8,6 +8,7 @@
     <title>CivicEye AI - Profile</title>
 
     <style>
+
         * {
             box-sizing: border-box;
         }
@@ -19,9 +20,10 @@
             color: white;
         }
 
+
         /* ================================
            NAVBAR
-           ================================ */
+        ================================ */
 
         .civic-navbar {
             position: fixed;
@@ -29,14 +31,20 @@
             left: 0;
             right: 0;
             height: 65px;
+
             padding: 0 20px;
+
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             background: rgba(255, 255, 255, 0.12);
+
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
+
             border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+
             z-index: 999998;
         }
 
@@ -54,7 +62,6 @@
         .civic-nav-links > a {
             color: inherit;
             text-decoration: none;
-            font-weight: 600;
             padding: 10px 14px;
             border-radius: 10px;
         }
@@ -63,86 +70,340 @@
             background: rgba(255, 255, 255, 0.12);
         }
 
-        /* ================================
-           MORE MENU
-           ================================ */
+
+        /* =====================================================
+           CIVICEYE THREE DOT MENU
+           SAME AS INDEX / TRACK / CITIZEN
+        ===================================================== */
 
         .more-menu-container {
-            position: relative;
-            display: inline-block;
-            margin-left: 8px;
+            position: relative !important;
+            display: inline-block !important;
+            margin-left: 8px !important;
             z-index: 999999 !important;
         }
 
+
+        /* =====================================================
+           THREE DOT BUTTON
+        ===================================================== */
+
         .more-menu-button {
-            width: 42px;
-            height: 42px;
-            border: none;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.16);
-            color: inherit;
-            font-size: 26px;
-            line-height: 1;
-            cursor: pointer;
-            position: relative;
+            width: 58px !important;
+            height: 58px !important;
+
+            padding: 0 !important;
+
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+
+            border: 1px solid rgba(40, 50, 80, 0.20) !important;
+            background: rgba(40, 50, 80, 0.08) !important;
+
+            color: #26324a !important;
+
+            border-radius: 16px !important;
+
+            font-family: Arial, sans-serif !important;
+            font-size: 28px !important;
+            font-weight: 400 !important;
+            line-height: 1 !important;
+
+            cursor: pointer !important;
+
+            position: relative !important;
             z-index: 1000000 !important;
+
             pointer-events: auto !important;
+
+            box-shadow: none !important;
+
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+
+            transition:
+                background 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease !important;
         }
 
-        .more-menu-button:hover {
-            background: rgba(255, 255, 255, 0.25);
+
+        /* =====================================================
+           LIGHT THEME BUTTON
+        ===================================================== */
+
+        body.theme-light .more-menu-button {
+            border: 1px solid rgba(40, 50, 80, 0.20) !important;
+            background: rgba(40, 50, 80, 0.08) !important;
+            color: #26324a !important;
         }
+
+        body.theme-light .more-menu-button:hover {
+            background: rgba(40, 50, 80, 0.14) !important;
+            border-color: rgba(40, 50, 80, 0.28) !important;
+            color: #1e293b !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+
+        /* =====================================================
+           DARK THEME BUTTON
+        ===================================================== */
+
+        body.theme-dark .more-menu-button {
+            border: 1px solid rgba(255, 255, 255, 0.16) !important;
+            background: rgba(255, 255, 255, 0.10) !important;
+            color: #ffffff !important;
+        }
+
+        body.theme-dark .more-menu-button:hover {
+            background: rgba(255, 255, 255, 0.16) !important;
+            border-color: rgba(255, 255, 255, 0.24) !important;
+            color: #ffffff !important;
+            transform: none !important;
+            box-shadow: none !important;
+        }
+
+
+        /* =====================================================
+           MORE MENU
+        ===================================================== */
 
         .more-menu {
             position: fixed !important;
+
             top: 70px !important;
             right: 20px !important;
-            width: 235px;
-            padding: 8px;
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.97);
-            color: #222;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.30);
+
+            width: 235px !important;
+            padding: 8px !important;
+
+            border-radius: 16px !important;
+
+            background: rgba(255, 255, 255, 0.16) !important;
+            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.30) !important;
+
             display: none !important;
-            z-index: 999999 !important;
+
+            /* MENU ABOVE THREE DOT BUTTON */
+            z-index: 1000001 !important;
+
+            animation: moreMenuOpen 0.18s ease;
+
             pointer-events: auto !important;
+
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
         }
 
         .more-menu.show {
             display: block !important;
             pointer-events: auto !important;
+            z-index: 1000001 !important;
         }
+
+
+        /* =====================================================
+           MENU ITEMS
+        ===================================================== */
 
         .more-menu a,
         .more-menu button {
-            width: 100%;
-            display: block;
-            border: none;
-            background: transparent;
-            color: #222;
-            text-decoration: none;
-            text-align: left;
-            padding: 12px 13px;
-            border-radius: 10px;
-            font-size: 14px;
-            cursor: pointer;
-            position: relative;
-            z-index: 1000000 !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+
+            display: flex !important;
+            align-items: center !important;
+
+            gap: 10px !important;
+
+            padding: 12px 13px !important;
+            margin: 2px 0 !important;
+
+            border: none !important;
+            background: transparent !important;
+
+            color: var(--main-text, #222222) !important;
+
+            text-decoration: none !important;
+
+            font-family: Arial, sans-serif !important;
+            font-size: 15px !important;
+            font-weight: 500 !important;
+            font-style: normal !important;
+
+            letter-spacing: 0 !important;
+
+            border-radius: 10px !important;
+
+            cursor: pointer !important;
+
+            text-align: left !important;
+
+            position: relative !important;
+            z-index: 1000002 !important;
+
             pointer-events: auto !important;
+
+            transition:
+                background 0.2s ease,
+                color 0.2s ease !important;
         }
 
-        .more-menu a:hover,
-        .more-menu button:hover {
-            background: #f0f2f5;
+
+        /* =====================================================
+           LIGHT THEME MENU
+        ===================================================== */
+
+        body.theme-light .more-menu {
+            background: rgba(255, 255, 255, 0.16) !important;
+            border: 1px solid rgba(40, 50, 80, 0.20) !important;
+
+            color: #222222 !important;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.20) !important;
+
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
         }
+
+        body.theme-light .more-menu a,
+        body.theme-light .more-menu button {
+            color: #222222 !important;
+            background: transparent !important;
+        }
+
+        body.theme-light .more-menu a:hover,
+        body.theme-light .more-menu button:hover {
+            background: rgba(40, 50, 80, 0.08) !important;
+            color: #222222 !important;
+        }
+
+
+        /* =====================================================
+           DARK THEME MENU
+        ===================================================== */
+
+        body.theme-dark .more-menu {
+            background: rgba(16, 32, 43, 0.72) !important;
+            border: 1px solid rgba(255, 255, 255, 0.16) !important;
+
+            color: #ffffff !important;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.55) !important;
+
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+        }
+
+        body.theme-dark .more-menu a,
+        body.theme-dark .more-menu button {
+            color: #ffffff !important;
+            background: transparent !important;
+        }
+
+        body.theme-dark .more-menu a:hover,
+        body.theme-dark .more-menu button:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+            color: #ffffff !important;
+        }
+
+
+        /* =====================================================
+           DEFAULT THEME MENU
+        ===================================================== */
+
+        body:not(.theme-light):not(.theme-dark) .more-menu {
+            background: rgba(255, 255, 255, 0.16) !important;
+
+            border: 1px solid rgba(255, 255, 255, 0.25) !important;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.25) !important;
+
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+        }
+
+        body:not(.theme-light):not(.theme-dark) .more-menu a,
+        body:not(.theme-light):not(.theme-dark) .more-menu button {
+            background: transparent !important;
+            color: var(--main-text, #222222) !important;
+        }
+
+        body:not(.theme-light):not(.theme-dark) .more-menu a:hover,
+        body:not(.theme-light):not(.theme-dark) .more-menu button:hover {
+            background: rgba(255, 255, 255, 0.10) !important;
+        }
+
+
+        /* =====================================================
+           LOGOUT — NO HIGHLIGHT
+        ===================================================== */
 
         .more-menu .logout-item {
-            color: #d93636;
+            background: transparent !important;
+            color: #ff4757 !important;
+
+            outline: none !important;
+            box-shadow: none !important;
         }
+
+        .more-menu .logout-item:hover,
+        .more-menu .logout-item:focus,
+        .more-menu .logout-item:active {
+            background: transparent !important;
+            color: #ff4757 !important;
+
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+        body.theme-dark .more-menu .logout-item {
+            background: transparent !important;
+            color: #ff6b7a !important;
+        }
+
+        body.theme-dark .more-menu .logout-item:hover,
+        body.theme-dark .more-menu .logout-item:focus,
+        body.theme-dark .more-menu .logout-item:active {
+            background: transparent !important;
+            color: #ff6b7a !important;
+
+            outline: none !important;
+            box-shadow: none !important;
+        }
+
+
+        /* =====================================================
+           MENU ANIMATION
+        ===================================================== */
+
+        @keyframes moreMenuOpen {
+
+            from {
+                opacity: 0;
+                transform: translateY(-8px) scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
 
         /* ================================
            PROFILE
-           ================================ */
+        ================================ */
 
         .profile-container {
             min-height: 100vh;
@@ -199,10 +460,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        .info-label {
-            font-weight: bold;
-        }
-
         .info-value {
             text-align: right;
             word-break: break-word;
@@ -224,7 +481,6 @@
 
         .stat-number {
             font-size: 28px;
-            font-weight: bold;
             margin-bottom: 8px;
         }
 
@@ -263,9 +519,10 @@
             opacity: 0.8;
         }
 
+
         /* ================================
            LIGHT THEME
-           ================================ */
+        ================================ */
 
         body.theme-light {
             background: #f5f7fa;
@@ -283,8 +540,8 @@
         }
 
         body.theme-light .more-menu-button {
-            background: rgba(0, 0, 0, 0.06);
-            color: #222;
+            background: rgba(40, 50, 80, 0.08);
+            color: #26324a;
         }
 
         body.theme-light .profile-box {
@@ -312,9 +569,10 @@
             color: white;
         }
 
+
         /* ================================
            DARK THEME
-           ================================ */
+        ================================ */
 
         body.theme-dark {
             background: #101010;
@@ -351,9 +609,10 @@
             color: white;
         }
 
+
         /* ================================
            MODALS
-           ================================ */
+        ================================ */
 
         .civic-modal {
             position: fixed;
@@ -411,9 +670,10 @@
             color: white;
         }
 
+
         /* ================================
            RESPONSIVE
-           ================================ */
+        ================================ */
 
         @media (max-width: 600px) {
 
@@ -454,15 +714,19 @@
             .info-value {
                 text-align: left;
             }
+
         }
+
     </style>
 </head>
 
+
 <body>
+
 
     <!-- ================================
          NAVBAR
-         ================================ -->
+    ================================ -->
 
     <nav class="civic-navbar">
 
@@ -470,11 +734,13 @@
             👁️ CivicEye AI
         </div>
 
+
         <div class="civic-nav-links">
 
-            <a href="./citizen.html" data-i18n="home">
-                🏠 Home
+            <a href="./citizen.html" data-i18n="citizenportal">
+                Citizen Portal
             </a>
+
 
             <div class="more-menu-container">
 
@@ -488,19 +754,32 @@
                     ⋮
                 </button>
 
+
                 <div class="more-menu" id="moreMenu">
 
-                    <a href="./profile.html" data-i18n="menuProfile">
+                    <a
+                        href="./profile.html"
+                        data-i18n="menuProfile"
+                    >
                         👤 Profile
                     </a>
 
-                    <a href="./settings.html" data-i18n="menuSettings">
+
+                    <a
+                        href="./settings.html"
+                        data-i18n="menuSettings"
+                    >
                         ⚙️ Settings
                     </a>
 
-                    <a href="./privacy.html" data-i18n="menuPrivacy">
+
+                    <a
+                        href="./privacy.html"
+                        data-i18n="menuPrivacy"
+                    >
                         🔒 Privacy
                     </a>
+
 
                     <button
                         type="button"
@@ -510,6 +789,7 @@
                         ❓ Help & Support
                     </button>
 
+
                     <button
                         type="button"
                         onclick="showAbout()"
@@ -517,6 +797,7 @@
                     >
                         ℹ️ About CivicEye AI
                     </button>
+
 
                     <a
                         href="./login.html"
@@ -537,7 +818,7 @@
 
     <!-- ================================
          PROFILE
-         ================================ -->
+    ================================ -->
 
     <div class="profile-container">
 
@@ -547,9 +828,11 @@
                 👤
             </div>
 
+
             <h1 data-i18n="title">
                 My Profile
             </h1>
+
 
             <p
                 class="profile-subtitle"
@@ -673,44 +956,11 @@
             </div>
 
 
-            <!-- ACTIONS -->
-
-            <div class="actions">
-
-                <a
-                    href="./citizen.html"
-                    class="action-btn"
-                    data-i18n="dashboard"
-                >
-                    🏠 Dashboard
-                </a>
-
-                <a
-                    href="./settings.html"
-                    class="action-btn"
-                    data-i18n="settings"
-                >
-                    ⚙️ Settings
-                </a>
-
-                <button
-                    class="action-btn logout-btn"
-                    onclick="logout()"
-                    data-i18n="logout"
-                >
-                    🚪 Logout
-                </button>
-
-            </div>
-
-        </div>
-
-    </div>
-
+            
 
     <!-- ================================
          HELP MODAL
-         ================================ -->
+    ================================ -->
 
     <div
         class="civic-modal"
@@ -727,17 +977,21 @@
                 ×
             </button>
 
+
             <h2 data-i18n="helpTitle">
                 ❓ Help & Support
             </h2>
+
 
             <p data-i18n="helpText1">
                 Need help using CivicEye AI?
             </p>
 
+
             <p data-i18n="helpText2">
                 Use Report Issue to submit a public issue, Track Issue to monitor its status, and My Reports to view your submitted reports.
             </p>
+
 
             <p data-i18n="helpText3">
                 Make sure your internet connection is active when submitting or checking reports.
@@ -750,7 +1004,7 @@
 
     <!-- ================================
          ABOUT MODAL
-         ================================ -->
+    ================================ -->
 
     <div
         class="civic-modal"
@@ -767,17 +1021,21 @@
                 ×
             </button>
 
+
             <h2 data-i18n="aboutTitle">
                 ℹ️ About CivicEye AI
             </h2>
+
 
             <p data-i18n="aboutText1">
                 CivicEye AI is a citizen-focused platform designed to make reporting and tracking public issues easier.
             </p>
 
+
             <p data-i18n="aboutText2">
                 The platform supports AI-assisted issue identification, location tracking, status updates, notifications and analytics.
             </p>
+
 
             <p data-i18n="aboutText3">
                 Built with the goal of helping create cleaner, safer and better communities in Sri Lanka 🇱🇰
@@ -792,7 +1050,7 @@
 
         /* ================================
            THEME
-           ================================ */
+        ================================ */
 
         (function () {
 
@@ -812,6 +1070,7 @@
                 );
 
             }
+
             else if (savedTheme === "dark") {
 
                 document.body.classList.add(
@@ -825,13 +1084,13 @@
 
         /* ================================
            LANGUAGE
-           ================================ */
+        ================================ */
 
         const translations = {
 
             en: {
 
-                home: "🏠 Home",
+                citizenportal: "👤 Citizen Portal",
 
                 menuProfile: "👤 Profile",
 
@@ -899,7 +1158,7 @@
 
             ta: {
 
-                home: "🏠 முகப்பு",
+                citizenportal: "👤 குடிமக்கள் போர்டல்",
 
                 menuProfile: "👤 சுயவிவரம்",
 
@@ -967,7 +1226,7 @@
 
             si: {
 
-                home: "🏠 මුල් පිටුව",
+                citizenportal: "👤 පුරවැසි ද්වාරය",
 
                 menuProfile: "👤 පැතිකඩ",
 
@@ -1084,7 +1343,7 @@
 
         /* ================================
            MORE MENU
-           ================================ */
+        ================================ */
 
         const moreMenuButton =
             document.getElementById(
@@ -1143,7 +1402,7 @@
 
         /* ================================
            MODALS
-           ================================ */
+        ================================ */
 
         function showHelp() {
 
@@ -1232,7 +1491,7 @@
 
         /* ================================
            PROFILE DATA
-           ================================ */
+        ================================ */
 
         const BACKEND_URL =
             "https://civiceye-backend-production-eac6.up.railway.app";
@@ -1256,6 +1515,7 @@
                 citizenEmail;
 
         }
+
         else {
 
             profileEmail.textContent =
@@ -1266,7 +1526,7 @@
 
         /* ================================
            LOAD REPORT STATISTICS
-           ================================ */
+        ================================ */
 
         async function loadProfileStats() {
 
@@ -1335,6 +1595,7 @@
                     active;
 
             }
+
             catch (error) {
 
                 console.error(
@@ -1343,6 +1604,7 @@
                 );
 
             }
+
             finally {
 
                 document.getElementById(
@@ -1360,7 +1622,7 @@
 
         /* ================================
            LOGOUT
-           ================================ */
+        ================================ */
 
         function logout() {
 
@@ -1376,7 +1638,7 @@
 
         /* ================================
            REFRESH LANGUAGE
-           ================================ */
+        ================================ */
 
         window.addEventListener(
             "pageshow",

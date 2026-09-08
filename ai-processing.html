@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="style.css">
 
     <style>
+
         /* ================================
            SAVED THEME SUPPORT
            ================================ */
@@ -73,227 +75,8 @@
             gap: 10px !important;
         }
 
-
-        /* ================================
-           MORE MENU
-           ================================ */
-
-        .more-menu-container {
-            position: relative !important;
-            display: inline-block !important;
-            margin-left: 0 !important;
-            z-index: 999999 !important;
-        }
-
-        .more-menu-button {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-
-            width: 42px !important;
-            height: 42px !important;
-
-            padding: 0 !important;
-
-            border: none !important;
-            background: transparent !important;
-
-            font-size: 26px !important;
-            line-height: 1 !important;
-
-            cursor: pointer !important;
-
-            position: relative !important;
-            z-index: 1000000 !important;
-        }
-
-        .more-menu {
-            position: fixed !important;
-
-            top: 70px !important;
-            right: 20px !important;
-
-            width: 235px !important;
-
-            padding: 8px !important;
-
-            display: none !important;
-            flex-direction: column !important;
-
-            background: rgba(255, 255, 255, 0.98) !important;
-
-            border-radius: 16px !important;
-
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.30) !important;
-
-            z-index: 999999 !important;
-
-            animation: moreMenuOpen 0.18s ease;
-
-            pointer-events: auto !important;
-        }
-
-        .more-menu.show {
-            display: flex !important;
-            flex-direction: column !important;
-        }
-
-        .more-menu a,
-        .more-menu button {
-            display: flex !important;
-            align-items: center !important;
-
-            width: 100% !important;
-            min-height: 44px !important;
-
-            box-sizing: border-box !important;
-
-            margin: 0 !important;
-            padding: 11px 14px !important;
-
-            border: none !important;
-            border-radius: 10px !important;
-
-            background: transparent !important;
-
-            color: #374151 !important;
-
-            text-decoration: none !important;
-            text-align: left !important;
-
-            font-size: 15px !important;
-            font-family: inherit !important;
-
-            cursor: pointer !important;
-
-            white-space: nowrap !important;
-
-            position: relative !important;
-            z-index: 1000000 !important;
-        }
-
-        .more-menu a:hover,
-        .more-menu button:hover {
-            background: rgba(0, 0, 0, 0.06) !important;
-        }
-
-
-        /* ================================
-           DARK MODE MENU
-           ================================ */
-
-        body.theme-dark .more-menu {
-            background: #1f2937 !important;
-        }
-
-        body.theme-dark .more-menu a,
-        body.theme-dark .more-menu button {
-            color: #ffffff !important;
-        }
-
-        body.theme-dark .more-menu a:hover,
-        body.theme-dark .more-menu button:hover {
-            background: rgba(255, 255, 255, 0.08) !important;
-        }
-
-        .more-menu .logout-item {
-            color: #dc2626 !important;
-        }
-
-        body.theme-dark .more-menu .logout-item {
-            color: #f87171 !important;
-        }
-
-
-        /* ================================
-           MENU ANIMATION
-           ================================ */
-
-        @keyframes moreMenuOpen {
-            from {
-                opacity: 0;
-                transform: translateY(-8px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-
-        /* ================================
-           MODALS
-           ================================ */
-
-        .civic-modal {
-            position: fixed;
-            inset: 0;
-
-            display: none;
-
-            align-items: center;
-            justify-content: center;
-
-            background: rgba(0, 0, 0, 0.55);
-
-            z-index: 2000000;
-
-            padding: 20px;
-
-            box-sizing: border-box;
-        }
-
-        .civic-modal.show {
-            display: flex;
-        }
-
-        .civic-modal-content {
-            width: min(500px, 100%);
-
-            background: #ffffff;
-
-            color: #1f2937;
-
-            border-radius: 18px;
-
-            padding: 25px;
-
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-
-            position: relative;
-        }
-
-        body.theme-dark .civic-modal-content {
-            background: #1f2937;
-            color: #ffffff;
-        }
-
-        .civic-modal-content h2 {
-            margin-top: 0;
-        }
-
-        .civic-modal-content p {
-            line-height: 1.6;
-        }
-
-        .civic-modal-close {
-            position: absolute;
-
-            top: 10px;
-            right: 14px;
-
-            border: none;
-
-            background: transparent;
-
-            font-size: 26px;
-
-            cursor: pointer;
-
-            color: inherit;
-        }
     </style>
+
 </head>
 
 
@@ -315,55 +98,6 @@
             <a href="./index.html">
                 🏠 Home
             </a>
-
-            <div class="more-menu-container">
-
-                <button
-                    type="button"
-                    class="more-menu-button"
-                    id="moreMenuButton"
-                    aria-label="More"
-                    aria-expanded="false">
-                    ⋮
-                </button>
-
-                <div
-                    class="more-menu"
-                    id="moreMenu">
-
-                    <a href="./profile.html">
-                        👤 Profile
-                    </a>
-
-                    <a href="./settings.html">
-                        ⚙️ Settings
-                    </a>
-
-                    <a href="./privacy.html">
-                        🔒 Privacy
-                    </a>
-
-                    <button
-                        type="button"
-                        onclick="showHelp()">
-                        ❓ Help & Support
-                    </button>
-
-                    <button
-                        type="button"
-                        onclick="showAbout()">
-                        ℹ️ About CivicEye AI
-                    </button>
-
-                    <a
-                        href="./login.html"
-                        class="logout-item">
-                        🚪 Logout
-                    </a>
-
-                </div>
-
-            </div>
 
         </div>
 
@@ -540,102 +274,7 @@
     </div>
 
 
-    <!-- ================================
-         HELP MODAL
-         ================================ -->
-
-    <div
-        class="civic-modal"
-        id="helpModal"
-        onclick="closeModalOutside(event)">
-
-        <div class="civic-modal-content">
-
-            <button
-                class="civic-modal-close"
-                type="button"
-                onclick="closeModal()">
-
-                ×
-
-            </button>
-
-            <h2>
-                ❓ Help & Support
-            </h2>
-
-            <p>
-                Need help using CivicEye AI?
-            </p>
-
-            <p>
-                📸 Upload a clear image of the public issue.
-            </p>
-
-            <p>
-                📝 Select the correct issue type and describe the problem.
-            </p>
-
-            <p>
-                📍 Add your location so authorities can identify the issue.
-            </p>
-
-            <p>
-                🚀 After submission, CivicEye AI analyses your complaint
-                and provides the detected issue, priority, authority,
-                duplicate status and current status.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================================
-         ABOUT MODAL
-         ================================ -->
-
-    <div
-        class="civic-modal"
-        id="aboutModal"
-        onclick="closeModalOutside(event)">
-
-        <div class="civic-modal-content">
-
-            <button
-                class="civic-modal-close"
-                type="button"
-                onclick="closeModal()">
-
-                ×
-
-            </button>
-
-            <h2>
-                ℹ️ About CivicEye AI
-            </h2>
-
-            <p>
-                CivicEye AI is an AI-powered platform designed to help
-                citizens report and track public issues more easily.
-            </p>
-
-            <p>
-                The system can identify issue types, detect duplicate
-                complaints, recommend the relevant authority and provide
-                status updates.
-            </p>
-
-            <p>
-                🇱🇰 Built with the goal of creating cleaner, safer and
-                smarter communities.
-            </p>
-
-        </div>
-
-    </div>
-
-
+    
     <script>
 
         /* ================================
@@ -671,91 +310,8 @@
 
 
         /* ================================
-           MORE MENU
+           MODAL
            ================================ */
-
-        const moreMenuButton =
-            document.getElementById("moreMenuButton");
-
-        const moreMenu =
-            document.getElementById("moreMenu");
-
-
-        moreMenuButton.addEventListener(
-            "click",
-            function (event) {
-
-                event.stopPropagation();
-
-                const isOpen =
-                    moreMenu.classList.toggle("show");
-
-                moreMenuButton.setAttribute(
-                    "aria-expanded",
-                    isOpen ? "true" : "false"
-                );
-
-            }
-        );
-
-
-        document.addEventListener(
-            "click",
-            function (event) {
-
-                if (
-                    !moreMenu.contains(event.target) &&
-                    !moreMenuButton.contains(event.target)
-                ) {
-
-                    moreMenu.classList.remove("show");
-
-                    moreMenuButton.setAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* ================================
-           MODALS
-           ================================ */
-
-        function showHelp() {
-
-            document
-                .getElementById("helpModal")
-                .classList.add("show");
-
-            moreMenu.classList.remove("show");
-
-            moreMenuButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-        }
-
-
-        function showAbout() {
-
-            document
-                .getElementById("aboutModal")
-                .classList.add("show");
-
-            moreMenu.classList.remove("show");
-
-            moreMenuButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-        }
-
 
         function closeModal() {
 
@@ -781,31 +337,6 @@
             }
 
         }
-
-
-        document.addEventListener(
-            "keydown",
-            function (event) {
-
-                if (event.key === "Escape") {
-
-                    closeModal();
-
-                    if (moreMenu) {
-
-                        moreMenu.classList.remove("show");
-
-                        moreMenuButton.setAttribute(
-                            "aria-expanded",
-                            "false"
-                        );
-
-                    }
-
-                }
-
-            }
-        );
 
 
         /* ================================

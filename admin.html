@@ -253,310 +253,331 @@ body.theme-dark .dashboard-nav a {
 
 
 /* =====================================================
-   THREE DOT MENU
+   CIVICEYE THREE DOT MENU
+   SAME STYLE AS PROFILE.HTML
 ===================================================== */
 
 .more-menu-container {
-
-    position:
-        relative;
-
-    display:
-        flex;
-
-    align-items:
-        center;
-
+    position: relative !important;
+    display: inline-block !important;
+    margin-left: 8px !important;
+    z-index: 999999 !important;
 }
 
+
+/* =====================================================
+   THREE DOT BUTTON
+===================================================== */
 
 .more-menu-button {
+    width: 58px !important;
+    height: 58px !important;
 
-    width:
-        42px;
+    padding: 0 !important;
 
-    height:
-        42px;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
 
-    display:
-        flex;
+    border: 1px solid rgba(40, 50, 80, 0.20) !important;
+    background: rgba(40, 50, 80, 0.08) !important;
 
-    align-items:
-        center;
+    color: #26324a !important;
 
-    justify-content:
-        center;
+    border-radius: 16px !important;
 
-    border:
-        1px solid var(--admin-card-border);
+    font-family: Arial, sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 400 !important;
+    line-height: 1 !important;
 
-    border-radius:
-        10px;
+    cursor: pointer !important;
 
-    background:
-        var(--admin-card);
+    position: relative !important;
+    z-index: 1000000 !important;
 
-    color:
-        var(--admin-text);
+    pointer-events: auto !important;
 
-    font-size:
-        25px;
+    box-shadow: none !important;
 
-    font-weight:
-        bold;
-
-    line-height:
-        1;
-
-    cursor:
-        pointer;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
 
     transition:
-        0.2s;
-
-    padding:
-        0;
-
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease !important;
 }
 
 
-.more-menu-button:hover {
+/* =====================================================
+   LIGHT THEME BUTTON
+===================================================== */
 
-    background:
-        var(--admin-secondary);
+body.theme-light .more-menu-button {
+    border: 1px solid rgba(40, 50, 80, 0.20) !important;
+    background: rgba(40, 50, 80, 0.08) !important;
+    color: #26324a !important;
+}
 
-    transform:
-        translateY(-1px);
-
+body.theme-light .more-menu-button:hover {
+    background: rgba(40, 50, 80, 0.14) !important;
+    border-color: rgba(40, 50, 80, 0.28) !important;
+    color: #1e293b !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 
-/* ===============================
+/* =====================================================
+   DARK THEME BUTTON
+===================================================== */
+
+body.theme-dark .more-menu-button {
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    background: rgba(255, 255, 255, 0.10) !important;
+    color: #ffffff !important;
+}
+
+body.theme-dark .more-menu-button:hover {
+    background: rgba(255, 255, 255, 0.16) !important;
+    border-color: rgba(255, 255, 255, 0.24) !important;
+    color: #ffffff !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+
+/* =====================================================
    MORE MENU
-================================ */
+===================================================== */
 
 .more-menu {
+    position: fixed !important;
 
-    position:
-        absolute;
+    top: 70px !important;
+    right: 20px !important;
 
-    top:
-        calc(100% + 10px);
+    width: 235px !important;
+    padding: 8px !important;
 
-    right:
-        0;
+    border-radius: 16px !important;
 
-    width:
-        230px;
-
-    padding:
-        8px;
-
-    background:
-        #ffffff;
-
-    color:
-        #222222;
-
-    border:
-        1px solid #dddddd;
-
-    border-radius:
-        14px;
+    background: rgba(255, 255, 255, 0.16) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,0.15);
+        0 15px 40px rgba(0, 0, 0, 0.30) !important;
 
-    display:
-        none;
+    display: none !important;
 
-    z-index:
-        9999;
+    /* MENU ABOVE THREE DOT BUTTON */
+    z-index: 1000001 !important;
 
-    box-sizing:
-        border-box;
+    animation: moreMenuOpen 0.18s ease;
 
+    pointer-events: auto !important;
+
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
 }
-
 
 .more-menu.show {
-
-    display:
-        block;
-
+    display: block !important;
+    pointer-events: auto !important;
+    z-index: 1000001 !important;
 }
 
 
-/* ===============================
+/* =====================================================
    MENU ITEMS
-================================ */
+===================================================== */
 
 .more-menu a,
 .more-menu button {
+    width: 100% !important;
+    box-sizing: border-box !important;
 
-    width:
-        100% !important;
+    display: flex !important;
+    align-items: center !important;
 
-    box-sizing:
-        border-box !important;
+    gap: 10px !important;
 
-    display:
-        flex !important;
+    padding: 12px 13px !important;
+    margin: 2px 0 !important;
 
-    align-items:
-        center !important;
+    border: none !important;
+    background: transparent !important;
 
-    margin:
-        0 !important;
+    color: var(--main-text, #222222) !important;
 
-    padding:
-        12px 14px !important;
+    text-decoration: none !important;
 
-    gap:
-        10px !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
 
-    text-align:
-        left !important;
+    letter-spacing: 0 !important;
 
-    justify-content:
-        flex-start !important;
+    border-radius: 10px !important;
 
-    font-family:
-        inherit !important;
+    cursor: pointer !important;
 
-    font-size:
-        14px !important;
+    text-align: left !important;
 
-    font-weight:
-        500 !important;
+    position: relative !important;
+    z-index: 1000002 !important;
 
-    line-height:
-        1.2 !important;
+    pointer-events: auto !important;
 
-    border:
-        none !important;
-
-    outline:
-        none !important;
-
-    background:
-        transparent !important;
-
-    appearance:
-        none !important;
-
-    -webkit-appearance:
-        none !important;
-
-    border-radius:
-        10px !important;
-
-    cursor:
-        pointer !important;
-
-    text-decoration:
-        none !important;
-
-    min-height:
-        42px !important;
-
-    color:
-        #222222 !important;
-
-    -webkit-text-fill-color:
-        #222222 !important;
-
+    transition:
+        background 0.2s ease,
+        color 0.2s ease !important;
 }
 
 
-.more-menu a:hover,
-.more-menu button:hover {
+/* =====================================================
+   LIGHT THEME MENU
+===================================================== */
 
-    background:
-        #f1f1f1 !important;
+body.theme-light .more-menu {
+    background: rgba(255, 255, 255, 0.16) !important;
+    border: 1px solid rgba(40, 50, 80, 0.20) !important;
 
-    color:
-        #111111 !important;
-
-    -webkit-text-fill-color:
-        #111111 !important;
-
-}
-
-
-/* ===============================
-   DARK MENU
-================================ */
-
-body.theme-dark .more-menu {
-
-    background:
-        rgba(25,25,35,0.98) !important;
-
-    color:
-        #ffffff !important;
-
-    border:
-        1px solid #374151 !important;
+    color: #222222 !important;
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,0.35) !important;
+        0 15px 40px rgba(0, 0, 0, 0.20) !important;
 
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
 }
 
+body.theme-light .more-menu a,
+body.theme-light .more-menu button {
+    color: #222222 !important;
+    background: transparent !important;
+}
+
+body.theme-light .more-menu a:hover,
+body.theme-light .more-menu button:hover {
+    background: rgba(40, 50, 80, 0.08) !important;
+    color: #222222 !important;
+}
+
+
+/* =====================================================
+   DARK THEME MENU
+===================================================== */
+
+body.theme-dark .more-menu {
+    background: rgba(16, 32, 43, 0.72) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+
+    color: #ffffff !important;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.55) !important;
+
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
 
 body.theme-dark .more-menu a,
 body.theme-dark .more-menu button {
-
-    color:
-        #ffffff !important;
-
-    -webkit-text-fill-color:
-        #ffffff !important;
-
+    color: #ffffff !important;
+    background: transparent !important;
 }
-
 
 body.theme-dark .more-menu a:hover,
 body.theme-dark .more-menu button:hover {
-
-    background:
-        rgba(255,255,255,0.10) !important;
-
-    color:
-        #ffffff !important;
-
-    -webkit-text-fill-color:
-        #ffffff !important;
-
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
 }
 
 
-/* ===============================
-   LOGOUT
-================================ */
+/* =====================================================
+   DEFAULT THEME MENU
+===================================================== */
+
+body:not(.theme-light):not(.theme-dark) .more-menu {
+    background: rgba(255, 255, 255, 0.16) !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25) !important;
+
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+body:not(.theme-light):not(.theme-dark) .more-menu a,
+body:not(.theme-light):not(.theme-dark) .more-menu button {
+    background: transparent !important;
+    color: var(--main-text, #222222) !important;
+}
+
+body:not(.theme-light):not(.theme-dark) .more-menu a:hover,
+body:not(.theme-light):not(.theme-dark) .more-menu button:hover {
+    background: rgba(255, 255, 255, 0.10) !important;
+}
+
+
+/* =====================================================
+   LOGOUT — NO HIGHLIGHT
+===================================================== */
 
 .more-menu .menu-danger {
+    background: transparent !important;
+    color: #ff4757 !important;
 
-    color:
-        #e74c3c !important;
-
-    -webkit-text-fill-color:
-        #e74c3c !important;
-
+    outline: none !important;
+    box-shadow: none !important;
 }
 
+.more-menu .menu-danger:hover,
+.more-menu .menu-danger:focus,
+.more-menu .menu-danger:active {
+    background: transparent !important;
+    color: #ff4757 !important;
+
+    outline: none !important;
+    box-shadow: none !important;
+}
 
 body.theme-dark .more-menu .menu-danger {
-
-    color:
-        #ff6b6b !important;
-
-    -webkit-text-fill-color:
-        #ff6b6b !important;
-
+    background: transparent !important;
+    color: #ff6b7a !important;
 }
 
+body.theme-dark .more-menu .menu-danger:hover,
+body.theme-dark .more-menu .menu-danger:focus,
+body.theme-dark .more-menu .menu-danger:active {
+    background: transparent !important;
+    color: #ff6b7a !important;
+
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+/* =====================================================
+   MENU ANIMATION
+===================================================== */
+
+@keyframes moreMenuOpen {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
 
 /* ===============================
    STATISTICS

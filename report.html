@@ -15,13 +15,12 @@
    ================================================== */
 
 body.theme-light {
-    background: #f5f7fa;
+    background: #95b6e7;
 }
 
 body.theme-dark {
-    background: #101010;
+    background: #585158;
 }
-
 
 /* ==================================================
    REPORT CONTAINER
@@ -35,21 +34,19 @@ body.theme-dark .report-container {
     color: #ffffff;
 }
 
-
 /* ==================================================
    REPORT CARD
    ================================================== */
 
 body.theme-light .report-card {
-    background: #ffffff;
+    background: #9db5cc;
     color: #111827;
 }
 
 body.theme-dark .report-card {
-    background: #1b1b1b;
+    background: #a991ac;
     color: #ffffff;
 }
-
 
 /* ==================================================
    TEXT COLORS
@@ -58,7 +55,7 @@ body.theme-dark .report-card {
 body.theme-light .report-container h1,
 body.theme-light .report-container h2,
 body.theme-light .report-container h3 {
-    color: #111827;
+    color: #4c566b;
 }
 
 body.theme-light .report-container p {
@@ -83,7 +80,6 @@ body.theme-dark .report-container label {
     color: #ffffff;
 }
 
-
 /* ==================================================
    INPUTS
    ================================================== */
@@ -103,7 +99,6 @@ body.theme-dark .report-container select {
     border-color: #555555;
 }
 
-
 /* ==================================================
    PLACEHOLDER
    ================================================== */
@@ -117,7 +112,6 @@ body.theme-dark .report-container input::placeholder,
 body.theme-dark .report-container textarea::placeholder {
     color: #bdbdbd;
 }
-
 
 /* ==================================================
    SELECT OPTIONS
@@ -133,7 +127,6 @@ body.theme-dark .report-container select option {
     background: #222222;
 }
 
-
 /* ==================================================
    FILE INPUT
    ================================================== */
@@ -145,7 +138,6 @@ body.theme-light .report-container input[type="file"] {
 body.theme-dark .report-container input[type="file"] {
     color: #ffffff;
 }
-
 
 /* ==================================================
    STATUS TEXT
@@ -165,262 +157,287 @@ body.theme-dark #submitStatus {
     color: #ffffff;
 }
 
-
 /* ==================================================
-   MORE MENU - FINAL FIX
+   CITIZEN HTML NAVBAR / MENU - EXACT STYLE
    ================================================== */
 
-.civic-nav-links {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
+.civic-navbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 35px;
+    background:var(--card-bg);
+    border-bottom:1px solid var(--card-border);
+    backdrop-filter:blur(15px);
+    position:relative;
+    z-index:999998;
 }
 
+/* CIVICEYE AI - WHITE */
+.civic-logo {
+    font-size:24px;
+    font-weight:bold;
+    color:#ffffff !important;
+}
+
+/* NAV LINKS - WHITE */
+.civic-nav-links {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.civic-nav-links > a {
+    text-decoration:none;
+    color:#ffffff !important;
+    padding:9px 14px;
+    border-radius:10px;
+    transition:.2s;
+    position:relative;
+}
+
+.civic-nav-links > a:hover {
+    background:var(--secondary-bg);
+}
+
+/* THREE DOTS - WHITE */
 .more-menu-container {
-    position: relative !important;
-    display: inline-block !important;
-    margin-left: 0 !important;
-    z-index: 999999 !important;
+    position:relative;
+    display:inline-block;
+    margin-left:8px;
+    z-index:999999 !important;
 }
 
 .more-menu-button {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    width: 42px !important;
-    height: 42px !important;
-
-    padding: 0 !important;
-
-    border: none !important;
-    background: transparent !important;
-
-    font-size: 26px !important;
-    line-height: 1 !important;
-
-    cursor: pointer !important;
-
-    position: relative !important;
-    z-index: 1000000 !important;
+    border:1px solid var(--card-border);
+    background:var(--secondary-bg);
+    color:#ffffff !important;
+    padding:9px 13px;
+    border-radius:10px;
+    font-size:20px;
+    line-height:1;
+    cursor:pointer;
+    position:relative;
+    z-index:1000000 !important;
+    pointer-events:auto !important;
+    transition:.2s;
 }
 
+.more-menu-button:hover {
+    background:var(--soft-bg);
+    transform:scale(1.03);
+}
 
-/* CLOSED */
-
+/* MORE MENU */
 .more-menu {
-    position: fixed !important;
-
-    top: 70px !important;
-    right: 20px !important;
-
-    width: 235px !important;
-
-    padding: 8px !important;
-
-    display: none !important;
-    flex-direction: column !important;
-
-    background: rgba(255,255,255,0.98) !important;
-
-    border-radius: 16px !important;
-
-    box-shadow: 0 15px 40px rgba(0,0,0,0.30) !important;
-
-    z-index: 999999 !important;
-
-    animation: moreMenuOpen 0.18s ease;
-
-    pointer-events: auto !important;
+    position:fixed !important;
+    top:70px !important;
+    right:20px !important;
+    width:235px;
+    padding:8px;
+    border-radius:16px;
+    background:var(--card-bg);
+    border:1px solid var(--card-border);
+    box-shadow:0 15px 40px rgba(0,0,0,.30);
+    display:none !important;
+    z-index:999999 !important;
+    animation:moreMenuOpen .18s ease;
+    pointer-events:auto !important;
+    backdrop-filter:blur(20px);
 }
-
-
-/* OPEN */
 
 .more-menu.show {
-    display: flex !important;
-    flex-direction: column !important;
+    display:block !important;
+    pointer-events:auto !important;
 }
 
-
-/* EVERY MENU ITEM */
-
+/* MENU ITEMS */
 .more-menu a,
 .more-menu button {
-    display: flex !important;
-    align-items: center !important;
-
-    width: 100% !important;
-    min-height: 44px !important;
-
-    box-sizing: border-box !important;
-
-    margin: 0 !important;
-    padding: 11px 14px !important;
-
-    border: none !important;
-    border-radius: 10px !important;
-
-    background: transparent !important;
-
-    color: #374151 !important;
-
-    text-decoration: none !important;
-
-    text-align: left !important;
-
-    font-size: 15px !important;
-    font-family: inherit !important;
-
-    cursor: pointer !important;
-
-    white-space: nowrap !important;
-
-    position: relative !important;
-    z-index: 1000000 !important;
+    width:100%;
+    box-sizing:border-box;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:12px 13px;
+    margin:2px 0;
+    border:none;
+    background:transparent;
+    color:var(--main-text);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:400 !important;
+    border-radius:10px;
+    cursor:pointer;
+    text-align:left;
+    position:relative;
+    z-index:1000000 !important;
+    pointer-events:auto !important;
+    transition:.2s;
 }
-
-
-/* HOVER */
 
 .more-menu a:hover,
 .more-menu button:hover {
-    background: rgba(0,0,0,0.06) !important;
+    background:var(--secondary-bg);
 }
 
+/* ==================================================
+   HELP & SUPPORT + ABOUT - EXACT SAME AS OTHER ITEMS
+   ================================================== */
 
-/* DARK MODE */
-
-body.theme-dark .more-menu {
-    background: #1f2937 !important;
+.more-menu a,
+.more-menu button,
+.more-menu button[onclick="showHelp()"],
+.more-menu button[onclick="showAbout()"] {
+    width:100% !important;
+    box-sizing:border-box !important;
+    display:flex !important;
+    align-items:center !important;
+    gap:10px !important;
+    padding:12px 13px !important;
+    margin:2px 0 !important;
+    border:none !important;
+    background:transparent !important;
+    color:var(--main-text) !important;
+    text-decoration:none !important;
+    font-family:inherit !important;
+    font-size:14px !important;
+    font-weight:400 !important;
+    font-style:normal !important;
+    border-radius:10px !important;
+    cursor:pointer !important;
+    text-align:left !important;
+    box-shadow:none !important;
+    outline:none !important;
 }
 
-body.theme-dark .more-menu a,
-body.theme-dark .more-menu button {
-    color: #ffffff !important;
+.more-menu a:hover,
+.more-menu button:hover,
+.more-menu button[onclick="showHelp()"]:hover,
+.more-menu button[onclick="showAbout()"]:hover {
+    background:var(--secondary-bg) !important;
+    color:var(--main-text) !important;
+    font-weight:400 !important;
+    box-shadow:none !important;
 }
-
-body.theme-dark .more-menu a:hover,
-body.theme-dark .more-menu button:hover {
-    background: rgba(255,255,255,0.08) !important;
-}
-
 
 /* LOGOUT */
-
 .more-menu .logout-item {
-    color: #dc2626 !important;
+    color:#ff4757;
 }
-
-body.theme-dark .more-menu .logout-item {
-    color: #f87171 !important;
-}
-
-
-/* MENU ANIMATION */
 
 @keyframes moreMenuOpen {
-
     from {
-        opacity: 0;
-        transform: translateY(-8px);
+        opacity:0;
+        transform:translateY(-8px) scale(.97);
     }
 
     to {
-        opacity: 1;
-        transform: translateY(0);
+        opacity:1;
+        transform:translateY(0) scale(1);
     }
-
 }
-
 
 /* ==================================================
    MODALS
    ================================================== */
 
 .civic-modal {
-    position: fixed;
-
-    inset: 0;
-
-    display: none;
-
-    align-items: center;
-    justify-content: center;
-
-    background: rgba(0,0,0,0.55);
-
-    z-index: 2000000;
-
-    padding: 20px;
-
-    box-sizing: border-box;
+    position:fixed;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    background:rgba(0,0,0,0.55);
+    z-index:2000000;
+    padding:20px;
+    box-sizing:border-box;
 }
 
 .civic-modal.show {
-    display: flex;
+    display:flex;
 }
 
 .civic-modal-content {
-    width: min(500px, 100%);
-
-    background: #ffffff;
-
-    color: #1f2937;
-
-    border-radius: 18px;
-
-    padding: 25px;
-
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-
-    position: relative;
+    width:min(500px,100%);
+    background:#ffffff;
+    color:#1f2937;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.35);
+    position:relative;
 }
 
 body.theme-dark .civic-modal-content {
-    background: #1f2937;
-    color: #ffffff;
+    background:#1f2937;
+    color:#ffffff;
 }
 
 .civic-modal-content h2 {
-    margin-top: 0;
+    margin-top:0;
 }
 
 .civic-modal-close {
-    position: absolute;
-
-    top: 10px;
-    right: 14px;
-
-    border: none;
-
-    background: transparent;
-
-    font-size: 26px;
-
-    cursor: pointer;
-
-    color: inherit;
+    position:absolute;
+    top:10px;
+    right:14px;
+    border:none;
+    background:transparent;
+    font-size:26px;
+    cursor:pointer;
+    color:inherit;
 }
 
 .civic-modal-content p {
-    line-height: 1.6;
+    line-height:1.6;
 }
-
 
 /* ==================================================
    NAVIGATION Z-INDEX
    ================================================== */
 
 nav {
-    position: relative;
-    z-index: 999998 !important;
+    position:relative;
+    z-index:999998 !important;
+}
+
+/* ==================================================
+   MOBILE - SAME CITIZEN HTML STYLE
+   ================================================== */
+
+@media (max-width:700px) {
+
+    .civic-navbar {
+        padding:15px 18px;
+        flex-direction:column;
+        gap:12px;
+        position:relative;
+        z-index:999998;
+    }
+
+    .civic-nav-links {
+        justify-content:center;
+        z-index:999999;
+    }
+
+    .more-menu-container {
+        margin-top:5px;
+        z-index:999999 !important;
+    }
+
+    .more-menu {
+        position:fixed !important;
+        top:70px !important;
+        right:15px !important;
+        width:230px;
+        z-index:999999 !important;
+    }
 }
 
 </style>
 
 </head>
-
 
 <body>
 
@@ -493,7 +510,6 @@ nav {
 
 </nav>
 
-
 <!-- ==================================================
      REPORT CONTENT
      ================================================== -->
@@ -510,7 +526,6 @@ nav {
             Help make Sri Lanka cleaner, safer and better 🇱🇰
         </p>
 
-
         <!-- IMAGE -->
 
         <label for="issueImage">
@@ -526,7 +541,6 @@ nav {
         <div id="imagePreview"></div>
 
         <p id="imageStatus"></p>
-
 
         <!-- ISSUE TYPE -->
 
@@ -562,7 +576,6 @@ nav {
 
         </select>
 
-
         <!-- DESCRIPTION -->
 
         <label for="description">
@@ -574,7 +587,6 @@ nav {
             rows="5"
             placeholder="Describe the issue...">
         </textarea>
-
 
         <!-- VOICE -->
 
@@ -610,7 +622,6 @@ nav {
             Voice ready
         </p>
 
-
         <!-- LOCATION -->
 
         <label for="location">
@@ -632,7 +643,6 @@ nav {
 
         <p id="locationStatus"></p>
 
-
         <!-- SUBMIT -->
 
         <button
@@ -649,7 +659,6 @@ nav {
     </div>
 
 </main>
-
 
 <!-- ==================================================
      HELP MODAL
@@ -697,7 +706,6 @@ nav {
 
 </div>
 
-
 <!-- ==================================================
      ABOUT MODAL
      ================================================== -->
@@ -738,7 +746,6 @@ nav {
 
 </div>
 
-
 <!-- ==================================================
      JAVASCRIPT
      ================================================== -->
@@ -769,7 +776,6 @@ nav {
 
 })();
 
-
 /* ==================================================
    MORE MENU
    ================================================== */
@@ -779,7 +785,6 @@ const moreMenuButton =
 
 const moreMenu =
     document.getElementById("moreMenu");
-
 
 moreMenuButton.addEventListener("click", function(event) {
 
@@ -794,7 +799,6 @@ moreMenuButton.addEventListener("click", function(event) {
     );
 
 });
-
 
 document.addEventListener("click", function(event) {
 
@@ -813,7 +817,6 @@ document.addEventListener("click", function(event) {
     }
 
 });
-
 
 /* ==================================================
    MODALS
@@ -834,7 +837,6 @@ function showHelp() {
 
 }
 
-
 function showAbout() {
 
     document
@@ -850,7 +852,6 @@ function showAbout() {
 
 }
 
-
 function closeModal() {
 
     document
@@ -863,7 +864,6 @@ function closeModal() {
 
 }
 
-
 function closeModalOutside(event) {
 
     if (
@@ -875,7 +875,6 @@ function closeModalOutside(event) {
     }
 
 }
-
 
 document.addEventListener(
     "keydown",
@@ -901,14 +900,12 @@ document.addEventListener(
     }
 );
 
-
 /* ==================================================
    BACKEND
    ================================================== */
 
 const BACKEND_URL =
     "https://civiceye-backend-production-eac6.up.railway.app";
-
 
 /* ==================================================
    IMAGE PREVIEW
@@ -925,7 +922,6 @@ function previewImage(event) {
     const status =
         document.getElementById("imageStatus");
 
-
     preview.innerHTML = "";
 
     if (!file) {
@@ -936,10 +932,8 @@ function previewImage(event) {
 
     }
 
-
     const reader =
         new FileReader();
-
 
     reader.onload = function(e) {
 
@@ -960,11 +954,9 @@ function previewImage(event) {
 
     };
 
-
     reader.readAsDataURL(file);
 
 }
-
 
 /* ==================================================
    LOCATION
@@ -978,7 +970,6 @@ function getCurrentLocation() {
     const locationStatus =
         document.getElementById("locationStatus");
 
-
     if (!navigator.geolocation) {
 
         locationStatus.textContent =
@@ -988,10 +979,8 @@ function getCurrentLocation() {
 
     }
 
-
     locationStatus.textContent =
         "📍 Getting your location...";
-
 
     navigator.geolocation.getCurrentPosition(
 
@@ -1003,10 +992,8 @@ function getCurrentLocation() {
             const longitude =
                 position.coords.longitude;
 
-
             locationInput.value =
                 `${latitude}, ${longitude}`;
-
 
             locationStatus.textContent =
                 "✅ Location detected successfully.";
@@ -1026,7 +1013,6 @@ function getCurrentLocation() {
 
 }
 
-
 /* ==================================================
    VOICE COMPLAINT
    ================================================== */
@@ -1034,7 +1020,6 @@ function getCurrentLocation() {
 let recognition = null;
 
 let isRecording = false;
-
 
 function startVoiceComplaint() {
 
@@ -1044,11 +1029,9 @@ function startVoiceComplaint() {
     const language =
         document.getElementById("voiceLanguage").value;
 
-
     const SpeechRecognition =
         window.SpeechRecognition ||
         window.webkitSpeechRecognition;
-
 
     if (!SpeechRecognition) {
 
@@ -1059,7 +1042,6 @@ function startVoiceComplaint() {
 
     }
 
-
     if (isRecording && recognition) {
 
         recognition.stop();
@@ -1068,10 +1050,8 @@ function startVoiceComplaint() {
 
     }
 
-
     recognition =
         new SpeechRecognition();
-
 
     recognition.lang =
         language;
@@ -1082,7 +1062,6 @@ function startVoiceComplaint() {
     recognition.interimResults =
         false;
 
-
     recognition.onstart = function() {
 
         isRecording = true;
@@ -1092,16 +1071,13 @@ function startVoiceComplaint() {
 
     };
 
-
     recognition.onresult = function(event) {
 
         const transcript =
             event.results[0][0].transcript;
 
-
         const description =
             document.getElementById("description");
-
 
         if (description.value.trim()) {
 
@@ -1115,12 +1091,10 @@ function startVoiceComplaint() {
 
         }
 
-
         voiceStatus.textContent =
             "✅ Voice complaint added.";
 
     };
-
 
     recognition.onerror = function(event) {
 
@@ -1136,18 +1110,15 @@ function startVoiceComplaint() {
 
     };
 
-
     recognition.onend = function() {
 
         isRecording = false;
 
     };
 
-
     recognition.start();
 
 }
-
 
 /* ==================================================
    SUBMIT REPORT
@@ -1161,7 +1132,6 @@ async function submitReport() {
     const submitStatus =
         document.getElementById("submitStatus");
 
-
     const issueImage =
         document.getElementById("issueImage").files[0];
 
@@ -1174,9 +1144,6 @@ async function submitReport() {
     const location =
         document.getElementById("location").value.trim();
 
-
-    /* IMAGE CHECK */
-
     if (!issueImage) {
 
         submitStatus.textContent =
@@ -1185,9 +1152,6 @@ async function submitReport() {
         return;
 
     }
-
-
-    /* ISSUE TYPE CHECK */
 
     if (!issueType) {
 
@@ -1198,9 +1162,6 @@ async function submitReport() {
 
     }
 
-
-    /* DESCRIPTION CHECK */
-
     if (!description) {
 
         submitStatus.textContent =
@@ -1209,9 +1170,6 @@ async function submitReport() {
         return;
 
     }
-
-
-    /* LOCATION CHECK */
 
     if (!location) {
 
@@ -1222,27 +1180,19 @@ async function submitReport() {
 
     }
 
-
     submitButton.disabled =
         true;
 
     submitButton.style.opacity =
         "0.6";
 
-
     submitStatus.textContent =
         "⏳ Uploading report...";
-
 
     try {
 
         const formData =
             new FormData();
-
-
-        /* ==========================================
-           REPORT DATA
-           ========================================== */
 
         formData.append(
             "image",
@@ -1264,24 +1214,13 @@ async function submitReport() {
             location
         );
 
-
-        /* ==========================================
-           CITIZEN EMAIL
-           ========================================== */
-
         const citizenEmail =
             localStorage.getItem("civicEyeCitizenEmail") || "";
-
 
         formData.append(
             "citizenEmail",
             citizenEmail
         );
-
-
-        /* ==========================================
-           SEND TO BACKEND
-           ========================================== */
 
         const response =
             await fetch(
@@ -1292,7 +1231,6 @@ async function submitReport() {
                 }
             );
 
-
         if (!response.ok) {
 
             throw new Error(
@@ -1301,30 +1239,21 @@ async function submitReport() {
 
         }
 
-
         const data =
             await response.json();
 
-
         const report =
             data.report || data;
-
-
-        /* ==========================================
-           SAVE REPORT
-           ========================================== */
 
         sessionStorage.setItem(
             "civicEyeReport",
             JSON.stringify(report)
         );
 
-
-        /* ==========================================
-           DUPLICATE / NORMAL REPORT MESSAGE
-           ========================================== */
-
-        if (data.duplicate === true || report.isDuplicate === true) {
+        if (
+            data.duplicate === true ||
+            report.isDuplicate === true
+        ) {
 
             submitStatus.textContent =
                 "⚠️ Duplicate complaint detected.";
@@ -1336,21 +1265,17 @@ async function submitReport() {
 
         }
 
-
-        /* ==========================================
-           REDIRECT
-           ========================================== */
-
         alert(
-            data.duplicate === true || report.isDuplicate === true
+            data.duplicate === true ||
+            report.isDuplicate === true
+
                 ? "⚠️ Duplicate complaint detected. You can view the notification in Notifications."
+
                 : "✅ Report submitted successfully!"
         );
 
-
         window.location.href =
             "./ai-processing.html";
-
 
     } catch (error) {
 
@@ -1358,7 +1283,6 @@ async function submitReport() {
             "Submit error:",
             error
         );
-
 
         submitStatus.textContent =
             "❌ Backend unavailable. Please try again.";
@@ -1372,7 +1296,6 @@ async function submitReport() {
     }
 
 }
-
 
 /* ==================================================
    PAGE LANGUAGE
@@ -1447,7 +1370,6 @@ const reportTranslations = {
 
     },
 
-
     ta: {
 
         title:
@@ -1514,7 +1436,6 @@ const reportTranslations = {
             "🚀 புகாரை சமர்ப்பிக்கவும்"
 
     },
-
 
     si: {
 
@@ -1585,7 +1506,6 @@ const reportTranslations = {
 
 };
 
-
 function applyLanguage() {
 
     const savedLanguage =
@@ -1595,13 +1515,11 @@ function applyLanguage() {
         reportTranslations[savedLanguage] ||
         reportTranslations.en;
 
-
     const title =
         document.querySelector(".report-container h1");
 
     if (title)
         title.textContent = t.title;
-
 
     const paragraphs =
         document.querySelectorAll(
@@ -1612,12 +1530,10 @@ function applyLanguage() {
         paragraphs[0].textContent =
             t.subtitle;
 
-
     const labels =
         document.querySelectorAll(
             ".report-container label"
         );
-
 
     if (labels[0])
         labels[0].textContent =
@@ -1639,12 +1555,10 @@ function applyLanguage() {
         labels[4].textContent =
             t.locationLabel;
 
-
     const issueOptions =
         document.querySelectorAll(
             "#issueType option"
         );
-
 
     if (issueOptions.length >= 6) {
 
@@ -1665,7 +1579,6 @@ function applyLanguage() {
 
     }
 
-
     const description =
         document.getElementById("description");
 
@@ -1673,12 +1586,10 @@ function applyLanguage() {
         description.placeholder =
             t.descriptionPlaceholder;
 
-
     const voiceOptions =
         document.querySelectorAll(
             "#voiceLanguage option"
         );
-
 
     if (voiceOptions.length >= 3) {
 
@@ -1693,7 +1604,6 @@ function applyLanguage() {
 
     }
 
-
     const voiceButton =
         document.querySelector(
             'button[onclick="startVoiceComplaint()"]'
@@ -1703,7 +1613,6 @@ function applyLanguage() {
         voiceButton.textContent =
             t.voiceButton;
 
-
     const voiceStatus =
         document.getElementById("voiceStatus");
 
@@ -1711,14 +1620,12 @@ function applyLanguage() {
         voiceStatus.textContent =
             t.voiceReady;
 
-
     const locationInput =
         document.getElementById("location");
 
     if (locationInput)
         locationInput.placeholder =
             t.locationPlaceholder;
-
 
     const locationButton =
         document.querySelector(
@@ -1729,7 +1636,6 @@ function applyLanguage() {
         locationButton.textContent =
             t.locationButton;
 
-
     const submitButton =
         document.getElementById("submitButton");
 
@@ -1738,7 +1644,6 @@ function applyLanguage() {
             t.submitButton;
 
 }
-
 
 /* ==================================================
    APPLY SAVED LANGUAGE

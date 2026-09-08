@@ -109,206 +109,386 @@ body.theme-dark .dashboard-nav a {
 
 
 /* =====================================================
-   THREE DOT MENU
+   CIVICEYE THREE DOT MENU
+   SAME AS INDEX.HTML
 ===================================================== */
 
 .more-menu-container {
-    position: relative;
-    display: inline-block;
+    position: relative !important;
+    display: inline-block !important;
+    margin-left: 8px !important;
+    z-index: 999999 !important;
 }
 
 
-/* 3 DOT BUTTON */
+/* =====================================================
+   THREE DOT BUTTON
+===================================================== */
 
 .more-menu-button {
-
-    width: 42px !important;
-    height: 42px !important;
+    width: 58px !important;
+    height: 58px !important;
 
     padding: 0 !important;
-    margin: 0 !important;
 
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
 
-    border: none !important;
-    outline: none !important;
+    border: 1px solid rgba(40, 50, 80, 0.20) !important;
+    background: rgba(40, 50, 80, 0.08) !important;
 
-    background: transparent !important;
+    color: #26324a !important;
 
-    color: inherit !important;
+    border-radius: 16px !important;
 
-    font-size: 24px !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 400 !important;
     line-height: 1 !important;
-
-    border-radius: 10px !important;
 
     cursor: pointer !important;
 
-    transition: background 0.2s ease;
+    position: relative !important;
+    z-index: 1000000 !important;
+
+    pointer-events: auto !important;
+
+    box-shadow: none !important;
+
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease !important;
 }
 
 
-.more-menu-button:hover {
-    background: rgba(0,0,0,0.08) !important;
+/* =====================================================
+   LIGHT THEME BUTTON
+===================================================== */
+
+body.theme-light .more-menu-button {
+    border: 1px solid rgba(40, 50, 80, 0.20) !important;
+    background: rgba(40, 50, 80, 0.08) !important;
+    color: #26324a !important;
+}
+
+body.theme-light .more-menu-button:hover {
+    background: rgba(40, 50, 80, 0.14) !important;
+    border-color: rgba(40, 50, 80, 0.28) !important;
+    color: #1e293b !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+
+/* =====================================================
+   DARK THEME BUTTON
+===================================================== */
+
+body.theme-dark .more-menu-button {
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    background: rgba(255, 255, 255, 0.10) !important;
+    color: #ffffff !important;
 }
 
 body.theme-dark .more-menu-button:hover {
-    background: rgba(255,255,255,0.10) !important;
+    background: rgba(255, 255, 255, 0.16) !important;
+    border-color: rgba(255, 255, 255, 0.24) !important;
+    color: #ffffff !important;
+    transform: none !important;
+    box-shadow: none !important;
 }
 
 
 /* =====================================================
-   MENU BOX
+   MORE MENU
 ===================================================== */
 
 .more-menu {
+    position: fixed !important;
 
-    position: absolute;
+    top: 70px !important;
+    right: 20px !important;
 
-    top: calc(100% + 8px);
+    width: 235px !important;
+    padding: 8px !important;
 
-    right: 0;
+    border-radius: 16px !important;
 
-    width: 210px;
+    /* DEFAULT = GLASS */
+    background: rgba(255, 255, 255, 0.16) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
 
-    padding: 8px;
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.30) !important;
 
-    background: rgba(255,255,255,0.98);
+    display: none !important;
 
-    border: 1px solid rgba(0,0,0,0.10);
+    /* MENU MUST BE ABOVE THREE DOT BUTTON */
+    z-index: 1000001 !important;
 
-    border-radius: 14px;
+    animation: moreMenuOpen 0.18s ease;
 
-    box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+    pointer-events: auto !important;
 
-    z-index: 9999;
-
-    display: none;
-
-    box-sizing: border-box;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
 }
 
-
 .more-menu.show {
-    display: block;
+    display: block !important;
+    pointer-events: auto !important;
+    z-index: 1000001 !important;
 }
 
 
 /* =====================================================
-   MENU ITEM ALIGNMENT
+   MENU ITEMS
 ===================================================== */
 
 .more-menu a,
 .more-menu button {
-
     width: 100% !important;
-
     box-sizing: border-box !important;
 
     display: flex !important;
-
     align-items: center !important;
-
-    margin: 0 !important;
-
-    padding: 12px 14px !important;
 
     gap: 10px !important;
 
-    text-align: left !important;
-
-    justify-content: flex-start !important;
-
-    font-family: inherit !important;
-
-    font-size: 14px !important;
-
-    font-weight: 500 !important;
-
-    line-height: 1.2 !important;
+    padding: 12px 13px !important;
+    margin: 2px 0 !important;
 
     border: none !important;
-
-    outline: none !important;
-
     background: transparent !important;
 
-    appearance: none !important;
+    color: var(--main-text) !important;
 
-    -webkit-appearance: none !important;
+    text-decoration: none !important;
+
+    font-family: Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+
+    letter-spacing: 0 !important;
 
     border-radius: 10px !important;
 
     cursor: pointer !important;
 
-    min-height: 42px !important;
+    text-align: left !important;
 
-    text-decoration: none !important;
-}
+    position: relative !important;
+    z-index: 1000002 !important;
 
+    pointer-events: auto !important;
 
-.more-menu button {
-    color: inherit !important;
-}
-
-
-/* ICON ALIGNMENT */
-
-.more-menu a::first-letter,
-.more-menu button::first-letter {
-    font-size: 15px;
-}
-
-
-/* HOVER */
-
-.more-menu a:hover,
-.more-menu button:hover {
-    background: rgba(0,0,0,0.07) !important;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease !important;
 }
 
 
 /* =====================================================
-   DARK MODE MENU
+   LIGHT THEME MENU
+===================================================== */
+
+body.theme-light .more-menu {
+    background: rgba(255, 255, 255, 0.16) !important;
+    border: 1px solid rgba(40, 50, 80, 0.20) !important;
+
+    color: #222222 !important;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.20) !important;
+
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+body.theme-light .more-menu a,
+body.theme-light .more-menu button {
+    color: #222222 !important;
+    background: transparent !important;
+}
+
+body.theme-light .more-menu a:hover,
+body.theme-light .more-menu button:hover {
+    background: rgba(40, 50, 80, 0.08) !important;
+    color: #222222 !important;
+}
+
+
+/* =====================================================
+   DARK THEME MENU
 ===================================================== */
 
 body.theme-dark .more-menu {
-
-    background: rgba(25,25,35,0.98) !important;
-
-    border-color: rgba(255,255,255,0.12) !important;
-}
-
-
-body.theme-dark .more-menu a,
-body.theme-dark .more-menu button {
+    background: rgba(16, 32, 43, 0.72) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
 
     color: #ffffff !important;
 
-    -webkit-text-fill-color: #ffffff !important;
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.55) !important;
+
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
 }
 
+body.theme-dark .more-menu a,
+body.theme-dark .more-menu button {
+    color: #ffffff !important;
+    background: transparent !important;
+}
 
 body.theme-dark .more-menu a:hover,
 body.theme-dark .more-menu button:hover {
-    background: rgba(255,255,255,0.10) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: #ffffff !important;
+}
+
+
+/* =====================================================
+   DEFAULT THEME MENU
+===================================================== */
+
+body:not(.theme-light):not(.theme-dark) .more-menu {
+    background: rgba(255, 255, 255, 0.16) !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.25) !important;
+
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+
+body:not(.theme-light):not(.theme-dark) .more-menu a,
+body:not(.theme-light):not(.theme-dark) .more-menu button {
+    background: transparent !important;
+    color: var(--main-text) !important;
+}
+
+body:not(.theme-light):not(.theme-dark) .more-menu a:hover,
+body:not(.theme-light):not(.theme-dark) .more-menu button:hover {
+    background: rgba(255, 255, 255, 0.10) !important;
 }
 
 
 /* =====================================================
    LOGOUT
+   NO HIGHLIGHT IN ANY THEME
 ===================================================== */
 
+.more-menu .logout-item,
 .more-menu .menu-danger {
-    color: #e74c3c !important;
+    background: transparent !important;
+    color: #ff4757 !important;
+
+    outline: none !important;
+    box-shadow: none !important;
 }
 
+.more-menu .logout-item:hover,
+.more-menu .menu-danger:hover {
+    background: transparent !important;
+    color: #ff4757 !important;
+
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.more-menu .logout-item:focus,
+.more-menu .menu-danger:focus {
+    background: transparent !important;
+    color: #ff4757 !important;
+
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.more-menu .logout-item:active,
+.more-menu .menu-danger:active {
+    background: transparent !important;
+    color: #ff4757 !important;
+
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+/* =====================================================
+   DARK LOGOUT
+===================================================== */
+
+body.theme-dark .more-menu .logout-item,
 body.theme-dark .more-menu .menu-danger {
-    color: #ff6b6b !important;
+    background: transparent !important;
+    color: #ff6b7a !important;
 }
 
+body.theme-dark .more-menu .logout-item:hover,
+body.theme-dark .more-menu .menu-danger:hover,
+body.theme-dark .more-menu .logout-item:focus,
+body.theme-dark .more-menu .menu-danger:focus,
+body.theme-dark .more-menu .logout-item:active,
+body.theme-dark .more-menu .menu-danger:active {
+    background: transparent !important;
+    color: #ff6b7a !important;
+
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+/* =====================================================
+   LIGHT LOGOUT
+===================================================== */
+
+body.theme-light .more-menu .logout-item,
+body.theme-light .more-menu .menu-danger {
+    background: transparent !important;
+    color: #ff4757 !important;
+}
+
+body.theme-light .more-menu .logout-item:hover,
+body.theme-light .more-menu .menu-danger:hover,
+body.theme-light .more-menu .logout-item:focus,
+body.theme-light .more-menu .menu-danger:focus,
+body.theme-light .more-menu .logout-item:active,
+body.theme-light .more-menu .menu-danger:active {
+    background: transparent !important;
+    color: #ff4757 !important;
+
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+/* =====================================================
+   MENU ANIMATION
+===================================================== */
+
+@keyframes moreMenuOpen {
+
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
 
 /* =====================================================
    ALL MAIN TRACK BUTTONS
