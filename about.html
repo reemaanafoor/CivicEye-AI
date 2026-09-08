@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About CivicEye AI</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* =====================================================
+   ABOUT PAGE
+===================================================== */
+
+.about-page {
+    min-height: 100vh;
+    padding: 120px 20px 100px;
+    max-width: 1100px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.about-card {
+    background: #ffffff;
+    color: #222;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    transition: 0.3s ease;
+}
+
+.about-card h1 {
+    margin: 0 0 15px;
+    font-size: 32px;
+}
+
+.about-card h2 {
+    margin: 30px 0 12px;
+    font-size: 23px;
+}
+
+.about-card p {
+    margin: 0 0 15px;
+    color: #666;
+    line-height: 1.8;
+}
+
+.about-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.feature-box {
+    background: #f7f8fc;
+    border: 1px solid #e8e9f0;
+    border-radius: 18px;
+    padding: 22px;
+    transition: 0.3s ease;
+}
+
+.feature-box h3 {
+    margin: 0 0 8px;
+    color: #333;
+}
+
+.feature-box p {
+    margin: 0;
+    color: #666;
+    line-height: 1.7;
+}
+
+/* =====================================================
+   EXIT BUTTON
+===================================================== */
+
+.exit-button {
+    display: block;
+    width: fit-content;
+    margin: 30px auto 0;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #333;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    transition: 0.2s ease;
+}
+
+.exit-button:hover {
+    transform: translateY(-2px);
+}
+
+/* =====================================================
+   DARK THEME
+===================================================== */
+
+body.dark-theme {
+    background: #0f1220 !important;
+}
+
+body.dark-theme .about-card {
+    background: #171a2b;
+    color: #ffffff;
+}
+
+body.dark-theme .about-card h1,
+body.dark-theme .about-card h2,
+body.dark-theme .feature-box h3 {
+    color: #ffffff;
+}
+
+body.dark-theme .about-card p,
+body.dark-theme .feature-box p {
+    color: #c9cbd8;
+}
+
+body.dark-theme .feature-box {
+    background: #22263a;
+    border-color: rgba(255,255,255,0.1);
+}
+
+body.dark-theme .exit-button {
+    background: #22263a;
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   LIGHT THEME
+===================================================== */
+
+body.light-theme {
+    background: #f5f7fb;
+}
+
+body.light-theme .about-card {
+    background: #ffffff;
+}
+
+/* =====================================================
+   LANGUAGE SELECTOR
+===================================================== */
+
+.language-box {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+.language-select {
+    padding: 9px 13px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.18);
+    color: #ffffff;
+    outline: none;
+    cursor: pointer;
+}
+
+.language-select option {
+    color: #222;
+    background: #ffffff;
+}
+
+@media (max-width: 700px) {
+
+    .about-page {
+        padding: 100px 15px 90px;
+    }
+
+    .about-card {
+        padding: 25px;
+    }
+
+    .about-card h1 {
+        font-size: 26px;
+    }
+
+    .about-features {
+        grid-template-columns: 1fr;
+    }
+
+    .language-box {
+        right: 12px;
+        bottom: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="civic-navbar">
+
+    <div class="civic-logo">
+        <span>👁️</span>
+        <strong>CivicEye AI</strong>
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     ABOUT CONTENT
+===================================================== -->
+
+<main class="about-page">
+
+    <section class="about-card">
+
+        <h1 data-i18n="aboutTitle">
+            About CivicEye AI
+        </h1>
+
+        <p data-i18n="aboutIntro">
+            CivicEye AI is an AI-powered civic issue reporting
+            web application designed to help citizens report
+            public issues in a simple and organized way.
+        </p>
+
+        <h2 data-i18n="whatTitle">
+            What CivicEye AI Does
+        </h2>
+
+        <p data-i18n="whatText">
+            The platform combines complaint reporting, AI-assisted
+            issue analysis, duplicate detection, priority assessment,
+            authority recommendation and complaint tracking.
+        </p>
+
+        <h2 data-i18n="featuresTitle">
+            Key Features
+        </h2>
+
+        <div class="about-features">
+
+            <div class="feature-box">
+                <h3 data-i18n="aiTitle">
+                    AI Issue Analysis
+                </h3>
+                <p data-i18n="aiText">
+                    Helps analyze submitted civic issues and identify
+                    their category.
+                </p>
+            </div>
+
+            <div class="feature-box">
+                <h3 data-i18n="duplicateTitle">
+                    Duplicate Detection
+                </h3>
+                <p data-i18n="duplicateText">
+                    Identifies possible repeated complaints based on
+                    the issue and reported location.
+                </p>
+            </div>
+
+            <div class="feature-box">
+                <h3 data-i18n="priorityTitle">
+                    Priority Detection
+                </h3>
+                <p data-i18n="priorityText">
+                    Helps identify the urgency of reported civic
+                    issues.
+                </p>
+            </div>
+
+            <div class="feature-box">
+                <h3 data-i18n="authorityTitle">
+                    Authority Recommendation
+                </h3>
+                <p data-i18n="authorityText">
+                    Suggests the relevant authority for handling
+                    the reported issue.
+                </p>
+            </div>
+
+            <div class="feature-box">
+                <h3 data-i18n="notificationTitle">
+                    Citizen Notifications
+                </h3>
+                <p data-i18n="notificationText">
+                    Keeps citizens informed about important complaint
+                    events and updates.
+                </p>
+            </div>
+
+            <div class="feature-box">
+                <h3 data-i18n="trackingTitle">
+                    Complaint Tracking
+                </h3>
+                <p data-i18n="trackingText">
+                    Allows citizens to follow the progress of their
+                    submitted complaints.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <a href="index.html"
+       class="exit-button"
+       data-i18n="exit">
+        Exit
+    </a>
+
+</main>
+
+
+<!-- =====================================================
+     LANGUAGE
+===================================================== -->
+
+<div class="language-box">
+
+    <select
+        id="languageSelect"
+        class="language-select"
+        aria-label="Language">
+
+        <option value="en">English</option>
+        <option value="ta">தமிழ்</option>
+        <option value="si">සිංහල</option>
+
+    </select>
+
+</div>
+
+
+<script>
+/* =====================================================
+   THEME SUPPORT
+===================================================== */
+
+function applyTheme() {
+
+    const savedTheme =
+        localStorage.getItem("civicEyeTheme") || "default";
+
+    document.body.classList.remove(
+        "dark-theme",
+        "light-theme"
+    );
+
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark-theme");
+    }
+
+    if (savedTheme === "light") {
+        document.body.classList.add("light-theme");
+    }
+}
+
+applyTheme();
+
+
+/* =====================================================
+   LANGUAGE SUPPORT
+===================================================== */
+
+const translations = {
+
+    en: {
+        aboutTitle: "About CivicEye AI",
+        aboutIntro: "CivicEye AI is an AI-powered civic issue reporting web application designed to help citizens report public issues in a simple and organized way.",
+        whatTitle: "What CivicEye AI Does",
+        whatText: "The platform combines complaint reporting, AI-assisted issue analysis, duplicate detection, priority assessment, authority recommendation and complaint tracking.",
+        featuresTitle: "Key Features",
+        aiTitle: "AI Issue Analysis",
+        aiText: "Helps analyze submitted civic issues and identify their category.",
+        duplicateTitle: "Duplicate Detection",
+        duplicateText: "Identifies possible repeated complaints based on the issue and reported location.",
+        priorityTitle: "Priority Detection",
+        priorityText: "Helps identify the urgency of reported civic issues.",
+        authorityTitle: "Authority Recommendation",
+        authorityText: "Suggests the relevant authority for handling the reported issue.",
+        notificationTitle: "Citizen Notifications",
+        notificationText: "Keeps citizens informed about important complaint events and updates.",
+        trackingTitle: "Complaint Tracking",
+        trackingText: "Allows citizens to follow the progress of their submitted complaints.",
+        exit: "Exit"
+    },
+
+    ta: {
+        aboutTitle: "CivicEye AI பற்றி",
+        aboutIntro: "CivicEye AI என்பது குடிமக்கள் பொது பிரச்சினைகளை எளிமையாகவும் ஒழுங்காகவும் புகாரளிக்க உதவும் AI அடிப்படையிலான இணைய பயன்பாடாகும்.",
+        whatTitle: "CivicEye AI என்ன செய்கிறது",
+        whatText: "இந்த தளம் புகார் பதிவு, AI உதவியுடன் பிரச்சினை பகுப்பாய்வு, மீண்டும் சமர்ப்பிக்கப்பட்ட புகார் கண்டறிதல், முன்னுரிமை மதிப்பீடு, அதிகாரி பரிந்துரை மற்றும் புகார் கண்காணிப்பு ஆகியவற்றை ஒருங்கிணைக்கிறது.",
+        featuresTitle: "முக்கிய அம்சங்கள்",
+        aiTitle: "AI பிரச்சினை பகுப்பாய்வு",
+        aiText: "சமர்ப்பிக்கப்பட்ட பொது பிரச்சினைகளை பகுப்பாய்வு செய்து அவற்றின் வகையை கண்டறிய உதவுகிறது.",
+        duplicateTitle: "மீண்டும் சமர்ப்பிக்கப்பட்ட புகார் கண்டறிதல்",
+        duplicateText: "பிரச்சினை மற்றும் தெரிவிக்கப்பட்ட இடத்தின் அடிப்படையில் மீண்டும் சமர்ப்பிக்கப்பட்ட புகார்களை கண்டறிய உதவுகிறது.",
+        priorityTitle: "முன்னுரிமை கண்டறிதல்",
+        priorityText: "புகாரளிக்கப்பட்ட பிரச்சினையின் அவசரத்தன்மையை கண்டறிய உதவுகிறது.",
+        authorityTitle: "அதிகாரி பரிந்துரை",
+        authorityText: "புகாரளிக்கப்பட்ட பிரச்சினையை கையாள வேண்டிய தொடர்புடைய அதிகாரியை பரிந்துரைக்கிறது.",
+        notificationTitle: "குடிமக்கள் அறிவிப்புகள்",
+        notificationText: "முக்கியமான புகார் நிகழ்வுகள் மற்றும் புதுப்பிப்புகள் குறித்து குடிமக்களுக்கு அறிவிக்கிறது.",
+        trackingTitle: "புகார் கண்காணிப்பு",
+        trackingText: "சமர்ப்பிக்கப்பட்ட புகாரின் முன்னேற்றத்தை கண்காணிக்க உதவுகிறது.",
+        exit: "வெளியேறு"
+    },
+
+    si: {
+        aboutTitle: "CivicEye AI පිළිබඳව",
+        aboutIntro: "CivicEye AI යනු පුරවැසියන්ට පොදු ගැටලු සරලව හා සංවිධානාත්මකව වාර්තා කිරීමට උපකාර කරන AI මත පදනම් වූ වෙබ් යෙදුමකි.",
+        whatTitle: "CivicEye AI කරන්නේ කුමක්ද",
+        whatText: "මෙම වේදිකාව පැමිණිලි ඉදිරිපත් කිරීම, AI මගින් ගැටලු විශ්ලේෂණය, නැවත ඉදිරිපත් කළ පැමිණිලි හඳුනාගැනීම, ප්‍රමුඛතා ඇගයීම, ආයතන නිර්දේශ කිරීම සහ පැමිණිලි නිරීක්ෂණය ඒකාබද්ධ කරයි.",
+        featuresTitle: "ප්‍රධාන විශේෂාංග",
+        aiTitle: "AI ගැටලු විශ්ලේෂණය",
+        aiText: "ඉදිරිපත් කළ පොදු ගැටලු විශ්ලේෂණය කර ඒවායේ වර්ගය හඳුනා ගැනීමට උපකාර කරයි.",
+        duplicateTitle: "නැවත ඉදිරිපත් කළ පැමිණිලි හඳුනාගැනීම",
+        duplicateText: "ගැටලුව සහ වාර්තා කළ ස්ථානය මත සමාන පැමිණිලි හඳුනා ගැනීමට උපකාර කරයි.",
+        priorityTitle: "ප්‍රමුඛතා හඳුනාගැනීම",
+        priorityText: "වාර්තා කළ ගැටලුවේ හදිසිභාවය හඳුනා ගැනීමට උපකාර කරයි.",
+        authorityTitle: "ආයතන නිර්දේශය",
+        authorityText: "වාර්තා කළ ගැටලුව හැසිරවිය යුතු අදාළ ආයතනය නිර්දේශ කරයි.",
+        notificationTitle: "පුරවැසි දැනුම්දීම්",
+        notificationText: "වැදගත් පැමිණිලි සිදුවීම් සහ යාවත්කාලීන කිරීම් පිළිබඳව පුරවැසියන් දැනුවත් කරයි.",
+        trackingTitle: "පැමිණිලි නිරීක්ෂණය",
+        trackingText: "ඉදිරිපත් කළ පැමිණිල්ලේ ප්‍රගතිය නිරීක්ෂණය කිරීමට උපකාර කරයි.",
+        exit: "පිටවීම"
+    }
+};
+
+
+function applyLanguage(language) {
+
+    const selectedLanguage =
+        translations[language] ? language : "en";
+
+    document.documentElement.lang = selectedLanguage;
+
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+
+        const key = element.getAttribute("data-i18n");
+
+        if (translations[selectedLanguage][key]) {
+            element.textContent =
+                translations[selectedLanguage][key];
+        }
+    });
+
+    localStorage.setItem(
+        "civicEyeLanguage",
+        selectedLanguage
+    );
+
+    document.getElementById("languageSelect").value =
+        selectedLanguage;
+}
+
+
+const savedLanguage =
+    localStorage.getItem("civicEyeLanguage") || "en";
+
+applyLanguage(savedLanguage);
+
+document
+    .getElementById("languageSelect")
+    .addEventListener("change", function() {
+
+        applyLanguage(this.value);
+
+    });
+
+</script>
+
+</body>
+</html>

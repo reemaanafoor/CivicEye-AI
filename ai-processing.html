@@ -274,7 +274,6 @@
     </div>
 
 
-    
     <script>
 
         /* ================================
@@ -536,7 +535,7 @@
 
 
         /* ================================
-           EXISTING CIVICEYE AI PROCESSING
+           LOAD SUBMITTED REPORT
            ================================ */
 
         const reportData =
@@ -581,7 +580,7 @@
 
 
             /* ================================
-               EXISTING RESULT DATA
+               DISPLAY AI RESULT
                ================================ */
 
             if (report) {
@@ -630,16 +629,30 @@
                     || "Relevant Local Authority";
 
 
+                /* =========================================
+                   IMPORTANT:
+                   SUPPORT BOTH BACKEND FIELD NAMES
+
+                   Normal:
+                   isDuplicate: false
+
+                   Duplicate:
+                   isDuplicate: true
+
+                   Also supports:
+                   duplicate: true / false
+                   ========================================= */
+
+                const isDuplicate =
+                    report.isDuplicate === true ||
+                    report.duplicate === true;
+
+
                 document.getElementById(
                     "resultDuplicate"
                 ).textContent =
-                    report.duplicate
-                    !== undefined
-                        ? (
-                            report.duplicate
-                                ? "Yes"
-                                : "No"
-                        )
+                    isDuplicate
+                        ? "Yes"
                         : "No";
 
 
@@ -647,15 +660,14 @@
                     "resultStatus"
                 ).textContent =
                     report.status
-                    || "Pending";
+                    || "Submitted";
 
             }
             else {
 
-                /*
-                 * Keep the existing prototype
-                 * fallback values.
-                 */
+                /* ================================
+                   FALLBACK PROTOTYPE VALUES
+                   ================================ */
 
                 document.getElementById(
                     "resultIssue"
@@ -702,7 +714,7 @@
                 document.getElementById(
                     "resultStatus"
                 ).textContent =
-                    "Pending";
+                    "Submitted";
 
             }
 

@@ -332,6 +332,8 @@ app.post(
 
                 return res.status(400).json({
 
+                    success: false,
+
                     message:
                         "No image uploaded"
 
@@ -342,18 +344,29 @@ app.post(
             // ----------------------------------
             // REPORT DATA
             // ----------------------------------
+            // Supports both:
+            // issueType  -> current report.html
+            // issue      -> older frontend
+            // ----------------------------------
 
             const issue =
-                req.body.issue ||
-                "Other";
+                String(
+                    req.body.issueType ||
+                    req.body.issue ||
+                    "Other"
+                ).trim();
 
             const description =
-                req.body.description ||
-                "";
+                String(
+                    req.body.description ||
+                    ""
+                ).trim();
 
             const location =
-                req.body.location ||
-                "Unknown";
+                String(
+                    req.body.location ||
+                    "Unknown"
+                ).trim();
 
             // ----------------------------------
             // CITIZEN EMAIL
@@ -374,8 +387,15 @@ app.post(
             // AI PROCESSING
             // ==================================
 
+            console.log("");
             console.log(
-                "🤖 AI Processing started..."
+                "=========================================="
+            );
+            console.log(
+                "🤖 AI PROCESSING STARTED"
+            );
+            console.log(
+                "=========================================="
             );
 
             console.log(
@@ -385,6 +405,29 @@ app.post(
             console.log(
                 `Location: ${location}`
             );
+
+            console.log(
+                `Citizen: ${citizenEmail || "Not provided"}`
+            );
+
+            // ----------------------------------
+            // PRIORITY
+            // ----------------------------------
+
+            const priority =
+                determinePriority(
+                    issue,
+                    description
+                );
+
+            // ----------------------------------
+            // AUTHORITY
+            // ----------------------------------
+
+            const authority =
+                recommendAuthority(
+                    issue
+                );
 
             // ----------------------------------
             // DUPLICATE DETECTION
@@ -404,8 +447,9 @@ app.post(
                 duplicateResult.isDuplicate
             ) {
 
+                console.log("");
                 console.log(
-                    "⚠️ AI detected duplicate complaint"
+                    "⚠️ DUPLICATE COMPLAINT DETECTED"
                 );
 
                 console.log(
@@ -413,12 +457,61 @@ app.post(
                 );
 
                 // --------------------------------
-                // IMPORTANT
+                // CREATE AI RESULT OBJECT
                 // --------------------------------
-                // DO NOT CREATE A NEW REPORT
-                // DO NOT PUSH TO reports[]
-                // DO NOT CREATE ADMIN ALERT
-                // DO NOT SEND TO ADMIN DASHBOARD
+                // This object is NOT saved into
+                // reports[].
+                //
+                // It is returned to the AI
+                // processing page so the citizen
+                // can see the analysis result.
+                // --------------------------------
+
+                const duplicateReport = {
+
+                    id:
+                        Date.now(),
+
+                    issue,
+
+                    confidence:
+                        "94%",
+
+                    location,
+
+                    description,
+
+                    status:
+                        "Submitted",
+
+                    priority,
+
+                    authority,
+
+                    isDuplicate:
+                        true,
+
+                    duplicate:
+                        true,
+
+                    duplicateReportId:
+                        duplicateResult.duplicateReportId,
+
+                    citizenEmail,
+
+                    image:
+                        req.file.filename,
+
+                    createdAt:
+                        new Date().toISOString(),
+
+                    solvedAt:
+                        null
+
+                };
+
+                // --------------------------------
+                // CITIZEN DUPLICATE NOTIFICATION
                 // --------------------------------
 
                 const duplicateNotification =
@@ -430,34 +523,74 @@ app.post(
 
                         "⚠️ Duplicate Complaint Detected",
 
-                        "This complaint cannot be accepted because it has already been submitted.",
+                        `Your ${issue} complaint appears to be a duplicate of an existing complaint at ${location}. The existing complaint is already registered.`,
 
                         citizenEmail
 
                     );
 
+                // --------------------------------
+                // ADMIN DUPLICATE ALERT
+                // --------------------------------
+
+                const duplicateAdminAlert =
+                    createAdminAlert(
+
+                        duplicateResult.duplicateReportId,
+
+                        "duplicate",
+
+                        "⚠️ Duplicate Complaint Attempt",
+
+                        `A citizen attempted to submit a duplicate ${issue} complaint from ${location}. Existing complaint ID: ${duplicateResult.duplicateReportId}.`
+
+                    );
+
                 console.log(
-                    "🚫 Duplicate complaint rejected"
+                    "🔔 Duplicate citizen notification created"
                 );
 
                 console.log(
-                    "🚫 No new report created"
+                    "🔔 Duplicate admin alert created"
                 );
 
                 console.log(
-                    "🚫 No admin alert created"
+                    "ℹ️ Duplicate complaint was NOT added as a new report"
                 );
+
+                console.log(
+                    "=========================================="
+                );
+
+                // ==================================
+                // IMPORTANT DUPLICATE RESPONSE
+                // ==================================
+                //
+                // accepted: true
+                // -> The complaint request was
+                //    successfully processed by AI.
+                //
+                // adminSubmitted: false
+                // -> It is NOT created as a new
+                //    admin report because it is
+                //    already registered.
+                //
+                // The citizen still continues to
+                // ai-processing.html.
+                // ==================================
 
                 return res.status(200).json({
 
-                    success: false,
+                    success: true,
 
                     message:
-                        "Duplicate complaint detected. This complaint cannot be accepted because it has already been submitted.",
+                        "AI analysis completed. Duplicate complaint detected.",
 
                     duplicate: true,
 
-                    accepted: false,
+                    isDuplicate: true,
+
+                    accepted: true,
 
                     adminSubmitted: false,
 
@@ -465,33 +598,20 @@ app.post(
                         duplicateResult.duplicateReportId,
 
                     notification:
-                        duplicateNotification
+                        duplicateNotification,
+
+                    adminAlert:
+                        duplicateAdminAlert,
+
+                    report:
+                        duplicateReport
 
                 });
 
             }
 
             // ==================================
-            // PRIORITY
-            // ==================================
-
-            const priority =
-                determinePriority(
-                    issue,
-                    description
-                );
-
-            // ==================================
-            // AUTHORITY
-            // ==================================
-
-            const authority =
-                recommendAuthority(
-                    issue
-                );
-
-            // ==================================
-            // CREATE NORMAL REPORT
+            // NORMAL / NON-DUPLICATE REPORT
             // ==================================
 
             const report = {
@@ -518,6 +638,9 @@ app.post(
                 isDuplicate:
                     false,
 
+                duplicate:
+                    false,
+
                 duplicateReportId:
                     null,
 
@@ -542,12 +665,17 @@ app.post(
                 report
             );
 
+            console.log("");
             console.log(
                 `✅ AI accepted new report: ${report.id}`
             );
 
             // ==================================
-            // CITIZEN NOTIFICATION
+            // NORMAL CITIZEN NOTIFICATION
+            // ==================================
+            // IMPORTANT:
+            // This notification is ONLY created
+            // for a normal new complaint.
             // ==================================
 
             createNotification(
@@ -565,7 +693,11 @@ app.post(
             );
 
             // ==================================
-            // ADMIN ALERT
+            // NORMAL ADMIN ALERT
+            // ==================================
+            // IMPORTANT:
+            // This is ONLY created for a new
+            // non-duplicate complaint.
             // ==================================
 
             createAdminAlert(
@@ -580,9 +712,9 @@ app.post(
 
             );
 
-            // ==================================
-            // SUCCESS RESPONSE
-            // ==================================
+            console.log(
+                "=========================================="
+            );
 
             return res.status(200).json({
 
@@ -592,6 +724,8 @@ app.post(
                     "Report analysed successfully 🚀",
 
                 duplicate: false,
+
+                isDuplicate: false,
 
                 accepted: true,
 
@@ -604,7 +738,7 @@ app.post(
         } catch (error) {
 
             console.error(
-                "Upload error:",
+                "❌ Upload error:",
                 error
             );
 
@@ -741,6 +875,10 @@ app.patch(
             // ==================================
             // DUPLICATE SAFETY CHECK
             // ==================================
+            // Duplicate analysis objects are not
+            // saved inside reports[], so normally
+            // this will never block a real report.
+            // ==================================
 
             if (
                 report.isDuplicate === true
@@ -749,7 +887,7 @@ app.patch(
                 return res.status(403).json({
 
                     message:
-                        "Duplicate complaints cannot be processed from the Admin Dashboard"
+                        "Duplicate complaints cannot be processed as new reports"
 
                 });
 
@@ -1366,7 +1504,11 @@ app.listen(
         );
 
         console.log(
-            "🚫 Duplicate complaint rejection: ACTIVE"
+            "🔔 Duplicate citizen notifications: ACTIVE"
+        );
+
+        console.log(
+            "🔔 Duplicate admin alerts: ACTIVE"
         );
 
         console.log(

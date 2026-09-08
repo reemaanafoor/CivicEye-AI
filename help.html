@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Help & Support - CivicEye AI</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* =====================================================
+   HELP PAGE
+===================================================== */
+
+.help-page {
+    min-height: 100vh;
+    padding: 120px 20px 100px;
+    max-width: 1100px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.help-card {
+    background: #ffffff;
+    color: #222;
+    border-radius: 24px;
+    padding: 40px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    transition: 0.3s ease;
+}
+
+.help-card h1 {
+    margin: 0 0 12px;
+    font-size: 32px;
+}
+
+.help-intro {
+    margin: 0 0 30px;
+    color: #666;
+    line-height: 1.7;
+}
+
+.help-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.help-item {
+    background: #f7f8fc;
+    border: 1px solid #e8e9f0;
+    border-radius: 18px;
+    padding: 24px;
+    transition: 0.3s ease;
+}
+
+.help-item h3 {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.help-item p {
+    margin: 0;
+    color: #666;
+    line-height: 1.7;
+}
+
+/* =====================================================
+   EXIT BUTTON
+===================================================== */
+
+.exit-button {
+    display: block;
+    width: fit-content;
+    margin: 30px auto 0;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #333;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    transition: 0.2s ease;
+}
+
+.exit-button:hover {
+    transform: translateY(-2px);
+}
+
+/* =====================================================
+   DARK THEME
+===================================================== */
+
+body.dark-theme {
+    background: #0f1220 !important;
+}
+
+body.dark-theme .help-card {
+    background: #171a2b;
+    color: #ffffff;
+}
+
+body.dark-theme .help-card h1,
+body.dark-theme .help-item h3 {
+    color: #ffffff;
+}
+
+body.dark-theme .help-intro,
+body.dark-theme .help-item p {
+    color: #c9cbd8;
+}
+
+body.dark-theme .help-item {
+    background: #22263a;
+    border-color: rgba(255,255,255,0.1);
+}
+
+body.dark-theme .exit-button {
+    background: #22263a;
+    color: #ffffff;
+}
+
+
+/* =====================================================
+   LIGHT THEME
+===================================================== */
+
+body.light-theme {
+    background: #f5f7fb;
+}
+
+body.light-theme .help-card {
+    background: #ffffff;
+}
+
+/* =====================================================
+   LANGUAGE SELECTOR
+===================================================== */
+
+.language-box {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 1000;
+}
+
+.language-select {
+    padding: 9px 13px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.25);
+    background: rgba(255,255,255,0.18);
+    color: #ffffff;
+    outline: none;
+    cursor: pointer;
+}
+
+.language-select option {
+    color: #222;
+    background: #ffffff;
+}
+
+@media (max-width: 700px) {
+
+    .help-page {
+        padding: 100px 15px 90px;
+    }
+
+    .help-card {
+        padding: 25px;
+    }
+
+    .help-card h1 {
+        font-size: 26px;
+    }
+
+    .help-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .language-box {
+        right: 12px;
+        bottom: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="civic-navbar">
+
+    <div class="civic-logo">
+        <span>👁️</span>
+        <strong>CivicEye AI</strong>
+    </div>
+</nav>
+
+
+<!-- =====================================================
+     HELP CONTENT
+===================================================== -->
+
+<main class="help-page">
+
+    <section class="help-card">
+
+        <h1 data-i18n="helpTitle">Help & Support</h1>
+
+        <p class="help-intro" data-i18n="helpIntro">
+            Find helpful information about using CivicEye AI
+            and its main features.
+        </p>
+
+        <div class="help-grid">
+
+            <div class="help-item">
+                <h3 data-i18n="reportTitle">How to Report an Issue</h3>
+                <p data-i18n="reportText">
+                    Open the Report page, select the issue type,
+                    provide the location and description, and
+                    submit your complaint.
+                </p>
+            </div>
+
+            <div class="help-item">
+                <h3 data-i18n="analysisTitle">AI Issue Analysis</h3>
+                <p data-i18n="analysisText">
+                    CivicEye AI analyzes reported issues and helps
+                    identify the issue category, priority and
+                    recommended authority.
+                </p>
+            </div>
+
+            <div class="help-item">
+                <h3 data-i18n="duplicateTitle">Duplicate Complaint Detection</h3>
+                <p data-i18n="duplicateText">
+                    CivicEye AI checks whether a similar complaint
+                    has already been submitted for the same type
+                    of issue and location.
+                </p>
+            </div>
+
+            <div class="help-item">
+                <h3 data-i18n="notificationTitle">Notifications</h3>
+                <p data-i18n="notificationText">
+                    Citizens can receive notifications about their
+                    complaints and important complaint updates.
+                </p>
+            </div>
+
+            <div class="help-item">
+                <h3 data-i18n="trackTitle">Track Your Complaint</h3>
+                <p data-i18n="trackText">
+                    Use the Track section to follow the current
+                    status and progress of a submitted complaint.
+                </p>
+            </div>
+
+            <div class="help-item">
+                <h3 data-i18n="moreHelpTitle">Need More Help?</h3>
+                <p data-i18n="moreHelpText">
+                    Use the available CivicEye AI features to report,
+                    monitor and manage civic issues through the
+                    platform.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+    <a href="index.html"
+       class="exit-button"
+       data-i18n="exit">
+        Exit
+    </a>
+
+</main>
+
+
+<!-- =====================================================
+     LANGUAGE
+===================================================== -->
+
+<div class="language-box">
+
+    <select
+        id="languageSelect"
+        class="language-select"
+        aria-label="Language">
+
+        <option value="en">English</option>
+        <option value="ta">தமிழ்</option>
+        <option value="si">සිංහල</option>
+
+    </select>
+
+</div>
+
+
+<script>
+/* =====================================================
+   THEME SUPPORT
+===================================================== */
+
+function applyTheme() {
+
+    const savedTheme =
+        localStorage.getItem("civicEyeTheme") || "default";
+
+    document.body.classList.remove(
+        "dark-theme",
+        "light-theme"
+    );
+
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark-theme");
+    }
+
+    if (savedTheme === "light") {
+        document.body.classList.add("light-theme");
+    }
+}
+
+applyTheme();
+
+
+/* =====================================================
+   LANGUAGE SUPPORT
+===================================================== */
+
+const translations = {
+
+    en: {
+        helpTitle: "Help & Support",
+        helpIntro: "Find helpful information about using CivicEye AI and its main features.",
+        reportTitle: "How to Report an Issue",
+        reportText: "Open the Report page, select the issue type, provide the location and description, and submit your complaint.",
+        analysisTitle: "AI Issue Analysis",
+        analysisText: "CivicEye AI analyzes reported issues and helps identify the issue category, priority and recommended authority.",
+        duplicateTitle: "Duplicate Complaint Detection",
+        duplicateText: "CivicEye AI checks whether a similar complaint has already been submitted for the same type of issue and location.",
+        notificationTitle: "Notifications",
+        notificationText: "Citizens can receive notifications about their complaints and important complaint updates.",
+        trackTitle: "Track Your Complaint",
+        trackText: "Use the Track section to follow the current status and progress of a submitted complaint.",
+        moreHelpTitle: "Need More Help?",
+        moreHelpText: "Use the available CivicEye AI features to report, monitor and manage civic issues through the platform.",
+        exit: "Exit"
+    },
+
+    ta: {
+        helpTitle: "உதவி மற்றும் ஆதரவு",
+        helpIntro: "CivicEye AI மற்றும் அதன் முக்கிய அம்சங்களைப் பயன்படுத்துவதற்கான உதவிகரமான தகவல்களை இங்கே காணலாம்.",
+        reportTitle: "பிரச்சினையை எவ்வாறு புகாரளிப்பது",
+        reportText: "Report பக்கத்தைத் திறந்து, பிரச்சினை வகையைத் தேர்ந்தெடுத்து, இடம் மற்றும் விளக்கத்தை வழங்கி புகாரை சமர்ப்பிக்கவும்.",
+        analysisTitle: "AI பிரச்சினை பகுப்பாய்வு",
+        analysisText: "CivicEye AI புகாரளிக்கப்பட்ட பிரச்சினைகளை பகுப்பாய்வு செய்து வகை, முன்னுரிமை மற்றும் பரிந்துரைக்கப்பட்ட அதிகாரியை அடையாளம் காண உதவுகிறது.",
+        duplicateTitle: "மீண்டும் சமர்ப்பிக்கப்பட்ட புகார் கண்டறிதல்",
+        duplicateText: "அதே வகை மற்றும் இடத்தில் ஏற்கனவே இதே போன்ற புகார் சமர்ப்பிக்கப்பட்டுள்ளதா என்பதை CivicEye AI சரிபார்க்கிறது.",
+        notificationTitle: "அறிவிப்புகள்",
+        notificationText: "குடிமக்கள் தங்கள் புகார்கள் மற்றும் முக்கியமான புதுப்பிப்புகள் தொடர்பான அறிவிப்புகளைப் பெறலாம்.",
+        trackTitle: "உங்கள் புகாரை கண்காணிக்கவும்",
+        trackText: "சமர்ப்பிக்கப்பட்ட புகாரின் தற்போதைய நிலை மற்றும் முன்னேற்றத்தை Track பகுதியில் பார்க்கலாம்.",
+        moreHelpTitle: "மேலும் உதவி தேவையா?",
+        moreHelpText: "CivicEye AI-யின் கிடைக்கும் அம்சங்களைப் பயன்படுத்தி குடிமக்கள் பிரச்சினைகளைப் புகாரளித்து கண்காணிக்கலாம்.",
+        exit: "வெளியேறு"
+    },
+
+    si: {
+        helpTitle: "උදව් සහ සහාය",
+        helpIntro: "CivicEye AI සහ එහි ප්‍රධාන විශේෂාංග භාවිතා කිරීම සඳහා අවශ්‍ය තොරතුරු මෙහි ඇත.",
+        reportTitle: "ගැටලුවක් වාර්තා කරන්නේ කෙසේද",
+        reportText: "Report පිටුව විවෘත කර ගැටලු වර්ගය තෝරා ස්ථානය සහ විස්තර ලබා දී පැමිණිල්ල ඉදිරිපත් කරන්න.",
+        analysisTitle: "AI ගැටලු විශ්ලේෂණය",
+        analysisText: "CivicEye AI වාර්තා කළ ගැටලු විශ්ලේෂණය කර වර්ගය, ප්‍රමුඛතාවය සහ නිර්දේශිත ආයතනය හඳුනා ගැනීමට උපකාර කරයි.",
+        duplicateTitle: "නැවත ඉදිරිපත් කළ පැමිණිලි හඳුනාගැනීම",
+        duplicateText: "එකම වර්ගයේ සහ ස්ථානයේ සමාන පැමිණිල්ලක් දැනටමත් ඉදිරිපත් කර ඇත්දැයි CivicEye AI පරීක්ෂා කරයි.",
+        notificationTitle: "දැනුම්දීම්",
+        notificationText: "පුරවැසියන්ට තම පැමිණිලි සහ වැදගත් යාවත්කාලීන කිරීම් පිළිබඳ දැනුම්දීම් ලැබිය හැක.",
+        trackTitle: "ඔබේ පැමිණිල්ල නිරීක්ෂණය කරන්න",
+        trackText: "ඉදිරිපත් කළ පැමිණිල්ලේ වත්මන් තත්ත්වය සහ ප්‍රගතිය Track කොටසින් බලන්න.",
+        moreHelpTitle: "තවත් උදව් අවශ්‍යද?",
+        moreHelpText: "CivicEye AI හි ඇති විශේෂාංග භාවිතයෙන් පුරවැසි ගැටලු වාර්තා කර නිරීක්ෂණය කළ හැක.",
+        exit: "පිටවීම"
+    }
+};
+
+
+function applyLanguage(language) {
+
+    const selectedLanguage =
+        translations[language] ? language : "en";
+
+    document.documentElement.lang = selectedLanguage;
+
+    document.querySelectorAll("[data-i18n]").forEach(element => {
+
+        const key = element.getAttribute("data-i18n");
+
+        if (translations[selectedLanguage][key]) {
+            element.textContent =
+                translations[selectedLanguage][key];
+        }
+    });
+
+    localStorage.setItem(
+        "civicEyeLanguage",
+        selectedLanguage
+    );
+
+    document.getElementById("languageSelect").value =
+        selectedLanguage;
+}
+
+
+const savedLanguage =
+    localStorage.getItem("civicEyeLanguage") || "en";
+
+applyLanguage(savedLanguage);
+
+document
+    .getElementById("languageSelect")
+    .addEventListener("change", function() {
+
+        applyLanguage(this.value);
+
+    });
+
+</script>
+
+</body>
+</html>

@@ -518,26 +518,23 @@ body.theme-dark .civic-modal-box {
                     🔒 Privacy
                 </a>
 
-                <button
-                    type="button"
-                    class="menu-help-item"
-                    onclick="showHelp()"
-                    data-menu-text="help">
 
-                    ❓ Help & Support
+                
+                <a href="help.html">
+                    ❓
+                    <span>
+                        Help &amp; Support
+                    </span>
+                </a>
 
-                </button>
 
-                <button
-                    type="button"
-                    class="menu-about-item"
-                    onclick="showAbout()"
-                    data-menu-text="about">
-
-                    ℹ️ About CivicEye AI
-
-                </button>
-
+                <a href="about.html">
+                    ℹ️
+                    <span>
+                        About CivicEye AI
+                    </span>
+                </a>
+                
                 <a
                     href="./login.html"
                     class="logout-item"
@@ -2196,41 +2193,12 @@ function applySavedLanguage() {
 window.addEventListener(
     "load",
     function() {
-
         setTimeout(
             function() {
-
-                const loadingScreen =
-                    document.getElementById(
-                        "loading-screen"
-                    );
-
-                const mainContent =
-                    document.getElementById(
-                        "main-content"
-                    );
-
-                if (loadingScreen) {
-
-                    loadingScreen.classList.add(
-                        "hide"
-                    );
-
-                }
-
-                if (mainContent) {
-
-                    mainContent.style.display =
-                        "block";
-
-                }
-
-                applySavedLanguage();
-
+                window.location.href = "login.html";
             },
             2500
         );
-
     }
 );
 
