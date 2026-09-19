@@ -89,7 +89,7 @@
 
             text-decoration: none;
 
-            font-weight: bold;
+        
 
         }
 
@@ -359,37 +359,7 @@
             color: #ffffff !important;
         }
 
-
-        /* LOGOUT — NEVER HIGHLIGHT */
-
-        .more-menu .menu-danger,
-        .more-menu .menu-danger:hover,
-        .more-menu .menu-danger:focus,
-        .more-menu .menu-danger:active,
-        .more-menu .menu-danger:focus-visible {
-            background: transparent !important;
-            box-shadow: none !important;
-            outline: none !important;
-            color: #ff4757 !important;
-        }
-
-        body.theme-light .more-menu .menu-danger,
-        body.theme-light .more-menu .menu-danger:hover,
-        body.theme-light .more-menu .menu-danger:focus,
-        body.theme-light .more-menu .menu-danger:active,
-        body.theme-light .more-menu .menu-danger:focus-visible {
-            background: transparent !important;
-            color: #d62828 !important;
-        }
-
-        body.theme-dark .more-menu .menu-danger,
-        body.theme-dark .more-menu .menu-danger:hover,
-        body.theme-dark .more-menu .menu-danger:focus,
-        body.theme-dark .more-menu .menu-danger:active,
-        body.theme-dark .more-menu .menu-danger:focus-visible {
-            background: transparent !important;
-            color: #ff6b7a !important;
-        }
+    
 
         /* =====================================================
            PRIVACY CONTAINER
@@ -868,69 +838,23 @@
                 class="more-menu"
                 id="moreMenu"
             >
-
-                <a href="profile.html">
-
-                    👤
-
-                    <span data-menu-text="profile">
-                        Profile
-                    </span>
-
-                </a>
-
-                <a href="settings.html">
-
-                    ⚙️
-
-                    <span data-menu-text="settings">
-                        Settings
-                    </span>
-
-                </a>
-
-                <a href="privacy.html">
-
-                    🔒
-
-                    <span data-menu-text="privacy">
-                        Privacy
-                    </span>
-
-                </a>
+<a href="settings.html" data-menu-text="settings">
+    ⚙️ Settings
+</a>
+                
 
                 
-                <a href="help.html">
-                    ❓
-                    <span>
-                        Help &amp; Support
-                    </span>
-                </a>
+          <a href="help.html" data-menu-text="help">
+    ❓ Help &amp; Support
+</a>
 
+<a href="about.html" data-menu-text="about">
+    ℹ️ About CivicEye AI
+</a>
 
-                <a href="about.html">
-                    ℹ️
-                    <span>
-                        About CivicEye AI
-                    </span>
-                </a>
+               
 
-                <a
-                    href="login.html"
-                    class="menu-danger"
-                >
-
-                    🚪
-
-                    <span data-menu-text="logout">
-                        Logout
-                    </span>
-
-                </a>
-
-            </div>
-
-        </div>
+                
 
     </div>
 
@@ -1041,76 +965,7 @@
 
         
 
-<!-- =====================================================
-     HELP MODAL
-===================================================== -->
 
-<div
-    class="civic-modal"
-    id="helpModal"
-    onclick="closeModalOutside(event,'helpModal')"
->
-
-    <div class="civic-modal-box">
-
-        <h2 data-i18n="helpTitle">
-            ❓ Help & Support
-        </h2>
-
-        <p data-i18n="helpText">
-            CivicEye AI helps citizens report public issues,
-            track complaint progress, and receive status updates.
-            If you need assistance, please contact your project
-            administrator.
-        </p>
-
-        <button
-            type="button"
-            class="modal-close"
-            onclick="closeModal('helpModal')"
-            data-i18n="close"
-        >
-            Close
-        </button>
-
-    </div>
-
-</div>
-
-<!-- =====================================================
-     ABOUT MODAL
-===================================================== -->
-
-<div
-    class="civic-modal"
-    id="aboutModal"
-    onclick="closeModalOutside(event,'aboutModal')"
->
-
-    <div class="civic-modal-box">
-
-        <h2 data-i18n="aboutTitle">
-            ℹ️ About CivicEye AI
-        </h2>
-
-        <p data-i18n="aboutText">
-            CivicEye AI is a smart civic issue reporting platform
-            designed to help citizens report problems such as road
-            damage, garbage, water leaks and street-light issues.
-        </p>
-
-        <button
-            type="button"
-            class="modal-close"
-            onclick="closeModal('aboutModal')"
-            data-i18n="close"
-        >
-            Close
-        </button>
-
-    </div>
-
-</div>
 
 <script>
 
@@ -1176,23 +1031,12 @@ const translations = {
         settings:
             "⚙️ Settings",
 
-        profile:
-            "👤 Profile",
-
         helpTitle:
             "❓ Help & Support",
-
-        helpText:
-            "CivicEye AI helps citizens report public issues, track complaint progress, and receive status updates. If you need assistance, please contact your project administrator.",
 
         aboutTitle:
             "ℹ️ About CivicEye AI",
 
-        aboutText:
-            "CivicEye AI is a smart civic issue reporting platform designed to help citizens report problems such as road damage, garbage, water leaks and street-light issues.",
-
-        close:
-            "Close"
 
     },
 
@@ -1252,23 +1096,13 @@ const translations = {
         settings:
             "⚙️ அமைப்புகள்",
 
-        profile:
-            "👤 சுயவிவரம்",
-
         helpTitle:
             "❓ உதவி மற்றும் ஆதரவு",
-
-        helpText:
-            "CivicEye AI மூலம் குடிமக்கள் பொது பிரச்சினைகளைப் பதிவு செய்யவும், புகார்களின் முன்னேற்றத்தைப் பார்க்கவும் மற்றும் நிலை புதுப்பிப்புகளைப் பெறவும் முடியும். உதவி தேவைப்பட்டால் திட்ட நிர்வாகியைத் தொடர்புகொள்ளவும்.",
 
         aboutTitle:
             "ℹ️ CivicEye AI பற்றி",
 
-        aboutText:
-            "CivicEye AI என்பது சாலை சேதம், குப்பை, நீர் கசிவு மற்றும் தெருவிளக்கு பிரச்சினைகள் போன்ற பொது பிரச்சினைகளைப் பதிவு செய்ய குடிமக்களுக்கு உதவும் புத்திசாலித்தனமான தளமாகும்.",
-
-        close:
-            "மூடு"
+    
 
     },
 
@@ -1328,25 +1162,14 @@ const translations = {
         settings:
             "⚙️ සැකසුම්",
 
-        profile:
-            "👤 පැතිකඩ",
-
         helpTitle:
             "❓ උදව් සහ සහාය",
-
-        helpText:
-            "CivicEye AI මඟින් පුරවැසියන්ට පොදු ගැටලු වාර්තා කිරීමට, පැමිණිලිවල ප්‍රගතිය නිරීක්ෂණය කිරීමට සහ තත්ත්ව යාවත්කාලීන ලබා ගැනීමට හැකිය. සහාය අවශ්‍ය නම් ව්‍යාපෘති පරිපාලක අමතන්න.",
 
         aboutTitle:
             "ℹ️ CivicEye AI ගැන",
 
-        aboutText:
-            "CivicEye AI යනු මාර්ග හානි, කසළ, ජල කාන්දුවීම් සහ වීදි ආලෝක ගැටලු වැනි පොදු ගැටලු වාර්තා කිරීමට පුරවැසියන්ට උපකාර කරන බුද්ධිමත් වේදිකාවකි.",
-
-        close:
-            "වසන්න"
-
     }
+    
 
 };
 
@@ -1358,14 +1181,9 @@ const menuTranslations = {
 
     en: {
 
-        profile:
-            "Profile",
 
         settings:
             "Settings",
-
-        privacy:
-            "Privacy",
 
         help:
             "Help & Support",
@@ -1373,21 +1191,16 @@ const menuTranslations = {
         about:
             "About CivicEye AI",
 
-        logout:
-            "Logout"
+        
 
     },
 
     ta: {
 
-        profile:
-            "சுயவிவரம்",
+
 
         settings:
             "அமைப்புகள்",
-
-        privacy:
-            "தனியுரிமை",
 
         help:
             "உதவி மற்றும் ஆதரவு",
@@ -1395,21 +1208,12 @@ const menuTranslations = {
         about:
             "CivicEye AI பற்றி",
 
-        logout:
-            "வெளியேறு"
-
     },
 
     si: {
 
-        profile:
-            "පැතිකඩ",
-
         settings:
             "සැකසුම්",
-
-        privacy:
-            "පෞද්ගලිකත්වය",
 
         help:
             "උදව් සහ සහාය",
@@ -1417,8 +1221,6 @@ const menuTranslations = {
         about:
             "CivicEye AI ගැන",
 
-        logout:
-            "ඉවත් වන්න"
 
     }
 
@@ -1470,31 +1272,40 @@ function applyLanguage() {
 
         });
 
-    /* More menu */
 
-    document
-        .querySelectorAll("[data-menu-text]")
-        .forEach(function(element) {
+document
+    .querySelectorAll("[data-menu-text]")
+    .forEach(function(element) {
 
-            const key =
-                element.getAttribute(
-                    "data-menu-text"
-                );
+        const key =
+            element.getAttribute(
+                "data-menu-text"
+            );
 
-            if (
-                menuTranslations[language][key]
-                !== undefined
-            ) {
+        if (
+            menuTranslations[language][key]
+            !== undefined
+        ) {
 
-                element.textContent =
-                    menuTranslations[language][key];
+            const emoji =
+                key === "help"
+                    ? "❓ "
+                    : key === "about"
+                        ? "ℹ️ "
+                        : key === "settings"
+                            ? "⚙️ "
+                            : "";
 
-            }
+            element.textContent =
+                emoji + menuTranslations[language][key];
 
-        });
+        }
+
+    });
+
 
 }
-
+    
 /* =====================================================
    THEME
 ===================================================== */

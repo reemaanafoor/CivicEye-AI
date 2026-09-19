@@ -739,10 +739,9 @@ body.theme-light .more-menu .logout-item {
 
     <div class="nav-links">
 
-        <a href="./index.html" data-i18n="home">
-             Home
-        </a>
-
+        <a href="index.html?from=home">
+    <span data-i18n="home">Home</span>
+</a>
         <a
             href="./notifications.html"
             class="notification-link"
@@ -787,21 +786,13 @@ body.theme-light .more-menu .logout-item {
                     🔒 Privacy
                 </a>
 
-                
-                <a href="help.html">
-                    ❓
-                    <span>
-                        Help &amp; Support
-                    </span>
-                </a>
-
-
-                <a href="about.html">
-                    ℹ️
-                    <span>
-                        About CivicEye AI
-                    </span>
-                </a>
+                <a href="help.html" data-menu-text="help">
+    ❓ Help &amp; Support
+</a>
+            
+<a href="about.html" data-menu-text="about">
+    ℹ️ About CivicEye AI
+</a>
 
 
                 <a
@@ -898,85 +889,6 @@ body.theme-light .more-menu .logout-item {
 </div>
 
 
-<div
-    class="civic-modal"
-    id="helpModal"
-    onclick="closeModalOutside(event)">
-
-    <div class="civic-modal-box">
-
-        <button
-            class="modal-close"
-            type="button"
-            onclick="closeModal()">
-
-            ×
-
-        </button>
-
-        <h2 data-i18n="helpTitle">
-            ❓ Help & Support
-        </h2>
-
-        <p data-i18n="helpIntro">
-            Need help using CivicEye AI?
-        </p>
-
-        <p data-i18n="helpFeatures">
-            You can report public issues, track your complaint status,
-            receive notifications and monitor updates through the Citizen Portal.
-        </p>
-
-        <p data-i18n="helpInternet">
-            If you experience a problem, please check your internet
-            connection and try again.
-        </p>
-
-    </div>
-
-</div>
-
-
-<div
-    class="civic-modal"
-    id="aboutModal"
-    onclick="closeModalOutside(event)">
-
-    <div class="civic-modal-box">
-
-        <button
-            class="modal-close"
-            type="button"
-            onclick="closeModal()">
-
-            ×
-
-        </button>
-
-        <h2 data-i18n="aboutTitle">
-            ℹ️ About CivicEye AI
-        </h2>
-
-        <p data-i18n="aboutIntro">
-            CivicEye AI is an AI-assisted platform designed
-            to help citizens report and track public issues
-            more easily.
-        </p>
-
-        <p data-i18n="aboutFeatures">
-            The system can identify reported issues,
-            recommend relevant authorities, detect possible
-            duplicate complaints and provide status notifications.
-        </p>
-
-        <p data-i18n="aboutSriLanka">
-            Built to support smarter and more responsive
-            communities in Sri Lanka. 🇱🇰
-        </p>
-
-    </div>
-
-</div>
 
 
 <script>
@@ -1144,30 +1056,7 @@ const citizenTranslations = {
         relevantAuthority:
             "Relevant Authority",
 
-        helpTitle:
-            "❓ Help & Support",
-
-        helpIntro:
-            "Need help using CivicEye AI?",
-
-        helpFeatures:
-            "You can report public issues, track your complaint status, receive notifications and monitor updates through the Citizen Portal.",
-
-        helpInternet:
-            "If you experience a problem, please check your internet connection and try again.",
-
-        aboutTitle:
-            "ℹ️ About CivicEye AI",
-
-        aboutIntro:
-            "CivicEye AI is an AI-assisted platform designed to help citizens report and track public issues more easily.",
-
-        aboutFeatures:
-            "The system can identify reported issues, recommend relevant authorities, detect possible duplicate complaints and provide status notifications.",
-
-        aboutSriLanka:
-            "Built to support smarter and more responsive communities in Sri Lanka. 🇱🇰"
-
+       
     },
 
     ta: {
@@ -1283,30 +1172,7 @@ const citizenTranslations = {
         relevantAuthority:
             "சம்பந்தப்பட்ட அதிகாரம்",
 
-        helpTitle:
-            "❓ உதவி மற்றும் ஆதரவு",
-
-        helpIntro:
-            "CivicEye AI-ஐப் பயன்படுத்த உதவி தேவையா?",
-
-        helpFeatures:
-            "Citizen Portal மூலம் பொது பிரச்சினைகளைப் புகாரளிக்கலாம், உங்கள் புகாரின் நிலையை கண்காணிக்கலாம், அறிவிப்புகளைப் பெறலாம் மற்றும் புதுப்பிப்புகளைப் பார்க்கலாம்.",
-
-        helpInternet:
-            "ஏதேனும் பிரச்சினை ஏற்பட்டால், உங்கள் இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.",
-
-        aboutTitle:
-            "ℹ️ CivicEye AI பற்றி",
-
-        aboutIntro:
-            "CivicEye AI என்பது குடிமக்கள் பொது பிரச்சினைகளை எளிதாகப் புகாரளித்து கண்காணிக்க உதவும் AI உதவியுடனான தளமாகும்.",
-
-        aboutFeatures:
-            "இந்த அமைப்பு புகாரளிக்கப்பட்ட பிரச்சினைகளை அடையாளம் காணவும், தொடர்புடைய அதிகாரங்களைப் பரிந்துரைக்கவும், சாத்தியமான நகல் புகார்களைக் கண்டறியவும் மற்றும் நிலை அறிவிப்புகளை வழங்கவும் முடியும்.",
-
-        aboutSriLanka:
-            "இலங்கையில் புத்திசாலித்தனமான மற்றும் விரைவாக செயல்படும் சமூகங்களை ஆதரிப்பதற்காக உருவாக்கப்பட்டது. 🇱🇰"
-
+        
     },
 
     si: {
@@ -1422,30 +1288,8 @@ const citizenTranslations = {
         relevantAuthority:
             "අදාළ අධිකාරිය",
 
-        helpTitle:
-            "❓ උදව් සහ සහාය",
-
-        helpIntro:
-            "CivicEye AI භාවිතා කිරීමට උදව් අවශ්‍යද?",
-
-        helpFeatures:
-            "Citizen Portal හරහා පොදු ගැටලු වාර්තා කිරීමට, ඔබගේ පැමිණිල්ලේ තත්ත්වය නිරීක්ෂණය කිරීමට, දැනුම්දීම් ලබා ගැනීමට සහ යාවත්කාලීන බැලීමට හැකිය.",
-
-        helpInternet:
-            "ගැටලුවක් ඇති වුවහොත්, ඔබගේ අන්තර්ජාල සම්බන්ධතාවය පරීක්ෂා කර නැවත උත්සාහ කරන්න.",
-
-        aboutTitle:
-            "ℹ️ CivicEye AI ගැන",
-
-        aboutIntro:
-            "CivicEye AI යනු පුරවැසියන්ට පොදු ගැටලු පහසුවෙන් වාර්තා කිරීමට සහ නිරීක්ෂණය කිරීමට උපකාර කරන AI සහාය සහිත වේදිකාවකි.",
-
-        aboutFeatures:
-            "මෙම පද්ධතියට වාර්තා කළ ගැටලු හඳුනා ගැනීමට, අදාළ අධිකාරීන් නිර්දේශ කිරීමට, හැකි අනුපිටපත් පැමිණිලි හඳුනා ගැනීමට සහ තත්ත්ව දැනුම්දීම් ලබා දීමට හැකිය.",
-
-        aboutSriLanka:
-            "ශ්‍රී ලංකාවේ වඩාත් බුද්ධිමත් සහ ප්‍රතිචාරාත්මක ප්‍රජාවන්ට සහාය වීම සඳහා නිර්මාණය කර ඇත. 🇱🇰"
-
+      
+        
     }
 
 };

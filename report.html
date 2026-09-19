@@ -343,35 +343,6 @@ font-style: normal !important;
     color: var(--main-text) !important;
 }
 
-/* ==================================================
-   HELP + ABOUT
-   ================================================== */
-
-.more-menu .menu-help-item,
-.more-menu .menu-about-item {
-    width: 100% !important;
-    background: transparent !important;
-    color: var(--main-text) !important;
-}
-
-.more-menu .menu-help-item:hover,
-.more-menu .menu-about-item:hover {
-    background: var(--secondary-bg) !important;
-    color: var(--main-text) !important;
-}
-
-/* ==================================================
-   LOGOUT
-   ================================================== */
-
-.more-menu .logout-item {
-    color: #ff4757 !important;
-}
-
-.more-menu .logout-item:hover {
-    background: rgba(255,71,87,0.08) !important;
-    color: #ff4757 !important;
-}
 
 /* ==================================================
    ANIMATION
@@ -409,9 +380,7 @@ body.theme-dark .more-menu button:hover {
     color: #ffffff !important;
 }
 
-body.theme-dark .more-menu .logout-item {
-    color: #ff6b7a !important;
-}
+
 
 /* ==================================================
    NAVIGATION Z-INDEX
@@ -444,13 +413,7 @@ nav {
 </head>
 
 <body>
-
-<!-- ==================================================
-     NAVBAR
-     SAME CIVICEYE COMMON MENU
-     ================================================== -->
-
-<nav class="civic-navbar">
+    <nav class="civic-navbar">
 
     <div class="civic-logo">
         👁️ CivicEye AI
@@ -458,8 +421,8 @@ nav {
 
     <div class="civic-nav-links">
 
-        <a href="./index.html">
-            🏠 Home
+        <a href="citizen.html" class="nav-link">
+            <span data-menu-text="citizenPortal">Citizen Portal</span>
         </a>
 
         <div class="more-menu-container">
@@ -478,38 +441,23 @@ nav {
                 id="moreMenu">
 
                 <a href="./profile.html">
-                    👤 Profile
+                    <span data-menu-text="profile">👤 Profile</span>
                 </a>
 
                 <a href="./settings.html">
-                    ⚙️ Settings
+                    <span data-menu-text="settings">⚙️ Settings</span>
                 </a>
 
                 <a href="./privacy.html">
-                    🔒 Privacy
-                
-                </a>
-                
-                <a href="help.html">
-                    ❓
-                    <span>
-                        Help &amp; Support
-                    </span>
+                    <span data-menu-text="privacy">🔒 Privacy</span>
                 </a>
 
-
-                <a href="about.html">
-                    ℹ️
-                    <span>
-                        About CivicEye AI
-                    </span>
+                <a href="help.html" data-menu-text="help">
+                    ❓ Help &amp; Support
                 </a>
 
-
-                <a
-                    href="./login.html"
-                    class="logout-item">
-                    🚪 Logout
+                <a href="about.html" data-menu-text="about">
+                    ℹ️ About CivicEye AI
                 </a>
 
             </div>
@@ -1477,6 +1425,39 @@ const reportTranslations = {
 
 };
 
+
+const menuTranslations = {
+
+    en: {
+        citizenPortal: "Citizen Portal",
+        profile: "👤 Profile",
+        settings: "⚙️ Settings",
+        privacy: "🔒 Privacy",
+        help: "❓ Help & Support",
+        about: "ℹ️ About CivicEye AI"
+    },
+
+
+       ta: {
+        citizenPortal: "குடிமக்கள் தளம்", 
+        profile: "👤 சுயவிவரம்",
+        settings: "⚙️ அமைப்புகள்",
+        privacy: "🔒 தனியுரிமை",
+        help: "❓ உதவி மற்றும் ஆதரவு",
+        about: "ℹ️ CivicEye AI பற்றி"
+    },
+
+    si: {
+        citizenPortal: "පුරවැසි ද්වාරය",
+        profile: "👤 පැතිකඩ",
+        settings: "⚙️ සැකසුම්",
+        privacy: "🔒 පෞද්ගලිකත්වය",
+        help: "❓ උදව් සහ සහාය",
+        about: "ℹ️ CivicEye AI ගැන"
+    }
+
+};
+
 function applyLanguage() {
 
     const savedLanguage =
@@ -1613,6 +1594,29 @@ function applyLanguage() {
     if (submitButton)
         submitButton.textContent =
             t.submitButton;
+
+
+document
+    .querySelectorAll("[data-menu-text]")
+    .forEach(function(element) {
+
+        const key =
+            element.getAttribute("data-menu-text");
+
+       if (
+    menuTranslations[savedLanguage] &&
+    menuTranslations[savedLanguage][key] !== undefined
+) {
+
+    element.textContent =
+        menuTranslations[savedLanguage][key];
+
+}
+
+    });
+
+
+
 
 }
 

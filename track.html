@@ -382,94 +382,6 @@ body:not(.theme-light):not(.theme-dark) .more-menu button:hover {
 }
 
 
-/* =====================================================
-   LOGOUT
-   NO HIGHLIGHT IN ANY THEME
-===================================================== */
-
-.more-menu .logout-item,
-.more-menu .menu-danger {
-    background: transparent !important;
-    color: #ff4757 !important;
-
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-.more-menu .logout-item:hover,
-.more-menu .menu-danger:hover {
-    background: transparent !important;
-    color: #ff4757 !important;
-
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-.more-menu .logout-item:focus,
-.more-menu .menu-danger:focus {
-    background: transparent !important;
-    color: #ff4757 !important;
-
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-.more-menu .logout-item:active,
-.more-menu .menu-danger:active {
-    background: transparent !important;
-    color: #ff4757 !important;
-
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-
-/* =====================================================
-   DARK LOGOUT
-===================================================== */
-
-body.theme-dark .more-menu .logout-item,
-body.theme-dark .more-menu .menu-danger {
-    background: transparent !important;
-    color: #ff6b7a !important;
-}
-
-body.theme-dark .more-menu .logout-item:hover,
-body.theme-dark .more-menu .menu-danger:hover,
-body.theme-dark .more-menu .logout-item:focus,
-body.theme-dark .more-menu .menu-danger:focus,
-body.theme-dark .more-menu .logout-item:active,
-body.theme-dark .more-menu .menu-danger:active {
-    background: transparent !important;
-    color: #ff6b7a !important;
-
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-
-/* =====================================================
-   LIGHT LOGOUT
-===================================================== */
-
-body.theme-light .more-menu .logout-item,
-body.theme-light .more-menu .menu-danger {
-    background: transparent !important;
-    color: #ff4757 !important;
-}
-
-body.theme-light .more-menu .logout-item:hover,
-body.theme-light .more-menu .menu-danger:hover,
-body.theme-light .more-menu .logout-item:focus,
-body.theme-light .more-menu .menu-danger:focus,
-body.theme-light .more-menu .logout-item:active,
-body.theme-light .more-menu .menu-danger:active {
-    background: transparent !important;
-    color: #ff4757 !important;
-
-    outline: none !important;
-    box-shadow: none !important;
-}
 
 
 /* =====================================================
@@ -717,12 +629,7 @@ body:not(.theme-dark) .more-menu button:hover {
     color: #111111 !important;
 }
 
-/* Logout stays red */
-body.theme-light .more-menu .menu-danger,
-body:not(.theme-dark) .more-menu .menu-danger {
-    color: #e74c3c !important;
-    -webkit-text-fill-color: #e74c3c !important;
-}
+
 
 /* DARK MODE */
 body.theme-dark .more-menu {
@@ -756,15 +663,9 @@ body.theme-dark .more-menu button {
 
     <div>
 
-        <a href="citizen.html">
-
-            
-
-            <span data-i18n="citizenPortal">
-                Citizen Portal
-            </span>
-
-        </a>
+        <a href="index.html?from=home">
+    <span data-i18n="home">Home</span>
+</a>
 
 
         <!-- =================================================
@@ -789,60 +690,19 @@ body.theme-dark .more-menu button {
                 id="moreMenu"
             >
 
-                <a href="profile.html">
-                    👤
-                    <span>
-                        Profile
-                    </span>
-                </a>
+                
+<a href="profile.html"><span data-i18n="menuProfile">👤 Profile</span></a>
 
+<a href="settings.html"><span data-i18n="menuSettings">⚙️ Settings</span></a>
 
-                <a href="settings.html">
-                    ⚙️
-                    <span>
-                        Settings
-                    </span>
-                </a>
+<a href="privacy.html"><span data-i18n="menuPrivacy">🔒 Privacy</span></a>
 
-
-                <a href="privacy.html">
-                    🔒
-                    <span>
-                        Privacy
-                    </span>
-                </a>
-
-
-                <a href="help.html">
-                    ❓
-                    <span>
-                        Help &amp; Support
-                    </span>
-                </a>
-
-
-                <a href="about.html">
-                    ℹ️
-                    <span>
-                        About CivicEye AI
-                    </span>
-                </a>
-
-
-                <button
-                    type="button"
-                    class="menu-danger"
-                    onclick="logout()"
-                >
-                    🚪
-                    <span>
-                        Logout
-                    </span>
-                </button>
-
-            </div>
-
-        </div>
+ <a href="help.html" data-i18n="menuHelp">
+    ❓ Help &amp; Support
+</a>
+<a href="about.html" data-i18n="menuAbout">
+    ℹ️ About CivicEye AI
+</a>
 
     </div>
 
@@ -1418,14 +1278,23 @@ const translations = {
 
     en: {
 
-        citizenPortal:
-            "Citizen Portal",
+         home:
+            "Home",
 
-        settings:
-            "Settings",
+menuProfile:
+    "👤 Profile",
 
-        logout:
-            "Logout",
+menuSettings:
+    "⚙️ Settings",
+
+menuPrivacy:
+    "🔒 Privacy",
+
+menuHelp:
+    "❓ Help & Support",
+
+menuAbout:
+    "ℹ️ About CivicEye AI",
 
         pageTitle:
             "🔍 Track Your Issue",
@@ -1561,14 +1430,23 @@ const translations = {
 
     ta: {
 
-        citizenPortal:
-            "குடிமக்கள் Portal",
+         home:
+            "முகப்பு",
 
-        settings:
-            "அமைப்புகள்",
+        menuProfile:
+    "👤 சுயவிவரம்",
 
-        logout:
-            "வெளியேறு",
+menuSettings:
+    "⚙️ அமைப்புகள்",
+
+menuPrivacy:
+    "🔒 தனியுரிமை",
+
+menuHelp:
+    "❓ உதவி மற்றும் ஆதரவு",
+
+menuAbout:
+    "ℹ️ CivicEye AI பற்றி",
 
         pageTitle:
             "🔍 உங்கள் பிரச்சினையைக் கண்காணிக்கவும்",
@@ -1704,14 +1582,25 @@ const translations = {
 
     si: {
 
-        citizenPortal:
-            "පුරවැසි Portal",
 
-        settings:
-            "සැකසුම්",
+        home:
+            "මුල් පිටුව",
 
-        logout:
-            "ඉවත් වන්න",
+        menuProfile:
+    "👤 පැතිකඩ",
+
+menuSettings:
+    "⚙️ සැකසුම්",
+
+menuPrivacy:
+    "🔒 පෞද්ගලිකත්වය",
+
+menuHelp:
+    "❓ උදව් සහ සහාය",
+
+menuAbout:
+    "ℹ️ CivicEye AI ගැන",
+        
 
         pageTitle:
             "🔍 ඔබගේ ගැටලුව නිරීක්ෂණය කරන්න",
@@ -2388,21 +2277,7 @@ function verifyResolution(answer) {
 
 
 
-/* =====================================================
-   LOGOUT
-===================================================== */
 
-function logout() {
-
-    localStorage.removeItem(
-        "civicEyeCitizenEmail"
-    );
-
-
-    window.location.href =
-        "login.html";
-
-}
 
 
 

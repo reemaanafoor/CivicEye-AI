@@ -270,7 +270,8 @@ body.light-theme .notification-read-btn {
     <div class="nav-right">
 
         <a href="citizen.html" class="nav-link">
-            Citizen Portal
+    <span id="citizenPortalText">Citizen Portal</span>
+
             <span
                 id="notificationBadge"
                 style="
@@ -1101,9 +1102,27 @@ function applyLanguage() {
 
 
     if (markAllButton) {
-        markAllButton.textContent =
-            t.markAll;
-    }
+    markAllButton.textContent =
+        t.markAll;
+}
+const citizenPortal =
+    document.getElementById("citizenPortalText");
+
+const citizenPortalTranslations = {
+
+    en: "Citizen Portal",
+
+    ta: "குடிமக்கள் தளம்",
+
+    si: "පුරවැසි ද්වාරය"
+
+};
+
+if (citizenPortal) {
+    citizenPortal.textContent =
+        citizenPortalTranslations[lang] ||
+        citizenPortalTranslations.en;
+}
 
 }
 

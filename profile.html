@@ -757,13 +757,7 @@
 
                 <div class="more-menu" id="moreMenu">
 
-                    <a
-                        href="./profile.html"
-                        data-i18n="menuProfile"
-                    >
-                        👤 Profile
-                    </a>
-
+                    
 
                     <a
                         href="./settings.html"
@@ -780,36 +774,16 @@
                         🔒 Privacy
                     </a>
                     
+ <a href="help.html" data-i18n="menuHelp">
+    ❓ Help &amp; Support
+</a>
+<a href="about.html" data-i18n="menuAbout">
+    ℹ️ About CivicEye AI
+</a>
 
-                <a href="help.html">
-                    ❓
-                    <span>
-                        Help &amp; Support
-                    </span>
-                </a>
+                   
 
-
-                <a href="about.html">
-                    ℹ️
-                    <span>
-                        About CivicEye AI
-                    </span>
-                </a>
-
-
-
-                    <a
-                        href="./login.html"
-                        class="logout-item"
-                        data-i18n="menuLogout"
-                    >
-                        🚪 Logout
-                    </a>
-
-                </div>
-
-            </div>
-
+            
         </div>
 
     </nav>
@@ -957,93 +931,6 @@
 
             
 
-    <!-- ================================
-         HELP MODAL
-    ================================ -->
-
-    <div
-        class="civic-modal"
-        id="helpModal"
-        onclick="closeModalOutside(event, 'helpModal')"
-    >
-
-        <div class="civic-modal-content">
-
-            <button
-                class="modal-close"
-                onclick="closeModal('helpModal')"
-            >
-                ×
-            </button>
-
-
-            <h2 data-i18n="helpTitle">
-                ❓ Help & Support
-            </h2>
-
-
-            <p data-i18n="helpText1">
-                Need help using CivicEye AI?
-            </p>
-
-
-            <p data-i18n="helpText2">
-                Use Report Issue to submit a public issue, Track Issue to monitor its status, and My Reports to view your submitted reports.
-            </p>
-
-
-            <p data-i18n="helpText3">
-                Make sure your internet connection is active when submitting or checking reports.
-            </p>
-
-        </div>
-
-    </div>
-
-
-    <!-- ================================
-         ABOUT MODAL
-    ================================ -->
-
-    <div
-        class="civic-modal"
-        id="aboutModal"
-        onclick="closeModalOutside(event, 'aboutModal')"
-    >
-
-        <div class="civic-modal-content">
-
-            <button
-                class="modal-close"
-                onclick="closeModal('aboutModal')"
-            >
-                ×
-            </button>
-
-
-            <h2 data-i18n="aboutTitle">
-                ℹ️ About CivicEye AI
-            </h2>
-
-
-            <p data-i18n="aboutText1">
-                CivicEye AI is a citizen-focused platform designed to make reporting and tracking public issues easier.
-            </p>
-
-
-            <p data-i18n="aboutText2">
-                The platform supports AI-assisted issue identification, location tracking, status updates, notifications and analytics.
-            </p>
-
-
-            <p data-i18n="aboutText3">
-                Built with the goal of helping create cleaner, safer and better communities in Sri Lanka 🇱🇰
-            </p>
-
-        </div>
-
-    </div>
-
 
     <script>
 
@@ -1131,33 +1018,17 @@
 
                 helpTitle: "❓ Help & Support",
 
-                helpText1:
-                    "Need help using CivicEye AI?",
-
-                helpText2:
-                    "Use Report Issue to submit a public issue, Track Issue to monitor its status, and My Reports to view your submitted reports.",
-
-                helpText3:
-                    "Make sure your internet connection is active when submitting or checking reports.",
-
+               
                 aboutTitle:
                     "ℹ️ About CivicEye AI",
 
-                aboutText1:
-                    "CivicEye AI is a citizen-focused platform designed to make reporting and tracking public issues easier.",
-
-                aboutText2:
-                    "The platform supports AI-assisted issue identification, location tracking, status updates, notifications and analytics.",
-
-                aboutText3:
-                    "Built with the goal of helping create cleaner, safer and better communities in Sri Lanka 🇱🇰"
-
+                
             },
 
 
             ta: {
 
-                citizenportal: " குடிமக்கள் போர்டல்",
+                citizenportal: " குடிமக்கள் தளம் ",
 
                 menuProfile: "👤 சுயவிவரம்",
 
@@ -1199,26 +1070,8 @@
 
                 helpTitle: "❓ உதவி & ஆதரவு",
 
-                helpText1:
-                    "CivicEye AI-ஐ பயன்படுத்த உதவி தேவையா?",
-
-                helpText2:
-                    "பொது பிரச்சினையைப் பதிவு செய்ய Report Issue-ஐ, அதன் நிலையைப் பார்க்க Track Issue-ஐ, நீங்கள் சமர்ப்பித்த புகார்களைப் பார்க்க My Reports-ஐ பயன்படுத்துங்கள்.",
-
-                helpText3:
-                    "புகார்களைச் சமர்ப்பிக்கும் அல்லது சரிபார்க்கும் போது உங்கள் இணைய இணைப்பு செயல்பாட்டில் இருப்பதை உறுதிப்படுத்துங்கள்.",
-
                 aboutTitle:
                     "ℹ️ CivicEye AI பற்றி",
-
-                aboutText1:
-                    "CivicEye AI என்பது பொது பிரச்சினைகளை எளிதாகப் புகாரளித்து கண்காணிக்க உதவும் குடிமக்கள் மையப்படுத்தப்பட்ட தளமாகும்.",
-
-                aboutText2:
-                    "இந்த தளம் AI உதவியுடன் பிரச்சினை அடையாளம் காணுதல், இருப்பிட கண்காணிப்பு, நிலை புதுப்பிப்புகள், அறிவிப்புகள் மற்றும் பகுப்பாய்வுகளை ஆதரிக்கிறது.",
-
-                aboutText3:
-                    "இலங்கையில் சுத்தமான, பாதுகாப்பான மற்றும் சிறந்த சமூகங்களை உருவாக்க உதவும் நோக்கத்துடன் உருவாக்கப்பட்டது 🇱🇰"
 
             },
 
@@ -1267,27 +1120,10 @@
 
                 helpTitle: "❓ උදව් සහ සහාය",
 
-                helpText1:
-                    "CivicEye AI භාවිතා කිරීමට උදව් අවශ්‍යද?",
-
-                helpText2:
-                    "පොදු ගැටලුවක් වාර්තා කිරීමට Report Issue ද, එහි තත්ත්වය පරීක්ෂා කිරීමට Track Issue ද, ඔබ ඉදිරිපත් කළ වාර්තා බැලීමට My Reports ද භාවිතා කරන්න.",
-
-                helpText3:
-                    "වාර්තා ඉදිරිපත් කරන විට හෝ පරීක්ෂා කරන විට ඔබගේ අන්තර්ජාල සම්බන්ධතාවය සක්‍රීයව ඇති බව තහවුරු කරන්න.",
-
                 aboutTitle:
                     "ℹ️ CivicEye AI ගැන",
 
-                aboutText1:
-                    "CivicEye AI යනු පොදු ගැටලු පහසුවෙන් වාර්තා කිරීමට සහ නිරීක්ෂණය කිරීමට නිර්මාණය කළ පුරවැසි කේන්ද්‍රීය වේදිකාවකි.",
-
-                aboutText2:
-                    "මෙම වේදිකාව AI මගින් ගැටලු හඳුනාගැනීම, ස්ථාන නිරීක්ෂණය, තත්ත්ව යාවත්කාලීන කිරීම්, දැනුම්දීම් සහ විශ්ලේෂණ සඳහා සහාය දක්වයි.",
-
-                aboutText3:
-                    "ශ්‍රී ලංකාවේ වඩාත් පිරිසිදු, ආරක්ෂිත සහ යහපත් ප්‍රජාවන් නිර්මාණය කිරීමට උපකාර කිරීමේ අරමුණින් මෙය නිර්මාණය කර ඇත 🇱🇰"
-
+                
             }
 
         };
