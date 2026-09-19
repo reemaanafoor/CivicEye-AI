@@ -17,18 +17,25 @@
            ================================ */
 
         body.theme-light {
-            background: #f5f7fa;
+            background: #f5f6f7;
         }
 
         body.theme-dark {
             background: #101010;
         }
 
-        body.theme-light .processing-container,
-        body.theme-light .processing-card,
-        body.theme-light .result-box {
-            color: #222;
-        }
+    body.theme-light .processing-container,
+body.theme-light .processing-card,
+body.theme-light .result-box,
+body.theme-light .processing-card h1,
+body.theme-light .processing-card h2,
+body.theme-light .processing-card h3,
+body.theme-light .processing-card p,
+body.theme-light .processing-card .result-item,
+body.theme-light .processing-card strong,
+body.theme-light .processing-card span {
+    color: #222 !important;
+}
 
         body.theme-dark .processing-container,
         body.theme-dark .processing-card,
@@ -37,7 +44,7 @@
         }
 
         body.theme-light .result-box {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(227, 232, 233, 0.95);
             border-color: rgba(0, 0, 0, 0.12);
         }
 
@@ -74,6 +81,23 @@
             align-items: center !important;
             gap: 10px !important;
         }
+
+        /* =====================================================
+   LIGHT THEME - NAVBAR TEXT
+===================================================== */
+
+body.theme-light .civic-navbar,
+body.theme-light .civic-navbar a,
+body.theme-light .civic-logo,
+body.theme-light .civic-nav-links {
+    color: #222 !important;
+}
+
+body.theme-light .civic-navbar a span {
+    color: #222 !important;
+}
+
+
 
     </style>
 
