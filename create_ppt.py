@@ -1,13 +1,13 @@
-
 from pptx import Presentation
 from pptx.util import Inches, Pt
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR
-from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.shapes import MSO_SHAPE, MSO_CONNECTOR
 from pptx.dml.color import RGBColor
 
 
 # =========================================================
-# CIVICEYE AI — PREMIUM COMPETITION PRESENTATION
+# CIVICEYE AI - PREMIUM YCS 2026 PRESENTATION
+# 7 SLIDES
 # =========================================================
 
 prs = Presentation()
@@ -20,18 +20,34 @@ prs.slide_height = Inches(7.5)
 # COLORS
 # =========================================================
 
-BG = RGBColor(245, 247, 255)
-DARK = RGBColor(27, 31, 50)
+BG = RGBColor(246, 248, 255)
+
+DARK = RGBColor(25, 31, 52)
+NAVY = RGBColor(20, 27, 51)
+
 PURPLE = RGBColor(91, 76, 220)
+PURPLE_DARK = RGBColor(70, 56, 180)
+PURPLE_LIGHT = RGBColor(226, 222, 255)
+
 BLUE = RGBColor(57, 168, 255)
+BLUE_LIGHT = RGBColor(224, 241, 255)
+
+CYAN = RGBColor(46, 201, 255)
+
+GREEN = RGBColor(36, 180, 120)
+GREEN_LIGHT = RGBColor(224, 248, 239)
+
+ORANGE = RGBColor(245, 158, 11)
+ORANGE_LIGHT = RGBColor(255, 244, 220)
+
 WHITE = RGBColor(255, 255, 255)
-GREY = RGBColor(100, 106, 125)
-LIGHT = RGBColor(232, 235, 248)
-GREEN = RGBColor(40, 180, 120)
+
+GREY = RGBColor(100, 108, 128)
+LIGHT = RGBColor(225, 230, 242)
 
 
 # =========================================================
-# HELPERS
+# BASIC HELPERS
 # =========================================================
 
 def add_text(
@@ -57,18 +73,31 @@ def add_text(
     tf = box.text_frame
     tf.clear()
     tf.word_wrap = True
+
+    tf.margin_left = 0
+    tf.margin_right = 0
+    tf.margin_top = 0
+    tf.margin_bottom = 0
+
     tf.vertical_anchor = MSO_ANCHOR.MIDDLE
 
     p = tf.paragraphs[0]
 
     p.text = text
-    p.font.name = "Aptos"
+    p.font.name = "Arial"
     p.font.size = Pt(size)
     p.font.bold = bold
     p.font.color.rgb = color
     p.alignment = align
 
     return box
+
+
+def add_background(slide, color=BG):
+
+    fill = slide.background.fill
+    fill.solid()
+    fill.fore_color.rgb = color
 
 
 def add_card(
@@ -78,6 +107,7 @@ def add_card(
     w,
     h,
     fill=WHITE,
+    line=LIGHT,
     radius=True
 ):
 
@@ -98,43 +128,73 @@ def add_card(
     card.fill.solid()
     card.fill.fore_color.rgb = fill
 
-    card.line.color.rgb = LIGHT
+    card.line.color.rgb = line
+    card.line.width = Pt(1)
 
     return card
 
 
-def add_background(slide):
+def add_accent_line(slide, x, y, w, color=PURPLE):
 
-    fill = slide.background.fill
-    fill.solid()
-    fill.fore_color.rgb = BG
+    line = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE,
+        Inches(x),
+        Inches(y),
+        Inches(w),
+        Inches(0.06)
+    )
+
+    line.fill.solid()
+    line.fill.fore_color.rgb = color
+    line.line.fill.background()
+
+    return line
 
 
-def add_header(slide, title, number):
+def add_header(slide, title, subtitle, number):
 
     add_text(
         slide,
         title,
-        0.7,
-        0.35,
+        0.72,
+        0.40,
         9.5,
         0.55,
-        size=25,
+        size=26,
         color=DARK,
         bold=True
     )
 
     add_text(
         slide,
-        f"CIVICEYE AI   •   {number}/7",
+        subtitle,
+        0.75,
+        1.00,
         10.4,
-        0.38,
+        0.4,
+        size=13,
+        color=GREY
+    )
+
+    add_text(
+        slide,
+        f"CIVICEYE AI   |   {number}/7",
+        10.35,
+        0.47,
         2.2,
-        0.35,
-        size=10,
+        0.3,
+        size=9,
         color=GREY,
         bold=True,
         align=PP_ALIGN.RIGHT
+    )
+
+    add_accent_line(
+        slide,
+        0.72,
+        1.45,
+        1.25,
+        PURPLE
     )
 
 
@@ -142,71 +202,200 @@ def add_footer(slide):
 
     add_text(
         slide,
-        "Smart AI Solution for a Cleaner Sri Lanka 🇱🇰",
-        0.7,
-        7.05,
-        7.5,
-        0.25,
-        size=9,
+        "CivicEye AI  |  YCS 2026  |  Sri Lanka",
+        0.72,
+        7.12,
+        5.0,
+        0.2,
+        size=8,
         color=GREY
     )
 
 
+def add_pill(
+    slide,
+    text,
+    x,
+    y,
+    w,
+    fill,
+    color=DARK
+):
+
+    add_card(
+        slide,
+        x,
+        y,
+        w,
+        0.48,
+        fill,
+        fill
+    )
+
+    add_text(
+        slide,
+        text,
+        x,
+        y + 0.02,
+        w,
+        0.4,
+        size=9,
+        color=color,
+        bold=True,
+        align=PP_ALIGN.CENTER
+    )
+
+
+def add_arrow(
+    slide,
+    x1,
+    y1,
+    x2,
+    y2,
+    color=PURPLE
+):
+
+    connector = slide.shapes.add_connector(
+        MSO_CONNECTOR.STRAIGHT,
+        Inches(x1),
+        Inches(y1),
+        Inches(x2),
+        Inches(y2)
+    )
+
+    connector.line.color.rgb = color
+    connector.line.width = Pt(2)
+
+    return connector
+
+
+def add_feature_card(
+    slide,
+    title,
+    description,
+    x,
+    y,
+    w,
+    h,
+    fill,
+    accent
+):
+
+    add_card(
+        slide,
+        x,
+        y,
+        w,
+        h,
+        fill,
+        fill
+    )
+
+    add_accent_line(
+        slide,
+        x + 0.18,
+        y + 0.18,
+        0.45,
+        accent
+    )
+
+    add_text(
+        slide,
+        title,
+        x + 0.18,
+        y + 0.38,
+        w - 0.36,
+        0.32,
+        size=12,
+        color=accent,
+        bold=True
+    )
+
+    add_text(
+        slide,
+        description,
+        x + 0.18,
+        y + 0.76,
+        w - 0.36,
+        h - 0.88,
+        size=10,
+        color=DARK
+    )
+
+
 # =========================================================
-# SLIDE 1 — COVER
+# SLIDE 1
+# COVER
 # =========================================================
 
 slide = prs.slides.add_slide(prs.slide_layouts[6])
 
-add_background(slide)
+add_background(slide, BG)
 
 
-# Decorative shapes
+# Decorative background
 
 circle = slide.shapes.add_shape(
     MSO_SHAPE.OVAL,
-    Inches(9.6),
-    Inches(-1.0),
-    Inches(5.0),
-    Inches(5.0)
+    Inches(9.25),
+    Inches(-1.15),
+    Inches(5.2),
+    Inches(5.2)
 )
 
 circle.fill.solid()
-circle.fill.fore_color.rgb = RGBColor(226, 222, 255)
+circle.fill.fore_color.rgb = PURPLE_LIGHT
 circle.line.fill.background()
 
 
 circle2 = slide.shapes.add_shape(
     MSO_SHAPE.OVAL,
-    Inches(-1.3),
-    Inches(5.4),
-    Inches(4.0),
-    Inches(4.0)
+    Inches(-1.35),
+    Inches(5.35),
+    Inches(4.1),
+    Inches(4.1)
 )
 
 circle2.fill.solid()
-circle2.fill.fore_color.rgb = RGBColor(222, 239, 255)
+circle2.fill.fore_color.rgb = BLUE_LIGHT
 circle2.line.fill.background()
 
 
+# Logo
+
+logo = add_card(
+    slide,
+    0.9,
+    1.0,
+    0.95,
+    0.95,
+    PURPLE,
+    PURPLE
+)
+
 add_text(
     slide,
-    "👁️",
+    "CE",
     0.9,
     1.15,
-    1.0,
-    1.0,
-    size=42,
+    0.95,
+    0.55,
+    size=21,
+    color=WHITE,
+    bold=True,
     align=PP_ALIGN.CENTER
 )
+
+
+# Title
 
 add_text(
     slide,
     "CivicEye AI",
-    1.8,
-    1.18,
-    7.0,
-    0.8,
+    2.05,
+    1.02,
+    6.7,
+    0.75,
     size=40,
     color=DARK,
     bold=True
@@ -214,10 +403,10 @@ add_text(
 
 add_text(
     slide,
-    "Smart AI Solution for a Cleaner Sri Lanka 🇱🇰",
-    1.85,
-    2.05,
-    7.5,
+    "AI-Assisted Public Issue Reporting",
+    2.08,
+    1.88,
+    7.4,
     0.55,
     size=21,
     color=PURPLE,
@@ -226,79 +415,183 @@ add_text(
 
 add_text(
     slide,
-    "AI-powered public issue reporting and management platform",
-    1.85,
-    2.7,
-    7.0,
-    0.7,
-    size=18,
+    "A digital platform for reporting, analysing, prioritising and monitoring public issues.",
+    2.08,
+    2.62,
+    7.4,
+    0.8,
+    size=16,
     color=GREY
 )
 
 
 # Feature pills
 
-pills = [
-    ("🤖 AI Analysis", 1.85),
-    ("📍 Smart Location", 4.15),
-    ("🏛️ Authority Workflow", 6.55)
-]
+add_pill(
+    slide,
+    "AI ANALYSIS",
+    2.08,
+    3.75,
+    1.65,
+    PURPLE_LIGHT,
+    PURPLE
+)
 
-for text, x in pills:
+add_pill(
+    slide,
+    "LOCATION",
+    3.92,
+    3.75,
+    1.45,
+    BLUE_LIGHT,
+    BLUE
+)
 
-    add_card(
-        slide,
-        x,
-        3.75,
-        2.1,
-        0.55,
-        WHITE
-    )
+add_pill(
+    slide,
+    "PRIORITY",
+    5.55,
+    3.75,
+    1.45,
+    GREEN_LIGHT,
+    GREEN
+)
 
-    add_text(
-        slide,
-        text,
-        x + 0.05,
-        3.82,
-        2.0,
-        0.35,
-        size=10,
-        color=DARK,
-        bold=True,
-        align=PP_ALIGN.CENTER
-    )
+add_pill(
+    slide,
+    "TRACKING",
+    7.18,
+    3.75,
+    1.5,
+    ORANGE_LIGHT,
+    ORANGE
+)
 
+
+# Competition box
 
 add_card(
     slide,
-    1.85,
-    5.05,
-    6.8,
-    0.85,
+    2.08,
+    4.75,
+    6.95,
+    0.95,
+    PURPLE,
     PURPLE
 )
 
 add_text(
     slide,
-    "Young Computer Scientist (YCS) 2026",
-    2.0,
-    5.18,
-    6.5,
+    "Young Computer Scientist Competition (YCS) 2026",
+    2.25,
+    4.94,
+    6.6,
     0.45,
-    size=18,
+    size=17,
     color=WHITE,
     bold=True,
     align=PP_ALIGN.CENTER
 )
 
+
+# =========================================================
+# RIGHT SIDE - CIVICEYE MINI WORKFLOW
+# =========================================================
+
+add_card(
+    slide,
+    9.05,
+    2.65,
+    3.35,
+    3.25,
+    WHITE,
+    LIGHT
+)
+
 add_text(
     slide,
-    "🇱🇰 AI Innovation Project",
-    9.2,
-    5.7,
-    3.0,
-    0.5,
-    size=16,
+    "CIVICEYE WORKFLOW",
+    9.35,
+    2.92,
+    2.75,
+    0.35,
+    size=11,
+    color=PURPLE,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
+
+
+mini_steps = [
+    ("REPORT", PURPLE_LIGHT, PURPLE),
+    ("AI ANALYSE", BLUE_LIGHT, BLUE),
+    ("PRIORITY", GREEN_LIGHT, GREEN),
+    ("AUTHORITY", ORANGE_LIGHT, ORANGE),
+    ("TRACK", PURPLE_LIGHT, PURPLE)
+]
+
+
+for i, (label, fill, accent) in enumerate(mini_steps):
+
+    y = 3.45 + i * 0.48
+
+    add_card(
+        slide,
+        9.45,
+        y,
+        2.55,
+        0.36,
+        fill,
+        fill
+    )
+
+    add_text(
+        slide,
+        label,
+        9.45,
+        y + 0.01,
+        2.55,
+        0.27,
+        size=8.5,
+        color=accent,
+        bold=True,
+        align=PP_ALIGN.CENTER
+    )
+
+    if i < len(mini_steps) - 1:
+
+        add_arrow(
+            slide,
+            10.72,
+            y + 0.36,
+            10.72,
+            y + 0.48,
+            CYAN
+        )
+
+
+add_text(
+    slide,
+    "From citizen report to\ncontinuous monitoring",
+    9.35,
+    5.78,
+    2.75,
+    0.55,
+    size=10,
+    color=GREY,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
+
+
+add_text(
+    slide,
+    "Sri Lanka",
+    9.05,
+    6.45,
+    3.35,
+    0.35,
+    size=13,
     color=PURPLE,
     bold=True,
     align=PP_ALIGN.CENTER
@@ -306,158 +599,104 @@ add_text(
 
 
 # =========================================================
-# SLIDE 2 — THE PROBLEM
+# SLIDE 2
+# THE PROBLEM
 # =========================================================
 
 slide = prs.slides.add_slide(prs.slide_layouts[6])
 
 add_background(slide)
-add_header(slide, "🚨 The Public Issue Challenge", 2)
 
-add_text(
+add_header(
     slide,
-    "Public problems need a faster and more organized way to reach the right authority.",
-    0.75,
-    1.05,
-    11.7,
-    0.55,
-    size=18,
-    color=GREY
+    "The Public Issue Challenge",
+    "Common gaps in reporting, routing and monitoring public issues",
+    2
 )
 
 
 problems = [
-    ("📸", "Difficult Reporting", "Citizens may struggle to report public problems efficiently."),
-    ("⏳", "Slow Follow-up", "Reports can be difficult to monitor after submission."),
-    ("🔁", "Repeated Complaints", "Similar complaints may be submitted multiple times."),
-    ("❓", "Wrong Routing", "A report may need to reach the correct local authority.")
+    (
+        "01",
+        "REPORTING",
+        "Citizens need a structured way to submit issue details, images and location.",
+        BLUE
+    ),
+    (
+        "02",
+        "VISIBILITY",
+        "Citizens need clearer visibility after a report has been submitted.",
+        PURPLE
+    ),
+    (
+        "03",
+        "DUPLICATES",
+        "The same issue can potentially be reported multiple times.",
+        GREEN
+    ),
+    (
+        "04",
+        "ROUTING",
+        "Different issue categories may require different responsible authorities.",
+        ORANGE
+    )
 ]
+
 
 positions = [
-    (0.8, 2.0),
-    (6.75, 2.0),
-    (0.8, 4.35),
-    (6.75, 4.35)
+    (0.8, 1.95),
+    (6.75, 1.95),
+    (0.8, 4.25),
+    (6.75, 4.25)
 ]
 
-for (icon, title, desc), (x, y) in zip(problems, positions):
+
+for (num, title, desc, accent), (x, y) in zip(
+    problems,
+    positions
+):
 
     add_card(
         slide,
         x,
         y,
         5.75,
-        1.85,
-        WHITE
+        1.8,
+        WHITE,
+        LIGHT
     )
-
-    add_text(
-        slide,
-        icon,
-        x + 0.25,
-        y + 0.25,
-        0.65,
-        0.65,
-        size=25,
-        align=PP_ALIGN.CENTER
-    )
-
-    add_text(
-        slide,
-        title,
-        x + 1.0,
-        y + 0.2,
-        4.3,
-        0.4,
-        size=17,
-        color=DARK,
-        bold=True
-    )
-
-    add_text(
-        slide,
-        desc,
-        x + 1.0,
-        y + 0.7,
-        4.35,
-        0.8,
-        size=13,
-        color=GREY
-    )
-
-add_footer(slide)
-
-
-# =========================================================
-# SLIDE 3 — SOLUTION + FEATURES
-# =========================================================
-
-slide = prs.slides.add_slide(prs.slide_layouts[6])
-
-add_background(slide)
-add_header(slide, "💡 Introducing CivicEye AI", 3)
-
-add_text(
-    slide,
-    "One platform connecting citizens, AI-assisted analysis and authorities.",
-    0.75,
-    1.0,
-    11.5,
-    0.5,
-    size=18,
-    color=GREY
-)
-
-
-features = [
-    ("🤖", "AI Issue Detection", "Identify and categorize reported issues."),
-    ("📍", "Smart Location", "Capture where the issue was reported."),
-    ("🔍", "Duplicate Detection", "Identify similar reports."),
-    ("🚨", "Priority Classification", "Highlight issues needing faster attention."),
-    ("🏛️", "Authority Recommendation", "Suggest the relevant authority."),
-    ("🔄", "Status Tracking", "Monitor complaint progress."),
-    ("✅", "Resolution Verification", "Allow citizens to verify resolution."),
-    ("🎙️", "Multilingual Voice", "Support English, Tamil and Sinhala when available.")
-]
-
-x_positions = [0.75, 3.9, 7.05, 10.2]
-
-for i, (icon, title, desc) in enumerate(features):
-
-    row = i // 4
-    col = i % 4
-
-    x = x_positions[col]
-    y = 1.8 + row * 2.3
 
     add_card(
         slide,
-        x,
-        y,
-        2.75,
-        1.9,
-        WHITE
+        x + 0.25,
+        y + 0.27,
+        0.62,
+        0.62,
+        accent,
+        accent
     )
 
     add_text(
         slide,
-        icon,
-        x + 0.15,
-        y + 0.18,
-        0.65,
-        0.55,
-        size=23,
+        num,
+        x + 0.25,
+        y + 0.35,
+        0.62,
+        0.3,
+        size=11,
+        color=WHITE,
+        bold=True,
         align=PP_ALIGN.CENTER
     )
 
     add_text(
         slide,
         title,
-        x + 0.85,
-        y + 0.18,
-        1.7,
-        0.65,
-        size=13,
+        x + 1.05,
+        y + 0.22,
+        4.25,
+        0.4,
+        size=16,
         color=DARK,
         bold=True
     )
@@ -465,93 +704,241 @@ for i, (icon, title, desc) in enumerate(features):
     add_text(
         slide,
         desc,
-        x + 0.2,
-        y + 0.95,
-        2.35,
+        x + 1.05,
+        y + 0.75,
+        4.25,
         0.7,
-        size=11,
-        color=GREY,
-        align=PP_ALIGN.LEFT
+        size=12,
+        color=GREY
     )
+
 
 add_footer(slide)
 
 
 # =========================================================
-# SLIDE 4 — HOW IT WORKS
+# SLIDE 3
+# CIVICEYE SOLUTION + FEATURES
 # =========================================================
 
 slide = prs.slides.add_slide(prs.slide_layouts[6])
 
 add_background(slide)
-add_header(slide, "🔄 How CivicEye AI Works", 4)
+
+add_header(
+    slide,
+    "Introducing CivicEye AI",
+    "A single digital workflow connecting citizens, analysis and administration",
+    3
+)
+
+
+# Main statement
+
+add_card(
+    slide,
+    0.75,
+    1.72,
+    12.0,
+    0.95,
+    PURPLE,
+    PURPLE
+)
 
 add_text(
     slide,
-    "A simple digital workflow turns a citizen report into a trackable public issue.",
-    0.75,
-    1.0,
-    11.5,
-    0.5,
-    size=18,
-    color=GREY
+    "Report  ->  Analyse  ->  Prioritise  ->  Route  ->  Monitor",
+    1.05,
+    1.95,
+    11.4,
+    0.45,
+    size=19,
+    color=WHITE,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
+
+
+# Feature cards
+
+features = [
+    (
+        "IMAGE REPORTING",
+        "Upload an image with a public issue report.",
+        PURPLE_LIGHT,
+        PURPLE
+    ),
+    (
+        "LOCATION",
+        "Capture the issue location using browser geolocation.",
+        BLUE_LIGHT,
+        BLUE
+    ),
+    (
+        "VOICE",
+        "Voice input supports English, Tamil and Sinhala.",
+        GREEN_LIGHT,
+        GREEN
+    ),
+    (
+        "PRIORITY",
+        "Generate an emergency priority score from report information.",
+        ORANGE_LIGHT,
+        ORANGE
+    ),
+    (
+        "AUTHORITY",
+        "Recommend a relevant authority based on issue category.",
+        PURPLE_LIGHT,
+        PURPLE
+    ),
+    (
+        "DUPLICATES",
+        "Check for potentially matching reports.",
+        BLUE_LIGHT,
+        BLUE
+    ),
+    (
+        "NOTIFICATIONS",
+        "Notify citizens when report information changes.",
+        GREEN_LIGHT,
+        GREEN
+    ),
+    (
+        "TRACKING",
+        "Follow report status from submission to resolution.",
+        ORANGE_LIGHT,
+        ORANGE
+    )
+]
+
+
+for i, (title, desc, fill, accent) in enumerate(features):
+
+    col = i % 4
+    row = i // 4
+
+    x = 0.75 + col * 3.05
+    y = 3.00 + row * 1.65
+
+    add_feature_card(
+        slide,
+        title,
+        desc,
+        x,
+        y,
+        2.75,
+        1.35,
+        fill,
+        accent
+    )
+
+
+add_footer(slide)
+
+
+# =========================================================
+# SLIDE 4
+# HOW IT WORKS
+# =========================================================
+
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+
+add_background(slide)
+
+add_header(
+    slide,
+    "How CivicEye AI Works",
+    "A complete workflow from citizen submission to status monitoring",
+    4
 )
 
 
 steps = [
-    ("01", "📸", "REPORT", "Citizen submits image, description and location."),
-    ("02", "🤖", "AI ANALYSIS", "System analyses and categorizes the issue."),
-    ("03", "🚨", "PRIORITIZE", "Priority and duplicate information are generated."),
-    ("04", "🏛️", "AUTHORITY", "Relevant authority can review the report."),
-    ("05", "🔄", "MONITOR", "Status changes can be tracked by citizens."),
-    ("06", "✅", "RESOLVE", "Citizen can verify the reported issue.")
+    (
+        "01",
+        "REPORT",
+        "Citizen submits an image, description and location."
+    ),
+    (
+        "02",
+        "ANALYSE",
+        "Rule-based logic analyses issue information."
+    ),
+    (
+        "03",
+        "PRIORITISE",
+        "Priority and duplicate information are generated."
+    ),
+    (
+        "04",
+        "ROUTE",
+        "A relevant authority is recommended."
+    ),
+    (
+        "05",
+        "REVIEW",
+        "Admin reviews reports and updates status."
+    ),
+    (
+        "06",
+        "NOTIFY",
+        "Citizen tracks the report and receives updates."
+    )
 ]
 
-for i, (num, icon, title, desc) in enumerate(steps):
 
-    x = 0.7 + (i % 3) * 4.15
-    y = 1.8 + (i // 3) * 2.45
+for i, (num, title, desc) in enumerate(steps):
+
+    col = i % 3
+    row = i // 3
+
+    x = 0.7 + col * 4.15
+    y = 1.85 + row * 2.35
+
+    accent = PURPLE if i % 2 == 0 else BLUE
 
     add_card(
         slide,
         x,
         y,
         3.7,
-        1.95,
-        WHITE
+        1.8,
+        WHITE,
+        LIGHT
+    )
+
+    add_card(
+        slide,
+        x + 0.25,
+        y + 0.25,
+        0.65,
+        0.65,
+        accent,
+        accent
     )
 
     add_text(
         slide,
         num,
-        x + 0.2,
-        y + 0.2,
-        0.5,
-        0.35,
-        size=11,
-        color=PURPLE,
-        bold=True
-    )
-
-    add_text(
-        slide,
-        icon,
-        x + 0.65,
-        y + 0.18,
+        x + 0.25,
+        y + 0.34,
         0.65,
-        0.55,
-        size=22,
+        0.3,
+        size=11,
+        color=WHITE,
+        bold=True,
         align=PP_ALIGN.CENTER
     )
 
     add_text(
         slide,
         title,
-        x + 1.35,
-        y + 0.2,
-        2.0,
+        x + 1.1,
+        y + 0.22,
+        2.2,
         0.4,
-        size=14,
+        size=15,
         color=DARK,
         bold=True
     )
@@ -559,336 +946,351 @@ for i, (num, icon, title, desc) in enumerate(steps):
     add_text(
         slide,
         desc,
-        x + 0.25,
-        y + 0.95,
-        3.15,
+        x + 1.1,
+        y + 0.72,
+        2.25,
         0.7,
-        size=11,
+        size=10.5,
         color=GREY
     )
 
-add_footer(slide)
 
+# Flow connectors
 
-# =========================================================
-# SLIDE 5 — TECHNOLOGY
-# =========================================================
-
-slide = prs.slides.add_slide(prs.slide_layouts[6])
-
-add_background(slide)
-add_header(slide, "💻 Technology & System Architecture", 5)
-
-add_text(
+add_arrow(
     slide,
-    "CivicEye AI combines a web frontend with a Node.js backend and API-based communication.",
-    0.75,
-    1.0,
-    11.6,
-    0.5,
-    size=17,
-    color=GREY
+    4.4,
+    2.75,
+    4.75,
+    2.75,
+    CYAN
 )
 
-
-# Frontend
-
-add_card(slide, 0.8, 1.9, 3.45, 3.65, WHITE)
-
-add_text(
+add_arrow(
     slide,
-    "🌐 FRONTEND",
-    1.05,
-    2.15,
-    2.8,
-    0.45,
-    size=18,
-    color=PURPLE,
-    bold=True,
-    align=PP_ALIGN.CENTER
-)
-
-add_text(
-    slide,
-    "HTML\nCSS\nJavaScript\nResponsive Web Interface",
-    1.15,
-    2.85,
-    2.6,
-    1.8,
-    size=17,
-    color=DARK,
-    bold=True,
-    align=PP_ALIGN.CENTER
-)
-
-
-# Backend
-
-add_card(slide, 4.95, 1.9, 3.45, 3.65, WHITE)
-
-add_text(
-    slide,
-    "⚙️ BACKEND",
-    5.2,
-    2.15,
-    2.8,
-    0.45,
-    size=18,
-    color=PURPLE,
-    bold=True,
-    align=PP_ALIGN.CENTER
-)
-
-add_text(
-    slide,
-    "Node.js\nExpress.js\nMulter\nREST APIs\nCORS + dotenv",
-    5.2,
-    2.8,
-    2.9,
-    2.1,
-    size=16,
-    color=DARK,
-    bold=True,
-    align=PP_ALIGN.CENTER
-)
-
-
-# Deployment
-
-add_card(slide, 9.1, 1.9, 3.45, 3.65, WHITE)
-
-add_text(
-    slide,
-    "🚀 DEPLOYMENT",
-    9.35,
-    2.15,
-    2.95,
-    0.45,
-    size=18,
-    color=PURPLE,
-    bold=True,
-    align=PP_ALIGN.CENTER
-)
-
-add_text(
-    slide,
-    "Web Frontend\n+\nRailway Backend\n+\nAPI Communication",
-    9.35,
-    2.85,
-    2.9,
-    1.9,
-    size=16,
-    color=DARK,
-    bold=True,
-    align=PP_ALIGN.CENTER
-)
-
-
-# Flow
-
-add_card(
-    slide,
-    2.2,
-    6.0,
+    8.55,
+    2.75,
     8.9,
-    0.55,
-    PURPLE
+    2.75,
+    CYAN
 )
 
-add_text(
+add_arrow(
     slide,
-    "Citizen  →  Frontend  →  REST API  →  Backend  →  Admin",
-    2.35,
-    6.08,
-    8.6,
-    0.35,
-    size=13,
-    color=WHITE,
-    bold=True,
-    align=PP_ALIGN.CENTER
+    4.4,
+    5.1,
+    4.75,
+    5.1,
+    CYAN
 )
+
+add_arrow(
+    slide,
+    8.55,
+    5.1,
+    8.9,
+    5.1,
+    CYAN
+)
+
 
 add_footer(slide)
 
 
 # =========================================================
-# SLIDE 6 — TESTING + IMPACT
-# =========================================================
-
-slide = prs.slides.add_slide(prs.slide_layouts[6])
-
-add_background(slide)
-add_header(slide, "🧪 Testing, Impact & Future", 6)
-
-
-# Testing card
-
-add_card(slide, 0.75, 1.25, 5.8, 4.9, WHITE)
-
-add_text(
-    slide,
-    "🧪 TESTED",
-    1.05,
-    1.55,
-    5.1,
-    0.45,
-    size=20,
-    color=PURPLE,
-    bold=True
-)
-
-tests = [
-    "✅ Image upload & report submission",
-    "✅ AI processing result display",
-    "✅ Citizen report tracking",
-    "✅ Admin dashboard workflow",
-    "✅ Status update APIs",
-    "✅ Report retrieval & management",
-    "✅ Railway backend connection"
-]
-
-add_text(
-    slide,
-    "\n".join(tests),
-    1.05,
-    2.2,
-    5.0,
-    3.2,
-    size=15,
-    color=DARK
-)
-
-
-# Future card
-
-add_card(slide, 6.8, 1.25, 5.8, 4.9, WHITE)
-
-add_text(
-    slide,
-    "🔮 FUTURE IMPROVEMENTS",
-    7.1,
-    1.55,
-    5.1,
-    0.45,
-    size=20,
-    color=PURPLE,
-    bold=True
-)
-
-future = [
-    "🤖 More advanced AI models",
-    "🗄️ Persistent production database",
-    "🎙️ Improved multilingual voice input",
-    "📊 Advanced analytics",
-    "🔔 Real-time notifications",
-    "🌍 Wider community deployment"
-]
-
-add_text(
-    slide,
-    "\n".join(future),
-    7.1,
-    2.2,
-    5.0,
-    3.2,
-    size=15,
-    color=DARK
-)
-
-add_footer(slide)
-
-
-# =========================================================
-# SLIDE 7 — PROJECT INFORMATION / CONCLUSION
+# SLIDE 5
+# SYSTEM ARCHITECTURE
 # =========================================================
 
 slide = prs.slides.add_slide(prs.slide_layouts[6])
 
 add_background(slide)
 
-add_text(
+add_header(
     slide,
-    "👁️ CivicEye AI",
-    0.8,
-    0.75,
-    11.7,
-    0.7,
-    size=34,
-    color=DARK,
-    bold=True,
-    align=PP_ALIGN.CENTER
-)
-
-add_text(
-    slide,
-    "Building smarter communities through AI and digital reporting 🇱🇰",
-    1.0,
-    1.5,
-    11.3,
-    0.55,
-    size=19,
-    color=PURPLE,
-    bold=True,
-    align=PP_ALIGN.CENTER
+    "CivicEye AI System Architecture",
+    "How the web application connects citizens, backend services and administration",
+    5
 )
 
 
-# Main conclusion
+# Left section
 
 add_card(
     slide,
-    1.0,
-    2.35,
-    11.3,
-    1.2,
-    PURPLE
+    0.7,
+    1.75,
+    3.65,
+    4.95,
+    WHITE,
+    LIGHT
 )
 
 add_text(
     slide,
-    "Report  •  Analyse  •  Prioritize  •  Connect  •  Resolve",
-    1.25,
-    2.62,
-    10.8,
-    0.6,
-    size=21,
-    color=WHITE,
+    "CITIZEN LAYER",
+    1.0,
+    2.05,
+    3.05,
+    0.4,
+    size=16,
+    color=PURPLE,
     bold=True,
     align=PP_ALIGN.CENTER
 )
 
 
-# Project info cards
-
-info = [
-    ("Project Name", "CivicEye AI"),
-    ("Competition", "Young Computer Scientist (YCS) 2026"),
-    ("Project Type", "AI-Powered Web Application"),
-    ("Country", "Sri Lanka 🇱🇰")
+citizen_items = [
+    "Report Form",
+    "Image Upload",
+    "Location",
+    "Voice Input",
+    "Report Tracking",
+    "Notifications"
 ]
 
-for i, (label, value) in enumerate(info):
+for i, item in enumerate(citizen_items):
 
-    x = 1.0 + (i % 2) * 5.75
-    y = 4.0 + (i // 2) * 1.25
+    y = 2.72 + i * 0.55
 
     add_card(
         slide,
-        x,
+        1.05,
         y,
-        5.35,
-        0.95,
+        2.95,
+        0.38,
+        PURPLE_LIGHT,
+        PURPLE_LIGHT
+    )
+
+    add_text(
+        slide,
+        item,
+        1.05,
+        y + 0.02,
+        2.95,
+        0.3,
+        size=10,
+        color=PURPLE_DARK,
+        bold=True,
+        align=PP_ALIGN.CENTER
+    )
+
+
+# Middle section
+
+add_card(
+    slide,
+    4.85,
+    1.75,
+    3.55,
+    4.95,
+    PURPLE,
+    PURPLE
+)
+
+add_text(
+    slide,
+    "PROCESSING LAYER",
+    5.15,
+    2.05,
+    2.95,
+    0.4,
+    size=16,
+    color=WHITE,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
+
+
+processing = [
+    "REST API",
+    "Node.js / Express",
+    "Image Handling",
+    "Rule-Based Analysis",
+    "Priority Logic",
+    "Duplicate Check",
+    "Authority Mapping"
+]
+
+for i, item in enumerate(processing):
+
+    y = 2.65 + i * 0.5
+
+    add_card(
+        slide,
+        5.25,
+        y,
+        2.75,
+        0.35,
+        WHITE,
         WHITE
     )
 
     add_text(
         slide,
-        label,
-        x + 0.2,
-        y + 0.12,
-        1.7,
+        item,
+        5.25,
+        y + 0.01,
+        2.75,
+        0.28,
+        size=9,
+        color=DARK,
+        bold=True,
+        align=PP_ALIGN.CENTER
+    )
+
+
+# Right section
+
+add_card(
+    slide,
+    8.9,
+    1.75,
+    3.7,
+    4.95,
+    WHITE,
+    LIGHT
+)
+
+add_text(
+    slide,
+    "ADMIN LAYER",
+    9.2,
+    2.05,
+    3.1,
+    0.4,
+    size=16,
+    color=BLUE,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
+
+
+admin_items = [
+    "Admin Dashboard",
+    "Report Review",
+    "Status Updates",
+    "Notifications",
+    "Resolution Verification",
+    "Monitoring"
+]
+
+for i, item in enumerate(admin_items):
+
+    y = 2.72 + i * 0.55
+
+    add_card(
+        slide,
+        9.25,
+        y,
+        3.0,
+        0.38,
+        BLUE_LIGHT,
+        BLUE_LIGHT
+    )
+
+    add_text(
+        slide,
+        item,
+        9.25,
+        y + 0.02,
+        3.0,
         0.3,
-        size=11,
+        size=10,
+        color=BLUE,
+        bold=True,
+        align=PP_ALIGN.CENTER
+    )
+
+
+# Architecture connectors
+
+add_arrow(
+    slide,
+    4.35,
+    4.1,
+    4.8,
+    4.1,
+    CYAN
+)
+
+add_arrow(
+    slide,
+    8.45,
+    4.1,
+    8.85,
+    4.1,
+    CYAN
+)
+
+
+add_footer(slide)
+
+
+# =========================================================
+# SLIDE 6
+# TECHNOLOGY + TESTING + FUTURE
+# =========================================================
+
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+
+add_background(slide)
+
+add_header(
+    slide,
+    "Technology, Testing and Future Scope",
+    "The current prototype and its path toward a larger civic platform",
+    6
+)
+
+
+# Technology
+
+add_card(
+    slide,
+    0.7,
+    1.75,
+    3.85,
+    4.95,
+    WHITE,
+    LIGHT
+)
+
+add_text(
+    slide,
+    "TECHNOLOGY",
+    1.0,
+    2.05,
+    3.25,
+    0.4,
+    size=17,
+    color=PURPLE,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
+
+technology = [
+    ("Frontend", "HTML, CSS, JavaScript"),
+    ("Browser", "Geolocation and Speech APIs"),
+    ("Backend", "Node.js and Express"),
+    ("Upload", "Multer"),
+    ("API", "REST API and CORS"),
+    ("Deployment", "Vercel and Railway")
+]
+
+for i, (label, value) in enumerate(technology):
+
+    y = 2.72 + i * 0.55
+
+    add_text(
+        slide,
+        label,
+        1.0,
+        y,
+        0.95,
+        0.3,
+        size=9,
         color=GREY,
         bold=True
     )
@@ -896,25 +1298,336 @@ for i, (label, value) in enumerate(info):
     add_text(
         slide,
         value,
-        x + 1.85,
-        y + 0.1,
-        3.2,
-        0.55,
-        size=14,
+        1.95,
+        y,
+        2.2,
+        0.3,
+        size=9.5,
+        color=DARK,
+        bold=True
+    )
+
+
+# Testing
+
+add_card(
+    slide,
+    4.75,
+    1.75,
+    3.85,
+    4.95,
+    WHITE,
+    LIGHT
+)
+
+add_text(
+    slide,
+    "TESTED WORKFLOWS",
+    5.05,
+    2.05,
+    3.25,
+    0.4,
+    size=17,
+    color=GREEN,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
+
+testing = [
+    "Report submission",
+    "Image upload",
+    "Issue analysis",
+    "Duplicate detection",
+    "Admin workflow",
+    "Status updates",
+    "Citizen notifications",
+    "Backend connection"
+]
+
+for i, item in enumerate(testing):
+
+    y = 2.68 + i * 0.43
+
+    add_card(
+        slide,
+        5.05,
+        y,
+        0.28,
+        0.28,
+        GREEN,
+        GREEN
+    )
+
+    add_text(
+        slide,
+        "OK",
+        5.05,
+        y + 0.01,
+        0.28,
+        0.2,
+        size=6.5,
+        color=WHITE,
+        bold=True,
+        align=PP_ALIGN.CENTER
+    )
+
+    add_text(
+        slide,
+        item,
+        5.5,
+        y - 0.02,
+        2.65,
+        0.3,
+        size=10.5,
+        color=DARK
+    )
+
+
+# Future
+
+add_card(
+    slide,
+    8.8,
+    1.75,
+    3.85,
+    4.95,
+    WHITE,
+    LIGHT
+)
+
+add_text(
+    slide,
+    "FUTURE SCOPE",
+    9.1,
+    2.05,
+    3.25,
+    0.4,
+    size=17,
+    color=BLUE,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
+
+future = [
+    "Trained ML models",
+    "Computer vision",
+    "Cloud database",
+    "Advanced GIS mapping",
+    "Authority integration",
+    "Secure authentication",
+    "Advanced analytics",
+    "Mobile application"
+]
+
+for i, item in enumerate(future):
+
+    y = 2.68 + i * 0.43
+
+    add_card(
+        slide,
+        9.1,
+        y,
+        0.28,
+        0.28,
+        BLUE,
+        BLUE
+    )
+
+    add_text(
+        slide,
+        "+",
+        9.1,
+        y - 0.01,
+        0.28,
+        0.2,
+        size=10,
+        color=WHITE,
+        bold=True,
+        align=PP_ALIGN.CENTER
+    )
+
+    add_text(
+        slide,
+        item,
+        9.55,
+        y - 0.02,
+        2.65,
+        0.3,
+        size=10.5,
+        color=DARK
+    )
+
+
+add_footer(slide)
+
+
+# =========================================================
+# SLIDE 7
+# CONCLUSION
+# LIGHT BACKGROUND + READABLE TEXT
+# =========================================================
+
+slide = prs.slides.add_slide(prs.slide_layouts[6])
+
+add_background(slide, BG)
+
+
+# Decorative elements
+
+circle = slide.shapes.add_shape(
+    MSO_SHAPE.OVAL,
+    Inches(9.4),
+    Inches(-1.1),
+    Inches(4.7),
+    Inches(4.7)
+)
+
+circle.fill.solid()
+circle.fill.fore_color.rgb = PURPLE_LIGHT
+circle.line.fill.background()
+
+
+circle2 = slide.shapes.add_shape(
+    MSO_SHAPE.OVAL,
+    Inches(-1.0),
+    Inches(5.3),
+    Inches(3.5),
+    Inches(3.5)
+)
+
+circle2.fill.solid()
+circle2.fill.fore_color.rgb = BLUE_LIGHT
+circle2.line.fill.background()
+
+
+# Main title
+
+add_text(
+    slide,
+    "CIVICEYE AI",
+    0.9,
+    0.95,
+    11.5,
+    0.65,
+    size=34,
+    color=DARK,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
+
+add_accent_line(
+    slide,
+    5.45,
+    1.75,
+    2.4,
+    PURPLE
+)
+
+
+# Main statement
+
+add_text(
+    slide,
+    "Smarter civic issue reporting\nthrough AI-assisted technology",
+    1.6,
+    2.25,
+    10.1,
+    1.25,
+    size=28,
+    color=DARK,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
+
+
+# Main workflow
+
+workflow = [
+    "REPORT",
+    "ANALYSE",
+    "PRIORITISE",
+    "CONNECT",
+    "MONITOR"
+]
+
+for i, item in enumerate(workflow):
+
+    x = 1.05 + i * 2.38
+
+    add_card(
+        slide,
+        x,
+        4.15,
+        1.95,
+        0.7,
+        WHITE,
+        LIGHT
+    )
+
+    add_text(
+        slide,
+        item,
+        x,
+        4.34,
+        1.95,
+        0.3,
+        size=10,
         color=DARK,
         bold=True,
-        align=PP_ALIGN.RIGHT
+        align=PP_ALIGN.CENTER
     )
+
+    if i < len(workflow) - 1:
+
+        add_arrow(
+            slide,
+            x + 1.95,
+            4.5,
+            x + 2.3,
+            4.5,
+            PURPLE
+        )
+
+
+# Closing statement
+
+add_text(
+    slide,
+    "A working prototype designed to make civic issue reporting more structured, visible and manageable.",
+    1.35,
+    5.25,
+    10.65,
+    0.6,
+    size=14,
+    color=GREY,
+    align=PP_ALIGN.CENTER
+)
+
+
+# Competition text
+
+add_text(
+    slide,
+    "Young Computer Scientist Competition (YCS) 2026",
+    1.0,
+    6.0,
+    11.3,
+    0.4,
+    size=15,
+    color=DARK,
+    bold=True,
+    align=PP_ALIGN.CENTER
+)
 
 
 add_text(
     slide,
-    "Thank You",
-    4.0,
-    6.65,
-    5.3,
-    0.45,
-    size=20,
+    "AI-Powered Web Application  |  Sri Lanka",
+    1.0,
+    6.48,
+    11.3,
+    0.35,
+    size=12,
     color=PURPLE,
     bold=True,
     align=PP_ALIGN.CENTER
@@ -930,9 +1643,9 @@ output_file = "CivicEye_AI_Premium_Final.pptx"
 prs.save(output_file)
 
 print()
-print("==============================================")
-print("CIVICEYE AI PREMIUM PPT CREATED! 🚀")
-print("==============================================")
+print("================================================")
+print(" CIVICEYE AI PREMIUM PPT CREATED SUCCESSFULLY")
+print("================================================")
 print()
 print(f"File: {output_file}")
 print()

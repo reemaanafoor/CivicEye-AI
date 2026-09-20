@@ -1,292 +1,492 @@
-CivicEye AI
+CIVICEYE AI
+YCS 2026 — AI-Powered Civic Issue Reporting Platform
+Sri Lanka
 
-AI-Powered Public Issue Reporting & Monitoring Web Application
+============================================================
+1. PROJECT OVERVIEW
+============================================================
 
-YCS 2026 – Young Computer Scientist Competition
+CivicEye AI is an AI-assisted civic issue reporting and
+monitoring web application developed as a competition
+prototype for YCS 2026.
 
-National-Level School ICT Championship – Sri Lanka
+The platform is designed to help citizens report common
+public issues such as road damage, garbage, water leaks,
+and faulty street lights through a structured digital
+workflow.
 
-⸻
+Citizens can submit issue information including an image,
+issue type, description, and location. The system then
+performs AI-assisted analysis using programmed rules and
+keyword matching to support issue categorization, priority
+assessment, and authority recommendation.
 
-1. Project Overview
+The platform also demonstrates duplicate detection,
+citizen notifications, report tracking, resolution
+verification, and an administrator dashboard.
 
-CivicEye AI is an AI-powered web application designed to help citizens report and monitor public issues in their communities.
+CivicEye AI is a prototype and is not currently connected
+to an official Municipal Council, government authority,
+emergency service, or production government database.
 
-The system allows users to submit an image, select the type of public issue, provide a description, and specify the location.
 
-The submitted report is analysed and presented with useful information such as issue priority, recommended authority, and duplicate complaint status.
+============================================================
+2. PROBLEM
+============================================================
 
-The project aims to use modern web technologies and AI-assisted analysis to make public issue reporting more organized, accessible, and efficient.
+Public issues such as damaged roads, garbage accumulation,
+water leaks, and faulty street lights require an organized
+way for citizens to report them and for responsible
+authorities to monitor them.
 
-⸻
+Traditional reporting processes may involve difficulties
+such as:
 
-2. Problems Addressed
+* Unclear reporting channels
+* Incomplete complaint information
+* Difficulty identifying the relevant authority
+* Repeated or duplicate complaints
+* Limited visibility of complaint progress
+* Difficulty identifying higher-priority issues
+* Language barriers for some citizens
 
-Citizens may encounter public issues such as:
-	•	Road damage
-	•	Garbage problems
-	•	Water leakage
-	•	Street-light issues
-	•	Other local public problems
+CivicEye AI addresses these challenges through a structured
+digital reporting workflow that combines citizen input,
+AI-assisted analysis, location information, priority
+assessment, authority recommendation, duplicate detection,
+notifications, and report tracking.
 
-Traditional reporting methods can make it difficult to organize complaints, identify repeated reports, and determine which authority should handle an issue.
 
-CivicEye AI provides a centralized digital approach for reporting and monitoring public issues.
+============================================================
+3. PROPOSED SOLUTION
+============================================================
 
-⸻
+CivicEye AI provides a single web-based platform where
+citizens can create and monitor civic issue reports.
 
-3. Main Features
+The general workflow is:
 
-Image-Based Reporting
-
-Users can upload an image showing the public issue.
-
-Issue Description
-
-Users can provide a written description of the reported problem.
-
-Location Capture
-
-Users can enter a location manually or use the device’s current location.
-
+Citizen
+   ↓
+Create Report
+   ↓
+Upload Image + Enter Issue Details
+   ↓
 AI-Assisted Analysis
-
-The system processes the submitted report and provides an AI analysis result.
-
-Priority Detection
-
-Reports are assigned a priority level such as:
-	•	Normal
-	•	Medium
-	•	High
-	•	Emergency
-
+   ↓
+Issue Categorization
+   ↓
+Priority Assessment
+   ↓
 Authority Recommendation
+   ↓
+Report Tracking
+   ↓
+Notifications
+   ↓
+Resolution Verification
 
-The system recommends a relevant authority based on the reported issue.
+The system is designed to make the reporting process more
+structured while providing administrators with a dashboard
+for monitoring submitted reports.
 
-Examples:
-	•	Water Leakage → Water Supply Authority
-	•	Garbage Problem → Local Municipal Authority
-	•	Road Damage → Road Development / Local Authority
-	•	Street Light Issue → Local Authority / Electricity Provider
 
-Duplicate Complaint Detection
+============================================================
+4. MAIN FEATURES
+============================================================
 
-The system checks whether a report with the same issue type and location has already been submitted.
+4.1 AI-Assisted Issue Categorization
 
-Admin Dashboard
+The system analyzes the submitted issue information using
+programmed rules and keyword matching to determine the
+likely issue category.
 
-Administrators can view submitted reports, images, descriptions, locations, status, and submission time.
+Supported example categories include:
 
-Multilingual Voice Input
+* Road Damage
+* Garbage
+* Water Leak
+* Faulty Street Light
 
-The reporting interface provides voice-input options for:
-	•	English
-	•	Tamil
-	•	Sinhala
 
-⸻
+4.2 Image-Based Reporting
 
-4. Technology Used
+Citizens can upload an image related to the reported issue.
+The image provides supporting visual information for the
+submitted complaint.
 
-Frontend
-	•	HTML5
-	•	CSS3
-	•	JavaScript
+The current prototype does not use a trained computer-vision
+model for image classification.
 
-Backend
-	•	Node.js
-	•	Express.js
-	•	Multer
-	•	CORS
-	•	dotenv
 
-Deployment
-	•	Frontend: Web-based interface
-	•	Backend: Railway
+4.3 Location Support
 
-⸻
+Citizens can enter or capture the location associated with
+the reported issue.
 
-5. Project Structure
+Browser geolocation functionality depends on browser support
+and user permission.
 
-Frontend
 
-Important files include:
-	•	index.html – Home page
-	•	report.html – Public issue reporting page
-	•	ai-processing.html – AI analysis result page
-	•	admin.html – Administrative dashboard
-	•	login.html – Login interface
-	•	citizen.html – Citizen dashboard
-	•	script.js – JavaScript functionality
-	•	style.css – Styling and responsive design
+4.4 Priority Assessment
 
-Backend
+The system provides an AI-assisted priority assessment based
+on programmed rules and issue information.
 
-Important files include:
-	•	server.js – Main backend server
-	•	package.json – Project dependencies
-	•	package-lock.json – Dependency lock file
+This is intended to demonstrate how reports could be
+prioritized in a future production system.
 
-⸻
 
-6. How to Test the Project
+4.5 Authority Recommendation
 
-Step 1 – Open the Reporting Page
+Based on the issue category, the system can recommend a
+relevant authority for the reported issue.
 
-Open:
+This recommendation is part of the prototype workflow and
+does not directly submit complaints to government authorities.
 
-report.html
 
-Step 2 – Create a Report
-	1.	Upload an image.
-	2.	Select an issue type.
-	3.	Enter a description.
-	4.	Enter a location or use the current-location feature.
-	5.	Click Submit Report.
+4.6 Multilingual Interaction
 
-Step 3 – View AI Analysis
+The platform is designed to support English, Tamil, and
+Sinhala user interaction.
 
-The system opens:
+Voice recognition functionality depends on browser support
+and user permissions.
 
-ai-processing.html
 
-The result displays:
-	•	Issue
-	•	AI Confidence
-	•	Location
-	•	Description
-	•	Priority
-	•	Recommended Authority
-	•	Duplicate Complaint
-	•	Status
+4.7 Duplicate Detection
 
-Step 4 – Test Duplicate Detection
+The backend checks submitted reports for potentially matching
+existing reports using relevant report information such as
+issue type and location.
 
-Submit the same issue type using the same location again.
+This helps demonstrate how repeated complaints could be
+identified.
 
-The second submission should be identified as:
 
-Duplicate Complaint: Yes
+4.8 Citizen Notifications
 
-Step 5 – View the Admin Dashboard
+Citizens can receive notifications related to report activity
+and status changes.
 
-Open:
 
+4.9 Admin Alerts
+
+The administrator interface supports monitoring of relevant
+report activity.
+
+
+4.10 Report Tracking
+
+Citizens can view submitted reports and monitor their current
+status.
+
+
+4.11 Resolution Verification
+
+The prototype provides a citizen-facing resolution
+verification interaction after an issue is marked as solved.
+
+
+4.12 Administrator Dashboard
+
+Administrators can review submitted reports and update their
+status.
+
+Example status flow:
+
+Pending
+   ↓
+Processing
+   ↓
+Solved
+
+
+============================================================
+5. USER WORKFLOW
+============================================================
+
+Citizen Workflow
+
+1. Open CivicEye AI.
+2. Login as a citizen.
+3. Open the Citizen Portal.
+4. Select Report New Issue.
+5. Upload an issue image.
+6. Select the issue type.
+7. Enter a description.
+8. Enter or capture the location.
+9. Submit the complaint.
+10. View the AI-assisted analysis result.
+11. Open the Citizen Dashboard.
+12. Check the submitted report and notification.
+
+Admin Workflow
+
+1. Open Admin Login.
+2. Open the Admin Dashboard.
+3. Review submitted reports.
+4. Open a report.
+5. Review the report information.
+6. Change the status from Pending to Processing.
+7. Change the status from Processing to Solved.
+8. Verify the updated status and generated notifications.
+
+
+============================================================
+6. TECHNOLOGIES USED
+============================================================
+
+Frontend:
+
+* HTML5
+* CSS3
+* JavaScript
+
+Backend:
+
+* Node.js
+* Express.js
+* CORS
+* Multer
+* dotenv
+
+Development and Deployment:
+
+* Visual Studio Code
+* Git / GitHub
+* Vercel
+* Railway
+
+Browser-based capabilities:
+
+* Geolocation API
+* Web Speech / Voice Recognition support where available
+
+
+============================================================
+7. SYSTEM ARCHITECTURE
+============================================================
+
+The CivicEye AI prototype follows a frontend-backend
+architecture.
+
+Citizen / Admin
+       ↓
+Web Frontend
+       ↓
+JavaScript
+       ↓
+HTTP API
+       ↓
+Node.js + Express Backend
+       ↓
+Report Processing
+       ↓
+Duplicate Detection
+       ↓
+Notifications / Admin Alerts
+
+The frontend communicates with the backend through HTTP
+API requests.
+
+The backend handles report processing, duplicate detection,
+status management, notifications, and related application
+logic.
+
+
+============================================================
+8. PROJECT STRUCTURE
+============================================================
+
+Main frontend pages include:
+
+index.html
+login.html
+citizen.html
 admin.html
+report.html
+ai-processing.html
+track.html
+profile.html
+settings.html
+notifications.html
+privacy.html
 
-The administrator can view submitted reports and their details.
+Supporting frontend files include:
 
-⸻
+script.js
+style.css
+images/
 
-7. Backend API
+Backend files contain the Node.js and Express server,
+configuration, and supporting backend logic.
 
-The application backend provides the following main endpoints:
 
-Health Check
+============================================================
+9. DEPLOYMENT
+============================================================
 
-GET /
+Frontend:
 
-Used to verify that the CivicEye AI backend is running.
+The frontend can be deployed as a web application using
+Vercel.
 
-Submit Report
+Backend:
 
-POST /upload
+The backend is deployed using Railway.
 
-Receives the uploaded image and report information and returns the analysed report.
+The frontend communicates with the deployed backend through
+the configured backend API URL.
 
-Get Reports
+The backend uses the environment variable PORT when provided.
 
-GET /reports
+When deployed on Railway, the platform-provided port is used.
 
-Returns submitted reports for the Admin Dashboard.
 
-Delete Report
+============================================================
+10. TESTING WORKFLOW
+============================================================
 
-DELETE /reports/:id
+Citizen Report Test
 
-Removes a selected report from the backend.
+1. Open CivicEye AI.
+2. Select Citizen Login.
+3. Open the Citizen Portal.
+4. Select Report New Issue.
+5. Upload an issue image.
+6. Select the issue type.
+7. Enter a description.
+8. Enter or capture the location.
+9. Submit the complaint.
+10. View the AI-assisted analysis result.
+11. Open the Citizen Dashboard.
+12. Check the submitted report and notification.
 
-⸻
 
-8. Requirements
+Duplicate Detection Test
 
-To run the project locally, the following are recommended:
-	•	Modern web browser
-	•	Node.js
-	•	Internet connection for the deployed backend
-	•	JavaScript enabled
+1. Submit a report with a specific issue type and location.
+2. Submit another report using the same issue type and location.
+3. The backend checks for an existing matching report.
+4. The second submission is identified as a duplicate.
 
-Install the backend dependencies using:
 
-npm install
+Admin Test
 
-Start the backend using:
+1. Open Admin Login.
+2. Open the Admin Dashboard.
+3. Review submitted reports.
+4. Open a report.
+5. Change the status from Pending to Processing.
+6. Change the status from Processing to Solved.
+7. Verify the updated status and generated notifications.
 
-node server.js
 
-⸻
+============================================================
+11. IMPORTANT PROTOTYPE LIMITATIONS
+============================================================
 
-9. Important Notes for Judges
+CivicEye AI is a competition prototype and has several
+limitations.
 
-The project is designed as a web application.
+Rule-Based AI
 
-For the easiest demonstration:
-	1.	Open the reporting interface.
-	2.	Create a sample public-issue report.
-	3.	View the AI analysis result.
-	4.	Open the Admin Dashboard to view the submitted report.
+The current AI-assisted analysis uses programmed rules and
+keyword matching.
 
-For duplicate detection, submit the same issue type and location more than once.
+It does not currently use a trained machine-learning model
+or external AI API.
 
-The project has been designed to support both desktop and mobile screen sizes.
+Confidence Display
 
-⸻
+The current prototype displays a predefined confidence value
+for demonstration purposes. It should not be interpreted as
+a statistically calibrated machine-learning confidence score.
 
-10. Project Objective
+Data Storage
 
-The main objective of CivicEye AI is to demonstrate how AI-assisted software can improve the way citizens report public issues and how such reports can be organized for administrative monitoring.
+Reports and notifications are currently stored in server
+memory.
+
+Therefore, the prototype does not provide permanent database
+storage.
+
+Authentication
+
+The current login system is designed for prototype
+demonstration and does not provide production-grade
+authentication.
+
+Resolution Verification
+
+The citizen resolution verification interface is currently
+a frontend prototype interaction and is not stored through
+a dedicated backend verification service.
+
+Browser Features
+
+Voice recognition and geolocation depend on browser support
+and user permissions.
+
+
+============================================================
+12. FUTURE IMPROVEMENTS
+============================================================
+
+Future versions of CivicEye AI could include:
+
+* Trained machine-learning models
+* Computer vision for image-based issue classification
+* Permanent cloud database
+* Secure user authentication
+* Role-based access control
+* Per-citizen report access
+* Real-time authority communication
+* Advanced GIS mapping
+* Persistent resolution verification
+* Advanced analytics and reporting
+* Mobile application support
+* Integration with relevant government authorities
+
+
+============================================================
+13. PROJECT OBJECTIVE
+============================================================
+
+The objective of CivicEye AI is to demonstrate how web
+technologies and AI-assisted decision logic can support more
+structured civic issue reporting and monitoring.
 
 The project focuses on:
-	•	Citizen participation
-	•	Intelligent report analysis
-	•	Public issue prioritization
-	•	Duplicate complaint identification
-	•	Authority recommendation
-	•	Digital administration
 
-⸻
+* Simplifying citizen reporting
+* Organizing complaint information
+* Supporting issue prioritization
+* Reducing repeated complaints
+* Recommending relevant authorities
+* Improving complaint visibility
+* Supporting multilingual interaction
 
-11. Future Improvements
 
-Possible future developments include:
-	•	Advanced computer-vision-based issue detection
-	•	Real-time authority notifications
-	•	Interactive geographic issue maps
-	•	Improved multilingual AI support
-	•	Cloud database integration
-	•	Real-time report status updates
-	•	Advanced analytics and prediction
-	•	Integration with relevant public-service authorities
+============================================================
+14. CONCLUSION
+============================================================
 
-⸻
+CivicEye AI demonstrates a prototype workflow for digital
+civic issue reporting and monitoring.
 
-12. Conclusion
+By combining a citizen-facing web interface, a Node.js
+backend, rule-based AI-assisted analysis, duplicate detection,
+authority recommendation, notifications, and an administrator
+dashboard, the project provides a foundation for a future
+intelligent civic management platform.
 
-CivicEye AI demonstrates a practical application of AI and web technologies to address real-world public-service problems.
+The current implementation is intentionally presented as a
+prototype, with future scope for machine learning, persistent
+databases, secure authentication, advanced mapping, and
+direct authority integration.
 
-By combining citizen reporting, image uploads, location information, AI-assisted analysis, priority detection, duplicate detection, authority recommendation, and administrative monitoring, the system provides a foundation for a smarter and more organized public issue reporting process.
 
-⸻
-
-Project Information
-
-Project Name: CivicEye AI
-
-Competition: Young Computer Scientist (YCS) 2026
-
-Project Type: AI-Powered Web Application
-
-Country: Sri Lanka 🇱🇰
-
+CivicEye AI · YCS 2026 · Sri Lanka
